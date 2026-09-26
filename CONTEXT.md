@@ -28,4 +28,4 @@
 | Review Point | review point | 預先約定重新檢視某決策或實驗的時間與依據。 |
 | Learning Review | learning review | 出錯後理解問題如何形成、改善系統的檢討（不找戰犯）。 |
 | 角色檢視 | role review | 每半年公開檢視角色與權力分配，防止隱形主管。 |
-| 紅線 | red line | `CLAUDE.md` 所列不可違反的規則；修改屬社群基本規則。 |
+| 紅線 | red line | `AGENTS.md` 所列不可違反的規則；修改屬社群基本規則。 |

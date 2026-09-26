@@ -24,6 +24,27 @@
 - 提交前：`npm run lint && npm run check && npm test`。
 - commit message 用英文、Conventional Commits 格式。
 
+## 使用 AI 工具協作
+Codex、Claude Code 或其他 AI 工具均遵守 [AGENTS.md](AGENTS.md) 的共用規範；內容審核與決策責任不因工具不同而改變。
+
+| 工具 | 規範入口 |
+|---|---|
+| Codex | 根目錄 `AGENTS.md`；從本專案目錄開始任務，先確認讀到共用規範 |
+| Claude Code | `CLAUDE.md` 導讀至 `AGENTS.md`，依導讀完整閱讀 |
+| 其他 AI 工具 | 明確要求讀取 `AGENTS.md`；無法存取 repo 時，提供檔案內容及任務所需文件 |
+
+可複製以下提示開工或切換工具：
+
+```text
+請先完整閱讀 AGENTS.md、CONTRIBUTING.md、CONTEXT.md 與 docs/sdd/11-milestones.md，
+按本次任務讀取相關 SDD、ADR 與既有交接紀錄，簡述適用的紅線與目前進度。
+先確認分支和 git status，保留既有未提交變更，再接手以下任務：
+（填入目標、範圍與交接紀錄的位置）
+完成後說明變更、實際驗證結果、未完成事項及下一步，並依 AGENTS.md 留下交接紀錄。
+```
+
+交接紀錄放在既有 PR／Issue 或 repo 文件（未指定時可用 `docs/handoff.md`），不要只保存在單一 AI 的對話中。新增工具入口時只導向共用規範，避免複製出不同版本。流程理由見 [ADR-0016](docs/adr/0016-shared-ai-instructions.md)。
+
 ## 授權
 提交即同意程式碼以 MIT、內容以 CC BY-SA 4.0 授權釋出。
 

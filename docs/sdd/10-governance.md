@@ -53,7 +53,7 @@
 見 `CODE_OF_CONDUCT.md`（依指引 §11、§15、§21、§26 撰寫）。
 
 ## 傳承機制
-1. **文件即交接**：`CLAUDE.md`＋`docs/sdd/`＋`docs/adr/`＋指引須與程式同步。
+1. **文件即交接**：`AGENTS.md`（共用 AI 規範）＋`CLAUDE.md`（導讀入口）＋`docs/sdd/`＋`docs/adr/`＋指引須與程式同步；跨 AI 工具接手依 `AGENTS.md` 的交接流程，開工提示見 `CONTRIBUTING.md`。
 2. **外部資產清單**（交接時逐項移轉）：
    | 資產 | 持有者 | 交接方式 |
    |---|---|---|

@@ -16,6 +16,8 @@
 ## AI 協作與審核
 部分內容由 AI 協助撰寫初稿（標示 `aiAssisted: true`），一律經人工審核改為 `reviewed` 後才會出現在網站上。
 
+使用 Codex、Claude Code 或其他 AI 工具參與開發，請先讀共用規範 [AGENTS.md](AGENTS.md)。Claude Code 的 [CLAUDE.md](CLAUDE.md) 也導向同一份規範；開工提示與跨工具交接方式見 [CONTRIBUTING.md](CONTRIBUTING.md#使用-ai-工具協作)。
+
 ## 唯一官方網址
 為避免仿冒，本專案只使用：
 - 網站：https://ecologic-tw.github.io/

@@ -16,7 +16,7 @@
 ## 目錄結構
 ```
 /
-├─ CLAUDE.md  README.md  CONTEXT.md  CONTRIBUTING.md  SECURITY.md  CODE_OF_CONDUCT.md
+├─ AGENTS.md  CLAUDE.md  README.md  CONTEXT.md  CONTRIBUTING.md  SECURITY.md  CODE_OF_CONDUCT.md
 ├─ LICENSE  LICENSE-CONTENT.md
 ├─ docs/ sdd/ adr/ feedback/  共好型自主敏捷社群指引.md
 ├─ .github/ ISSUE_TEMPLATE/  workflows/  dependabot.yml  pull_request_template.md  CODEOWNERS
