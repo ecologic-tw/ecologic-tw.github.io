@@ -17,13 +17,24 @@
   ```ts
   export const FEEDBACK = {
     formShortUrl: 'https://forms.gle/ZAacF8i7hQ7QF8LC9',
-    formPrefillBase: '',          // TODO: 完整 viewform 網址，表單題目定稿後填入
-    formEntryIdField: '',         // TODO: 「題目或卡片 ID」題的 entry.xxxx
-    formPageUrlField: '',         // TODO: 「頁面網址」題的 entry.xxxx（選用）
+    formPrefillBase: 'https://docs.google.com/forms/d/e/1FAIpQLSfLYC6tg7ixZLtb6bVbcPQqURNFj7abswN_Y9777z1qS7adaw/viewform',
+    fields: {
+      type: 'entry.1967567927',     // Q1 你想告訴我們什麼？（選項文字須完全相同）
+      contentId: 'entry.1393954149', // Q2 題目或卡片 ID
+      mode: 'entry.868715057',       // Q3 你使用的模式：基礎／進階／不確定
+    },
+    typeValues: { report: '這一題／這張卡有問題', feedback: '使用心得與建議', submit: '我想投稿一個情境' },
+    modeValues: { basic: '基礎', advanced: '進階' },
     issueBase: 'https://github.com/ecologic-tw/ecologic-tw.github.io/issues/new',
   };
+  // 題目頁「回報」按鈕：type=report、contentId=<id>、mode=<目前模式>
+  // 頁尾「意見回饋」：只帶 mode（不預選 type）
+  // 所有值以 encodeURIComponent() 編碼；entry 代號於 2026-09-26 取得，題目刪除重建後須更新
   ```
   `formPrefillBase` 為空時退回短網址。
+
+  範例（題目頁回報）：
+  `…/viewform?usp=pp_url&entry.1967567927=%E9%80%99%E4%B8%80%E9%A1%8C%EF%BC%8F%E9%80%99%E5%BC%B5%E5%8D%A1%E6%9C%89%E5%95%8F%E9%A1%8C&entry.1393954149=cons-003&entry.868715057=%E5%9F%BA%E7%A4%8E`
 - Issue：`?template=content-error.yml&title=[勘誤] <id>&content-id=<id>`（Issue Forms 支援以欄位 id 預填）。
 
 ## 處理流程
