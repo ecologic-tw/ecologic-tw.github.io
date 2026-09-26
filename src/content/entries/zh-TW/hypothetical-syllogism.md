@@ -1,0 +1,42 @@
+---
+id: hypothetical-syllogism
+kind: inference
+title: 假言三段論
+en: Hypothetical syllogism
+summary: 如果 P 就 Q，如果 Q 就 R；所以，如果 P 就 R。
+form: 'P → Q, Q → R ∴ P → R'
+related: [slippery-slope, modus-ponens]
+terms: [conditional, validity]
+status: draft
+reviewers: []
+updated: 2026-09-26
+aiAssisted: true
+---
+
+## 說明
+
+兩個[[conditional]]可以串起來：P 會導致 Q，Q 又會導致 R，那麼 P 就會導致 R。串接本身是[[validity|有效]]的。
+
+這個形式也是「滑坡謬誤」常借用的外殼：鏈子本身沒錯，問題通常出在其中某一環不成立。
+
+## 生活例子
+
+> 如果今晚熬夜，明天早上就會起不來。
+> 如果早上起不來，就會錯過早班公車。
+> 所以，如果今晚熬夜，就會錯過早班公車。
+
+## 保育例子
+
+> 如果田邊的樹籬被移除，昆蟲就會變少。
+> 如果昆蟲變少，吃昆蟲的鳥就會找不到足夠食物。
+> 所以，如果樹籬被移除，吃昆蟲的鳥就會找不到足夠食物。
+
+推論有效。每一環是否成立、影響有多大，需要調查資料支持。
+
+## 何時合理
+
+每一個條件句都要有理由支持。鏈子越長，只要其中一環不太可靠，整體結論的可信度就會下降得很快。
+
+## 進階
+
+形式：P → Q, Q → R ∴ P → R，也稱為條件句的遞移性。若每一環都只是「很可能」而非「必然」，整條鏈的可能性大約是各環機率相乘，會比任何一環都低。

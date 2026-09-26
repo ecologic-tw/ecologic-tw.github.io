@@ -14,9 +14,11 @@
   - [x] 在 GitHub 上開 PR 驗證 CI 對錯誤內容會失敗（PR #2 的 CI 失敗；該 PR 誤合併進功能分支後已 revert，未進入 main）
 
 ## M1 圖鑑與名詞
-- [ ] `/guide/`、`/guide/<id>/`、`/terms/`、名詞 popover
-- [ ] 22 張圖鑑卡 draft、30 條名詞 draft
+- [x] `/guide/`、`/guide/<id>/`、`/terms/`、名詞 popover（原生 popover，不需 JS；見 ADR-0013）
+- [x] 22 張圖鑑卡 draft、30 條名詞 draft（皆 `aiAssisted: true`，待人工審核）
 - **驗收**：關閉 JS 可閱讀；鍵盤可操作 popover；axe 無嚴重問題
+  - [x] 本機 `npm run test:e2e` 全數通過（含草稿建置，淺色與深色模式各 25 頁）
+  - [ ] CI `e2e` job 在 GitHub 上通過
 
 ## M2 情境題
 - [ ] `/practice/*`、`/scenario/<id>/`、作答流程、解說分層、模式切換

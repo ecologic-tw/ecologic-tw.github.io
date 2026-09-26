@@ -1,0 +1,45 @@
+---
+id: confirmation-bias
+kind: bias
+title: 確認偏誤
+en: Confirmation bias
+summary: 傾向注意、相信支持自己想法的資訊，忽略或低估相反的資訊。
+notFallacyWhen: 已經有充分證據支持的看法，不需要遇到一點反例就推翻；重點是願意主動找反面證據，並公平評估。
+charitableResponse: 「我們一起列一下：有哪些資料出現的話，會讓你改變想法？」
+related: [availability-heuristic, correlation-causation]
+terms: [cognitive-bias, counterexample]
+status: draft
+reviewers: []
+sources:
+  - title: 'Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in many guises. Review of General Psychology, 2(2), 175–220.'
+updated: 2026-09-26
+aiAssisted: true
+---
+
+## 說明
+
+我們都會不自覺地多注意支持自己想法的資訊，對相反的資訊則比較挑剔，甚至直接略過。這是很普遍的[[cognitive-bias]]，和聰明與否無關。
+
+## 生活例子
+
+> 認為「左撇子比較有創意」的人，會特別記得有創意的左撇子，卻不太注意沒什麼創意的左撇子，也不太注意有創意的右撇子。
+
+## 保育例子
+
+> 支持在某處設立保護區的社團，轉貼每一篇提到當地生態豐富的文章；看到調查顯示當地物種數量普通的報告時，就認為那份調查一定做得不好。
+
+> 反對設立保護區的居民，只轉貼保護區造成生活不便的案例，對其他地方成功兼顧的例子則說「那裡情況不一樣」。
+
+雙方都在做同一件事：只讓支持自己的資訊進來。
+
+## 何時合理
+
+已經有大量證據支持的看法，不需要因為一個[[counterexample]]就全盤推翻，先檢查那個反例本身可不可靠是合理的。確認偏誤的問題在於不對等的標準：對支持的資訊很寬鬆，對相反的資訊很嚴格。
+
+## 善意回應法
+
+「你對這片地很熟悉，觀察一定很有價值。如果我們要公平比較，還需要找哪些不同立場的資料？」
+
+## 進階
+
+心理學研究常以 Wason 的選擇作業等實驗討論這類傾向。對抗確認偏誤的做法包括：事先寫下「什麼證據會讓我改變想法」、刻意尋找反面資料、請立場不同的人檢查自己的推理。
