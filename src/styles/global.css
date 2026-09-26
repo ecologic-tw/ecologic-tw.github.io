@@ -1,0 +1,44 @@
+/* 原生 CSS；字型自託管（M1 起加入），此前使用系統字型。 */
+:root {
+  --color-bg: #fbfaf6;
+  --color-text: #1f2a24;
+  --color-muted: #5b665f;
+  --font-body:
+    system-ui, -apple-system, 'Segoe UI', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei',
+    sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #141a17;
+    --color-text: #e6ece8;
+    --color-muted: #a3b0a8;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+}
+
+main,
+footer {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+footer {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}

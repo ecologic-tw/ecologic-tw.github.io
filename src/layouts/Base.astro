@@ -1,0 +1,33 @@
+---
+import { CSP } from '../lib/csp.ts';
+import { t } from '../i18n/zh-TW.ts';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = t.tagline } = Astro.props;
+const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.siteNameEn}`;
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content={CSP} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>{t.notOfficial}</p>
+    </footer>
+  </body>
+</html>

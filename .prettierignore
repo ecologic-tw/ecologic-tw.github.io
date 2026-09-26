@@ -1,0 +1,7 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+# 文件與內容以人工排版為準，不由 Prettier 改寫
+*.md
+src/content/
