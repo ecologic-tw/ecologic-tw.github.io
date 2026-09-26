@@ -18,7 +18,7 @@
 - [x] 22 張圖鑑卡 draft、30 條名詞 draft（皆 `aiAssisted: true`，待人工審核）
 - **驗收**：關閉 JS 可閱讀；鍵盤可操作 popover；axe 無嚴重問題
   - [x] 本機 `npm run test:e2e` 全數通過（含草稿建置，淺色與深色模式各 25 頁）
-  - [ ] CI `e2e` job 在 GitHub 上通過
+  - [x] CI `e2e` job 在 GitHub 上通過（PR #6）
 
 ## M2 情境題
 - [ ] `/practice/*`、`/scenario/<id>/`、作答流程、解說分層、模式切換
