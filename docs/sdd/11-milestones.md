@@ -38,11 +38,11 @@
 - [x] 回饋入口與預填連結（09）：題目頁、圖鑑卡頁底部與全站頁尾
 - [x] `/about/`（使命、非官方聲明、隱私、授權、參與），另加回饋管道、AI 協作說明與唯一官方網址（07 防仿冒）
 - [x] 填入 `CODE_OF_CONDUCT.md` 聯絡人與外部觀察員；角色名冊填入實際帳號（外部觀察員與第二位管理員：招募中）
-- [ ] 建立 Issue 標籤：`learning-review`、`experiment`、`governance`
+- [x] 建立 Issue 標籤：`learning-review`、`experiment`、`governance`（另建 `content-error`、`new-scenario`、`suggestion`；無障礙沿用既有的 `accessibility`）
 - [x] Google 表單依 `docs/feedback/google-form-design.md` 建置、取得 entry id 填入設定（`src/lib/feedback.ts`）
 - **驗收**：從題目頁點回報，表單／Issue 已帶入題目 ID
   - [x] 本機 e2e（`tests/e2e/m4-feedback.spec.ts`）通過
-  - [ ] CI 在 GitHub 上通過
+  - [x] CI 在 GitHub 上通過（PR #12：check、e2e）
 
 ## M5 審核與上線
 - [ ] 全部 MVP 內容經人工審核改為 `reviewed`
