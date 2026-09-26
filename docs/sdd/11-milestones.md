@@ -32,7 +32,7 @@
 - [x] `progress.ts`、`badges.ts`、`/me/`、匯出匯入清除（另加卡內小檢核與閱讀紀錄，見 ADR-0015）
 - **驗收**：徽章規則單元測試；匯入惡意／超大檔被拒；localStorage 不可用時網站仍可用
   - [x] 本機單元測試（`tests/unit/badges.test.ts`、`progress.test.ts`）與 e2e（`tests/e2e/m3-me.spec.ts`）通過
-  - [ ] CI 在 GitHub 上通過
+  - [x] CI 在 GitHub 上通過（PR #10：check、e2e）
 
 ## M4 回饋與治理
 - [ ] 回饋入口與預填連結（09）
