@@ -6,10 +6,20 @@ en: Hasty generalization
 summary: 用太少或不具代表性的例子，推出普遍的結論。
 notFallacyWhen: 樣本足夠多且具代表性，或結論清楚限縮在觀察到的範圍時，由例子歸納是合理的。
 charitableResponse: 「你遇到的情況聽起來很辛苦。其他地方或其他時間的情況也一樣嗎？」
-related: [survivorship-bias, availability-heuristic, principle-of-sufficient-reason]
-terms: [induction, sample, representative-sample]
-status: draft
-reviewers: []
+related: [ survivorship-bias, availability-heuristic, principle-of-sufficient-reason ]
+terms: [ induction, sample, representative-sample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
+  - title: "AAPOR — Best Practices for Survey Research"
+    url: https://aapor.org/standards-and-ethics/best-practices/
+    supports:
+      - "樣本、抽樣方式與涵蓋及未回覆等誤差須一併評估。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -36,7 +46,7 @@ aiAssisted: true
 
 ## 何時不算謬誤
 
-如果樣本夠多、抽樣方式能代表整體，歸納出的結論就很可靠。或者把結論限縮在實際觀察的範圍，例如「我看過的那幾隻獼猴會搶食物」，也沒有問題。
+足夠的樣本量與合適的抽樣方式能增加支持，但仍要檢查涵蓋、未回覆、量測方式與不確定性，不能保證每個歸納結論都可靠。或者把結論限縮在實際觀察的範圍，例如「我看過的那幾隻獼猴會搶食物」，也沒有問題。
 
 ## 善意回應法
 

@@ -6,10 +6,16 @@ en: Straw man
 summary: 把對方的說法扭曲成比較弱的版本，再去反駁那個版本。
 notFallacyWhen: 對方的說法本身模糊，而你先說出「我理解成…，如果不對請更正」再回應；或對方確實就是那樣主張時，不算稻草人。
 charitableResponse: 「我想先確認一下，你的意思是……嗎？如果我理解錯了，請告訴我。」
-related: [ad-hominem, false-dilemma]
-terms: [principle-of-charity, argument]
-status: draft
-reviewers: []
+related: [ ad-hominem, false-dilemma ]
+terms: [ principle-of-charity, argument ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

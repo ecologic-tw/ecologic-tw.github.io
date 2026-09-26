@@ -6,12 +6,15 @@ en: Survivorship bias
 summary: 只看到「留下來」或「成功」的案例，就對全體下結論。
 notFallacyWhen: 如果結論只針對留下來的那一群，或已經把沒留下來的案例也納入考量，推理就是合理的。
 charitableResponse: 「我們看到的是順利留下來的那些。沒被看到的那些，後來怎麼了？」
-related: [hasty-generalization, confirmation-bias]
-terms: [cognitive-bias, sample, representative-sample]
-status: draft
-reviewers: []
+related: [ hasty-generalization, confirmation-bias ]
+terms: [ cognitive-bias, sample, representative-sample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Mangel, M., & Samaniego, F. J. (1984). Abraham Wald's work on aircraft survivability. Journal of the American Statistical Association, 79(386), 259–267."
+  - title: "Mangel, M., & Samaniego, F. J. (1984). Abraham Wald's work on aircraft
+      survivability. Journal of the American Statistical Association, 79(386),
+      259–267."
 updated: 2026-09-26
 aiAssisted: true
 ---

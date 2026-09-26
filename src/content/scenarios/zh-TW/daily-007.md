@@ -3,7 +3,7 @@ id: daily-007
 theme: daily
 title: 用平板做筆記的同學
 answer: correlation-causation
-distractors: [straw-man, false-dilemma]
+distractors: [ straw-man, false-dilemma ]
 difficulty: basic
 betterPhrasing:
   - 「班上用平板做筆記的同學成績比較好，不過他們可能本來就比較會安排讀書時間。要知道平板有沒有幫助，得比較其他條件相近的同學。」
@@ -11,9 +11,16 @@ checklist:
   - 想過有沒有第三個因素同時影響兩件事
   - 沒有直接把「一起出現」說成「造成」
   - 提出可以比較或驗證的方法
-terms: [correlation, confounder]
-status: draft
-reviewers: []
+terms: [ correlation, confounder ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding
+      Revisited With Directed Acyclic Graphs."
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+    supports:
+      - "混淆及因果結構的區分，調整相關變項不必然排除偏差。"
 updated: 2026-09-26
 aiAssisted: true
 ---

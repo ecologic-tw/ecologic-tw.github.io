@@ -14,7 +14,13 @@ checklist:
 terms: [principle-of-charity]
 status: draft
 reviewers: []
-updated: 2026-09-26
+requiresSecondReview: true
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+    url: https://plato.stanford.edu/entries/logic-informal/
+    supports:
+      - "專家意見論證及其批判問題；引用證言不自動構成謬誤。"
+updated: 2026-09-27
 aiAssisted: true
 ---
 

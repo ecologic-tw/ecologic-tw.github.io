@@ -14,7 +14,13 @@ checklist:
 terms: [correlation, confounder]
 status: draft
 reviewers: []
-updated: 2026-09-26
+sources:
+  - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding Revisited With Directed Acyclic Graphs."
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+    supports:
+      - "混淆及因果結構的區分，調整相關變項不必然排除偏差。"
+requiresSecondReview: true
+updated: 2026-09-27
 aiAssisted: true
 ---
 

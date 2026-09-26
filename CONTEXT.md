@@ -5,7 +5,7 @@
 | 用語 | 英文識別字 | 定義 |
 |---|---|---|
 | 圖鑑卡 | `entry` | 一個邏輯概念的說明頁。種類見「卡別」。 |
-| 卡別 | `kind` | `law` 思維定律／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
+| 卡別 | `kind` | `law` 思維定律與哲學原則／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
 | 情境題 | `scenario` | 一段虛構對話或陳述，讓使用者判讀其推理是否有問題。 |
 | 主題 | `theme` | `daily` 日常生活／`conservation` 野生生物保育 |
 | 對照題 | `control` | 推理其實沒問題的情境題（`isControl: true`），用來防止「看到什麼都說是謬誤」。 |

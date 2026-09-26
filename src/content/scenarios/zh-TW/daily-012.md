@@ -4,7 +4,7 @@ theme: daily
 title: 牙醫的建議
 isControl: true
 answer: none
-distractors: [appeal-to-authority, confirmation-bias, slippery-slope]
+distractors: [ appeal-to-authority, confirmation-bias, slippery-slope ]
 difficulty: basic
 betterPhrasing:
   - 「牙醫檢查後說這顆需要補，也照了 X 光讓我看。如果還有疑慮，可以再問問治療方式的差別。」
@@ -12,8 +12,14 @@ checklist:
   - 引用的專家在這個主題上具相關專業
   - 專家的判斷有具體依據
   - 仍保留提問或尋求第二意見的空間
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+    url: https://plato.stanford.edu/entries/logic-informal/
+    supports:
+      - "非形式論證的評估、善意理解與專家證言的批判問題。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -24,7 +30,7 @@ aiAssisted: true
 
 ## 解說
 
-這段推理**沒有問題**。
+就題幹的專業判斷與暫定採納而言，這段推理**沒有問題**；這不是對實際牙齒病況或治療時機的建議。
 
 牙醫在牙齒問題上具有相關專業，而且是實際檢查、照了 X 光後才給建議。參考這樣的專家意見，是合理的推理捷徑，不是不當訴諸權威。
 

@@ -200,7 +200,7 @@ test.describe('關閉 JavaScript', () => {
   test('quick check answer is readable without JavaScript', async ({ page }) => {
     await page.goto('/guide/modus-tollens/');
     await page.getByText('看答案').click();
-    await expect(page.locator('[data-qc-reveal]')).toContainText('他還沒出門');
+    await expect(page.locator('[data-qc-reveal]')).toContainText('申請沒有成功送出');
   });
 });
 

@@ -3,7 +3,7 @@ id: cons-006
 theme: conservation
 title: 海灘上的塑膠垃圾
 answer: hasty-generalization
-distractors: [correlation-causation, appeal-to-authority]
+distractors: [ correlation-causation, appeal-to-authority ]
 difficulty: basic
 betterPhrasing:
   - 「我兩次去都看到海鳥被塑膠纏住，很令人擔心。不知道有沒有更系統的調查，可以看出整體受害的比例？」
@@ -11,9 +11,15 @@ checklist:
   - 結論限縮在實際看到的情況
   - 注意到觀察次數很少
   - 提出可以了解整體情況的方法
-terms: [sample]
-status: draft
-reviewers: []
+terms: [ sample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "AAPOR — Best Practices for Survey Research"
+    url: https://aapor.org/standards-and-ethics/best-practices/
+    supports:
+      - "樣本、抽樣方式與涵蓋及未回覆等誤差須一併評估。"
 updated: 2026-09-26
 aiAssisted: true
 ---

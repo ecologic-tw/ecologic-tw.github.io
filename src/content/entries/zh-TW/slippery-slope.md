@@ -6,17 +6,27 @@ en: Slippery slope
 summary: 沒有充分理由，就斷定第一步會一路引發一連串嚴重後果。
 notFallacyWhen: 每一步都有證據或機制支持，並說明了發生的可能性時，提醒連鎖後果是合理的推理。
 charitableResponse: 「你擔心的是後面那些影響吧？我們一步一步看，每一步發生的可能性有多高？」
-related: [hypothetical-syllogism, false-dilemma]
-terms: [conditional, premise]
-status: draft
-reviewers: []
+related: [ hypothetical-syllogism, false-dilemma ]
+terms: [ conditional, premise ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+    url: https://plato.stanford.edu/entries/logic-informal/
+    supports:
+      - "專家意見論證及其批判問題；引用證言不自動構成謬誤。"
+  - title: "Stanford Encyclopedia of Philosophy — Interpretations of Probability"
+    url: https://plato.stanford.edu/entries/probability-interpret/
+    supports:
+      - "條件機率需要指明條件；不能只憑兩個局部條件機率算出最終結果。"
 updated: 2026-09-26
 aiAssisted: true
 ---
 
 ## 說明
 
-滑坡謬誤把一連串的[[conditional]]串起來，從一個小改變一路推到很嚴重的結局，但中間每一步都沒有理由支持。聽的人容易被最後的結局嚇到，而忽略了中間的環節其實站不住腳。
+滑坡謬誤把一連串的[[conditional]]串起來，從一個小改變一路推到很嚴重的結局，但其中關鍵環節缺少充分支持。聽的人容易被最後的結局嚇到，而忽略了中間的環節其實站不住腳。
 
 ## 生活例子
 
@@ -40,4 +50,4 @@ aiAssisted: true
 
 ## 進階
 
-滑坡的外殼是假言三段論：P → Q, Q → R, R → S ∴ P → S。形式本身有效，問題在於每個條件句只是「可能」而非「必然」。若每一步發生的機率都不高，串起來之後，最後結局的機率會更低。
+滑坡的外殼是假言三段論：P → Q, Q → R, R → S ∴ P → S。若前提都是必然條件句，這個演繹形式有效；現實的連鎖風險通常只是可能發生，需另外評估每一步的依據、相依關係與介入措施。機率性的提醒不因此就是謬誤；問題是證據是否足以支持結論的強度，也不能直接相乘各環機率來判斷最後結果。

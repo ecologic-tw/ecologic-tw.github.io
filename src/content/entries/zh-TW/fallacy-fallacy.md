@@ -6,10 +6,20 @@ en: Fallacy fallacy
 summary: 因為對方的論證有謬誤，就認定對方的結論一定是錯的。
 notFallacyWhen: 如果只是說「這個理由撐不起結論」，而不是說「所以結論是錯的」，那就是正確的批評。
 charitableResponse: 「這個理由不太能支持你的結論，不過結論本身可能還是對的。我們找找看有沒有更好的理由？」
-related: [straw-man, ad-hominem]
-terms: [fallacy, argument, conclusion, validity]
-status: draft
-reviewers: []
+related: [ straw-man, ad-hominem ]
+terms: [ fallacy, argument, conclusion, validity ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
+  - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+    url: https://plato.stanford.edu/entries/logic-informal/
+    supports:
+      - "專家意見論證及其批判問題；引用證言不自動構成謬誤。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -22,11 +32,11 @@ aiAssisted: true
 
 ## 生活例子
 
-> 甲：「這家餐廳很好吃，因為大家都說好吃。」
+> 甲：「這塊隔熱板一定符合工程的耐火要求，因為名人推薦它。」
 >
-> 乙：「『大家都說』是從眾，不是理由，所以這家餐廳不好吃。」
+> 乙：「名人推薦不能證明耐火性能，所以這塊板一定不合格。」
 
-甲的理由不夠好，但這家餐廳到底好不好吃，要吃過或看更多評價才知道。
+甲沒有提供性能證據，但板材是否合格仍要查試驗報告、工程要求與使用條件。乙不能從理由不足，直接推出結論為假。
 
 ## 保育例子
 
@@ -34,7 +44,7 @@ aiAssisted: true
 >
 > 路人：「『可愛』是訴諸情感，所以這片濕地不需要保護。」
 
-「可愛」確實不是保護濕地的好理由，但濕地是否值得保護，還可以從生態功能、物種多樣性等面向討論。
+喜愛動物可以是價值上的保護動機，但單憑這點不足以決定具體政策；也不能因此反推濕地不值得保護。仍需討論其他價值、證據與取捨。
 
 ## 何時不算謬誤
 

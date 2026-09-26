@@ -19,7 +19,7 @@ export const t = {
 } as const;
 
 export const kindLabel: Record<EntryKind, string> = {
-  law: '思維定律',
+  law: '思維定律與哲學原則',
   inference: '有效推論',
   'formal-fallacy': '形式謬誤',
   'informal-fallacy': '非形式謬誤',
@@ -27,7 +27,7 @@ export const kindLabel: Record<EntryKind, string> = {
 };
 
 export const kindIntro: Record<EntryKind, string> = {
-  law: '思考時預設要遵守的基本規則。',
+  law: '區分形式邏輯的基本規則與仍有爭議的哲學原則；不把兩者視為同一種定律。',
   inference: '只要前提都成立，結論就一定成立的推理形式。',
   'formal-fallacy': '看起來像有效推論，但推理形式本身不成立。',
   'informal-fallacy': '問題不在形式，而在內容、用詞或脈絡。',

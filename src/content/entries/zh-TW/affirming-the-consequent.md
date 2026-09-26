@@ -8,10 +8,16 @@ form: 'P → Q, Q ∴ P'
 pairWith: modus-ponens
 notFallacyWhen: 當「只有 P 會造成 Q」也有理由支持，或只是把 P 當成需要再查證的可能解釋時，推理是合理的。
 charitableResponse: 「Q 確實發生了。我們想想看，還有沒有別的原因也會造成 Q？」
-related: [modus-ponens, correlation-causation]
-terms: [conditional, consequent, counterexample]
-status: draft
-reviewers: []
+related: [ modus-ponens, correlation-causation ]
+terms: [ conditional, consequent, counterexample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
 updated: 2026-09-26
 aiAssisted: true
 ---

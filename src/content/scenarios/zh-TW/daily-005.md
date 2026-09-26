@@ -3,7 +3,7 @@ id: daily-005
 theme: daily
 title: 公車又誤點了
 answer: hasty-generalization
-distractors: [correlation-causation, appeal-to-nature]
+distractors: [ correlation-causation, appeal-to-nature ]
 difficulty: basic
 betterPhrasing:
   - 「我這兩次搭這條路線都遇到誤點，有點擔心。要不要查一下平常的準點情況，再決定要不要改搭別的？」
@@ -11,9 +11,15 @@ checklist:
   - 結論限縮在實際觀察到的範圍
   - 注意到樣本數量很少
   - 提出可以查證的方法
-terms: [sample]
-status: draft
-reviewers: []
+terms: [ sample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "AAPOR — Best Practices for Survey Research"
+    url: https://aapor.org/standards-and-ethics/best-practices/
+    supports:
+      - "樣本、抽樣方式與涵蓋及未回覆等誤差須一併評估。"
 updated: 2026-09-26
 aiAssisted: true
 ---

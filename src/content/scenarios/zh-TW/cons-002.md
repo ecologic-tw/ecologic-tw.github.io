@@ -3,7 +3,7 @@ id: cons-002
 theme: conservation
 title: 開發預定地的調查報告
 answer: ad-hominem
-distractors: [straw-man, appeal-to-authority]
+distractors: [ straw-man, appeal-to-authority ]
 difficulty: basic
 betterPhrasing:
   - 「報告說預定地有石虎活動，我想知道調查做了多久、用什麼方法。我們在地人也有觀察，可以一起比對。」
@@ -11,8 +11,14 @@ checklist:
   - 針對報告的內容與方法提問
   - 沒有用對方的身分或出身否定他的說法
   - 提出可以補充或比對的資訊
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

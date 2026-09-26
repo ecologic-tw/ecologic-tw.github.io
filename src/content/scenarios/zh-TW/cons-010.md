@@ -3,7 +3,7 @@ id: cons-010
 theme: conservation
 title: 名人說海龜夠多了
 answer: appeal-to-authority
-distractors: [ad-hominem, hasty-generalization]
+distractors: [ ad-hominem, hasty-generalization ]
 difficulty: basic
 betterPhrasing:
   - 「那位企業家認為海龜數量已經足夠。海龜族群的狀況，還是要看長期監測和研究人員的評估。」
@@ -11,8 +11,14 @@ checklist:
   - 確認說話者在這個主題上是否有相關專業
   - 找相關研究或監測資料
   - 沒有因為對方有名就直接接受
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+    url: https://plato.stanford.edu/entries/logic-informal/
+    supports:
+      - "非形式論證的評估、善意理解與專家證言的批判問題。"
 updated: 2026-09-26
 aiAssisted: true
 ---

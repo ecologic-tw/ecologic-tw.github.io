@@ -13,10 +13,11 @@ quickCheck:
     - '「這個計畫對經濟有幫助」和「這個計畫對生態有影響」'
   answer: 0
   explanation: '只有第一組在同一個對象、同一段時間，同時說「是」又說「不是」。第二組的時間不同，第三組談的是不同面向。'
-related: [law-of-identity, law-of-excluded-middle]
-terms: [contradiction, negation, proposition]
-status: draft
-reviewers: []
+related: [ law-of-identity, law-of-excluded-middle ]
+terms: [ contradiction, negation, proposition ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: Stanford Encyclopedia of Philosophy — Contradiction
     url: https://plato.stanford.edu/entries/contradiction/
@@ -42,11 +43,11 @@ aiAssisted: true
 
 ## 保育例子
 
-> 志工甲：「這條溪已經沒有魚了。」
+> 志工甲：「今天上午這份調查紀錄，在這段樣區完全沒有記錄到任何魚。」
 >
-> 志工乙：「上個月調查時，我們還記錄到好幾種魚。」
+> 志工乙：「今天上午同一份調查紀錄，在同一段樣區記錄到了三種魚。」
 
-如果兩人說的是同一段溪、同一個時間，這兩句話不能同時成立。但也可能甲說的是下游、乙說的是上游；或甲說的是乾季、乙說的是雨季。找出差別在哪個方面，比爭論誰說謊更有用。
+這裡明確指同一份紀錄、同一段樣區與同一時段，「完全沒有記錄到魚」與「記錄到三種魚」不能同時為真。可以先核對紀錄與用詞，不必猜誰說謊。若改成上月與本月，或上游與下游，則不必然矛盾。沒有記錄到魚也不等於已證明水中沒有魚。
 
 ## 何時合理
 

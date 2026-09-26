@@ -4,32 +4,38 @@ theme: conservation
 title: 池塘裡還有外來種魚嗎
 isControl: true
 answer: none
-distractors: [affirming-the-consequent, hasty-generalization, confirmation-bias]
+distractors: [ affirming-the-consequent, hasty-generalization, confirmation-bias ]
 difficulty: advanced
-form: 'P → Q, ¬Q ∴ ¬P'
 betterPhrasing:
-  - 「三個月用了三種方法都沒捕到，推測外來種魚已經很少或沒有了。我們再持續監測半年，確認沒有漏網的。」
+  - 「這次三個月沒有捕到，但偵測能力尚未確認，還不能斷定沒有魚。我們先評估調查方法，再決定後續監測。」
 checklist:
   - 結論的強度和證據相符
   - 說明調查的範圍與方法
   - 保留持續確認的做法
-terms: [conditional, negation]
-status: draft
-reviewers: []
+terms: [ conditional, negation ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "MacKenzie et al. (2002). Estimating site occupancy rates when detection
+      probabilities are less than one. Ecology 83, 2248–2255."
+    url: https://pubs.usgs.gov/publication/5224176
+    supports:
+      - "偵測率小於一時，未偵測到不代表不存在；非本情境虛構調查的資料來源。"
 updated: 2026-09-26
 aiAssisted: true
 ---
 
 ## 情境
 
-> 移除外來種魚的志工隊長：「如果池塘裡還有不少外來種魚，我們用三種不同方法連續三個月誘捕，應該多少會捕到。結果三個月下來一隻都沒捕到。所以目前推測，池塘裡的外來種魚已經很少，甚至可能沒有了。」
+> 移除外來種魚的志工隊長：「我們用了三種方法連續調查三個月，都沒有捕到目標魚種。不過還不知道這些方法在目前水況下有多容易偵測到牠們，所以目前只能說本次沒有捕獲紀錄，不能宣稱魚已清除。下一步先檢查調查方法與偵測能力，再安排監測。」
 
 ## 解說
 
-這段推理**沒有問題**。
+這段推理**沒有問題**。它把結論限於虛構題幹的觀察紀錄，並指出「沒捕到」與「不存在」不同。
 
-它是「否定後件」：如果還有不少（P），就應該捕得到（Q）；沒捕到（非 Q）；所以推測已經不多（非 P）。而且隊長用了多種方法、持續三個月，[[conditional]]本身相當可靠；結論也用了「推測」「很少、可能沒有」這樣有保留的說法。
+多種方法、較長期間可以增加資料，但不自動保證偵測能力可靠。隊長沒有把不確定的[[conditional]]當成必然前提，也沒有僅凭未捕獲就推論數量很少。
 
 ## 進階解說
 
-形式為 P → Q, ¬Q ∴ ¬P，是有效推論。實務上要注意條件句的可靠度：如果只用一種方法、只調查一週，「有魚就一定會捕到」就不太成立，結論也要更保守。
+只有在可靠的「如果存在就必定偵測到」前提下，才可用否定後件推出不存在。生態調查通常須另外估計偵測率，並交代模型與調查假設；本題沒有這些資料，因此保留未知。
