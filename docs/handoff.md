@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：P2／P3 來源、搜尋與品質工具
+- **目標與狀態**：從已合併 PR #17 的 `origin/main`（`f3240a2`）建立 `codex/content-quality-p2-p3`；本節隨 P2／P3 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。未修改內容審核狀態，對照題雙審仍關閉。
+- **完成**：三種內容共用參考資料區塊（情境置於答案內）；canonical／Open Graph 與自託管 PNG；依已審內容產生 sitemap，開發預覽 noindex／禁爬；每次正式建置驗證 metadata、sitemap、草稿排除並產生來源／雙審／AI 協助覆蓋率與閱讀長度報告；每週與手動來源 URL workflow（合併後才排程）。無新增套件。
+- **驗證**：151 個單元測試、lint、Astro／內容 check 與正式 49 頁 build 通過。既有 52 個 e2e 全數通過；新增來源揭露測試初次誤用隱藏 summary 操作，改走實際作答流程後，4 個新增 e2e 全數通過，含手機展開來源 axe 與溢出檢查。已檢視手機來源截圖與分享圖。
+- **報告結果**：76 項來源覆蓋率 100%、雙審 0%、AI 協助 100%；其中 72 項 reviewed。篇幅未超過初始門檻，這不是閱讀年級或易懂程度的認證。18 個不同來源 URL：16 個 HTTP 成功，Science DOI 403 與 USGS 文獻逾時列 manual，沒有認定失效或修改引用。
+- **待人工確認**：ADR-0018、來源原文、手機實讀與篇幅門檻；部署後社群分享快取需實測。M5 驗收狀態不因工具完成而改變。
+- **下一步／文件**：依使用者要求建立 PR，待 CI 與人工審閱；本次未要求合併。操作及人工檢查見 [內容品質工具](review/content-quality.md)，決策見 [ADR-0018](adr/0018-content-quality-and-discovery.md)。本機報告位於忽略的 `reports/`，CI 保存 artifact，未進公開網站。
+
 ## 2026-09-27：提交 P0／P1 修訂 PR
 - **工作狀態**：分支 `codex/content-review-p0-p1`；本節隨本次 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
 - **使用者審核狀態**：保留使用者自行標記的 30 條名詞、22 張圖鑑卡、20 題情境題為 reviewed；`cons-001`、`cons-005`、`cons-009` 及暫緩發布的 `cons-012` 為 draft。AI 未代為完成內容審核檢核表。

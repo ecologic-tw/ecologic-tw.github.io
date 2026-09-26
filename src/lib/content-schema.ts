@@ -32,7 +32,7 @@ const reviewMeta = {
       z
         .object({
           title: z.string().trim().min(1),
-          url: z.url().optional(),
+          url: z.url({ protocol: /^https?$/ }).optional(),
           supports: z.array(z.string().trim().min(1)).min(1).optional(),
         })
         .strict(),

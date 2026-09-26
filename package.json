@@ -9,14 +9,16 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-dist.ts",
+    "build": "astro build && node scripts/check-dist.ts && node scripts/content-quality.ts",
     "preview": "astro preview",
     "check": "astro sync && astro check && node scripts/check-content.ts",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "review": "node scripts/mark-reviewed.ts"
+    "review": "node scripts/mark-reviewed.ts",
+    "report:content": "node scripts/content-quality.ts",
+    "check:links": "node scripts/check-links.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

@@ -37,6 +37,18 @@ const scenario = {
 };
 
 describe('shared review gates', () => {
+  it('rejects executable source URLs before rendering bibliography links', () => {
+    for (const url of [
+      'javascript:alert(1)',
+      'data:text/html,test',
+      'file:///tmp/test',
+      'not-url',
+    ]) {
+      expect(termSchema.safeParse({ ...term, sources: [{ title: 'Unsafe', url }] }).success).toBe(
+        false,
+      );
+    }
+  });
   it.each([
     [entrySchema, entry],
     [scenarioSchema, scenario],

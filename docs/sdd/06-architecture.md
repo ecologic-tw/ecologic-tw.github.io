@@ -20,7 +20,7 @@
 ├─ LICENSE  LICENSE-CONTENT.md
 ├─ docs/ sdd/ adr/ feedback/  共好型自主敏捷社群指引.md
 ├─ .github/ ISSUE_TEMPLATE/  workflows/  dependabot.yml  pull_request_template.md  CODEOWNERS
-├─ public/ fonts/  favicon.svg  robots.txt
+├─ public/ fonts/  favicon.svg  social-card.png
 ├─ src/
 │  ├─ content.config.ts
 │  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/
@@ -57,3 +57,8 @@ parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證�
 // badges.ts：earnedBadges(progress, contentIndex)、collectedEntries(progress, contentIndex)，純函式
 ```
 開發環境（`npm run dev`）顯示 draft 內容並加「草稿」浮水印；正式建置不含。
+
+## 來源與搜尋（ADR-0018）
+- `Sources.astro` 統一呈現三種內容的來源；情境題置於答案揭露區。
+- `site.ts` 集中正式網址；`Base.astro` 輸出 canonical／Open Graph。靜態 endpoints 產生 sitemap 與 robots，取內容仍經 `content.ts`；草稿預覽不索引。
+- 建置後產生 `reports/content-quality.*`（不進公開 dist）；獨立來源連結 workflow 產生 Actions 報告。操作及限制見 `docs/review/content-quality.md`。

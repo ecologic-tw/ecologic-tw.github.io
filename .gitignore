@@ -8,3 +8,4 @@ coverage/
 dist-drafts/
 test-results/
 playwright-report/
+reports/

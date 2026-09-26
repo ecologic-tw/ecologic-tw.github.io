@@ -1,0 +1,54 @@
+---
+interface Props {
+  sources: { title: string; url?: string; supports?: string[] }[];
+}
+const { sources } = Astro.props;
+---
+
+{sources.length > 0 && (
+  <details class="sources">
+    <summary>參考資料</summary>
+    <ul>
+      {sources.map((source) => (
+        <li>
+          {source.url ? (
+            <a href={source.url} rel="noopener noreferrer">
+              {source.title}
+            </a>
+          ) : (
+            <span>{source.title}</span>
+          )}
+          {source.supports && (
+            <ul aria-label="引用範圍">
+              {source.supports.map((claim) => (
+                <li>{claim}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  </details>
+)}
+
+<style>
+  .sources {
+    margin-top: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  ul {
+    margin-top: 0.5rem;
+    padding-left: 1.3rem;
+  }
+  li + li {
+    margin-top: 0.6rem;
+  }
+  li ul {
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+</style>

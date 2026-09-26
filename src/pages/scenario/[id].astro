@@ -1,5 +1,6 @@
 ---
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
+import Sources from '../../components/Sources.astro';
 import { biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
@@ -110,6 +111,7 @@ const next = themeScenarios[index + 1];
           <div class="prose" set:html={advancedHtml} />
         </div>
       )}
+      <Sources sources={data.sources} />
     </details>
 
     <section class="rewrite" data-quiz-rewrite aria-labelledby="rewrite-title">
