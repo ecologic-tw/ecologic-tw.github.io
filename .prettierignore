@@ -8,3 +8,4 @@ src/content/
 dist-drafts/
 test-results/
 playwright-report/
+reports/

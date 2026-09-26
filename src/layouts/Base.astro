@@ -5,6 +5,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { t } from '../i18n/zh-TW.ts';
 import { CSP } from '../lib/csp.ts';
+import { canonicalUrl, SITE_URL } from '../lib/site.ts';
+import { showDrafts } from '../lib/content.ts';
 
 interface Props {
   title?: string;
@@ -13,6 +15,7 @@ interface Props {
 
 const { title, description = t.tagline } = Astro.props;
 const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.siteNameEn}`;
+const canonical = canonicalUrl(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -23,6 +26,20 @@ const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.site
     {import.meta.env.PROD && <meta http-equiv="Content-Security-Policy" content={CSP} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {(showDrafts || Astro.url.pathname === '/me/') && (
+      <meta name="robots" content="noindex, nofollow" />
+    )}
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={t.siteName} />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:image" content={`${SITE_URL}/social-card.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="邏生門 EcoLogic：學會檢查推理，而不是替別人貼標籤。" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{fullTitle}</title>
