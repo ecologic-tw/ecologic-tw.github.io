@@ -39,7 +39,7 @@
 
 ## 處理流程
 1. 維護者每月（至少每季）檢視表單回應試算表與 Issues。
-2. 表單回應需要處理者，由維護者轉開 GitHub Issue（去除個資），標籤：`content-error`／`suggestion`／`new-scenario`／`a11y`。
+2. 表單回應需要處理者，由維護者轉開 GitHub Issue（去除個資），標籤：`content-error`／`suggestion`／`new-scenario`／`accessibility`。
 3. 情境投稿經改寫為符合 08 寫作準則後以 `draft` 進入內容，依 10 審核。
 4. 採用的投稿者若同意，列入貢獻者名單（可匿名）。
 
