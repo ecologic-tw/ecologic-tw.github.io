@@ -1,7 +1,10 @@
 ---
-import { CSP } from '../lib/csp.ts';
-import { t } from '../i18n/zh-TW.ts';
+import '@fontsource/lxgw-wenkai-tc/400.css';
 import '../styles/global.css';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { t } from '../i18n/zh-TW.ts';
+import { CSP } from '../lib/csp.ts';
 
 interface Props {
   title?: string;
@@ -19,15 +22,18 @@ const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.site
     <meta http-equiv="Content-Security-Policy" content={CSP} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{fullTitle}</title>
   </head>
   <body>
-    <main>
+    <a class="skip-link" href="#main">
+      {t.skipToContent}
+    </a>
+    <SiteHeader />
+    <main id="main" class="page">
       <slot />
     </main>
-    <footer>
-      <p>{t.notOfficial}</p>
-    </footer>
+    <SiteFooter />
   </body>
 </html>
