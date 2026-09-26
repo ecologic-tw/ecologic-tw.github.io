@@ -66,12 +66,53 @@
 > 收到了，謝謝你！我們大約每月整理一次回饋，內容勘誤會優先處理。
 > 想追蹤進度或參與討論：https://github.com/ecologic-tw
 
-## 四、預填連結設定（完成表單後）
-1. 表單右上 ⋮ →「取得預先填入的連結」。
-2. Q2 填 `TEST-ID`、Q3 選「基礎」→ 取得連結。
-3. 從連結中找出 `entry.xxxxxxx=TEST-ID` 的 `entry.xxxxxxx`，以及 `viewform` 前的完整網址。
-4. 填入 `src/lib/feedback.ts` 的 `formPrefillBase` 與 `formEntryIdField`（見 09）。
-5. 網站產生連結範例：`…/viewform?usp=pp_url&entry.xxxxxxx=cons-003`。
+## 四、預填連結設定（取得 entry 代號）
+
+表單完整網址（`forms.gle/ZAacF8i7hQ7QF8LC9` 轉址後）：
+`https://docs.google.com/forms/d/e/1FAIpQLSfLYC6tg7ixZLtb6bVbcPQqURNFj7abswN_Y9777z1qS7adaw/viewform`
+
+### 方法 A：預先填入連結（建議）
+1. 開啟表單**編輯頁**（不是填答頁）。
+2. 右上角「⋮」（更多）→「**取得預先填入的連結**」（Get pre-filled link）。會開出一個填答畫面。
+3. 在 Q2「題目或卡片 ID」輸入 `TESTID`；Q3「你使用的模式」選「基礎」。其他題留空。
+   - 若 Q2 在第一區段、但 Q1 是「依答案前往區段」的必填題，仍可直接按底部按鈕，不需填 Q1。
+4. 按最下方「**取得連結**」→ 頁面左下跳出提示 →「**複製連結**」。
+5. 貼到記事本，會長這樣：
+   ```
+   https://docs.google.com/forms/d/e/1FAIpQLSf…/viewform?usp=pp_url&entry.123456789=TESTID&entry.987654321=基礎
+   ```
+6. `entry.` 後面接 `=TESTID` 的那組就是 **Q2 的代號**；接 `=基礎`（可能顯示為 `%E5%9F%BA%E7%A4%8E`）的是 **Q3 的代號**。
+
+### 方法 B：瀏覽器開發者工具（方法 A 找不到選單時）
+1. 用 Chrome 開啟**填答頁**，在 Q2 輸入框按右鍵 →「檢查」。
+2. 在 Elements 面板按 Ctrl+F，搜尋 `entry.`，找到 `name="entry.123456789"` 的隱藏欄位。
+3. 或在 Console 輸入：
+   ```js
+   FB_PUBLIC_LOAD_DATA_[1][1].map(q => [q[1], q[4]?.[0]?.[0]])
+   ```
+   會列出每題標題與代號（數字前加 `entry.` 即可）。
+
+### 已取得的代號（2026-09-26）
+| 題目 | entry 代號 | 預填值 |
+|---|---|---|
+| Q1 你想告訴我們什麼？ | `entry.1967567927` | `這一題／這張卡有問題`（回報按鈕用） |
+| Q2 題目或卡片 ID | `entry.1393954149` | 題目或卡片 id，如 `cons-003` |
+| Q3 你使用的模式 | `entry.868715057` | `基礎`／`進階` |
+
+預填 Q1 後，使用者按「下一步」會直接進入區段 2（內容回報），少一個步驟。
+
+### 填入程式設定
+已填入 `docs/sdd/09-feedback.md` 的 `FEEDBACK` 設定（實作時建立 `src/lib/feedback.ts`）。
+- 值需以 `encodeURIComponent()` 編碼。
+- 選項題（Q1、Q3）的預填值必須與選項文字**完全相同**；修改選項文字時，需同步修改設定中的 `typeValues`／`modeValues`。
+
+### 驗證
+1. 把組好的網址貼到無痕視窗開啟，確認 Q2、Q3 已帶入。
+2. **不要按送出**（避免測試資料進入回應試算表）；若已送出，在試算表中刪除該列。
+
+### 注意
+- entry 代號在題目建立時決定。**刪除後重建題目會產生新代號**，需重新取得並更新設定；只修改題目文字、選項或說明不會變。
+- 本設計只預填區段 1 的題目（Q2、Q3），不論使用者 Q1 選哪條路徑都會保留。
 
 ## 五、回應處理（試算表）
 在回應試算表右側加三欄（不影響表單）：`處理狀態`（未處理／已轉 Issue／不採用／完成）、`Issue 連結`、`處理者`。轉 Issue 時移除任何可能的個資。
