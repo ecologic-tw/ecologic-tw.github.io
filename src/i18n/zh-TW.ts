@@ -10,7 +10,7 @@ export const t = {
   privacy: '本站不使用 cookie，也不蒐集任何個人資料。',
   license: '程式碼以 MIT、內容以 CC BY-SA 4.0 授權。',
   sourceLink: '原始碼與參與方式',
-  nav: { daily: '日常', conservation: '保育', guide: '圖鑑', terms: '名詞' },
+  nav: { daily: '日常', conservation: '保育', guide: '圖鑑', terms: '名詞', me: '我的圖鑑' },
   draftBadge: '草稿',
   draftNote: '這是尚未審核的草稿，只在開發環境顯示，正式網站不會出現。',
   filterLabel: '篩選',

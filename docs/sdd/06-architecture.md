@@ -42,14 +42,18 @@
 getPublishedEntries(): Promise<Entry[]>
 getPublishedScenarios(theme?: Theme): Promise<Scenario[]>
 
-// progress.ts
+// progress.ts（ADR-0014、ADR-0015）
 const KEY = 'ecologic:v1';
 type Progress = { version: 1; mode: 'basic'|'advanced';
   answered: Record<string, { correct: boolean; at: string }>;
-  rewrites: number; collected: string[]; badges: string[] };
-load(): Progress              // 讀取失敗或格式錯 → 回傳預設值，不拋錯
-save(p: Progress): void       // try/catch，儲存失敗僅提示
-exportFile(): Blob
-importFile(f: File): Result   // 大小上限 100 KB、zod 嚴格驗證、未知欄位捨棄
+  rewrites: number; collected: string[]; read: string[]; badges: string[] };
+load(): Progress              // 讀取失敗或格式錯 → 回傳預設值，不拋錯；單一欄位損壞只重設該欄位
+save(p: Progress): boolean    // try/catch，儲存失敗回傳 false，由呼叫端提示
+update(change): Progress      // 以純函式更新：setMode、recordAnswer、addRewrite、collect、markRead、grantBadges
+clear(): boolean
+exportJson(p): string
+parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證、未知欄位捨棄、只保留已知 id
+
+// badges.ts：earnedBadges(progress, contentIndex)、collectedEntries(progress, contentIndex)，純函式
 ```
 開發環境（`npm run dev`）顯示 draft 內容並加「草稿」浮水印；正式建置不含。

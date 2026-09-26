@@ -4,6 +4,14 @@ kind: law
 title: 充足理由律
 en: Principle of sufficient reason
 summary: 要接受一個主張，需要有足夠的理由支持它。
+quickCheck:
+  question: '主張「這條步道應該封閉」時，哪一個理由最符合充足理由律的要求？'
+  options:
+    - '我覺得遊客太多了'
+    - '調查顯示遊客量增加後，這一帶動物出現的頻率明顯下降'
+    - '很多人在網路上說應該封閉'
+  answer: 1
+  explanation: '封閉步道會影響很多人，需要能讓大家檢查的理由。調查資料可以被檢驗；個人感覺與網路聲量都不足以支持這麼大的決定。'
 related: [appeal-to-authority, hasty-generalization]
 terms: [premise, conclusion, burden-of-proof]
 status: draft

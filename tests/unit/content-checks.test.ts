@@ -56,13 +56,26 @@ describe('schema', () => {
     expect(errors.join()).toMatch(/notFallacyWhen/);
   });
 
+  const quickCheck = { question: '問題？', options: ['甲', '乙'], answer: 1, explanation: '說明' };
+
   it('does not require them for law / inference cards', () => {
     const law = entry('d', {
       kind: 'law',
       notFallacyWhen: undefined,
       charitableResponse: undefined,
+      quickCheck,
     });
     expect(run({ entries: [...cards, law] }).errors).toEqual([]);
+  });
+
+  it('requires a quickCheck on law / inference cards (02 規則 4)', () => {
+    const inference = entry('d', { kind: 'inference' });
+    expect(run({ entries: [...cards, inference] }).errors.join()).toMatch(/quickCheck/);
+  });
+
+  it('rejects a quickCheck answer outside the options', () => {
+    const law = entry('d', { kind: 'law', quickCheck: { ...quickCheck, answer: 2 } });
+    expect(run({ entries: [...cards, law] }).errors.join()).toMatch(/quickCheck\.answer/);
   });
 
   it('requires reviewers when reviewed', () => {

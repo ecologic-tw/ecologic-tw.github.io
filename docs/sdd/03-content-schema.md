@@ -34,6 +34,12 @@ z.object({
   pairWith: z.string().optional(),             // 形式謬誤 ↔ 有效推論
   notFallacyWhen: z.string().optional(),       // 謬誤、偏誤卡必填（refine）
   charitableResponse: z.string().optional(),   // 謬誤、偏誤卡必填（refine）
+  quickCheck: z.object({                        // 卡內小檢核；思維定律、有效推論卡必填（refine，ADR-0015）
+    question: z.string(),
+    options: z.array(z.string()).min(2).max(4),
+    answer: z.number().int(),                   // options 的索引，從 0 開始
+    explanation: z.string(),
+  }).optional(),
   related: z.array(z.string()).default([]),
   terms: z.array(z.string()).default([]),
   ...reviewMeta,

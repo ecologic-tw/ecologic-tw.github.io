@@ -20,6 +20,8 @@ async function seriousViolations(page: Page) {
 test.describe('axe：無嚴重無障礙問題（M1 驗收）', () => {
   for (const scheme of ['light', 'dark'] as const) {
     test(`all pages (${scheme})`, async ({ page }) => {
+      // 逐頁跑 axe 需要較長時間，平行執行時容易超過預設 30 秒
+      test.setTimeout(120_000);
       await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' });
       const found: string[] = [];
       for (const path of pages) {
