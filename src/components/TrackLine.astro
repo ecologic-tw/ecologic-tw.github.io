@@ -1,0 +1,52 @@
+---
+// 一行鳥類足跡，呼應使命「一步一步」。純裝飾，對輔助科技隱藏。
+const COUNT = 9;
+const WIDTH = 600;
+const tracks = Array.from({ length: COUNT }, (_, i) => {
+  const x = 24 + (i * (WIDTH - 48)) / (COUNT - 1);
+  const side = i % 2 === 0 ? -1 : 1;
+  const y = 36 + side * 10 - Math.sin(i / 1.8) * 5;
+  const angle = 90 + side * 10 + ((i * 37) % 7) - 3;
+  return `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${angle})`;
+});
+---
+
+<svg class="tracks" viewBox={`0 0 ${WIDTH} 72`} aria-hidden="true" focusable="false">
+  {tracks.map((transform) => (
+    <g transform={transform}>
+      <path d="M0 1 L-0.6 -15 M0 1 L-10 -10.5 M0 1 L10 -11 M0 1 L0.4 7" />
+    </g>
+  ))}
+</svg>
+
+<style>
+  .tracks {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    height: auto;
+    color: var(--soil);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* 以 steps() 逐步揭露，讓足跡一個接一個出現（整頁唯一的進場動畫） */
+    animation: walk 2.4s steps(9, end) 0.4s both;
+  }
+
+  @keyframes walk {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tracks {
+      animation: none;
+    }
+  }
+</style>
