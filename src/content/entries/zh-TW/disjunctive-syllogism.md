@@ -5,6 +5,14 @@ title: 選言三段論
 en: Disjunctive syllogism
 summary: P 或 Q；P 不成立，所以 Q 成立。
 form: 'P ∨ Q, ¬P ∴ Q'
+quickCheck:
+  question: '「鑰匙不是在包包裡，就是在外套口袋。包包找過了，沒有。」要讓「鑰匙在外套口袋」這個結論可靠，最需要確認什麼？'
+  options:
+    - '鑰匙真的只可能在這兩個地方'
+    - '包包是不是新買的'
+    - '剛剛找得夠不夠快'
+  answer: 0
+  explanation: '選言三段論要成立，選項必須涵蓋所有可能。如果鑰匙也可能掉在車上，刪去包包也推不出外套口袋。'
 related: [false-dilemma, law-of-excluded-middle]
 terms: [disjunction, negation, validity]
 status: draft

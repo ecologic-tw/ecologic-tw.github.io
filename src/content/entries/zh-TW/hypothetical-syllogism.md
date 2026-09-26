@@ -5,6 +5,14 @@ title: 假言三段論
 en: Hypothetical syllogism
 summary: 如果 P 就 Q，如果 Q 就 R；所以，如果 P 就 R。
 form: 'P → Q, Q → R ∴ P → R'
+quickCheck:
+  question: '「如果熬夜，早上就起不來；如果早上起不來，就會錯過早班公車。」可以推出什麼？'
+  options:
+    - '如果熬夜，就會錯過早班公車'
+    - '如果錯過早班公車，就表示前一晚熬夜了'
+    - '如果沒熬夜，就不會錯過早班公車'
+  answer: 0
+  explanation: '把兩個條件句串起來，得到第一項。第二項是從結果推回原因（肯定後件），第三項是否定前件，兩者都推不出來。'
 related: [slippery-slope, modus-ponens]
 terms: [conditional, validity]
 status: draft

@@ -5,6 +5,14 @@ title: 不矛盾律
 en: Law of non-contradiction
 summary: 同一件事，不能在同一方面、同一時間，既說它是又說它不是。
 form: '¬(P ∧ ¬P)'
+quickCheck:
+  question: '下列哪一組說法真的互相矛盾？'
+  options:
+    - '「這段溪今天早上有魚」和「這段溪今天早上沒有魚」'
+    - '「這片森林晚上很安靜」和「這片森林清晨很吵」'
+    - '「這個計畫對經濟有幫助」和「這個計畫對生態有影響」'
+  answer: 0
+  explanation: '只有第一組在同一個對象、同一段時間，同時說「是」又說「不是」。第二組的時間不同，第三組談的是不同面向。'
 related: [law-of-identity, law-of-excluded-middle]
 terms: [contradiction, negation, proposition]
 status: draft

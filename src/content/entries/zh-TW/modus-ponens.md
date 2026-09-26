@@ -6,6 +6,14 @@ en: Modus ponens
 summary: 如果 P 就 Q；P 成立，所以 Q 成立。
 form: 'P → Q, P ∴ Q'
 pairWith: affirming-the-consequent
+quickCheck:
+  question: '「如果下雨，活動就改到室內。今天下雨了。」可以推出什麼？'
+  options:
+    - '活動改到室內'
+    - '活動沒有改到室內'
+    - '沒辦法確定'
+  answer: 0
+  explanation: '條件句成立，前件（下雨）也成立，就能推出後件：這是肯定前件。'
 related: [modus-tollens, hypothetical-syllogism]
 terms: [conditional, antecedent, validity, soundness]
 status: draft

@@ -5,6 +5,14 @@ title: 同一律
 en: Law of identity
 summary: 同一次討論裡，同一個詞要維持同一個意思。
 form: 'P → P'
+quickCheck:
+  question: '下列哪一種情況，最可能違反同一律？'
+  options:
+    - '討論到一半，把「天然」從「沒有添加色素」換成「對身體好」的意思'
+    - '早上說「會下雨」，看到新的氣象預報後改口說「不會下雨」'
+    - '在兩篇不同的文章裡，用不同的方式定義「保育」'
+  answer: 0
+  explanation: '同一律要求在同一次討論中，一個詞維持同一個意思。第二項是依新資訊修正看法；第三項是在不同的討論裡使用不同定義，都不違反同一律。'
 related: [law-of-non-contradiction, law-of-excluded-middle]
 terms: [proposition, argument]
 status: draft

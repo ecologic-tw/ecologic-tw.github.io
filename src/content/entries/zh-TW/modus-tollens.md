@@ -6,6 +6,14 @@ en: Modus tollens
 summary: 如果 P 就 Q；Q 不成立，所以 P 不成立。
 form: 'P → Q, ¬Q ∴ ¬P'
 pairWith: denying-the-antecedent
+quickCheck:
+  question: '「如果他已經出門，玄關的鞋子就不會在。鞋子還在玄關。」可以推出什麼？'
+  options:
+    - '他已經出門了'
+    - '他還沒出門'
+    - '沒辦法確定'
+  answer: 1
+  explanation: '條件句成立，後件（鞋子不在）不成立，就能推出前件也不成立：這是否定後件。'
 related: [modus-ponens]
 terms: [conditional, consequent, negation, validity, soundness]
 status: draft

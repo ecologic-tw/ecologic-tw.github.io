@@ -5,6 +5,14 @@ title: 排中律
 en: Law of excluded middle
 summary: 一個命題和它的否定，至少有一個成立，不會有第三種可能。
 form: 'P ∨ ¬P'
+quickCheck:
+  question: '下列哪一組，才是「兩者必有一個成立」的排中律？'
+  options:
+    - '「這台相機今天有拍到動物」或「這台相機今天沒拍到動物」'
+    - '「你支持這個計畫」或「你反對這個計畫」'
+    - '「這隻鳥是白鷺」或「這隻鳥是黑面琵鷺」'
+  answer: 0
+  explanation: '排中律談的是一個命題和它的否定。「支持」的否定是「不支持」，還包括沒意見；鳥也可能是其他種類。把後兩組當成排中律，就會變成假兩難。'
 related: [false-dilemma, law-of-non-contradiction, disjunctive-syllogism]
 terms: [proposition, negation, disjunction]
 status: draft
