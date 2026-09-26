@@ -13,7 +13,13 @@ checklist:
   - 沒有用「不這樣就只能那樣」施壓
 status: draft
 reviewers: []
-updated: 2026-09-26
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
+requiresSecondReview: true
+updated: 2026-09-27
 aiAssisted: true
 ---
 

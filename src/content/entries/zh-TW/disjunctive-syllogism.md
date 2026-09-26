@@ -13,10 +13,16 @@ quickCheck:
     - '剛剛找得夠不夠快'
   answer: 0
   explanation: '選言三段論要成立，選項必須涵蓋所有可能。如果鑰匙也可能掉在車上，刪去包包也推不出外套口袋。'
-related: [false-dilemma, law-of-excluded-middle]
-terms: [disjunction, negation, validity]
-status: draft
-reviewers: []
+related: [ false-dilemma, law-of-excluded-middle ]
+terms: [ disjunction, negation, validity ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
 updated: 2026-09-26
 aiAssisted: true
 ---

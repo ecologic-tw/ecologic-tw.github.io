@@ -1,212 +1,457 @@
-# 名詞表（docs/sdd/03）。每條需有 id、term、en、definition、status。
+# 名詞表（docs/sdd/03）。每條需有 id、term、en、definition 與共用審核資料。
 # 以下皆為 AI 協助撰寫的草稿，需人工審核後才能改為 reviewed。
 
 - id: argument
   term: 論證
   en: Argument
   definition: 一組陳述，其中一些（前提）被拿來支持另一個（結論）。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: premise
   term: 前提
   en: Premise
   definition: 論證中用來支持結論的陳述。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: conclusion
   term: 結論
   en: Conclusion
   definition: 論證想要讓人接受的那個主張。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: inference
   term: 推論
   en: Inference
   definition: 從前提得出結論的那一步。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: proposition
   term: 命題
   en: Proposition
   definition: 可以判斷為真或為假的陳述。「今天會下雨」是命題，「請關門」不是。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: truth-value
   term: 真值
   en: Truth value
   definition: 一個命題是真還是假。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: validity
   term: 有效
   en: Validity
   definition: 推理形式保證「只要前提全部為真，結論就一定為真」。有效只談形式，不保證前提真的成立。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: soundness
   term: 健全
   en: Soundness
   definition: 推理有效，而且前提確實都為真。健全的論證，結論一定為真。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: conditional
   term: 條件句
   en: Conditional
   definition: 「如果 P，那麼 Q」形式的陳述，符號寫成 P→Q。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: antecedent
   term: 前件
   en: Antecedent
   definition: 條件句「如果 P，那麼 Q」中「如果」後面的部分，也就是 P。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: consequent
   term: 後件
   en: Consequent
   definition: 條件句「如果 P，那麼 Q」中「那麼」後面的部分，也就是 Q。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: sufficient-condition
   term: 充分條件
   en: Sufficient condition
   definition: 在 P→Q 中，P 是 Q 的充分條件：只要 P 成立，Q 就一定成立。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: necessary-condition
   term: 必要條件
   en: Necessary condition
   definition: 在 P→Q 中，Q 是 P 的必要條件：Q 不成立時，P 不可能成立。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: negation
   term: 否定
   en: Negation
   definition: 把命題的真假反過來，符號寫成 ¬P，讀作「非 P」。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: conjunction
   term: 連言
   en: Conjunction
   definition: 「P 而且 Q」，兩者都成立時才為真，符號寫成 P∧Q。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: disjunction
   term: 選言
   en: Disjunction
   definition: 「P 或 Q」，至少一個成立時就為真，符號寫成 P∨Q。邏輯上的「或」通常允許兩者同時成立。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: contradiction
   term: 矛盾
   en: Contradiction
   definition: 同時主張一個命題和它的否定，例如同時說「P」與「非 P」。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.2 Logical Statements"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-2-logical-statements
+      supports:
+        - "命題、條件句與真值連接詞的基本用法。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: deduction
   term: 演繹
   en: Deduction
   definition: 只要前提為真，結論就必然為真的推理方式。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: induction
   term: 歸納
   en: Induction
-  definition: 從有限的觀察推向較一般的結論。結論可以很可靠，但不是必然成立。
-  status: draft
+  definition: 從有限觀察推向較一般的結論，通常評為強或弱；即使支持很強，也不像有效演繹那樣保證結論必真。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: counterexample
   term: 反例
   en: Counterexample
-  definition: 前提都成立、結論卻不成立的例子。只要找到一個，就能說明某個推理形式無效。
-  status: draft
+  definition: 用來反駁一般命題，或顯示推論形式無效的例子。對後者，需構成前提全真而結論為假的情況。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+      url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+      supports:
+        - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: fallacy
   term: 謬誤
   en: Fallacy
   definition: 聽起來有說服力，但推理本身有缺陷的論證方式。推理有謬誤，不代表結論一定錯。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+      url: https://plato.stanford.edu/entries/fallacies/
+      supports:
+        - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: cognitive-bias
   term: 認知偏誤
   en: Cognitive bias
   definition: 人在判斷時常見、有規律的思考偏差，是心理現象，不是邏輯形式的錯誤。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Tversky and Kahneman (1974). Judgment under Uncertainty: Heuristics and
+        Biases. Science 185, 1124–1131."
+      url: https://doi.org/10.1126/science.185.4157.1124
+      supports:
+        - "判斷捷思、偏誤與基本率；虛構對話不能作為個人診斷。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: sample
   term: 樣本
   en: Sample
   definition: 從想了解的整體中，實際觀察或調查到的那一部分。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "AAPOR — Best Practices for Survey Research"
+      url: https://aapor.org/standards-and-ethics/best-practices/
+      supports:
+        - "樣本、抽樣方式與涵蓋及未回覆等誤差須一併評估。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: representative-sample
   term: 代表性樣本
   en: Representative sample
-  definition: 組成和整體相近、能反映整體樣貌的樣本。樣本不具代表性時，結論就難以推到整體。
-  status: draft
+  definition: 能合理反映研究目標整體的樣本；須評估抽樣方法、涵蓋範圍、無回覆與自我選擇偏差，不能只看人數或表面組成相似。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "AAPOR — Best Practices for Survey Research"
+      url: https://aapor.org/standards-and-ethics/best-practices/
+      supports:
+        - "調查須注意抽樣、涵蓋、問卷及未回覆等誤差；回收數量不保證代表性。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: correlation
   term: 相關
   en: Correlation
   definition: 兩件事常常一起變化。相關本身不代表其中一件造成另一件。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding
+        Revisited With Directed Acyclic Graphs."
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+      supports:
+        - "混淆及因果結構的區分，調整相關變項不必然排除偏差。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: causation
   term: 因果
   en: Causation
   definition: 一件事確實導致另一件事發生。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding
+        Revisited With Directed Acyclic Graphs."
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+      supports:
+        - "混淆及因果結構的區分，調整相關變項不必然排除偏差。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: confounder
   term: 干擾因子
   en: Confounder
-  definition: 同時影響兩件事的第三個因素，會讓兩者看起來有關。也稱混淆變項。
-  status: draft
+  definition: 研究中會混淆暴露與結果因果關聯的因素，常見情況是兩者有共同原因。不能只憑同時相關就判定，也不應把因果途徑中的中介因素直接當成混淆因子；須依因果結構評估。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding
+        Revisited With Directed Acyclic Graphs."
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+      supports:
+        - "混淆不能只用表面相關判定，需依因果結構評估調整；不能宣稱配對排除所有混淆。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: burden-of-proof
   term: 舉證責任
   en: Burden of proof
-  definition: 提出主張的一方，有責任拿出支持這個主張的理由或證據。
-  status: draft
+  definition: 在討論中提出有待支持的主張者，通常應交代理由或證據；責任也會隨既有證據、角色與主張類型調整，不等於哲學上的充足理由原則。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+      url: https://plato.stanford.edu/entries/logic-informal/
+      supports:
+        - "專家意見論證及其批判問題；引用證言不自動構成謬誤。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: base-rate
   term: 基本率
   en: Base rate
   definition: 某件事在整體中原本發生的比例。判斷「常不常見」時，應該先看基本率。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Tversky and Kahneman (1974). Judgment under Uncertainty: Heuristics and
+        Biases. Science 185, 1124–1131."
+      url: https://doi.org/10.1126/science.185.4157.1124
+      supports:
+        - "判斷捷思、偏誤與基本率；虛構對話不能作為個人診斷。"
+  updated: 2026-09-26
   aiAssisted: true
 
 - id: principle-of-charity
   term: 善意詮釋
   en: Principle of charity
   definition: 先用最合理、最有力的方式理解對方的說法，再來討論是否同意。
-  status: draft
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
+      url: https://plato.stanford.edu/entries/logic-informal/
+      supports:
+        - "非形式論證的評估、善意理解與專家證言的批判問題。"
+  updated: 2026-09-26
   aiAssisted: true

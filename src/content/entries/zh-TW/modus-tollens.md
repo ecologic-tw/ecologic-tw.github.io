@@ -7,17 +7,28 @@ summary: 如果 P 就 Q；Q 不成立，所以 P 不成立。
 form: 'P → Q, ¬Q ∴ ¬P'
 pairWith: denying-the-antecedent
 quickCheck:
-  question: '「如果他已經出門，玄關的鞋子就不會在。鞋子還在玄關。」可以推出什麼？'
+  question: '「假設系統規則可靠：如果申請成功送出，就會顯示申請編號。現在沒有顯示申請編號。」可以推出什麼？'
   options:
-    - '他已經出門了'
-    - '他還沒出門'
+    - '申請已成功送出'
+    - '申請沒有成功送出'
     - '沒辦法確定'
   answer: 1
-  explanation: '條件句成立，後件（鞋子不在）不成立，就能推出前件也不成立：這是否定後件。'
-related: [modus-ponens]
-terms: [conditional, consequent, negation, validity, soundness]
-status: draft
-reviewers: []
+  explanation: '在題幹假設下，沒有編號（非 Q）可推出未成功送出（非 P）。真實使用時仍須排除顯示故障，確認條件句可靠。'
+related: [ modus-ponens ]
+terms: [ conditional, consequent, negation, validity, soundness ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
+  - title: "MacKenzie et al. (2002). Estimating site occupancy rates when detection
+      probabilities are less than one. Ecology 83, 2248–2255."
+    url: https://pubs.usgs.gov/publication/5224176
+    supports:
+      - "偵測率小於一時，未偵測到不代表不存在；非本情境虛構調查的資料來源。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -28,11 +39,11 @@ aiAssisted: true
 
 ## 生活例子
 
-> 如果他已經出門，玄關的鞋子就不會在。
+> 假設系統規則可靠：如果申請成功送出，頁面就會顯示申請編號。
 >
-> 鞋子還在玄關。
+> 頁面沒有顯示申請編號。
 >
-> 所以，他還沒出門。
+> 所以，申請沒有成功送出。
 
 ## 保育例子
 
@@ -46,7 +57,7 @@ aiAssisted: true
 
 ## 何時合理
 
-條件句要真的可靠。像上面的例子，比較謹慎的說法是「沒拍到，表示石虎在這裡活動的機會可能不高」，而不是斷定「沒有」。
+條件句要真的可靠。沒拍到動物時，要先知道調查的偵測能力；僅憑三個月未拍到，甚至不能直接判定出現機會低。系統申請的例子也須排除顯示故障。
 
 ## 進階
 

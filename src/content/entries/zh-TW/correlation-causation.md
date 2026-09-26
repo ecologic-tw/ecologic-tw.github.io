@@ -4,12 +4,19 @@ kind: informal-fallacy
 title: 相關誤為因果
 en: Correlation mistaken for causation
 summary: 看到兩件事一起變化，就斷定其中一件造成另一件。
-notFallacyWhen: 有對照比較、合理的作用機制，並排除了主要干擾因子時，從相關推論因果是合理的研究步驟。
+notFallacyWhen: 對照比較與機制證據能支持因果解釋，但須交代混淆、測量與選擇偏差等假設及限制。
 charitableResponse: 「這兩件事確實一起發生了。有沒有其他因素，可能同時影響這兩件事？」
-related: [affirming-the-consequent, confirmation-bias]
-terms: [correlation, causation, confounder]
-status: draft
-reviewers: []
+related: [ affirming-the-consequent, confirmation-bias ]
+terms: [ correlation, causation, confounder ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Howards et al. (2012). Toward a Clearer Definition of Confounding
+      Revisited With Directed Acyclic Graphs."
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3530354/
+    supports:
+      - "混淆不能只用表面相關判定，需依因果結構評估調整；不能宣稱配對排除所有混淆。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -22,7 +29,7 @@ aiAssisted: true
 
 > 「冰淇淋賣得越多的月份，溺水事件也越多，所以吃冰淇淋會增加溺水風險。」
 
-天氣熱是干擾因子：天熱時冰淇淋賣得多，去玩水的人也多。
+這個虛構例子的一種可能解釋是：天氣同時影響購買與戲水行為。是否如此，仍需資料驗證。
 
 ## 保育例子
 
@@ -32,11 +39,11 @@ aiAssisted: true
 
 > 「院子裡放了餵食器之後，鳥變多了，所以餵食對鳥是好事。」
 
-鳥變多是事實，但「對鳥好」是另一個結論，還要考慮疾病傳播、依賴人類餵食等影響。
+即使題目假定記錄到的鳥變多，「對鳥好」仍是另一個結論。還要問健康與存活狀況是否改善，不能只用數量判定。
 
 ## 何時不算謬誤
 
-相關常常是找出因果的第一步。如果有對照比較、合理的作用機制，也排除了主要的干擾因子，就可以合理地推論因果。
+相關常常是找出因果的第一步。對照比較、作用機制與對混淆的處理可以增加支持，但還須評估未量測因素、測量方式與樣本選擇；觀察性研究不會因為有對照組就自動證明因果。
 
 ## 善意回應法
 

@@ -3,7 +3,7 @@ id: daily-002
 theme: daily
 title: 垃圾分類的提醒
 answer: ad-hominem
-distractors: [straw-man, appeal-to-authority]
+distractors: [ straw-man, appeal-to-authority ]
 difficulty: basic
 betterPhrasing:
   - 「分類的建議我同意。另外，大家停車也可以再注意一下，我們可以一起在社區群組提醒。」
@@ -11,8 +11,14 @@ checklist:
   - 先回應對方提出的理由
   - 對方自己做不到的事，另外討論，不拿來否定他的論點
   - 沒有使用針對個人的形容詞
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

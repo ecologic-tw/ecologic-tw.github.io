@@ -3,7 +3,7 @@ id: daily-003
 theme: daily
 title: 補習班的說明會
 answer: false-dilemma
-distractors: [slippery-slope, appeal-to-authority]
+distractors: [ slippery-slope, appeal-to-authority ]
 difficulty: basic
 betterPhrasing:
   - 「孩子數學比較吃力的話，補習是一個選項，也可以先試試學校的課後輔導或線上資源，看看哪種比較適合。」
@@ -11,8 +11,14 @@ checklist:
   - 列出兩個以外的其他可能做法
   - 說明各個選項的好處和代價
   - 沒有用「只能這樣，不然就……」的說法施壓
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

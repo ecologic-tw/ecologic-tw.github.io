@@ -11,6 +11,7 @@ const baseEntry = {
   charitableResponse: '善意回應。',
   status: 'draft',
   updated: '2026-09-26',
+  sources: [{ title: 'Test reference' }],
 };
 
 const baseScenario = {
@@ -21,6 +22,7 @@ const baseScenario = {
   checklist: ['一', '二', '三'],
   status: 'draft',
   updated: '2026-09-26',
+  sources: [{ title: 'Test reference' }],
 };
 
 function entry(id: string, extra: Record<string, unknown> = {}, body = ''): SourceDoc {
@@ -150,7 +152,14 @@ describe('references', () => {
 describe('body term markers', () => {
   const premise = (status = 'draft'): SourceDoc => ({
     file: 'terms.yaml[0]',
-    data: { id: 'premise', term: '前提', en: 'Premise', definition: 'd', status },
+    data: {
+      id: 'premise',
+      term: '前提',
+      en: 'Premise',
+      definition: 'd',
+      updated: '2026-09-27',
+      status,
+    },
     body: '',
   });
 

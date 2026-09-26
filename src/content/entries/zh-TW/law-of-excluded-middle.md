@@ -13,10 +13,11 @@ quickCheck:
     - '「這隻鳥是白鷺」或「這隻鳥是黑面琵鷺」'
   answer: 0
   explanation: '排中律談的是一個命題和它的否定。「支持」的否定是「不支持」，還包括沒意見；鳥也可能是其他種類。把後兩組當成排中律，就會變成假兩難。'
-related: [false-dilemma, law-of-non-contradiction, disjunctive-syllogism]
-terms: [proposition, negation, disjunction]
-status: draft
-reviewers: []
+related: [ false-dilemma, law-of-non-contradiction, disjunctive-syllogism ]
+terms: [ proposition, negation, disjunction ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: Stanford Encyclopedia of Philosophy — Intuitionistic Logic
     url: https://plato.stanford.edu/entries/logic-intuitionistic/

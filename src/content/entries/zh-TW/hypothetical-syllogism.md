@@ -13,17 +13,27 @@ quickCheck:
     - '如果沒熬夜，就不會錯過早班公車'
   answer: 0
   explanation: '把兩個條件句串起來，得到第一項。第二項是從結果推回原因（肯定後件），第三項是否定前件，兩者都推不出來。'
-related: [slippery-slope, modus-ponens]
-terms: [conditional, validity]
-status: draft
-reviewers: []
+related: [ slippery-slope, modus-ponens ]
+terms: [ conditional, validity ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
+  - title: "Stanford Encyclopedia of Philosophy — Interpretations of Probability"
+    url: https://plato.stanford.edu/entries/probability-interpret/
+    supports:
+      - "條件機率需要指明條件；不能只憑兩個局部條件機率算出最終結果。"
 updated: 2026-09-26
 aiAssisted: true
 ---
 
 ## 說明
 
-兩個[[conditional]]可以串起來：P 會導致 Q，Q 又會導致 R，那麼 P 就會導致 R。串接本身是[[validity|有效]]的。
+兩個[[conditional]]可以串起來：如果 P 成立就有 Q，如果 Q 成立就有 R，那麼如果 P 成立就有 R。條件句本身不必描述因果關係。串接本身是[[validity|有效]]的。
 
 這個形式也是「滑坡謬誤」常借用的外殼：鏈子本身沒錯，問題通常出在其中某一環不成立。
 
@@ -47,8 +57,8 @@ aiAssisted: true
 
 ## 何時合理
 
-每一個條件句都要有理由支持。鏈子越長，只要其中一環不太可靠，整體結論的可信度就會下降得很快。
+形式有效不保證前提為真。使用上述虛構例子時，要另外查證每一個條件句，不能把「常常」當成「必然」。
 
 ## 進階
 
-形式：P → Q, Q → R ∴ P → R，也稱為條件句的遞移性。若每一環都只是「很可能」而非「必然」，整條鏈的可能性大約是各環機率相乘，會比任何一環都低。
+形式：P → Q, Q → R ∴ P → R，也稱為條件句的遞移性。若每一環只是「很可能」，就不能直接套用這個演繹形式。即使知道 P(Q|P) 與 P(R|Q)，仍不足以決定 P(R|P)；還需要其他條件與依賴關係。不能直接把各環的機率相乘，當成最後結果的機率。

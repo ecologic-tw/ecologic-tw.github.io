@@ -3,7 +3,7 @@ id: cons-003
 theme: conservation
 title: 山上要開一條產業道路
 answer: slippery-slope
-distractors: [false-dilemma, hasty-generalization]
+distractors: [ false-dilemma, hasty-generalization ]
 difficulty: basic
 betterPhrasing:
   - 「開產業道路可能讓更多車輛進入山區，增加路殺和棲地切割的風險。能不能先評估路線，並限制通行時段和車種？」
@@ -11,8 +11,19 @@ checklist:
   - 指出這一步可能造成的具體影響
   - 需要更多步驟才會發生的後果，說明它的可能性
   - 提出可以降低影響的做法
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
+  - title: "Rytwinski et al. (2016). How Effective Is Road Mitigation at Reducing
+      Road-Kill? A Meta-Analysis."
+    url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0166941
+    supports:
+      - "道路造成野生動物死亡及減輕措施需要有系統的評估，不能由少數目擊推估整體比例。"
 updated: 2026-09-26
 aiAssisted: true
 ---

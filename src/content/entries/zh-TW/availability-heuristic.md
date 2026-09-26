@@ -6,12 +6,17 @@ en: Availability heuristic
 summary: 用「容易想起來的程度」來判斷一件事有多常發生。
 notFallacyWhen: 容易想起的事常常確實比較常見，當作初步判斷的線索是合理的；做重要決定前，再查實際的發生比例。
 charitableResponse: 「那則新聞確實讓人印象深刻。我們來查查看，實際上這種事多常發生？」
-related: [hasty-generalization, confirmation-bias]
-terms: [cognitive-bias, base-rate]
-status: draft
-reviewers: []
+related: [ hasty-generalization, confirmation-bias ]
+terms: [ cognitive-bias, base-rate ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: 'Tversky, A., & Kahneman, D. (1973). Availability: A heuristic for judging frequency and probability. Cognitive Psychology, 5(2), 207–232.'
+  - title: "Tversky and Kahneman (1973). Availability: A heuristic for judging
+      frequency and probability. Cognitive Psychology 5, 207–232."
+    url: https://doi.org/10.1016/0010-0285(73)90033-9
+    supports:
+      - "可得性捷思的概念；生活與保育對話是教學示例，不是對個人的診斷。"
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -22,9 +27,9 @@ aiAssisted: true
 
 ## 生活例子
 
-> 「最近常看到飛機事故的新聞，搭飛機好危險，我還是開車好了。」
+> 「這週我一直想起同事上次遲到，覺得他大概天天都遲到。」
 
-飛機事故少見卻會被大幅報導，所以特別容易想起。判斷風險時，應該看每單位里程的事故率，也就是[[base-rate]]。
+這是虛構例子：容易想起某次遲到，不等於遲到的比例高。若要比較，應先定義遲到，查看同一期間實際遲到的工作日數與應出勤日數，而不是用印象代替[[base-rate]]。
 
 ## 保育例子
 

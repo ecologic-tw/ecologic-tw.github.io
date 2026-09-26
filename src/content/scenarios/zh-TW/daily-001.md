@@ -3,7 +3,7 @@ id: daily-001
 theme: daily
 title: 改成線上開會
 answer: straw-man
-distractors: [ad-hominem, false-dilemma]
+distractors: [ ad-hominem, false-dilemma ]
 difficulty: basic
 betterPhrasing:
   - 「線上開會可以省通勤時間，不過有些討論當面比較順。要不要例會線上、腦力激盪當面？」
@@ -11,8 +11,14 @@ checklist:
   - 回應的是對方實際說的內容，不是誇大後的版本
   - 不確定對方意思時，先確認再回應
   - 說明自己在意的具體理由
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

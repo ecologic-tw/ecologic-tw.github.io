@@ -14,12 +14,15 @@ src/content/
 ```ts
 const reviewMeta = {
   status: z.enum(['draft', 'reviewed', 'retired']),
-  reviewers: z.array(z.string()).default([]),   // GitHub 帳號；reviewed 時至少 1 人
-  sources: z.array(z.object({ title: z.string(), url: z.string().url().optional() })).default([]),
+  reviewers: z.array(z.string()).default([]),   // 非空 GitHub 帳號；reviewed 時至少 1 位不同審核者
+  sources: z.array(z.object({ title: z.string().trim().min(1), url: z.string().url().optional(), supports: z.array(z.string().trim().min(1)).min(1).optional() })).default([]),
+  requiresSecondReview: z.boolean().default(false), // 爭議內容：reviewed 時至少 2 位不同審核者
   updated: z.coerce.date(),
   aiAssisted: z.boolean().default(false),       // AI 參與撰寫須標 true
 };
-// refine：status === 'reviewed' 時 reviewers.length >= 1
+// refine：reviewed 時來源至少 1 項；審核帳號以不分大小寫的不同人數計算。
+// requiresSecondReview 時至少 2 人；一般內容至少 1 人。
+// 對照題雙審開關在 src/lib/review-policy.ts，目前關閉；開啟後 isControl 也至少 2 人。
 ```
 
 ## 圖鑑卡 `entries`
@@ -102,10 +105,17 @@ z.object({
   term: 前提
   en: Premise
   definition: 推論中被用來支持結論的陳述。
-  status: reviewed
+  status: draft
+  reviewers: []
+  sources: []
+  updated: 2026-09-27
+  aiAssisted: true
 ```
 
+三種內容都套用共用審核欄位與 refine（ADR-0017）。`sources.supports` 可記錄來源對應的主張與適用範圍；至少有來源不代表知識必然正確，仍需人工核對。虛構情境中的數字不是文獻的實際研究結果。
+
 ## 建置期檢查（`npm run check`）
+- 已審圖鑑卡、情境題與名詞都須有來源與足夠的不同審核者；草稿不要求先填審核者或來源。
 - 所有 `related`、`answer`、`distractors`、`pairWith`、`terms` 參照存在。
 - reviewed 內容不得引用 draft 內容。
 - 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）。

@@ -6,12 +6,14 @@ en: Confirmation bias
 summary: 傾向注意、相信支持自己想法的資訊，忽略或低估相反的資訊。
 notFallacyWhen: 已經有充分證據支持的看法，不需要遇到一點反例就推翻；重點是願意主動找反面證據，並公平評估。
 charitableResponse: 「我們一起列一下：有哪些資料出現的話，會讓你改變想法？」
-related: [availability-heuristic, correlation-causation]
-terms: [cognitive-bias, counterexample]
-status: draft
-reviewers: []
+related: [ availability-heuristic, correlation-causation ]
+terms: [ cognitive-bias, counterexample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: 'Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in many guises. Review of General Psychology, 2(2), 175–220.'
+  - title: 'Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in
+      many guises. Review of General Psychology, 2(2), 175–220.'
 updated: 2026-09-26
 aiAssisted: true
 ---
@@ -30,7 +32,7 @@ aiAssisted: true
 
 > 反對設立保護區的居民，只轉貼保護區造成生活不便的案例，對其他地方成功兼顧的例子則說「那裡情況不一樣」。
 
-雙方都在做同一件事：只讓支持自己的資訊進來。
+兩邊都可能出現相似的資訊篩選傾向：比較容易接受支持自己立場的資料，而對相反資料要求更高。這是教學示例，不能憑一小段對話診斷個人。
 
 ## 何時合理
 

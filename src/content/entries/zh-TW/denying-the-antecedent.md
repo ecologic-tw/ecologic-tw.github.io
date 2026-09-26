@@ -8,10 +8,16 @@ form: 'P → Q, ¬P ∴ ¬Q'
 pairWith: modus-tollens
 notFallacyWhen: 當 P 是 Q 的唯一原因（也就是「只有 P 才會 Q」）有理由支持時，推理是合理的。
 charitableResponse: 「P 沒發生是好消息。不過 Q 會不會還有其他途徑發生？」
-related: [modus-tollens]
-terms: [conditional, antecedent, necessary-condition, counterexample]
-status: draft
-reviewers: []
+related: [ modus-tollens ]
+terms: [ conditional, antecedent, necessary-condition, counterexample ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
 updated: 2026-09-26
 aiAssisted: true
 ---

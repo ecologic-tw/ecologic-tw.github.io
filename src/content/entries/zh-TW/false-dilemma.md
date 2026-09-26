@@ -6,10 +6,16 @@ en: False dilemma
 summary: 把還有其他可能的情況，說成只有兩個選項。
 notFallacyWhen: 選項確實只有兩個時，例如一個命題與它的否定，二選一是合理的。
 charitableResponse: 「這兩個選項都有道理。除了這兩個，還有沒有其他做法？」
-related: [law-of-excluded-middle, disjunctive-syllogism, straw-man]
-terms: [disjunction, negation]
-status: draft
-reviewers: []
+related: [ law-of-excluded-middle, disjunctive-syllogism, straw-man ]
+terms: [ disjunction, negation ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

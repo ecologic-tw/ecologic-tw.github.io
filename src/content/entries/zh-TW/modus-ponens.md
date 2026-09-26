@@ -14,10 +14,16 @@ quickCheck:
     - '沒辦法確定'
   answer: 0
   explanation: '條件句成立，前件（下雨）也成立，就能推出後件：這是肯定前件。'
-related: [modus-tollens, hypothetical-syllogism]
-terms: [conditional, antecedent, validity, soundness]
-status: draft
-reviewers: []
+related: [ modus-tollens, hypothetical-syllogism ]
+terms: [ conditional, antecedent, validity, soundness ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
+    url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
+    supports:
+      - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
 updated: 2026-09-26
 aiAssisted: true
 ---

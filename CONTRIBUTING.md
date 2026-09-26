@@ -16,8 +16,9 @@
 1. 閱讀 `docs/sdd/08-misuse-prevention.md` 寫作準則與 `docs/sdd/03-content-schema.md` 欄位說明。
 2. 複製一個既有檔案當範本，放在 `src/content/…/zh-TW/`。
 3. 新內容 `status: draft`；使用 AI 協助請標 `aiAssisted: true`。
-4. 本機執行 `npm run check` 確認通過，開 PR 並完成模板中的審核檢核表。
-5. 維護者審核通過後改為 `reviewed` 並填入 `reviewers`。
+4. 補齊支持主張的 `sources`；爭議保育內容標 `requiresSecondReview: true`，需第二位不同審核者。對照題雙審目前尚未啟用，見審核指南。
+5. 本機執行 `npm run check` 確認通過，開 PR 並完成模板中的審核檢核表。
+6. 維護者審核通過後改為 `reviewed` 並填入 `reviewers`。
 
 ## 修改程式
 - 依 `docs/sdd/11-milestones.md` 挑選項目；新增套件或改變架構需附 ADR（`docs/adr/0000-template.md`）。

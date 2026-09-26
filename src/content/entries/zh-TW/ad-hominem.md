@@ -6,10 +6,16 @@ en: Ad hominem
 summary: 不回應論點本身，改去攻擊提出論點的人。
 notFallacyWhen: 當討論的正是這個人的說法是否可信（例如證詞、利益衝突需要揭露）時，指出相關背景是合理的；但仍要回頭檢查論點本身。
 charitableResponse: 「他的背景我們可以另外討論。先回到他提出的理由，哪一點你覺得不成立？」
-related: [straw-man, appeal-to-authority]
-terms: [argument, premise]
-status: draft
-reviewers: []
+related: [ straw-man, appeal-to-authority ]
+terms: [ argument, premise ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

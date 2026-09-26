@@ -6,23 +6,33 @@ en: Appeal to nature
 summary: 認為「自然的」就一定好、「不自然的」就一定壞。
 notFallacyWhen: 當討論的目標本來就定義為「維持自然狀態」（如保護區經營目標）時，以此作為評估標準是合理的。
 charitableResponse: 「你在意的是對身體或環境的影響吧？我們來看看有沒有資料比較兩者。」
-related: [false-dilemma]
-terms: [premise, conclusion]
-status: draft
-reviewers: []
+related: [ false-dilemma ]
+terms: [ premise, conclusion ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "NCCIH — Using Dietary Supplements Wisely"
+    url: https://www.nccih.nih.gov/health/using-dietary-supplements-wisely
+    supports:
+      - "天然來源不保證安全，功效及風險須依實證評估。"
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---
 
 ## 說明
 
-「自然」和「好」是兩個不同的概念。很多自然的東西有害（例如毒菇），很多人為的東西有益（例如疫苗）。只用「自然／不自然」當[[premise]]，就推出「好／不好」的[[conclusion]]，中間少了真正的理由。
+「自然」和「好」是兩個不同的概念。天然來源不保證安全；評價一項產品或措施，需要具體的成分、用途與影響資料。只用「自然／不自然」當[[premise]]，就推出「好／不好」的[[conclusion]]，中間少了真正的理由。
 
 ## 生活例子
 
-> 「這款洗髮精全部天然成分，一定比較不傷頭皮。」
+> 「這款草本補充品全部天然成分，一定比較安全。」
 
-天然成分也可能引起過敏，是否傷頭皮要看成分本身與個人體質。
+天然補充品也可能有不良反應或交互作用，不能只憑來源保證安全。
 
 ## 保育例子
 

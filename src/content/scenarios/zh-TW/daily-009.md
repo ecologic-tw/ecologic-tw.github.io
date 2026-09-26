@@ -3,7 +3,7 @@ id: daily-009
 theme: daily
 title: 週五可以穿便服
 answer: slippery-slope
-distractors: [false-dilemma, hasty-generalization]
+distractors: [ false-dilemma, hasty-generalization ]
 difficulty: basic
 betterPhrasing:
   - 「週五穿便服我擔心會影響見客戶時的形象。可以試辦三個月，有客戶來訪的日子再穿正式一點，之後再檢討。」
@@ -11,8 +11,14 @@ checklist:
   - 說清楚真正擔心的具體後果
   - 每一步推論都有理由支持，或說明可能性高低
   - 提出可以觀察或調整的做法
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---

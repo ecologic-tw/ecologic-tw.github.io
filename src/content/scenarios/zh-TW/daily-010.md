@@ -3,7 +3,7 @@ id: daily-010
 theme: daily
 title: 手機變慢了
 answer: affirming-the-consequent
-distractors: [denying-the-antecedent, hasty-generalization]
+distractors: [ denying-the-antecedent, hasty-generalization ]
 difficulty: advanced
 form: 'P → Q, Q ∴ P'
 betterPhrasing:
@@ -12,9 +12,15 @@ checklist:
   - 想過造成同一個結果的其他原因
   - 沒有把「可能的解釋」當成「確定的原因」
   - 提出可以區分不同原因的檢查方法
-terms: [conditional, consequent]
-status: draft
-reviewers: []
+terms: [ conditional, consequent ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
+sources:
+  - title: "Stanford Encyclopedia of Philosophy — Fallacies"
+    url: https://plato.stanford.edu/entries/fallacies/
+    supports:
+      - "對本卡或情境所用謬誤概念的界定；不是案例中的實證資料或政策結論。"
 updated: 2026-09-26
 aiAssisted: true
 ---
