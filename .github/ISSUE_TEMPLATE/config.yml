@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 不用 GitHub 帳號？填回饋表單
+    url: https://forms.gle/ZAacF8i7hQ7QF8LC9
+    about: 一般民眾回報、建議、情境投稿
+  - name: 資安問題（請私下回報）
+    url: https://github.com/ecologic-tw/ecologic-tw.github.io/security/advisories/new
+    about: 請勿在公開 Issue 描述漏洞

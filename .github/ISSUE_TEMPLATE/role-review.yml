@@ -1,0 +1,32 @@
+name: 角色檢視（每半年）
+description: 公開檢視權力與角色分配，防止隱形主管
+title: '[角色檢視] YYYY-MM'
+labels: [governance]
+body:
+  - type: markdown
+    attributes:
+      value: '依指引 §23–24 與 docs/sdd/10-governance.md。公開至少 14 天；即使只有一位維護者也照常進行。'
+  - type: textarea
+    id: roster
+    attributes:
+      {
+        label: 目前角色與權限,
+        description: 貼上角色名冊，含 GitHub Org Owner、CODEOWNERS、表單擁有者,
+      }
+    validations: { required: true }
+  - type: textarea
+    id: decisions
+    attributes: { label: 本期重大決策（ADR 清單）與其 Review Point 結果 }
+  - type: textarea
+    id: power
+    attributes:
+      label: 權力檢視
+      description: '誰實際擁有決策權？誰最容易影響結果？誰很難提出不同意見？是否有人掌握過多資訊或權限？是否有人成為不可挑戰的權威？'
+    validations: { required: true }
+  - type: textarea
+    id: changes
+    attributes: { label: 各角色決定（續任／交接／分享）與理由 }
+    validations: { required: true }
+  - type: textarea
+    id: invite
+    attributes: { label: 誠徵接手或分擔的角色 }

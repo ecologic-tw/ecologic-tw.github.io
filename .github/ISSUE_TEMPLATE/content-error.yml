@@ -1,0 +1,27 @@
+name: 內容勘誤
+description: 題目、圖鑑卡或名詞有錯誤或不妥
+title: '[勘誤] '
+labels: [content-error]
+body:
+  - type: input
+    id: content-id
+    attributes: { label: 題目／卡片 ID, placeholder: '例如 cons-003 或 straw-man' }
+    validations: { required: true }
+  - type: dropdown
+    id: problem
+    attributes:
+      label: 問題類型
+      options:
+        [
+          邏輯判讀有誤,
+          事實錯誤或過時,
+          措辭不妥或可能引戰,
+          涉及真實人事物或敏感地點,
+          錯字或排版,
+          其他,
+        ]
+    validations: { required: true }
+  - type: textarea
+    id: detail
+    attributes: { label: 說明與建議修改, description: 若涉及事實請附來源 }
+    validations: { required: true }

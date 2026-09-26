@@ -1,0 +1,12 @@
+name: 功能建議／無障礙問題
+description: 介面、互動或無障礙相關建議
+labels: [suggestion]
+body:
+  - type: dropdown
+    id: kind
+    attributes: { label: 類型, options: [功能建議, 無障礙問題, 錯誤回報] }
+    validations: { required: true }
+  - type: textarea
+    id: detail
+    attributes: { label: 說明, description: 錯誤回報請附裝置、瀏覽器與重現步驟 }
+    validations: { required: true }

@@ -1,0 +1,98 @@
+# 03 內容 Schema
+
+內容位於 `src/content/`，以 Astro Content Layer（`glob` loader）載入，schema 定義於 `src/content.config.ts`，以 zod 驗證。**schema 驗證失敗 → 建置失敗**。
+
+## 目錄
+```
+src/content/
+  entries/zh-TW/<id>.md       # 圖鑑卡
+  scenarios/zh-TW/<id>.md     # 情境題
+  terms/zh-TW/terms.yaml      # 名詞（單檔，方便非工程師編輯）
+```
+
+## 共用欄位
+```ts
+const reviewMeta = {
+  status: z.enum(['draft', 'reviewed', 'retired']),
+  reviewers: z.array(z.string()).default([]),   // GitHub 帳號；reviewed 時至少 1 人
+  sources: z.array(z.object({ title: z.string(), url: z.string().url().optional() })).default([]),
+  updated: z.coerce.date(),
+  aiAssisted: z.boolean().default(false),       // AI 參與撰寫須標 true
+};
+// refine：status === 'reviewed' 時 reviewers.length >= 1
+```
+
+## 圖鑑卡 `entries`
+```ts
+z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),        // 與檔名一致，如 straw-man
+  kind: z.enum(['law','inference','formal-fallacy','informal-fallacy','bias']),
+  title: z.string(),                           // 稻草人謬誤
+  en: z.string(),                              // Straw man
+  summary: z.string().max(60),                 // 一句話定義
+  form: z.string().optional(),                 // 進階：P→Q, Q ∴ P
+  pairWith: z.string().optional(),             // 形式謬誤 ↔ 有效推論
+  notFallacyWhen: z.string().optional(),       // 謬誤、偏誤卡必填（refine）
+  charitableResponse: z.string().optional(),   // 謬誤、偏誤卡必填（refine）
+  related: z.array(z.string()).default([]),
+  terms: z.array(z.string()).default([]),
+  ...reviewMeta,
+})
+```
+Markdown 本文依序使用以下二級標題：`## 說明`、`## 生活例子`、`## 保育例子`、`## 何時不算謬誤`（或 `## 何時合理`）、`## 善意回應法`、`## 進階`（進階模式才顯示）。
+
+範例 `entries/zh-TW/appeal-to-nature.md`：
+```md
+---
+id: appeal-to-nature
+kind: informal-fallacy
+title: 訴諸自然
+en: Appeal to nature
+summary: 認為「自然的」就一定好、「不自然的」就一定壞。
+notFallacyWhen: 當討論的目標本來就定義為「維持自然狀態」（如保護區經營目標），以此作為評估標準是合理的。
+charitableResponse: 「你在意的是對身體或環境的影響吧？我們來看看有沒有資料比較兩者。」
+related: [false-dilemma]
+terms: [premise, conclusion]
+status: draft
+reviewers: []
+updated: 2026-09-26
+aiAssisted: true
+---
+## 說明
+……
+```
+
+## 情境題 `scenarios`
+```ts
+z.object({
+  id: z.string().regex(/^(daily|cons)-\d{3}$/),  // daily-001 / cons-001
+  theme: z.enum(['daily','conservation']),
+  title: z.string(),
+  isControl: z.boolean().default(false),
+  answer: z.string(),                              // entry id 或 'none'
+  distractors: z.array(z.string()).min(2).max(3),
+  difficulty: z.enum(['basic','advanced']),        // basic 題兩種模式都出；advanced 只在進階模式出
+  betterPhrasing: z.array(z.string()).min(1).max(2),
+  checklist: z.array(z.string()).min(3).max(4),
+  form: z.string().optional(),                     // 進階：此情境的形式結構
+  terms: z.array(z.string()).default([]),
+  ...reviewMeta,
+})
+// refine：isControl ⇔ answer === 'none'
+```
+本文結構：`## 情境`（對話或陳述）、`## 解說`、`## 進階解說`（選填）。
+
+## 名詞 `terms.yaml`
+```yaml
+- id: premise
+  term: 前提
+  en: Premise
+  definition: 推論中被用來支持結論的陳述。
+  status: reviewed
+```
+
+## 建置期檢查（`npm run check`）
+- 所有 `related`、`answer`、`distractors`、`pairWith`、`terms` 參照存在。
+- reviewed 內容不得引用 draft 內容。
+- 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）。
+- 每個主題中對照題比例 15%–30%。

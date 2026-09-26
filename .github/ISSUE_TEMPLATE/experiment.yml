@@ -1,0 +1,35 @@
+name: 實驗提案
+description: 小規模、低成本、可逆的嘗試
+title: '[實驗] '
+labels: [experiment]
+body:
+  - type: markdown
+    attributes:
+      value: '依指引 §19–20。實驗不得越過紅線：不追蹤使用者、不加第三方腳本、不蒐集個資。'
+  - type: textarea
+    id: hypothesis
+    attributes: { label: Hypothesis：我們相信什麼？ }
+    validations: { required: true }
+  - type: textarea
+    id: experiment
+    attributes: { label: Experiment：如何以最低合理成本驗證？, description: 規模、期間、是否可逆 }
+    validations: { required: true }
+  - type: textarea
+    id: evidence
+    attributes:
+      {
+        label: Evidence：看到什麼代表假設可能成立？,
+        description: 來源限回饋表單、自願可用性測試、GitHub traffic、公開討論,
+      }
+    validations: { required: true }
+  - type: input
+    id: review
+    attributes: { label: Review：何時決定繼續、修改或停止？ }
+    validations: { required: true }
+  - type: checkboxes
+    id: redline
+    attributes:
+      label: 確認
+      options:
+        - label: 此實驗不違反 CLAUDE.md 紅線
+          required: true

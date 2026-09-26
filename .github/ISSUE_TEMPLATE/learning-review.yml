@@ -1,0 +1,40 @@
+name: Learning Review
+description: 事情出錯時，理解問題如何形成並改善系統（不找戰犯）
+title: '[Learning Review] '
+labels: [learning-review]
+body:
+  - type: markdown
+    attributes:
+      value: '依《共好型自主敏捷社群指引》§16。對事不對人；資安或個資事件請修復後再以去識別化方式填寫。'
+  - type: textarea
+    id: what
+    attributes: { label: 1. 發生了什麼？（事實） }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: 2. 原本期待什麼？ }
+    validations: { required: true }
+  - type: textarea
+    id: known
+    attributes: { label: 3. 當時知道什麼？, description: 避免用事後資訊批判當時的人 }
+  - type: textarea
+    id: reasonable
+    attributes:
+      { label: 4. 為什麼當時的選擇看起來合理？, description: 資訊、假設、限制、時間、優先順序 }
+  - type: textarea
+    id: mechanisms
+    attributes:
+      { label: 5. 哪些機制沒有發揮作用？, description: 審核、schema、CI、檢核表、文件、溝通 }
+  - type: textarea
+    id: earlier
+    attributes: { label: 6. 如何更早發現？ }
+  - type: textarea
+    id: change
+    attributes: { label: 7. 我們要改變什麼？ }
+    validations: { required: true }
+  - type: input
+    id: owner
+    attributes: { label: 8. 誰承諾推進改善？（GitHub 帳號或角色） }
+  - type: input
+    id: recheck
+    attributes: { label: 9. 何時重新確認？ }
