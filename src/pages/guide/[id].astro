@@ -1,0 +1,185 @@
+---
+import { render } from 'astro:content';
+import { biasNote, kindLabel, t } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedEntries, getPublishedTerms, type Entry } from '../../lib/content.ts';
+
+export async function getStaticPaths() {
+  const entries = await getPublishedEntries();
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: Entry;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const byId = new Map((await getPublishedEntries()).map((e) => [e.id, e]));
+const termById = new Map((await getPublishedTerms()).map((term) => [term.id, term]));
+
+const pair = data.pairWith ? byId.get(data.pairWith) : undefined;
+const related = data.related.flatMap((id) => byId.get(id) ?? []);
+const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
+---
+
+<Base title={data.title} description={data.summary}>
+  {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
+
+  <article class={`kind-${data.kind}`}>
+    <header class="label">
+      <p class="kind">
+        <a href={`/guide/#kind-${data.kind}`}>{kindLabel[data.kind]}</a>
+      </p>
+      <h1>{data.title}</h1>
+      <p class="latin en" lang="en">
+        {data.en}
+      </p>
+      <p class="summary">{data.summary}</p>
+      {data.kind === 'bias' && <p class="note">{biasNote}</p>}
+      {pair && (
+        <p class="note">
+          容易和<a href={`/guide/${pair.id}/`}>{pair.data.title}</a>
+          混淆，可以對照著看。
+        </p>
+      )}
+      {data.form && (
+        <details class="advanced form">
+          <summary>形式結構</summary>
+          <p class="formula">{data.form}</p>
+        </details>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {(related.length > 0 || terms.length > 0) && (
+      <footer class="links">
+        {related.length > 0 && (
+          <section aria-labelledby="related-title">
+            <h2 id="related-title">相關卡片</h2>
+            <ul>
+              {related.map((e) => (
+                <li class={`kind-${e.data.kind}`}>
+                  <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {terms.length > 0 && (
+          <section aria-labelledby="terms-title">
+            <h2 id="terms-title">用到的名詞</h2>
+            <ul>
+              {terms.map((term) => (
+                <li>
+                  <a href={`/terms/#${term.id}`}>{term.data.term}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </footer>
+    )}
+  </article>
+</Base>
+
+<style>
+  .label {
+    margin-top: 3rem;
+    padding-left: 1.25rem;
+    border-left: 6px solid var(--kind);
+  }
+
+  .kind {
+    font-size: var(--step--1);
+  }
+
+  .kind a {
+    color: var(--kind);
+    text-decoration: none;
+  }
+
+  .kind a:hover {
+    text-decoration: underline;
+  }
+
+  h1 {
+    margin-top: 0.25rem;
+    font-size: var(--step-4);
+    line-height: 1.2;
+  }
+
+  .en {
+    margin-top: 0.35rem;
+    font-size: var(--step-1);
+    color: var(--moss);
+  }
+
+  .summary {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    line-height: 1.75;
+  }
+
+  .note {
+    margin-top: 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .note a {
+    margin: 0 0.2em;
+  }
+
+  .label details.form {
+    margin-top: 1.25rem;
+  }
+
+  .formula {
+    font-family: var(--font-latin);
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+  }
+
+  .prose {
+    margin-top: 1rem;
+  }
+
+  .links {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--mist);
+  }
+
+  @media (min-width: 40rem) {
+    .links {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .links h2 {
+    font-size: var(--step-1);
+  }
+
+  .links ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+
+  .links li + li {
+    margin-top: 0.3rem;
+  }
+
+  .links li[class] {
+    padding-left: 0.6rem;
+    border-left: 3px solid var(--kind);
+  }
+</style>

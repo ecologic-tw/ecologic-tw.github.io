@@ -6,7 +6,17 @@ import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig(
-  { ignores: ['dist/', '.astro/', 'node_modules/', 'coverage/'] },
+  {
+    ignores: [
+      'dist/',
+      'dist-drafts/',
+      '.astro/',
+      'node_modules/',
+      'coverage/',
+      'test-results/',
+      'playwright-report/',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   ...astro.configs.recommended,

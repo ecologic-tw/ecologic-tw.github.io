@@ -5,3 +5,6 @@ coverage/
 *.log
 .env*
 .DS_Store
+dist-drafts/
+test-results/
+playwright-report/

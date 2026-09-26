@@ -24,7 +24,7 @@
 - 不得自行擔任 Decision Owner、不得自行核准或合併 PR。
 
 ## 常用指令（M0 完成後生效）
-- `npm ci` / `npm run dev` / `npm run build` / `npm run check`（astro check＋內容 schema）/ `npm run lint` / `npm test`
+- `npm ci` / `npm run dev` / `npm run build` / `npm run check`（astro check＋內容 schema）/ `npm run lint` / `npm test` / `npm run test:e2e`（首次需 `npx playwright install chromium`）
 
 ## 文件地圖
 | 需要… | 讀 |

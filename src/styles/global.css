@@ -149,3 +149,154 @@ a:hover {
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
+
+/* ── 卡別色標：元素加上 .kind-<kind>，再用 var(--kind) ── */
+.kind-law {
+  --kind: var(--kind-law);
+}
+.kind-inference {
+  --kind: var(--kind-inference);
+}
+.kind-formal-fallacy {
+  --kind: var(--kind-formal-fallacy);
+}
+.kind-informal-fallacy {
+  --kind: var(--kind-informal-fallacy);
+}
+.kind-bias {
+  --kind: var(--kind-bias);
+}
+
+/* ── 草稿提示（只在開發環境出現） ── */
+.draft-banner {
+  margin-top: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--soil);
+  color: var(--soil);
+  font-size: var(--step--1);
+}
+
+/* ── Markdown 本文 ── */
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose h2 {
+  font-size: var(--step-2);
+  margin-top: 2.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose h3 {
+  font-size: var(--step-1);
+  margin-top: 2rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+}
+
+.prose li + li {
+  margin-top: 0.35rem;
+}
+
+.prose blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--mist);
+}
+
+.prose code {
+  font-family: var(--font-latin);
+  font-size: 1.05em;
+}
+
+details.advanced {
+  margin-top: 2.75rem;
+  padding: 0.75rem 1rem 1rem;
+  border: 1px solid var(--mist);
+  border-radius: 3px;
+}
+
+details.advanced > summary {
+  cursor: pointer;
+  font-family: var(--font-hand);
+  font-size: var(--step-1);
+}
+
+details.advanced[open] > summary {
+  margin-bottom: 0.75rem;
+}
+
+details.advanced > * + * {
+  margin-top: 1rem;
+}
+
+/* ── 名詞浮出說明（原生 popover；不支援的瀏覽器會直接顯示在文中） ── */
+.term-trigger {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: help;
+  text-decoration: underline dotted var(--moss);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+.term-popover {
+  max-width: min(24rem, calc(100vw - 2rem));
+  padding: 1rem 1.25rem;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--moss);
+  border-radius: 3px;
+  box-shadow: 0 0.5rem 2rem rgb(20 30 25 / 0.25);
+  line-height: 1.75;
+}
+
+.term-popover::backdrop {
+  background: rgb(20 30 25 / 0.15);
+}
+
+.term-popover-title,
+.term-popover-body,
+.term-popover-actions {
+  display: block;
+}
+
+.term-popover-title {
+  font-family: var(--font-hand);
+  font-size: var(--step-1);
+}
+
+.term-popover-title .latin {
+  font-size: var(--step-0);
+  color: var(--moss);
+}
+
+.term-popover-body {
+  margin-top: 0.35rem;
+}
+
+.term-popover-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.75rem;
+  font-size: var(--step--1);
+}
+
+.term-popover-close {
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--mist);
+  border-radius: 3px;
+  padding: 0.1rem 0.6rem;
+  cursor: pointer;
+}

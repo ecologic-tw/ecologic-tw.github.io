@@ -1,0 +1,109 @@
+---
+import ListFilter from '../../components/ListFilter.astro';
+import { t } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedTerms } from '../../lib/content.ts';
+
+const terms = await getPublishedTerms();
+---
+
+<Base title="名詞" description="討論推理時常用的名詞與白話說明。">
+  <h1>名詞</h1>
+  <p class="lead">圖鑑和題目裡用到的名詞，都可以在這裡查到白話說明。</p>
+
+  {terms.length === 0 ? (
+    <p class="empty">名詞解釋正在審核中，審核通過後會出現在這裡。</p>
+  ) : (
+    <div data-filter>
+      <ListFilter id="terms-filter" />
+      <dl class="terms">
+        {terms.map((term) => (
+          <div
+            id={term.id}
+            class="term"
+            data-filter-item
+            data-filter-text={`${term.data.term} ${term.data.en} ${term.data.definition}`}
+          >
+            <dt>
+              <span class="name">{term.data.term}</span>
+              <span class="latin" lang="en">
+                {term.data.en}
+              </span>
+              {term.data.status === 'draft' && <span class="draft">{t.draftBadge}</span>}
+            </dt>
+            <dd>{term.data.definition}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="empty" data-filter-empty hidden>
+        {t.filterEmpty}
+      </p>
+    </div>
+  )}
+</Base>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+  }
+
+  .empty {
+    margin-top: 2rem;
+    color: var(--moss);
+  }
+
+  .terms {
+    margin: 1.5rem 0 0;
+    border-top: 1px solid var(--mist);
+  }
+
+  .term {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--mist);
+    scroll-margin-top: 1.5rem;
+  }
+
+  .term[hidden] {
+    display: none;
+  }
+
+  /* 從名詞浮出說明點「看名詞表」跳過來時，標示目標名詞 */
+  .term:target {
+    background: var(--paper-deep);
+    box-shadow: -0.75rem 0 0 var(--paper-deep);
+  }
+
+  dt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .name {
+    font-family: var(--font-hand);
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+  }
+
+  dt .latin {
+    color: var(--moss);
+  }
+
+  .draft {
+    font-size: var(--step--1);
+    color: var(--soil);
+    border: 1px dashed var(--soil);
+    padding: 0 0.4rem;
+    line-height: 1.6;
+  }
+
+  dd {
+    margin: 0.2rem 0 0;
+  }
+</style>
