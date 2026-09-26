@@ -3,12 +3,15 @@
 每完成一項，勾選並於 PR 說明中引用。
 
 ## M0 專案骨架
-- [ ] Astro 專案初始化（static、TypeScript strict）、`.nvmrc`、ESLint／Prettier
-- [ ] `src/content.config.ts` 依 03 完成 schema；`scripts/check-content.ts`
-- [ ] `ci.yml`（PR）與 `deploy.yml`（main）依 07；Actions 以 SHA 鎖版
-- [ ] `dependabot.yml`、`CODEOWNERS`、PR 模板
-- [ ] CSP meta 生效，瀏覽器 console 無 CSP 違規
+- [x] Astro 專案初始化（static、TypeScript strict）、`.nvmrc`、ESLint／Prettier（依賴理由見 ADR-0011）
+- [x] `src/content.config.ts` 依 03 完成 schema；`scripts/check-content.ts`
+- [x] `ci.yml`（PR）與 `deploy.yml`（main）依 07；Actions 以 SHA 鎖版（尚未在 GitHub 上實跑）
+- [x] `dependabot.yml`、`CODEOWNERS`、PR 模板（CODEOWNERS 仍為 `@ecologic-tw/maintainers` 佔位，待 team 建立後確認）
+- [x] CSP meta 生效，瀏覽器 console 無 CSP 違規（本機 preview 實測；`scripts/check-dist.ts` 於建置時把關，見 ADR-0011）
 - **驗收**：空白首頁部署到 `ecologic-tw.github.io`；故意寫錯一個內容欄位時 CI 失敗
+  - [x] 故意寫錯欄位 → `npm run check` 失敗（本機已驗證；測試見 `tests/unit/content-checks.test.ts`）
+  - [ ] 空白首頁部署到 `ecologic-tw.github.io`（待建立 repo、推送並完成 07 Org 設定）
+  - [ ] 在 GitHub 上開 PR 驗證 CI 對錯誤內容會失敗
 
 ## M1 圖鑑與名詞
 - [ ] `/guide/`、`/guide/<id>/`、`/terms/`、名詞 popover
