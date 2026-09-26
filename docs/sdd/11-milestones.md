@@ -45,7 +45,7 @@
   - [x] CI 在 GitHub 上通過（PR #12：check、e2e）
 
 ## M5 審核與上線
-- [ ] 全部 MVP 內容經人工審核改為 `reviewed`
+- [ ] 全部 MVP 內容經人工審核改為 `reviewed`（分批方式與指令見 `docs/review/review-guide.md`；`npm run check` 會顯示審核進度）
 - [ ] Lighthouse：Performance ≥ 90、Accessibility ≥ 95；手機實測
 - [ ] Org 設定清單（07）全數完成
 - **驗收**：正式網址上線；README 與 about 頁資訊一致

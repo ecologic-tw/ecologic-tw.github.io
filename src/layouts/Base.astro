@@ -26,6 +26,7 @@ const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.site
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{fullTitle}</title>
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">

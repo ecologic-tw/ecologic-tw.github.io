@@ -15,7 +15,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "review": "node scripts/mark-reviewed.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

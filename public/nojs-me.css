@@ -1,0 +1,4 @@
+/* /me/ 在沒有 JavaScript 時隱藏互動區，只顯示說明（見 src/pages/me/index.astro） */
+[data-me-app] {
+  display: none;
+}

@@ -23,16 +23,22 @@ const index: ContentIndex = {
 ---
 
 <Base title="我的圖鑑" description="你的練習進度、點亮的圖鑑卡與徽章，只存在你的瀏覽器。">
+  {/* 互動區預設顯示以免版面跳動；沒有 JavaScript 時以外部樣式表隱藏（CSP 不允許行內樣式） */}
+  <noscript slot="head">
+    <link rel="stylesheet" href="/nojs-me.css" />
+  </noscript>
   <div class="me" data-me data-index={JSON.stringify(index)}>
     <h1>我的圖鑑</h1>
     <p class="lead">這裡的紀錄只存在你現在使用的瀏覽器，不會上傳到任何地方。</p>
 
-    <p class="notice" data-me-nojs>
-      「我的圖鑑」需要 JavaScript，才能讀取你在這個瀏覽器的紀錄。網站其他內容不需要 JavaScript
-      也能閱讀。
-    </p>
+    <noscript>
+      <p class="notice" data-me-nojs>
+        「我的圖鑑」需要 JavaScript，才能讀取你在這個瀏覽器的紀錄。網站其他內容不需要 JavaScript
+        也能閱讀。
+      </p>
+    </noscript>
 
-    <div data-me-app hidden>
+    <div data-me-app>
       <p class="notice" data-me-unavailable hidden>
         你的瀏覽器目前不允許網站儲存資料（例如無痕模式或封鎖網站資料），所以作答紀錄不會被保存。網站的其他功能仍然可以正常使用。
       </p>
@@ -71,7 +77,10 @@ const index: ContentIndex = {
             <li data-theme-progress={theme}>
               <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
               <progress max="1" value="0" aria-label={`${themeLabel[theme]}作答進度`} />
-              <span data-progress-text />
+              <span data-progress-text>
+                已作答 0／{index.scenarios.filter((s) => s.theme === theme).length} 題，其中答對 0
+                題
+              </span>
             </li>
           ))}
         </ul>
@@ -138,8 +147,7 @@ const index: ContentIndex = {
     color: var(--soil);
   }
 
-  .notice[hidden],
-  [data-me-app][hidden] {
+  .notice[hidden] {
     display: none;
   }
 
@@ -190,7 +198,7 @@ const index: ContentIndex = {
   .cells a {
     display: block;
     padding: 0.6rem 0.75rem;
-    font-family: var(--font-hand);
+    font-weight: 500;
     color: var(--moss);
     text-decoration: none;
   }
@@ -252,7 +260,7 @@ const index: ContentIndex = {
   }
 
   .badge-title {
-    font-family: var(--font-hand);
+    font-weight: 500;
     font-size: var(--step-1);
     color: var(--moss);
   }
