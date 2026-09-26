@@ -21,10 +21,12 @@
   - [x] CI `e2e` job 在 GitHub 上通過（PR #6）
 
 ## M2 情境題
-- [ ] `/practice/*`、`/scenario/<id>/`、作答流程、解說分層、模式切換
-- [ ] 改寫練習與檢核清單
-- [ ] 24 題情境題 draft（日常 12、保育 12；每主題對照題 2–3 題；保育題平衡原則）
+- [x] `/practice/*`、`/scenario/<id>/`、作答流程、解說分層、模式切換（progress.ts 核心提前實作，見 ADR-0014）
+- [x] 改寫練習與檢核清單（改寫內容不儲存，只計次數）
+- [x] 24 題情境題 draft（日常 12、保育 12；每主題對照題 3 題；保育題 12 題中 5 題由支持保育方犯錯）
 - **驗收**：`quiz.ts` 單元測試（選項含正解與「沒有問題」、打亂不重複）；e2e 走完一題
+  - [x] 本機單元測試（`tests/unit/quiz.test.ts`）與 e2e（`tests/e2e/m2-scenario.spec.ts`）通過
+  - [ ] CI 在 GitHub 上通過
 
 ## M3 八角與個人圖鑑
 - [ ] `progress.ts`、`badges.ts`、`/me/`、匯出匯入清除
