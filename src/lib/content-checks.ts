@@ -10,6 +10,7 @@ import {
   type ScenarioData,
   type TermData,
 } from './content-schema.ts';
+import { TERM_MARKER } from './markdown-ecologic.ts';
 
 export type SourceDoc = {
   /** 供錯誤訊息顯示的路徑 */
@@ -37,6 +38,11 @@ const PRIVATE_INFO_PATTERNS: [string, RegExp][] = [
 ];
 
 const RAW_HTML = /<\/?[a-z][^>]*>|<!--/i;
+
+/** 本文中 [[名詞]] 標記的 id */
+function bodyTermIds(body: string): string[] {
+  return [...body.matchAll(TERM_MARKER)].map((m) => m[1] ?? '');
+}
 
 type Parsed<T> = { doc: SourceDoc; data: T };
 
@@ -110,6 +116,7 @@ export function checkContent(input: ContentInput): CheckResult {
     for (const id of data.related) checkRef(item, 'related', entries, '圖鑑卡', id);
     if (data.pairWith) checkRef(item, 'pairWith', entries, '圖鑑卡', data.pairWith);
     for (const id of data.terms) checkRef(item, 'terms', terms, '名詞', id);
+    for (const id of bodyTermIds(item.doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
     if (RAW_HTML.test(item.doc.body)) {
       errors.push(`${item.doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
     }
@@ -126,6 +133,7 @@ export function checkContent(input: ContentInput): CheckResult {
       else checkRef(item, 'distractors', entries, '圖鑑卡', id);
     }
     for (const id of data.terms) checkRef(item, 'terms', terms, '名詞', id);
+    for (const id of bodyTermIds(item.doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
 
     const text = [data.title, ...data.betterPhrasing, ...data.checklist, doc.body].join('\n');
     for (const [label, pattern] of PRIVATE_INFO_PATTERNS) {

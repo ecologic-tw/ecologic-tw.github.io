@@ -1,2 +1,212 @@
 # 名詞表（docs/sdd/03）。每條需有 id、term、en、definition、status。
-[]
+# 以下皆為 AI 協助撰寫的草稿，需人工審核後才能改為 reviewed。
+
+- id: argument
+  term: 論證
+  en: Argument
+  definition: 一組陳述，其中一些（前提）被拿來支持另一個（結論）。
+  status: draft
+  aiAssisted: true
+
+- id: premise
+  term: 前提
+  en: Premise
+  definition: 論證中用來支持結論的陳述。
+  status: draft
+  aiAssisted: true
+
+- id: conclusion
+  term: 結論
+  en: Conclusion
+  definition: 論證想要讓人接受的那個主張。
+  status: draft
+  aiAssisted: true
+
+- id: inference
+  term: 推論
+  en: Inference
+  definition: 從前提得出結論的那一步。
+  status: draft
+  aiAssisted: true
+
+- id: proposition
+  term: 命題
+  en: Proposition
+  definition: 可以判斷為真或為假的陳述。「今天會下雨」是命題，「請關門」不是。
+  status: draft
+  aiAssisted: true
+
+- id: truth-value
+  term: 真值
+  en: Truth value
+  definition: 一個命題是真還是假。
+  status: draft
+  aiAssisted: true
+
+- id: validity
+  term: 有效
+  en: Validity
+  definition: 推理形式保證「只要前提全部為真，結論就一定為真」。有效只談形式，不保證前提真的成立。
+  status: draft
+  aiAssisted: true
+
+- id: soundness
+  term: 健全
+  en: Soundness
+  definition: 推理有效，而且前提確實都為真。健全的論證，結論一定為真。
+  status: draft
+  aiAssisted: true
+
+- id: conditional
+  term: 條件句
+  en: Conditional
+  definition: 「如果 P，那麼 Q」形式的陳述，符號寫成 P→Q。
+  status: draft
+  aiAssisted: true
+
+- id: antecedent
+  term: 前件
+  en: Antecedent
+  definition: 條件句「如果 P，那麼 Q」中「如果」後面的部分，也就是 P。
+  status: draft
+  aiAssisted: true
+
+- id: consequent
+  term: 後件
+  en: Consequent
+  definition: 條件句「如果 P，那麼 Q」中「那麼」後面的部分，也就是 Q。
+  status: draft
+  aiAssisted: true
+
+- id: sufficient-condition
+  term: 充分條件
+  en: Sufficient condition
+  definition: 在 P→Q 中，P 是 Q 的充分條件：只要 P 成立，Q 就一定成立。
+  status: draft
+  aiAssisted: true
+
+- id: necessary-condition
+  term: 必要條件
+  en: Necessary condition
+  definition: 在 P→Q 中，Q 是 P 的必要條件：Q 不成立時，P 不可能成立。
+  status: draft
+  aiAssisted: true
+
+- id: negation
+  term: 否定
+  en: Negation
+  definition: 把命題的真假反過來，符號寫成 ¬P，讀作「非 P」。
+  status: draft
+  aiAssisted: true
+
+- id: conjunction
+  term: 連言
+  en: Conjunction
+  definition: 「P 而且 Q」，兩者都成立時才為真，符號寫成 P∧Q。
+  status: draft
+  aiAssisted: true
+
+- id: disjunction
+  term: 選言
+  en: Disjunction
+  definition: 「P 或 Q」，至少一個成立時就為真，符號寫成 P∨Q。邏輯上的「或」通常允許兩者同時成立。
+  status: draft
+  aiAssisted: true
+
+- id: contradiction
+  term: 矛盾
+  en: Contradiction
+  definition: 同時主張一個命題和它的否定，例如同時說「P」與「非 P」。
+  status: draft
+  aiAssisted: true
+
+- id: deduction
+  term: 演繹
+  en: Deduction
+  definition: 只要前提為真，結論就必然為真的推理方式。
+  status: draft
+  aiAssisted: true
+
+- id: induction
+  term: 歸納
+  en: Induction
+  definition: 從有限的觀察推向較一般的結論。結論可以很可靠，但不是必然成立。
+  status: draft
+  aiAssisted: true
+
+- id: counterexample
+  term: 反例
+  en: Counterexample
+  definition: 前提都成立、結論卻不成立的例子。只要找到一個，就能說明某個推理形式無效。
+  status: draft
+  aiAssisted: true
+
+- id: fallacy
+  term: 謬誤
+  en: Fallacy
+  definition: 聽起來有說服力，但推理本身有缺陷的論證方式。推理有謬誤，不代表結論一定錯。
+  status: draft
+  aiAssisted: true
+
+- id: cognitive-bias
+  term: 認知偏誤
+  en: Cognitive bias
+  definition: 人在判斷時常見、有規律的思考偏差，是心理現象，不是邏輯形式的錯誤。
+  status: draft
+  aiAssisted: true
+
+- id: sample
+  term: 樣本
+  en: Sample
+  definition: 從想了解的整體中，實際觀察或調查到的那一部分。
+  status: draft
+  aiAssisted: true
+
+- id: representative-sample
+  term: 代表性樣本
+  en: Representative sample
+  definition: 組成和整體相近、能反映整體樣貌的樣本。樣本不具代表性時，結論就難以推到整體。
+  status: draft
+  aiAssisted: true
+
+- id: correlation
+  term: 相關
+  en: Correlation
+  definition: 兩件事常常一起變化。相關本身不代表其中一件造成另一件。
+  status: draft
+  aiAssisted: true
+
+- id: causation
+  term: 因果
+  en: Causation
+  definition: 一件事確實導致另一件事發生。
+  status: draft
+  aiAssisted: true
+
+- id: confounder
+  term: 干擾因子
+  en: Confounder
+  definition: 同時影響兩件事的第三個因素，會讓兩者看起來有關。也稱混淆變項。
+  status: draft
+  aiAssisted: true
+
+- id: burden-of-proof
+  term: 舉證責任
+  en: Burden of proof
+  definition: 提出主張的一方，有責任拿出支持這個主張的理由或證據。
+  status: draft
+  aiAssisted: true
+
+- id: base-rate
+  term: 基本率
+  en: Base rate
+  definition: 某件事在整體中原本發生的比例。判斷「常不常見」時，應該先看基本率。
+  status: draft
+  aiAssisted: true
+
+- id: principle-of-charity
+  term: 善意詮釋
+  en: Principle of charity
+  definition: 先用最合理、最有力的方式理解對方的說法，再來討論是否同意。
+  status: draft
+  aiAssisted: true

@@ -134,6 +134,36 @@ describe('references', () => {
   });
 });
 
+describe('body term markers', () => {
+  const premise = (status = 'draft'): SourceDoc => ({
+    file: 'terms.yaml[0]',
+    data: { id: 'premise', term: '前提', en: 'Premise', definition: 'd', status },
+    body: '',
+  });
+
+  it('rejects unknown term ids in the body', () => {
+    const { errors } = run({
+      entries: [...cards, entry('d', {}, '看[[nope]]')],
+      terms: [premise()],
+    });
+    expect(errors.join()).toMatch(/nope/);
+  });
+
+  it('rejects reviewed bodies that mark draft terms', () => {
+    const r = { status: 'reviewed', reviewers: ['someone'] };
+    const { errors } = run({ entries: [entry('d', r, '[[premise|理由]]')], terms: [premise()] });
+    expect(errors.join()).toMatch(/未審/);
+  });
+
+  it('accepts known terms', () => {
+    const { errors } = run({
+      entries: [...cards, entry('d', {}, '[[premise]]')],
+      terms: [premise()],
+    });
+    expect(errors).toEqual([]);
+  });
+});
+
 describe('writing rules', () => {
   it.each([
     ['網址', '請看 https://example.org'],
