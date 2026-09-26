@@ -1,17 +1,31 @@
 ---
 import { t } from '../i18n/zh-TW.ts';
+import { formUrl } from '../lib/feedback.ts';
 ---
 
 <footer class="site-footer page">
-  <p>{t.notOfficial}</p>
-  <p>{t.privacy}</p>
-  <p>
-    {t.license}
+  <nav class="footer-links" aria-label="頁尾">
+    <a href="/about/">關於本站</a>
+    <a
+      href={formUrl({ mode: 'basic' })}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-feedback-form
+    >
+      意見回饋（另開視窗）
+    </a>
     <a href="https://github.com/ecologic-tw" rel="noopener noreferrer">
       {t.sourceLink}
     </a>
-  </p>
+  </nav>
+  <p>{t.notOfficial}</p>
+  <p>{t.privacy}</p>
+  <p>{t.license}</p>
 </footer>
+
+<script>
+  import '../scripts/feedback-links.ts';
+</script>
 
 <style>
   .site-footer {
@@ -24,11 +38,18 @@ import { t } from '../i18n/zh-TW.ts';
     line-height: 1.8;
   }
 
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
   .site-footer p + p {
     margin-top: 0.35rem;
   }
 
   .site-footer a {
-    color: inherit;
+    color: var(--ink);
   }
 </style>

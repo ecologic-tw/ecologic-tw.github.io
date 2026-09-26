@@ -18,8 +18,8 @@
 - 未經同意公開他人個資
 
 ## 回報
-- 私下聯繫行為準則聯絡人：`{CONDUCT_CONTACT}`（建議使用專案共用信箱）
-- 若涉及聯絡人本人，請聯繫外部觀察員：`{OBSERVER_CONTACT}`
+- 私下聯繫行為準則聯絡人：findcat2000@gmail.com（專案共用信箱）
+- 若涉及聯絡人本人，請聯繫外部觀察員：**招募中**。在外部觀察員就任前，請改用 GitHub 的檢舉功能直接向 GitHub 回報（[Reporting abuse or spam](https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam)）。
 - 請勿在公開 Issue 點名。資安問題請依 `SECURITY.md`。
 
 ## 處理程序
