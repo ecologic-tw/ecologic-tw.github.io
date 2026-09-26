@@ -1,7 +1,10 @@
 ---
 import { t } from '../i18n/zh-TW.ts';
+import ModeSwitch from './ModeSwitch.astro';
 
 const links = [
+  { href: '/practice/daily/', label: t.nav.daily },
+  { href: '/practice/conservation/', label: t.nav.conservation },
   { href: '/guide/', label: t.nav.guide },
   { href: '/terms/', label: t.nav.terms },
 ];
@@ -24,6 +27,7 @@ const path = Astro.url.pathname;
       ))}
     </ul>
   </nav>
+  <ModeSwitch />
 </header>
 
 <style>
@@ -31,7 +35,6 @@ const path = Astro.url.pathname;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: space-between;
     gap: 0.5rem 1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 0.75rem;
@@ -39,6 +42,7 @@ const path = Astro.url.pathname;
   }
 
   .wordmark {
+    margin-right: auto;
     display: inline-flex;
     align-items: baseline;
     gap: 0.6rem;

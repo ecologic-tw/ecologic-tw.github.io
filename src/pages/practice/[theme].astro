@@ -1,0 +1,113 @@
+---
+import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
+import { quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedScenarios, type Theme } from '../../lib/content.ts';
+import { THEMES } from '../../lib/content-schema.ts';
+
+export function getStaticPaths() {
+  return THEMES.map((theme) => ({ params: { theme } }));
+}
+
+const theme = Astro.params.theme as Theme;
+const scenarios = await getPublishedScenarios(theme);
+---
+
+<Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]}>
+  <h1>{themeLabel[theme]}</h1>
+  <p class="lead">{themeIntro[theme]}</p>
+
+  {scenarios.length === 0 ? (
+    <p class="empty">這個主題的題目正在審核中，審核通過後會出現在這裡。</p>
+  ) : (
+    <>
+      <div class="actions">
+        <RandomScenarioButton scenarios={scenarios} />
+      </div>
+      <ol class="scenarios">
+        {scenarios.map((s) => (
+          <li
+            data-scenario-id={s.id}
+            class={s.data.difficulty === 'advanced' ? 'mode-advanced' : undefined}
+          >
+            <a href={`/scenario/${s.id}/`}>{s.data.title}</a>
+            {s.data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
+            {s.data.status === 'draft' && <span class="tag draft">{t.draftBadge}</span>}
+            <span class="status" data-status hidden />
+          </li>
+        ))}
+      </ol>
+    </>
+  )}
+</Base>
+
+<script>
+  import '../../scripts/practice-status.ts';
+</script>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+  }
+
+  .empty {
+    margin-top: 2rem;
+    color: var(--moss);
+  }
+
+  .actions {
+    margin-top: 1.5rem;
+  }
+
+  .scenarios {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--mist);
+  }
+
+  .scenarios li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .scenarios a {
+    font-family: var(--font-hand);
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  .scenarios a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--soil);
+  }
+
+  .tag {
+    font-size: var(--step--1);
+    color: var(--moss);
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+    line-height: 1.6;
+  }
+
+  .tag.draft {
+    color: var(--soil);
+    border: 1px dashed var(--soil);
+  }
+
+  .status {
+    margin-left: auto;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+</style>

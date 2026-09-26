@@ -1,20 +1,17 @@
 ---
 import HabitatIcon from '../components/HabitatIcon.astro';
+import RandomScenarioButton from '../components/RandomScenarioButton.astro';
 import TrackLine from '../components/TrackLine.astro';
+import { themeIntro, themeLabel } from '../i18n/zh-TW.ts';
 import Base from '../layouts/Base.astro';
+import { getPublishedScenarios } from '../lib/content.ts';
+import { THEMES } from '../lib/content-schema.ts';
 
-const themes = [
-  {
-    kind: 'daily',
-    title: '日常生活',
-    body: '家人聊天、網路留言、買東西時的判斷，那些聽起來很有道理的話。',
-  },
-  {
-    kind: 'conservation',
-    title: '野生生物保育',
-    body: '談到野生動物、棲地和人的時候，各方常見的說法與推論。',
-  },
-] as const;
+const scenarios = await getPublishedScenarios();
+const themes = THEMES.map((theme) => ({
+  theme,
+  count: scenarios.filter((s) => s.data.theme === theme).length,
+}));
 
 const steps = [
   { title: '讀情境', body: '一段虛構的對話或陳述。' },
@@ -40,17 +37,22 @@ const steps = [
   <section class="themes" aria-labelledby="themes-title">
     <h2 id="themes-title">兩個主題</h2>
     <ul class="theme-list">
-      {themes.map((theme) => (
+      {themes.map(({ theme, count }) => (
         <li class="theme">
-          <HabitatIcon kind={theme.kind} />
+          <HabitatIcon kind={theme} />
           <div>
-            <h3>{theme.title}</h3>
-            <p>{theme.body}</p>
-            <p class="status">題目整理中</p>
+            <h3>
+              <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
+            </h3>
+            <p>{themeIntro[theme]}</p>
+            <p class="status">{count > 0 ? `${count} 題` : '題目整理中'}</p>
           </div>
         </li>
       ))}
     </ul>
+    <p class="random">
+      <RandomScenarioButton scenarios={scenarios} />
+    </p>
   </section>
 
   <section class="how" aria-labelledby="how-title">
@@ -136,6 +138,19 @@ const steps = [
 
   .theme p {
     margin-top: 0.25rem;
+  }
+
+  .theme h3 a {
+    text-decoration: none;
+  }
+
+  .theme h3 a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--soil);
+  }
+
+  .random {
+    margin-top: 1.5rem;
   }
 
   .status {

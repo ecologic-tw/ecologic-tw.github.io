@@ -2,6 +2,7 @@
 // 同時供 src/content.config.ts（建置期驗證）與 scripts/check-content.ts（交叉參照檢查）使用，
 // 因此只能 import 'astro/zod'，不可 import 'astro:content' 等虛擬模組。
 import { z } from 'astro/zod';
+import { NO_PROBLEM } from './quiz.ts';
 
 export const ENTRY_KINDS = [
   'law',
@@ -13,8 +14,7 @@ export const ENTRY_KINDS = [
 export const STATUSES = ['draft', 'reviewed', 'retired'] as const;
 export const THEMES = ['daily', 'conservation'] as const;
 
-/** 情境題 answer 為「推理沒有問題」時的值 */
-export const NO_PROBLEM = 'none';
+export { NO_PROBLEM } from './quiz.ts';
 
 const reviewMeta = {
   status: z.enum(STATUSES),

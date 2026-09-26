@@ -1,0 +1,48 @@
+---
+import { quiz } from '../i18n/zh-TW.ts';
+import type { Scenario } from '../lib/content.ts';
+
+interface Props {
+  scenarios: Scenario[];
+  exclude?: string;
+}
+const { scenarios, exclude } = Astro.props;
+const items = scenarios.map((s) => ({ id: s.id, advanced: s.data.difficulty === 'advanced' }));
+---
+
+{items.length > 0 && (
+  <button
+    type="button"
+    class="random-button"
+    data-random-scenario
+    data-items={JSON.stringify(items)}
+    data-exclude={exclude}
+    hidden
+  >
+    {quiz.random}
+  </button>
+)}
+
+<script>
+  import '../scripts/random-scenario.ts';
+</script>
+
+<style>
+  .random-button {
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--soil);
+    border-radius: 3px;
+    padding: 0.3rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .random-button:hover {
+    background: var(--paper-deep);
+  }
+
+  .random-button[hidden] {
+    display: none;
+  }
+</style>
