@@ -1,0 +1,336 @@
+---
+import { kindLabel, themeLabel } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { BADGES, type ContentIndex } from '../../lib/badges.ts';
+import { getPublishedEntries, getPublishedScenarios, groupByKind } from '../../lib/content.ts';
+import { THEMES } from '../../lib/content-schema.ts';
+
+const entries = await getPublishedEntries();
+const scenarios = await getPublishedScenarios();
+const groups = groupByKind(entries);
+
+// 給前端的內容索引（只含 id 與規則需要的欄位）
+const index: ContentIndex = {
+  entries: entries.map((e) => e.id),
+  scenarios: scenarios.map((s) => ({
+    id: s.id,
+    theme: s.data.theme,
+    difficulty: s.data.difficulty,
+    isControl: s.data.isControl,
+    answer: s.data.answer,
+  })),
+};
+---
+
+<Base title="我的圖鑑" description="你的練習進度、點亮的圖鑑卡與徽章，只存在你的瀏覽器。">
+  <div class="me" data-me data-index={JSON.stringify(index)}>
+    <h1>我的圖鑑</h1>
+    <p class="lead">這裡的紀錄只存在你現在使用的瀏覽器，不會上傳到任何地方。</p>
+
+    <p class="notice" data-me-nojs>
+      「我的圖鑑」需要 JavaScript，才能讀取你在這個瀏覽器的紀錄。網站其他內容不需要 JavaScript
+      也能閱讀。
+    </p>
+
+    <div data-me-app hidden>
+      <p class="notice" data-me-unavailable hidden>
+        你的瀏覽器目前不允許網站儲存資料（例如無痕模式或封鎖網站資料），所以作答紀錄不會被保存。網站的其他功能仍然可以正常使用。
+      </p>
+
+      <section aria-labelledby="collection-title">
+        <h2 id="collection-title">圖鑑收集</h2>
+        <p class="hint">
+          答對一題以某張卡為答案的情境題，或完成思維定律、有效推論卡裡的小檢核，那張卡就會點亮。已點亮
+          <strong data-lit-count>0／{entries.length}</strong>
+        </p>
+        {groups.length === 0 ? (
+          <p class="empty">圖鑑卡正在審核中，審核通過後會出現在這裡。</p>
+        ) : (
+          groups.map(({ kind, entries: list }) => (
+            <div class={`kind-group kind-${kind}`}>
+              <h3>{kindLabel[kind]}</h3>
+              <ul class="cells">
+                {list.map((e) => (
+                  <li data-entry-id={e.id}>
+                    <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+                    <span class="visually-hidden" data-cell-state>
+                      尚未點亮
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
+      </section>
+
+      <section aria-labelledby="practice-title">
+        <h2 id="practice-title">練習進度</h2>
+        <ul class="themes">
+          {THEMES.map((theme) => (
+            <li data-theme-progress={theme}>
+              <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
+              <progress max="1" value="0" aria-label={`${themeLabel[theme]}作答進度`} />
+              <span data-progress-text />
+            </li>
+          ))}
+        </ul>
+        <p class="hint">
+          改寫練習自評：<strong data-rewrites>0</strong> 次
+        </p>
+      </section>
+
+      <section aria-labelledby="badges-title">
+        <h2 id="badges-title">徽章</h2>
+        <p class="hint">徽章只記錄學習的里程碑，沒有期限，也不和別人比較。</p>
+        <ul class="badges">
+          {BADGES.map((b) => (
+            <li data-badge-id={b.id}>
+              <span class="badge-title">{b.title}</span>
+              <span class="badge-condition">{b.condition}</span>
+              <span class="badge-state" data-badge-state>
+                尚未獲得
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="data-title">
+        <h2 id="data-title">你的資料</h2>
+        <p class="hint">匯出的檔案可以帶到其他裝置再匯入。匯入會取代目前的紀錄；清除後無法復原。</p>
+        <div class="data-actions">
+          <button type="button" data-export>
+            匯出進度檔
+          </button>
+          <label class="file-button">
+            匯入進度檔
+            <input type="file" accept=".json,application/json" data-import data-needs-storage />
+          </label>
+          <button type="button" class="danger" data-clear data-needs-storage>
+            清除所有紀錄
+          </button>
+        </div>
+        <p class="message" data-me-message role="status" hidden></p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/me.ts';
+</script>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+  }
+
+  .notice {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px dashed var(--soil);
+    color: var(--soil);
+  }
+
+  .notice[hidden],
+  [data-me-app][hidden] {
+    display: none;
+  }
+
+  section {
+    margin-top: 3rem;
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  h3 {
+    margin-top: 1.25rem;
+    font-size: var(--step-0);
+    color: var(--kind);
+  }
+
+  .hint {
+    margin-top: 0.4rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .hint strong {
+    color: var(--ink);
+  }
+
+  .empty {
+    margin-top: 1rem;
+    color: var(--moss);
+  }
+
+  /* 收集格：未點亮是虛線空格，點亮後填上卡別色 */
+  .cells {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 0.5rem;
+  }
+
+  .cells li {
+    border: 1px dashed var(--mist);
+    border-radius: 3px;
+  }
+
+  .cells a {
+    display: block;
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-hand);
+    color: var(--moss);
+    text-decoration: none;
+  }
+
+  .cells li.is-lit {
+    border: 1px solid var(--kind);
+    box-shadow: inset 4px 0 0 var(--kind);
+  }
+
+  .cells li.is-lit a {
+    color: var(--ink);
+  }
+
+  .cells li.is-lit a::after {
+    content: ' ✓';
+    color: var(--kind);
+  }
+
+  .themes {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .themes li {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    align-items: center;
+    gap: 0.25rem 1rem;
+  }
+
+  .themes span {
+    grid-column: 2;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  progress {
+    width: 100%;
+    height: 0.6rem;
+    accent-color: var(--moss);
+  }
+
+  .badges {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--mist);
+  }
+
+  .badges li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.1rem 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .badge-title {
+    font-family: var(--font-hand);
+    font-size: var(--step-1);
+    color: var(--moss);
+  }
+
+  .badges li.is-earned .badge-title {
+    color: var(--ink);
+  }
+
+  .badge-condition {
+    grid-column: 1;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .badge-state {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .badges li.is-earned .badge-state {
+    color: var(--ink);
+  }
+
+  .badges li.is-earned .badge-state::before {
+    content: '✓ ';
+    color: var(--moss);
+  }
+
+  .data-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .data-actions button,
+  .file-button {
+    font: inherit;
+    font-size: var(--step--1);
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--moss);
+    border-radius: 3px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .file-button {
+    position: relative;
+  }
+
+  .file-button:focus-within {
+    outline: 3px solid var(--soil);
+    outline-offset: 3px;
+  }
+
+  .file-button input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .data-actions .danger {
+    border-color: var(--soil);
+    color: var(--soil);
+  }
+
+  .data-actions :disabled,
+  .file-button:has(:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .message {
+    margin-top: 1rem;
+  }
+</style>

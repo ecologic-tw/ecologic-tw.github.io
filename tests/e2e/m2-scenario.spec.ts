@@ -155,6 +155,8 @@ test.describe('關閉 JavaScript 仍可閱讀情境與解說（NFR-07）', () =>
 test.describe('axe：情境題相關頁面', () => {
   for (const scheme of ['light', 'dark'] as const) {
     test(`practice and scenario pages (${scheme})`, async ({ page }) => {
+      // 逐頁跑 axe 需要較長時間，平行執行時容易超過預設 30 秒
+      test.setTimeout(120_000);
       await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' });
       const paths = [
         '/practice/daily/',

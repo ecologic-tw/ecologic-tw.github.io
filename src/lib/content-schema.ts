@@ -47,6 +47,16 @@ export const entrySchema = z
     pairWith: z.string().optional(),
     notFallacyWhen: z.string().optional(),
     charitableResponse: z.string().optional(),
+    // 卡內小檢核：思維定律與有效推論卡沒有對應情境題，靠它點亮（02 規則 4）
+    quickCheck: z
+      .object({
+        question: z.string(),
+        options: z.array(z.string()).min(2).max(4),
+        answer: z.number().int().min(0),
+        explanation: z.string(),
+      })
+      .strict()
+      .optional(),
     related: z.array(z.string()).default([]),
     terms: z.array(z.string()).default([]),
     ...reviewMeta,
@@ -62,6 +72,20 @@ export const entrySchema = z
           ctx.addIssue({ code: 'custom', path: [key], message: `謬誤、偏誤卡必填 ${key}` });
         }
       }
+    }
+    if ((data.kind === 'law' || data.kind === 'inference') && !data.quickCheck) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['quickCheck'],
+        message: '思維定律、有效推論卡必填 quickCheck',
+      });
+    }
+    if (data.quickCheck && data.quickCheck.answer >= data.quickCheck.options.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['quickCheck', 'answer'],
+        message: 'quickCheck.answer 必須是 options 的索引（從 0 開始）',
+      });
     }
   });
 
