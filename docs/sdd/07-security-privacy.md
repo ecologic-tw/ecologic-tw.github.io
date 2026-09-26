@@ -31,13 +31,14 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 - `/about/` 隱私段落以白話說明以上事項。
 
 ## GitHub Organization 設定清單（維護者初始化時執行）
+最近一次檢查：2026-09-26（以 `gh api` 唯讀查詢）。
 - [ ] Require 2FA for all members
 - [ ] 至少 2 位 Owner
-- [ ] Pages：Source 設為 GitHub Actions；Enforce HTTPS
-- [ ] Secret scanning＋push protection、Dependabot alerts＋security updates
-- [ ] `main` branch ruleset：需 PR、1 位 CODEOWNERS 核准、CI 通過、禁止 force push 與刪除
-- [ ] Actions：Workflow permissions 預設 read-only；禁止 Actions 建立／核准 PR
-- [ ] Private vulnerability reporting 開啟（配合 SECURITY.md）
+- [x] Pages：Source 設為 GitHub Actions；Enforce HTTPS
+- [x] Secret scanning＋push protection、Dependabot alerts＋security updates
+- [x] `main` branch ruleset：需 PR、1 位 CODEOWNERS 核准、CI 通過、禁止 force push 與刪除（單人維護期間 Organization admin 可 bypass，僅限 PR）
+- [x] Actions：Workflow permissions 預設 read-only；禁止 Actions 建立／核准 PR
+- [x] Private vulnerability reporting 開啟（配合 SECURITY.md）
 
 ## 部署 workflow 要點
 - 觸發：push 到 `main`、手動。

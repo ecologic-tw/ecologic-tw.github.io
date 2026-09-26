@@ -35,9 +35,6 @@ if (root) {
     message.hidden = false;
   };
 
-  for (const el of $$('[data-me-nojs]')) el.hidden = true;
-  for (const el of $$('[data-me-app]')) el.hidden = false;
-
   const storageOk = isStorageAvailable();
   const unavailable = $('[data-me-unavailable]');
   if (unavailable) unavailable.hidden = storageOk;
