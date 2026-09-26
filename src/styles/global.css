@@ -300,3 +300,9 @@ details.advanced > * + * {
   padding: 0.1rem 0.6rem;
   cursor: pointer;
 }
+
+/* ── 模式：基礎模式隱藏進階內容（沒有 JavaScript 時不設 data-mode，全部顯示） ── */
+/* 模式造成的隱藏一律優先於元件自己的 display 設定 */
+html[data-mode='basic'] .mode-advanced {
+  display: none !important;
+}

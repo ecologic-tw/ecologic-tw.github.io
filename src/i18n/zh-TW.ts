@@ -1,5 +1,5 @@
 // 介面字串（docs/sdd/06）。
-import type { EntryKind } from '../lib/content.ts';
+import type { EntryKind, Theme } from '../lib/content.ts';
 
 export const t = {
   siteName: '邏生門',
@@ -10,7 +10,7 @@ export const t = {
   privacy: '本站不使用 cookie，也不蒐集任何個人資料。',
   license: '程式碼以 MIT、內容以 CC BY-SA 4.0 授權。',
   sourceLink: '原始碼與參與方式',
-  nav: { guide: '圖鑑', terms: '名詞' },
+  nav: { daily: '日常', conservation: '保育', guide: '圖鑑', terms: '名詞' },
   draftBadge: '草稿',
   draftNote: '這是尚未審核的草稿，只在開發環境顯示，正式網站不會出現。',
   filterLabel: '篩選',
@@ -36,3 +36,43 @@ export const kindIntro: Record<EntryKind, string> = {
 
 /** 02 規則 5：認知偏誤卡一律加註 */
 export const biasNote = '這是心理上的推理陷阱，不是邏輯形式錯誤。';
+
+export const themeLabel: Record<Theme, string> = {
+  daily: '日常生活',
+  conservation: '野生生物保育',
+};
+
+export const themeIntro: Record<Theme, string> = {
+  daily: '家人聊天、網路留言、買東西時的判斷，那些聽起來很有道理的話。',
+  conservation: '談到野生動物、棲地和人的時候，各方常見的說法與推論。',
+};
+
+export const quiz = {
+  question: '這段推理……',
+  noProblem: '沒有問題',
+  hasProblem: (title: string) => `有問題：${title}`,
+  submit: '送出判讀',
+  chooseFirst: '先選一個判讀，再送出。',
+  correct: '判讀正確',
+  tryAnotherAngle: '換個角度看看',
+  yourChoice: '你的判讀',
+  answerIs: '這段推理',
+  reveal: '看答案與解說',
+  explanation: '解說',
+  advancedExplanation: '進階解說',
+  form: '形式結構',
+  betterPhrasing: '更好的說法',
+  rewritePrompt: '試著改寫看看（選填，不會儲存或上傳）',
+  checklistTitle: '對照檢核清單，看看你的改寫做到了幾項',
+  showReference: '看參考改寫',
+  relatedEntries: '相關圖鑑卡',
+  next: '下一題',
+  random: '隨機一題',
+  backToList: '回題目列表',
+  controlNote: '這是一題「對照題」：推理本身沒有問題。能分辨出來，和找出錯誤一樣重要。',
+  advancedOnly: '進階',
+  answered: '已作答',
+  answeredCorrect: '已答對',
+} as const;
+
+export const modeLabel = { basic: '基礎', advanced: '進階', legend: '模式' } as const;

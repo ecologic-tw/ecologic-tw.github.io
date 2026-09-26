@@ -1,0 +1,488 @@
+---
+import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
+import { biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedEntries, getPublishedScenarios, type Scenario } from '../../lib/content.ts';
+import { NO_PROBLEM, buildOptions } from '../../lib/quiz.ts';
+import { SECTIONS, renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
+import { loadTermInfo } from '../../lib/terms-source.ts';
+
+export async function getStaticPaths() {
+  const scenarios = await getPublishedScenarios();
+  return scenarios.map((scenario) => ({ params: { id: scenario.id }, props: { scenario } }));
+}
+
+interface Props {
+  scenario: Scenario;
+}
+
+const { scenario } = Astro.props;
+const { data } = scenario;
+
+const entries = new Map((await getPublishedEntries()).map((e) => [e.id, e]));
+const titleOf = (id: string) =>
+  id === NO_PROBLEM ? quiz.noProblem : (entries.get(id)?.data.title ?? id);
+
+// 建置時的順序；前端再打亂（02 規則 2）。沒有 JavaScript 時選項不顯示。
+const options = buildOptions(data.answer, data.distractors);
+
+const terms = loadTermInfo();
+const sections = splitSections(scenario.body ?? '');
+const html = (key: keyof typeof SECTIONS) => {
+  const md = sections.get(SECTIONS[key]);
+  return md ? renderMarkdown(md, terms, `${key}-`) : '';
+};
+const scenarioHtml = html('scenario');
+const explanationHtml = html('explanation');
+const advancedHtml = html('advanced');
+
+const answerEntry = entries.get(data.answer);
+const related = [data.answer, ...data.distractors].flatMap((id) => entries.get(id) ?? []);
+
+const themeScenarios = await getPublishedScenarios(data.theme);
+const index = themeScenarios.findIndex((s) => s.id === scenario.id);
+const next = themeScenarios[index + 1];
+---
+
+<Base title={data.title} description={`${themeLabel[data.theme]}情境題：${data.title}`}>
+  {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
+
+  <article class="scenario" data-quiz data-scenario-id={scenario.id} data-answer={data.answer}>
+    <header>
+      <p class="meta">
+        <a href={`/practice/${data.theme}/`}>{themeLabel[data.theme]}</a>
+        {data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
+      </p>
+      <h1>{data.title}</h1>
+    </header>
+
+    <section class="situation prose" aria-label={SECTIONS.scenario} set:html={scenarioHtml} />
+
+    <form class="judge" data-quiz-form hidden>
+      <fieldset>
+        <legend>{quiz.question}</legend>
+        <ul data-quiz-options>
+          {options.map((id) => (
+            <li data-option-id={id}>
+              <label>
+                <input type="radio" name="choice" value={id} />
+                <span data-option-label>{titleOf(id)}</span>
+                <span class="option-tag" data-option-tag hidden />
+              </label>
+            </li>
+          ))}
+        </ul>
+      </fieldset>
+      <p class="error" data-quiz-error hidden>
+        {quiz.chooseFirst}
+      </p>
+      <button type="submit">{quiz.submit}</button>
+    </form>
+
+    <div class="result" data-quiz-result tabindex="-1" role="status" hidden>
+      <span class="result-icon" data-result-icon aria-hidden="true"></span>
+      <span class="result-text" data-result-text></span>
+      <span class="result-choice" data-result-choice></span>
+    </div>
+
+    <details class="reveal" data-quiz-reveal>
+      <summary>{quiz.reveal}</summary>
+      <p class="answer">
+        {quiz.answerIs}：
+        {answerEntry ? (
+          <a href={`/guide/${answerEntry.id}/`}>{answerEntry.data.title}</a>
+        ) : (
+          <strong>{quiz.noProblem}</strong>
+        )}
+      </p>
+      {data.isControl && <p class="note">{quiz.controlNote}</p>}
+      {answerEntry?.data.kind === 'bias' && <p class="note">{biasNote}</p>}
+      <div class="prose" set:html={explanationHtml} />
+      {(data.form || advancedHtml) && (
+        <div class="mode-advanced advanced-block">
+          <h2>{quiz.advancedExplanation}</h2>
+          {data.form && (
+            <p class="formula">
+              {quiz.form}：<span>{data.form}</span>
+            </p>
+          )}
+          <div class="prose" set:html={advancedHtml} />
+        </div>
+      )}
+    </details>
+
+    <section class="rewrite" data-quiz-rewrite aria-labelledby="rewrite-title">
+      <h2 id="rewrite-title">{quiz.betterPhrasing}</h2>
+      <label class="rewrite-label" for="rewrite-input">
+        {quiz.rewritePrompt}
+      </label>
+      <textarea id="rewrite-input" rows="4" autocomplete="off"></textarea>
+      <fieldset class="checklist">
+        <legend>{quiz.checklistTitle}</legend>
+        {data.checklist.map((item) => (
+          <label>
+            <input type="checkbox" />
+            {item}
+          </label>
+        ))}
+      </fieldset>
+      <details class="reference" data-reference>
+        <summary>{quiz.showReference}</summary>
+        <ul>
+          {data.betterPhrasing.map((p) => (
+            <li>{p}</li>
+          ))}
+        </ul>
+      </details>
+    </section>
+
+    <footer class="links">
+      {related.length > 0 && (
+        <section aria-labelledby="related-title">
+          <h2 id="related-title">{quiz.relatedEntries}</h2>
+          <ul>
+            {related.map((e) => (
+              <li class={`kind-${e.data.kind}`}>
+                <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      <nav class="next" aria-label="接下來">
+        {next && (
+          <a href={`/scenario/${next.id}/`}>
+            {quiz.next}：{next.data.title}
+          </a>
+        )}
+        <a href={`/practice/${data.theme}/`}>{quiz.backToList}</a>
+        <RandomScenarioButton scenarios={await getPublishedScenarios()} exclude={scenario.id} />
+      </nav>
+    </footer>
+  </article>
+</Base>
+
+<script>
+  import '../../scripts/scenario.ts';
+</script>
+
+<style>
+  header {
+    margin-top: 3rem;
+  }
+
+  .meta {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: var(--step--1);
+  }
+
+  .meta a {
+    color: var(--moss);
+  }
+
+  .tag {
+    color: var(--moss);
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+  }
+
+  h1 {
+    margin-top: 0.4rem;
+    font-size: var(--step-3);
+  }
+
+  /* 情境：像田野筆記裡抄下的一段對話 */
+  .situation {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--paper-deep);
+    border-radius: 3px;
+  }
+
+  .situation :global(blockquote) {
+    border-left-color: var(--soil);
+  }
+
+  .judge {
+    margin-top: 2rem;
+  }
+
+  .judge[hidden] {
+    display: none;
+  }
+
+  .judge fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .judge legend {
+    font-family: var(--font-hand);
+    font-size: var(--step-2);
+    margin-bottom: 0.75rem;
+  }
+
+  .judge ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .judge label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .judge label:has(input:checked) {
+    border-color: var(--ink);
+    box-shadow: inset 3px 0 0 var(--ink);
+  }
+
+  .judge fieldset:disabled label {
+    cursor: default;
+  }
+
+  .judge li.is-answer label {
+    border-color: var(--moss);
+    box-shadow: inset 3px 0 0 var(--moss);
+  }
+
+  .judge input {
+    accent-color: var(--ink);
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+  }
+
+  .option-tag {
+    margin-left: auto;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .judge button {
+    margin-top: 1rem;
+    font: inherit;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    border-radius: 3px;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+  }
+
+  .judge button[hidden] {
+    display: none;
+  }
+
+  .error {
+    margin-top: 0.75rem;
+    color: var(--soil);
+  }
+
+  .result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--soil);
+    border-radius: 3px;
+  }
+
+  .result[hidden] {
+    display: none;
+  }
+
+  .result.is-correct {
+    border-color: var(--moss);
+  }
+
+  .result-icon {
+    font-size: var(--step-2);
+    line-height: 1;
+    color: var(--soil);
+  }
+
+  .result.is-correct .result-icon {
+    color: var(--moss);
+  }
+
+  .result-text {
+    font-family: var(--font-hand);
+    font-size: var(--step-2);
+  }
+
+  .result-choice {
+    width: 100%;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .reveal {
+    margin-top: 1.5rem;
+  }
+
+  .reveal > summary {
+    cursor: pointer;
+    font-family: var(--font-hand);
+    font-size: var(--step-1);
+  }
+
+  .reveal[hidden] {
+    display: none;
+  }
+
+  .answer {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+  }
+
+  .note {
+    margin-top: 0.5rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .reveal .prose {
+    margin-top: 1rem;
+  }
+
+  .advanced-block {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  .advanced-block h2 {
+    font-size: var(--step-1);
+  }
+
+  .formula {
+    margin-top: 0.5rem;
+  }
+
+  .formula span {
+    font-family: var(--font-latin);
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+  }
+
+  .rewrite {
+    margin-top: 3rem;
+  }
+
+  .rewrite[hidden] {
+    display: none;
+  }
+
+  .rewrite h2 {
+    font-size: var(--step-2);
+  }
+
+  .rewrite-label {
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--moss);
+    border-radius: 3px;
+    resize: vertical;
+  }
+
+  .checklist {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .checklist legend {
+    margin-bottom: 0.5rem;
+  }
+
+  .checklist label {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    cursor: pointer;
+  }
+
+  .checklist input {
+    accent-color: var(--moss);
+  }
+
+  .reference {
+    margin-top: 1.25rem;
+  }
+
+  .reference > summary {
+    cursor: pointer;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--soil);
+    text-underline-offset: 0.25em;
+  }
+
+  .reference ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25em;
+  }
+
+  .links {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--mist);
+  }
+
+  .links h2 {
+    font-size: var(--step-1);
+  }
+
+  .links ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+
+  .links li + li {
+    margin-top: 0.3rem;
+  }
+
+  .links li {
+    padding-left: 0.6rem;
+    border-left: 3px solid var(--kind);
+  }
+
+  .next {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+  }
+</style>

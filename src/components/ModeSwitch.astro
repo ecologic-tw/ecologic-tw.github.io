@@ -1,0 +1,63 @@
+---
+import { modeLabel } from '../i18n/zh-TW.ts';
+---
+
+<fieldset class="mode-switch" data-mode-switch hidden>
+  <legend class="visually-hidden">{modeLabel.legend}</legend>
+  <label>
+    <input type="radio" name="mode" value="basic" />
+    {modeLabel.basic}
+  </label>
+  <label>
+    <input type="radio" name="mode" value="advanced" />
+    {modeLabel.advanced}
+  </label>
+</fieldset>
+
+<script>
+  import '../scripts/mode.ts';
+</script>
+
+<style>
+  .mode-switch {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--moss);
+    border-radius: 3px;
+    font-size: var(--step--1);
+  }
+
+  .mode-switch[hidden] {
+    display: none;
+  }
+
+  label {
+    position: relative;
+    padding: 0.1rem 0.7rem;
+    cursor: pointer;
+    color: var(--moss);
+  }
+
+  label + label {
+    border-left: 1px solid var(--moss);
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  label:has(input:checked) {
+    background: var(--moss);
+    color: var(--paper);
+  }
+
+  label:has(input:focus-visible) {
+    outline: 3px solid var(--soil);
+    outline-offset: 2px;
+  }
+</style>

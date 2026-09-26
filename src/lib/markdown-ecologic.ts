@@ -93,14 +93,17 @@ function clone(node: HastChild): HastChild {
 const isHeading = (n: HastChild, levels: RegExp): n is HastElement =>
   n.type === 'element' && levels.test((n as HastElement).tagName);
 
-/** 名詞標記外掛；每份文件重新計數，確保 popover id 在頁內唯一 */
-export function ecologicTerms(terms: ReadonlyMap<string, TermInfo>) {
+/**
+ * 名詞標記外掛；每份文件重新計數，確保 popover id 在頁內唯一。
+ * 同一頁分段轉換多次時（情境題），以 idPrefix 區分各段。
+ */
+export function ecologicTerms(terms: ReadonlyMap<string, TermInfo>, idPrefix = '') {
   return ({ fileURL }: { fileURL: URL | undefined }): HastPluginDefinition => {
     const counts = new Map<string, number>();
     const nextId = (id: string) => {
       const n = (counts.get(id) ?? 0) + 1;
       counts.set(id, n);
-      return `term-${id}-${n}`;
+      return `term-${idPrefix}${id}-${n}`;
     };
     const file = fileURL?.pathname ?? '(markdown)';
     return {

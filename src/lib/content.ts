@@ -34,3 +34,15 @@ export function groupByKind(entries: Entry[]): { kind: EntryKind; entries: Entry
     entries: entries.filter((e) => e.data.kind === kind),
   })).filter((group) => group.entries.length > 0);
 }
+
+export type Scenario = CollectionEntry<'scenarios'>;
+export type Theme = Scenario['data']['theme'];
+
+/** 依 id 排序（daily-001、daily-002…），即題目的建議練習順序 */
+export async function getPublishedScenarios(theme?: Theme): Promise<Scenario[]> {
+  const scenarios = await getCollection(
+    'scenarios',
+    ({ data }) => isVisible(data.status) && (!theme || data.theme === theme),
+  );
+  return scenarios.sort((a, b) => a.id.localeCompare(b.id));
+}
