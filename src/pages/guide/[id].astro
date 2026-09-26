@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import { biasNote, kindLabel, t } from '../../i18n/zh-TW.ts';
+import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import { getPublishedEntries, getPublishedTerms, type Entry } from '../../lib/content.ts';
 
@@ -118,6 +119,7 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
         )}
       </footer>
     )}
+    <FeedbackLinks contentId={entry.id} kind="entry" />
   </article>
 </Base>
 

@@ -1,0 +1,70 @@
+---
+// 題目頁與圖鑑卡頁底部的回報入口（docs/sdd/09）
+import { formUrl, issueUrl } from '../lib/feedback.ts';
+
+interface Props {
+  contentId: string;
+  /** 情境題或圖鑑卡，只影響文字 */
+  kind: 'scenario' | 'entry';
+}
+const { contentId, kind } = Astro.props;
+const noun = kind === 'scenario' ? '這題' : '這張卡';
+---
+
+<aside class="feedback" aria-labelledby={`feedback-${contentId}`}>
+  <h2 id={`feedback-${contentId}`}>{noun}有問題，或有建議？</h2>
+  <p>會自動帶入 ID「{contentId}」。兩個管道都會另開新視窗。</p>
+  <ul>
+    <li>
+      <a
+        href={formUrl({ type: 'report', contentId, mode: 'basic' })}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-feedback-form
+        data-feedback-type="report"
+        data-content-id={contentId}
+      >
+        填回饋表單（不需帳號）
+      </a>
+    </li>
+    <li>
+      <a href={issueUrl(contentId)} target="_blank" rel="noopener noreferrer">
+        在 GitHub 開勘誤 Issue
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<script>
+  import '../scripts/feedback-links.ts';
+</script>
+
+<style>
+  .feedback {
+    margin-top: 3rem;
+    padding: 1rem 1.25rem;
+    border: 1px dashed var(--mist);
+    border-radius: 3px;
+  }
+
+  h2 {
+    font-size: var(--step-0);
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    margin-top: 0.25rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+</style>

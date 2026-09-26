@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import { FEEDBACK, formUrl } from '../../lib/feedback.ts';
+import { KEY } from '../../lib/progress.ts';
+
+const repo = 'https://github.com/ecologic-tw/ecologic-tw.github.io';
+const siteUrl = 'https://ecologic-tw.github.io/';
+---
+
+<Base title="關於本站" description="邏生門的使命、非官方聲明、隱私、授權與參與方式。">
+  <article class="about prose">
+    <h1>關於本站</h1>
+
+    <section aria-labelledby="mission">
+      <h2 id="mission">我們想做的事</h2>
+      <p>
+        邏生門用日常生活與野生生物保育的情境，帶你練習辨認推理中的問題，也練習分辨「其實沒問題」的推理。
+      </p>
+      <p>
+        目標是讓討論變得更好，而不是贏過別人。保育議題常常很情緒化，好的推理能幫助各方降溫、回到證據上。所以這裡的每張謬誤卡都會寫「什麼時候其實合理」和「怎麼善意回應」。
+      </p>
+    </section>
+
+    <section aria-labelledby="not-official">
+      <h2 id="not-official">這不是官方網站</h2>
+      <p>
+        邏生門是社群教育專案，<strong>不代表任何政府機關或團體的立場</strong>
+        ，也沒有使用任何機關的標誌。網站上的所有情境都是虛構的，不指涉真實的人物、機關或事件，也不寫出敏感物種的精確地點。
+      </p>
+    </section>
+
+    <section aria-labelledby="privacy">
+      <h2 id="privacy">隱私：我們不蒐集你的資料</h2>
+      <ul>
+        <li>不使用 cookie，沒有流量統計、廣告或任何第三方程式。</li>
+        <li>
+          你的作答紀錄、模式設定和徽章，只存在你目前使用的瀏覽器（localStorage 的「{KEY}
+          」），不會上傳到任何地方。
+        </li>
+        <li>改寫練習的文字完全不儲存，只記錄完成次數。</li>
+        <li>
+          你可以在<a href="/me/">「我的圖鑑」</a>匯出、匯入或一鍵清除這些紀錄。
+        </li>
+        <li>點「意見回饋」會前往 Google 表單。表單不收集 Email，也請不要在表單中填寫個人資料。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="ai">
+      <h2 id="ai">AI 協作與審核</h2>
+      <p>
+        部分內容由 AI
+        協助撰寫初稿，這些內容都會標示，並且一定要經過人工審核才會出現在網站上。審核的重點是邏輯正確性：AI
+        常把合理的推論誤判成謬誤。發現錯誤時，歡迎用下面的管道告訴我們。
+      </p>
+    </section>
+
+    <section aria-labelledby="feedback">
+      <h2 id="feedback">回饋與投稿</h2>
+      <table>
+        <caption class="visually-hidden">兩種回饋管道</caption>
+        <thead>
+          <tr>
+            <th scope="col">管道</th>
+            <th scope="col">適合</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a href={formUrl({ mode: 'basic' })} rel="noopener noreferrer" data-feedback-form>
+                回饋表單
+              </a>
+            </td>
+            <td>不需要帳號。回報題目問題、分享使用心得、投稿新情境。</td>
+          </tr>
+          <tr>
+            <td>
+              <a href={`${repo}/issues/new/choose`} rel="noopener noreferrer">
+                GitHub Issues
+              </a>
+            </td>
+            <td>有 GitHub 帳號。內容勘誤、新情境、功能建議，可以公開討論與追蹤。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        每個題目頁和圖鑑卡底部都有回報連結，會自動帶入題目或卡片的
+        ID。我們大約每月整理一次回饋，內容勘誤優先處理；表單回應轉成公開 Issue
+        前，會先移除可能的個人資料。
+      </p>
+    </section>
+
+    <section aria-labelledby="join">
+      <h2 id="join">一起參與</h2>
+      <p>
+        我們的文化是<strong>自由決定、公開承擔、共同學習</strong>
+        。不會寫程式也可以參與：回報問題、投稿情境、審核內容都很需要人手。
+      </p>
+      <ul>
+        <li>
+          <a href={`${repo}/blob/main/CONTRIBUTING.md`} rel="noopener noreferrer">
+            參與貢獻指南
+          </a>
+        </li>
+        <li>
+          <a href={`${repo}/blob/main/CODE_OF_CONDUCT.md`} rel="noopener noreferrer">
+            行為準則
+          </a>
+          （含私下回報的聯絡方式）
+        </li>
+        <li>
+          <a href={`${repo}/blob/main/SECURITY.md`} rel="noopener noreferrer">
+            資安問題回報方式
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="license">
+      <h2 id="license">授權</h2>
+      <ul>
+        <li>
+          程式碼：
+          <a href="https://opensource.org/license/mit" rel="noopener noreferrer">
+            MIT 授權
+          </a>
+        </li>
+        <li>
+          內容（題目、解說、名詞）：
+          <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hant"
+            rel="noopener noreferrer"
+          >
+            創用 CC 姓名標示－相同方式分享 4.0 國際
+          </a>
+        </li>
+      </ul>
+      <p>轉載或改作內容時，請這樣標示：</p>
+      <blockquote>
+        <p>內容來自「邏生門／EcoLogic」貢獻者們（https://github.com/ecologic-tw），CC BY-SA 4.0</p>
+      </blockquote>
+    </section>
+
+    <section aria-labelledby="official">
+      <h2 id="official">唯一的官方網址</h2>
+      <p>為了避免仿冒，邏生門只使用以下網址。其他看起來很像的網站或表單都不是我們的。</p>
+      <ul>
+        <li>
+          網站：<code>{siteUrl}</code>
+        </li>
+        <li>
+          回饋表單：<code>{FEEDBACK.formShortUrl}</code>
+        </li>
+        <li>
+          原始碼與討論：<code>https://github.com/ecologic-tw</code>
+        </li>
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  section {
+    margin-top: 2.5rem;
+  }
+
+  .about :global(h2) {
+    margin-top: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  th {
+    color: var(--moss);
+    font-weight: 400;
+  }
+
+  td:first-child {
+    white-space: nowrap;
+  }
+
+  code {
+    word-break: break-all;
+  }
+</style>

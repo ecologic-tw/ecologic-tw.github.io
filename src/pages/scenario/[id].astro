@@ -1,6 +1,7 @@
 ---
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import { biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import { getPublishedEntries, getPublishedScenarios, type Scenario } from '../../lib/content.ts';
 import { NO_PROBLEM, buildOptions } from '../../lib/quiz.ts';
@@ -159,6 +160,7 @@ const next = themeScenarios[index + 1];
         <RandomScenarioButton scenarios={await getPublishedScenarios()} exclude={scenario.id} />
       </nav>
     </footer>
+    <FeedbackLinks contentId={scenario.id} kind="scenario" />
   </article>
 </Base>
 
