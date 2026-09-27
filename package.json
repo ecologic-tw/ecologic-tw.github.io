@@ -18,7 +18,8 @@
     "test:e2e": "playwright test",
     "review": "node scripts/mark-reviewed.ts",
     "report:content": "node scripts/content-quality.ts",
-    "check:links": "node scripts/check-links.ts"
+    "check:links": "node scripts/check-links.ts",
+    "scenario": "node scripts/scenario.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

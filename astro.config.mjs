@@ -1,7 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { satteri } from '@astrojs/markdown-satteri';
-import { ecologicAdvanced, ecologicTerms } from './src/lib/markdown-ecologic.ts';
+import {
+  ecologicAdvanced,
+  ecologicTerms,
+  ecologicExternalLinks,
+} from './src/lib/markdown-ecologic.ts';
 import { loadTermInfo } from './src/lib/terms-source.ts';
 import { SITE_URL } from './src/lib/site.ts';
 
@@ -17,7 +21,9 @@ export default defineConfig({
     inlineStylesheets: 'never',
   },
   markdown: {
-    processor: satteri({ hastPlugins: [ecologicTerms(loadTermInfo()), ecologicAdvanced] }),
+    processor: satteri({
+      hastPlugins: [ecologicTerms(loadTermInfo()), ecologicExternalLinks, ecologicAdvanced],
+    }),
   },
   vite: {
     build: {

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       {
-        value: '請先閱讀 docs/sdd/08-misuse-prevention.md。情境須虛構，勿含真實人名、機關、精確地點或任何個資。',
+        value: '先分享一段想法即可，答案、來源與改寫可由大家逐步補齊。不必一次做完。情境須虛構，勿含真實人名、機關、精確地點或任何個資；詳見 CONTRIBUTING.md。',
       }
   - type: dropdown
     id: theme
@@ -22,6 +22,31 @@ body:
   - type: textarea
     id: better
     attributes: { label: 更好的說法（選填） }
+  - type: input
+    id: target
+    attributes:
+      {
+        label: 要修改的題號（選填）,
+        description: '修改既有情境時填 daily-001 等題號；新構想可留白。',
+      }
+  - type: textarea
+    id: sources
+    attributes:
+      { label: 已找到的來源（選填）, description: '可以只貢獻一個來源，說明它支持哪個部分。' }
+  - type: textarea
+    id: next-steps
+    attributes:
+      {
+        label: 希望大家接力的部分（選填）,
+        description: '例如確認答案、補來源、改善措辭或試讀；不必自己完成全部。',
+      }
+  - type: input
+    id: credit
+    attributes:
+      {
+        label: 願意公開的署名與貢獻（選填）,
+        description: '填寫即同意以此名稱標註這份貢獻，可用筆名；留白不署名。不填私人聯絡資料，勿代填他人姓名。',
+      }
   - type: checkboxes
     id: confirm
     attributes:

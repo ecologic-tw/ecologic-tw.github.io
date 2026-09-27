@@ -24,6 +24,8 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 ## 外部連結白名單
 只允許：`forms.gle`、`docs.google.com/forms`、`github.com/ecologic-tw`、`creativecommons.org`、`opensource.org`，以及內容 `sources` 中經審核的網址。一律 `rel="noopener noreferrer"`。建置期檢查非白名單外連（`sources` 除外）。
 
+網站外部連結另加 `target="_blank"` 與另開視窗提示，優先使用 `ExternalLink.astro`；內部導覽維持同頁。正式產物檢查會拒絕未另開視窗的外連（ADR-0019）。
+
 ## 隱私
 - 無 cookie、無分析、無第三方請求；可宣告「本站不蒐集任何個人資料」。
 - localStorage 只存 `ecologic:v1`（進度與模式），`/me/` 提供一鍵清除。

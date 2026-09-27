@@ -3,6 +3,22 @@
 // 2. `## 進階` 區塊 → <details>，模式切換（M2）完成前以此漸進揭露。
 // 只產生 hast 元素，不插入原生 HTML 字串。
 import type { HastPluginDefinition } from 'satteri';
+import { SITE_URL } from './site.ts';
+
+/** Markdown 作者只需寫一般連結，外部網址的另開視窗行為統一處理。 */
+export const ecologicExternalLinks: HastPluginDefinition = {
+  name: 'ecologic-external-links',
+  element: {
+    filter: ['a'],
+    visit(node, ctx) {
+      const href = String(node.properties.href ?? '');
+      if (!/^https?:\/\//i.test(href) || href.startsWith(`${SITE_URL}/`)) return;
+      ctx.setProperty(node, 'target', '_blank');
+      ctx.setProperty(node, 'rel', 'noopener noreferrer');
+      ctx.appendChild(node, { type: 'text', value: '（另開視窗）' });
+    },
+  },
+};
 
 export type TermInfo = { term: string; en: string; definition: string };
 

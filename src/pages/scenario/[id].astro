@@ -1,6 +1,7 @@
 ---
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import Sources from '../../components/Sources.astro';
+import Contributors from '../../components/Contributors.astro';
 import { biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
@@ -163,6 +164,7 @@ const next = themeScenarios[index + 1];
       </nav>
     </footer>
     <FeedbackLinks contentId={scenario.id} kind="scenario" />
+    <Contributors contributors={data.contributors} />
   </article>
 </Base>
 

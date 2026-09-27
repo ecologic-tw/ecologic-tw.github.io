@@ -41,13 +41,22 @@ describe('checkHtml', () => {
 
   it('allows whitelisted and extra (sources) links with rel', () => {
     const body =
-      '<a href="https://forms.gle/abc" rel="noopener noreferrer">x</a>' +
-      '<a href="https://example.org/paper" rel="noopener noreferrer">y</a>';
+      '<a href="https://forms.gle/abc" target="_blank" rel="noopener noreferrer">x</a>' +
+      '<a href="https://example.org/paper" target="_blank" rel="noopener noreferrer">y</a>';
     expect(checkHtml('a.html', page(body), ['https://example.org/paper'])).toEqual([]);
   });
 
   it('requires rel="noopener noreferrer" on external links', () => {
     const body = '<a href="https://forms.gle/abc">x</a>';
     expect(checkHtml('a.html', page(body)).join()).toMatch(/noopener/);
+  });
+  it('requires a new window for external links but not internal navigation', () => {
+    expect(
+      checkHtml(
+        'a.html',
+        page('<a href="https://forms.gle/abc" rel="noopener noreferrer">x</a>'),
+      ).join(),
+    ).toContain('target="_blank"');
+    expect(checkHtml('a.html', page('<a href="/about/">關於</a>'))).toEqual([]);
   });
 });

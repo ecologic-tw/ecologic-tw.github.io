@@ -116,6 +116,8 @@ z.object({
 
 來源網址限 HTTP(S)，書目與 `supports` 由共用參考資料元件顯示。建置另產生來源／雙審／AI 協助覆蓋率與閱讀篇幅提醒（ADR-0018）；篇幅提醒不改變 schema 審核狀態，不是閱讀年級評定。
 
+三種內容另可填 `contributors: [{ name, contribution }]`（預設空陣列），使用本人同意的公開名稱／筆名與實際貢獻；署名不取代 reviewers。可不完整的情境提案放在 `contributions/scenarios/`，不載入正式內容集合，轉入時才驗證完整 schema（ADR-0019）。
+
 ## 建置期檢查（`npm run check`）
 - 已審圖鑑卡、情境題與名詞都須有來源與足夠的不同審核者；草稿不要求先填審核者或來源。
 - 所有 `related`、`answer`、`distractors`、`pairWith`、`terms` 參照存在。

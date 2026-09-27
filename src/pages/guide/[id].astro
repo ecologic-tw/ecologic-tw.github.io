@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Sources from '../../components/Sources.astro';
+import Contributors from '../../components/Contributors.astro';
 import { biasNote, kindLabel, t } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
@@ -92,6 +93,7 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
 
     <div data-read-marker data-entry-id={entry.id} aria-hidden="true" />
     <Sources sources={data.sources} />
+    <Contributors contributors={data.contributors} />
 
     {(related.length > 0 || terms.length > 0) && (
       <footer class="links">
