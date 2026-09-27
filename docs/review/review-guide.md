@@ -27,6 +27,7 @@ AI 協助撰寫的內容從草稿開始（`status: draft`、`aiAssisted: true`�
 ## 發布前的來源與審核門檻（ADR-0017）
 
 - 圖鑑卡、情境題、名詞都需要 `updated`，發布時至少一個非空的來源書目與一位不同的審核帳號。
+- `npm run review` 首次把內容標為 reviewed 時，會自動填入 `published`（首次發布日期），之後的勘誤與重新審核不改動它；它決定內容出現在 `/updates/` 與訂閱源的日期（ADR-0024）。若手動改 status，請一併補上 `published`，否則該項只會算在「首批內容」。
 - `sources.supports` 可標明支援哪項主張及限制。人工仍需看原文；引用存在不代表支援整篇內容。
 - `requiresSecondReview: true` 的爭議內容至少兩位不同審核者；同帳號不同大小寫不算兩人。此規則原本已在保育寫作規範中要求，本次加入程式檢查。
 - **對照題雙審目前不啟用**：`src/lib/review-policy.ts` 中 `controlRequiresSecondReview: false`，一般對照題仍一人即可。未來有人力時先補齊已審對照題的第二審核者，再透過 PR 改為 `true`，跑 `npm run check` 與測試；不要用環境變數讓本機與 CI 規則不同。

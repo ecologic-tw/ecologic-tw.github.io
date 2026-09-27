@@ -54,6 +54,8 @@ const reviewMeta = {
     .default([]),
   requiresSecondReview: z.boolean().default(false),
   updated: z.coerce.date(),
+  // 首次發布日期（ADR-0024）：npm run review 首次標為 reviewed 時自動填入，勘誤不改動。
+  published: z.coerce.date().optional(),
   aiAssisted: z.boolean().default(false),
 };
 
@@ -363,3 +365,21 @@ export const termSchema = z
 export type EntryData = z.output<typeof entrySchema>;
 export type ScenarioData = z.output<typeof scenarioSchema>;
 export type TermData = z.output<typeof termSchema>;
+
+// 更新紀錄的手寫說明（ADR-0024）：功能更新、重要勘誤、公告。新上架內容由 published 自動列出。
+export const UPDATE_KINDS = ['feature', 'content', 'fix', 'notice'] as const;
+export const updateSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9-]+$/),
+    date: z.coerce.date(),
+    kind: z.enum(UPDATE_KINDS),
+    title: z.string().trim().min(1).max(60),
+    summary: z.string().trim().min(1).max(200),
+    // 只允許站內路徑，避免訂閱源夾帶外部連結
+    link: z
+      .string()
+      .regex(/^\/[a-z0-9\-/]*(#[a-z0-9-]+)?$/)
+      .optional(),
+  })
+  .strict();
+export type UpdateData = z.output<typeof updateSchema>;

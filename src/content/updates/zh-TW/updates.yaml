@@ -1,0 +1,10 @@
+# 更新紀錄的手寫說明（docs/adr/0024-updates-page-and-feed.md）
+# 新上架的圖鑑卡、情境題、名詞會依 published 日期自動列出，這裡只寫需要補充說明的事。
+# kind：feature 功能／content 內容／fix 勘誤／notice 公告
+# link：只能填站內路徑，例如 /guide/ 或 /terms/#premise
+- id: updates-page
+  date: 2026-09-27
+  kind: feature
+  title: 新增更新紀錄與訂閱
+  summary: 新上架的圖鑑卡、情境題與名詞會列在這裡，也可以用 RSS／Atom 閱讀器訂閱，本站不會知道誰訂閱了。
+  link: /updates/

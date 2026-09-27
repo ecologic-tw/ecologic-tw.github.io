@@ -46,3 +46,11 @@ export async function getPublishedScenarios(theme?: Theme): Promise<Scenario[]> 
   );
   return scenarios.sort((a, b) => a.id.localeCompare(b.id));
 }
+
+export type UpdateNote = CollectionEntry<'updates'>;
+
+/** 更新紀錄的手寫說明（ADR-0024），新到舊 */
+export async function getUpdateNotes(): Promise<UpdateNote[]> {
+  const notes = await getCollection('updates');
+  return notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
