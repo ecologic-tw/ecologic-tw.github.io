@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：README 環境準備與快速上手
+- **目標與範圍**：補齊新接手者的環境準備、取得專案、啟動、檢查與預覽步驟；只修改 `README.md` 與本交接紀錄。
+- **分支與狀態**：分支 `codex/readme-quickstart`，基底 `9ad0157`；使用者已要求 commit 與建立 PR，本節隨提交保存，commit／PR 以 Git 紀錄為準。既有未追蹤 `.claude/` 保留，未納入本次成果。
+- **完成**：依 `.nvmrc`、`package.json`、Astro／Playwright 設定與 CI 核對指令，補上 Node.js 24.x、Git／npm、clone／安裝流程、草稿與正式建置差異、e2e 準備及接手文件入口。
+- **驗證**：檢查文件引用與規範一致性、執行 `git diff --check`；本次只改文件，未執行 lint、check、單元測試、build 或 e2e，亦未重新實測全新環境安裝。
+- **待辦與下一步**：供維護者審閱文件；本次無架構或流程決策變更，不新增 ADR、不變更里程碑完成狀態。既有里程碑與內容審核狀態落差仍見前次紀錄，需依實際人工審核紀錄核對。
+- **相關文件**：[快速上手](../README.md#環境準備與快速上手)、[共用規範](../AGENTS.md)、[貢獻指南](../CONTRIBUTING.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：提交溝通與意義內容 PR
 - **目標／分支**：使用者表示已執行人工審核指令並要求 commit、發 PR；分支 `codex/communication-meaning`，基底 `0238dbf`，本節隨提交保存，commit／PR 以 Git 紀錄為準。既有 `.claude/` 不納入提交。
 - **完成**：核對三張新圖鑑卡與三條新名詞皆為 reviewed、審核帳號 Wang-Yi-Zhang；保留使用者的審核變更，AI 未執行標記。同步 SDD 11／12 的本批完成狀態；下方草稿階段紀錄為歷史狀態。
