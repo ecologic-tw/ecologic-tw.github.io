@@ -7,15 +7,22 @@ en: Confirmation bias
 summary: 傾向注意、相信支持自己想法的資訊，忽略或低估相反的資訊。
 notFallacyWhen: 已經有充分證據支持的看法，不需要遇到一點反例就推翻；重點是願意主動找反面證據，並公平評估。
 charitableResponse: 「我們一起列一下：有哪些資料出現的話，會讓你改變想法？」
+quickCheck:
+  question: '「小華認為某款手機的電池特別耐用。他上網搜尋時，只點開標題寫著『電池超耐用』的評論，其他評論都跳過。」這種找資料的方式最接近哪一種情況？'
+  options:
+    - '確認偏誤：傾向尋找、相信支持自己想法的資訊'
+    - '倖存者偏誤：只看到留下來、成功的案例'
+    - '沒有問題：多看好評本來就能更了解產品'
+  answer: 0
+  explanation: '只挑支持原本想法的評論來看，略過其他資訊，是確認偏誤的典型情況。倖存者偏誤談的是被淘汰的案例看不到；多看好評本身不是問題，問題在於刻意略過其他評論。'
 related: [ availability-heuristic, correlation-causation ]
 terms: [ cognitive-bias, counterexample ]
-status: reviewed
-reviewers:
-  - Wang-Yi-Zhang
+status: draft
+reviewers: []
 sources:
   - title: 'Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in
       many guises. Review of General Psychology, 2(2), 175–220.'
-updated: 2026-09-26
+updated: 2026-09-27
 aiAssisted: true
 ---
 
