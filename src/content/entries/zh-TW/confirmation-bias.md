@@ -1,6 +1,7 @@
 ---
 id: confirmation-bias
 kind: bias
+evidence: robust
 title: 確認偏誤
 en: Confirmation bias
 summary: 傾向注意、相信支持自己想法的資訊，忽略或低估相反的資訊。
