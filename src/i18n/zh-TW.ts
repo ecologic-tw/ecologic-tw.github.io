@@ -7,7 +7,7 @@ type EvidenceLevel = (typeof EVIDENCE_LEVELS)[number];
 export const t = {
   siteName: '邏生門',
   siteNameEn: 'EcoLogic',
-  tagline: '用生活與保育的情境，一步一步練習好好說理。',
+  tagline: '從各說各話，走向共同思考：用生活與保育的情境，練習辨識邏輯瑕疵、調整表述視角。',
   skipToContent: '跳到主要內容',
   notOfficial: '本站為社群教育專案，不代表任何政府機關或團體立場。所有情境皆為虛構。',
   privacy: '本站不使用 cookie，也不蒐集任何個人資料。',

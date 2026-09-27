@@ -1,6 +1,6 @@
 # 邏生門／EcoLogic
 
-用生活與保育的情境，一步一步練習好好說理。
+從各說各話，走向共同思考：用生活與保育的情境，練習辨識邏輯瑕疵、調整表述視角。
 
 - 網站：https://ecologic-tw.github.io/（[關於本站](https://ecologic-tw.github.io/about/)）
 - 內容：思維定律、有效推論、形式／非形式謬誤、認知偏誤
