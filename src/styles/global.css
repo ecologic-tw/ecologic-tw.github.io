@@ -36,6 +36,8 @@
   --step-4: clamp(2.25rem, 1.2rem + 4.2vw, 3.375rem);
 
   --measure: 34em;
+  /* 桌機寬版容器：頁首、頁尾、列表類頁面；內文仍以 --measure 限制行長 */
+  --wide: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
 
   color-scheme: light;
@@ -150,6 +152,10 @@ a:hover {
   max-width: calc(var(--measure) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 0 var(--gutter);
+}
+
+.page.page-wide {
+  max-width: calc(var(--wide) + 2 * var(--gutter));
 }
 
 /* ── 卡別色標：元素加上 .kind-<kind>，再用 var(--kind) ── */
