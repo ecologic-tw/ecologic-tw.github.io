@@ -1,5 +1,8 @@
 // 介面字串（docs/sdd/06）。
 import type { EntryKind, Theme } from '../lib/content.ts';
+import type { EVIDENCE_LEVELS } from '../lib/content-schema.ts';
+
+type EvidenceLevel = (typeof EVIDENCE_LEVELS)[number];
 
 export const t = {
   siteName: '邏生門',
@@ -19,6 +22,7 @@ export const t = {
 } as const;
 
 export const kindLabel: Record<EntryKind, string> = {
+  concept: '基礎概念',
   law: '思維定律與哲學原則',
   inference: '有效推論',
   'formal-fallacy': '形式謬誤',
@@ -27,11 +31,19 @@ export const kindLabel: Record<EntryKind, string> = {
 };
 
 export const kindIntro: Record<EntryKind, string> = {
+  concept: '真、有效、健全、條件……先把討論推理時會用到的基本詞彙弄清楚。',
   law: '區分形式邏輯的基本規則與仍有爭議的哲學原則；不把兩者視為同一種定律。',
   inference: '只要前提都成立，結論就一定成立的推理形式。',
   'formal-fallacy': '看起來像有效推論，但推理形式本身不成立。',
   'informal-fallacy': '問題不在形式，而在內容、用詞或脈絡。',
   bias: '心理上的推理陷阱，不是邏輯形式錯誤。',
+};
+
+/** 認知偏誤卡的證據強度標籤（ADR-0021） */
+export const evidenceLabel: Record<EvidenceLevel, { label: string; note: string }> = {
+  robust: { label: '證據穩健', note: '多項研究一致支持，但個別情境仍可能不適用。' },
+  moderate: { label: '證據中等', note: '有研究支持，但效果大小或適用範圍仍在討論。' },
+  contested: { label: '證據有爭議', note: '重複驗證結果不一致，請把它當作假說，而不是定論。' },
 };
 
 /** 02 規則 5：認知偏誤卡一律加註 */

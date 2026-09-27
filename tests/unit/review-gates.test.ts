@@ -21,6 +21,7 @@ const entry = {
   summary: '摘要',
   notFallacyWhen: '條件',
   charitableResponse: '回應',
+  evidence: 'robust',
   ...meta,
 };
 const scenario = {

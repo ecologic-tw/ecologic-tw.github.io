@@ -13,6 +13,7 @@ colors:
   moss: "#4F6B4A"
   soil: "#7A5A2E"
   mist: "#CFCBB4"
+  kind-concept: "#2F5F66"
   kind-law: "#56687A"
   kind-inference: "#4F6B4A"
   kind-formal-fallacy: "#86661E"
@@ -24,6 +25,7 @@ colors:
   moss-dark: "#93B08B"
   soil-dark: "#CFA96B"
   mist-dark: "#3A463E"
+  kind-concept-dark: "#8EC0C4"
   kind-law-dark: "#9FB2C4"
   kind-inference-dark: "#93B08B"
   kind-formal-fallacy-dark: "#D2B35E"
@@ -120,6 +122,9 @@ components:
     backgroundColor: "{colors.moss}"
     textColor: "{colors.paper}"
     rounded: "{rounded.md}"
+  kind-label-concept:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.kind-concept}"
   kind-label-law:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.kind-law}"
@@ -162,6 +167,9 @@ components:
   mode-switch-selected-dark:
     backgroundColor: "{colors.moss-dark}"
     textColor: "{colors.paper-dark}"
+  kind-label-concept-dark:
+    backgroundColor: "{colors.paper-dark}"
+    textColor: "{colors.kind-concept-dark}"
   kind-label-law-dark:
     backgroundColor: "{colors.paper-dark}"
     textColor: "{colors.kind-law-dark}"
@@ -194,7 +202,7 @@ components:
 - **moss（#4F6B4A）**：苔綠，次要文字、提示、主題左側線、模式切換選取狀態。
 - **soil（#7A5A2E）**：土色，焦點外框、連結底線、足跡、草稿提示。
 - **mist（#CFCBB4）**：分隔線與未選取邊框，不用於文字。
-- **卡別色標**：岩（思維定律）、苔（有效推論）、赭（形式謬誤）、鏽（非形式謬誤）、石楠（認知偏誤），像野外圖鑑書緣的分類索引，用於卡片左側色條與卡別文字。
+- **卡別色標**：溪（基礎概念，#2F5F66／深色 #8EC0C4，對比 6.17:1／8.75:1）、岩（思維定律）、苔（有效推論）、赭（形式謬誤）、鏽（非形式謬誤）、石楠（認知偏誤），像野外圖鑑書緣的分類索引，用於卡片左側色條與卡別文字。
 - **深色模式**：以 `prefers-color-scheme` 切換，`-dark` 後綴的色票與淺色一一對應。
 
 ## Typography

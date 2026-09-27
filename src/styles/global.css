@@ -13,6 +13,7 @@
   --mist: #cfcbb4;
 
   /* 卡別色標（M1 圖鑑卡使用） */
+  --kind-concept: #2f5f66;
   --kind-law: #56687a;
   --kind-inference: #4f6b4a;
   --kind-formal-fallacy: #86661e;
@@ -49,6 +50,7 @@
     --soil: #cfa96b;
     --mist: #3a463e;
 
+    --kind-concept: #8ec0c4;
     --kind-law: #9fb2c4;
     --kind-inference: #93b08b;
     --kind-formal-fallacy: #d2b35e;
@@ -151,6 +153,9 @@ a:hover {
 }
 
 /* ── 卡別色標：元素加上 .kind-<kind>，再用 var(--kind) ── */
+.kind-concept {
+  --kind: var(--kind-concept);
+}
 .kind-law {
   --kind: var(--kind-law);
 }

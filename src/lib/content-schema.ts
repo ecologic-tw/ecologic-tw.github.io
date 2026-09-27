@@ -6,6 +6,7 @@ import { NO_PROBLEM } from './quiz.ts';
 import { minimumReviewers, REVIEW_POLICY, type ReviewPolicy } from './review-policy.ts';
 
 export const ENTRY_KINDS = [
+  'concept',
   'law',
   'inference',
   'formal-fallacy',
@@ -13,6 +14,8 @@ export const ENTRY_KINDS = [
   'bias',
 ] as const;
 export const STATUSES = ['draft', 'reviewed', 'retired'] as const;
+// 認知偏誤卡的研究證據強度（ADR-0021、docs/sdd/12）。
+export const EVIDENCE_LEVELS = ['robust', 'moderate', 'contested'] as const;
 export const THEMES = ['daily', 'conservation'] as const;
 
 export { NO_PROBLEM } from './quiz.ts';
@@ -97,6 +100,7 @@ export const entrySchema = z
     pairWith: z.string().optional(),
     notFallacyWhen: z.string().optional(),
     charitableResponse: z.string().optional(),
+    evidence: z.enum(EVIDENCE_LEVELS).optional(),
     // 卡內小檢核：思維定律與有效推論卡沒有對應情境題，靠它點亮（02 規則 4）
     quickCheck: z
       .object({
@@ -123,11 +127,25 @@ export const entrySchema = z
         }
       }
     }
-    if ((data.kind === 'law' || data.kind === 'inference') && !data.quickCheck) {
+    if (
+      (data.kind === 'concept' || data.kind === 'law' || data.kind === 'inference') &&
+      !data.quickCheck
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['quickCheck'],
-        message: '思維定律、有效推論卡必填 quickCheck',
+        message: '基礎概念、思維定律、有效推論卡必填 quickCheck',
+      });
+    }
+    if (data.evidence && data.kind !== 'bias') {
+      ctx.addIssue({ code: 'custom', path: ['evidence'], message: 'evidence 只適用於認知偏誤卡' });
+    }
+    // 過渡期（ADR-0021）：新增或退回草稿的偏誤卡必填；既有 reviewed 卡待人工補值後改為全面必填。
+    if (data.kind === 'bias' && data.status !== 'reviewed' && !data.evidence) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['evidence'],
+        message: '認知偏誤卡必填 evidence（robust／moderate／contested）',
       });
     }
     if (data.quickCheck && data.quickCheck.answer >= data.quickCheck.options.length) {
