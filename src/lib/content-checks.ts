@@ -12,6 +12,7 @@ import {
   type TermData,
 } from './content-schema.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
+import { validateScenarioBody } from './scenario-sections.ts';
 
 export type SourceDoc = {
   /** 供錯誤訊息顯示的路徑 */
@@ -125,6 +126,7 @@ export function checkContent(input: ContentInput): CheckResult {
 
   for (const item of scenarios.values()) {
     const { data, doc } = item;
+    errors.push(...validateScenarioBody(doc.body).map((issue) => `${doc.file}: ${issue}`));
     if (data.format === 'judge') {
       if (data.answer !== NO_PROBLEM) checkRef(item, 'answer', entries, '圖鑑卡', data.answer);
       if (new Set(data.distractors).size !== data.distractors.length) {

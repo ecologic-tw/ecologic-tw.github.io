@@ -7,7 +7,7 @@ import { parse, parseDocument, stringify } from 'yaml';
 import { loadContent } from './load-content.ts';
 import { SCENARIO_FORMATS, scenarioSchema } from '../src/lib/content-schema.ts';
 import { checkContent } from '../src/lib/content-checks.ts';
-import { splitSections } from '../src/lib/scenario-sections.ts';
+import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
 
 const hash = (text: string) => createHash('sha256').update(text).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -164,9 +164,7 @@ export function preparePromotion(root: string, slug: string) {
   if (!String(data.title ?? '').trim()) issues.push('title: 請補標題');
   if ((data.format ?? 'judge') === 'judge' && !String(data.answer ?? '').trim())
     issues.push('answer: 請補圖鑑卡 ID 或 none');
-  const sections = splitSections(body);
-  for (const name of ['情境', '解說'])
-    if (!sections.get(name)?.trim()) issues.push(`本文: 請補「## ${name}」`);
+  issues.push(...validateScenarioBody(body));
   for (const key of ['betterPhrasing', 'checklist', 'distractors', 'answers', 'acceptable']) {
     if (
       Array.isArray(data[key]) &&

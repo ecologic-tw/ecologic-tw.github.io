@@ -24,6 +24,19 @@ function fixture(second = false) {
 }
 
 describe('human review preparation (temporary fixtures only)', () => {
+  it('rejects a missing explanation before returning any writes, including dry-run plans', () => {
+    const { root, file: terms } = fixture();
+    const file = join(root, 'scenarios/zh-TW/daily-001.md');
+    const text = `---\nid: daily-001\ntheme: daily\ntitle: 測試\nisControl: true\nanswer: none\ndistractors: [a, b]\ndifficulty: basic\nbetterPhrasing: [改寫]\nchecklist: [一, 二, 三]\nstatus: draft\nreviewers: []\nsources: [{title: Reference}]\nupdated: 2026-09-26\n---\n## 情境\n情境。\n`;
+    writeFileSync(file, text);
+    const beforeTerms = readFileSync(terms, 'utf8');
+    expect(() => prepareReview(root, ['premise', 'daily-001'], ['alice'], '2026-09-27')).toThrow(
+      /## 解說/,
+    );
+    expect(readFileSync(file, 'utf8')).toBe(text);
+    expect(readFileSync(terms, 'utf8')).toBe(beforeTerms);
+  });
+
   it('updates all term review metadata without writing during preparation', () => {
     const { root, file } = fixture();
     const before = readFileSync(file, 'utf8');
@@ -63,7 +76,7 @@ describe('human review preparation (temporary fixtures only)', () => {
     const file = join(root, 'scenarios/zh-TW/daily-001.md');
     writeFileSync(
       file,
-      `---\nid: daily-001\ntheme: daily\ntitle: 測試\nisControl: true\nanswer: none\ndistractors: [a, b]\ndifficulty: basic\nbetterPhrasing: [改寫]\nchecklist: [一, 二, 三]\nstatus: draft\nreviewers:\n  - alice\nsources: [{title: Reference}]\nupdated: 2026-09-26\n---\n\n## 情境\n保留本文。\n`,
+      `---\nid: daily-001\ntheme: daily\ntitle: 測試\nisControl: true\nanswer: none\ndistractors: [a, b]\ndifficulty: basic\nbetterPhrasing: [改寫]\nchecklist: [一, 二, 三]\nstatus: draft\nreviewers:\n  - alice\nsources: [{title: Reference}]\nupdated: 2026-09-26\n---\n\n## 情境\n保留本文。\n\n## 解說\n解說。\n`,
     );
     const plan = prepareReview(root, ['daily-001'], ['bob'], '2026-09-27');
     const result = plan.writes[0]?.text ?? '';

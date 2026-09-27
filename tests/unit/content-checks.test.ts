@@ -29,12 +29,14 @@ function entry(id: string, extra: Record<string, unknown> = {}, body = ''): Sour
   return { file: `${id}.md`, fileId: id, data: { ...baseEntry, id, ...extra }, body };
 }
 
-function scenario(id: string, extra: Record<string, unknown>, body = ''): SourceDoc {
+const validBody = '## 情境\n測試情境。\n\n## 解說\n測試解說。';
+
+function scenario(id: string, extra: Record<string, unknown>, body = validBody): SourceDoc {
   return { file: `${id}.md`, fileId: id, data: { ...baseScenario, id, ...extra }, body };
 }
 
 const cards = [entry('a'), entry('b'), entry('c')];
-const q = (id: string, extra: Record<string, unknown> = {}, body = '') =>
+const q = (id: string, extra: Record<string, unknown> = {}, body = validBody) =>
   scenario(id, { answer: 'a', distractors: ['b', 'c'], ...extra }, body);
 
 function run(input: { entries?: SourceDoc[]; scenarios?: SourceDoc[]; terms?: SourceDoc[] }) {
@@ -216,6 +218,36 @@ describe('body term markers', () => {
 
 describe('writing rules', () => {
   it.each([
+    ['', ['情境', '解說']],
+    ['## 情境描述\n內容\n## 解說\n理由', ['情境']],
+    ['## 情境\n內容', ['解說']],
+    ['## 情境\n \t\n## 解說\n理由', ['情境']],
+    ['## 情境\n內容\n## 解說\n \t', ['解說']],
+  ])('rejects missing or empty required sections: %s', (body, missing) => {
+    const errors = run({ scenarios: [q('daily-001', {}, body)] }).errors;
+    expect(errors).toHaveLength(missing.length);
+    for (const name of missing) expect(errors.join()).toContain(`## ${name}`);
+  });
+
+  it('rejects an empty reviewed scenario in an otherwise valid published collection', () => {
+    const input = loadContent();
+    const question = input.scenarios.find((doc) => doc.fileId === 'daily-001');
+    expect(question).toBeDefined();
+    if (!question) throw new Error('Missing daily-001 fixture');
+    question.body = '';
+    expect(checkContent(input).errors).toEqual([
+      expect.stringContaining('## 情境'),
+      expect.stringContaining('## 解說'),
+    ]);
+  });
+
+  it('accepts CRLF sections without an optional advanced explanation', () => {
+    expect(
+      run({ scenarios: [q('daily-001', {}, validBody.replaceAll('\n', '\r\n'))] }).errors,
+    ).toEqual([]);
+  });
+
+  it.each([
     ['網址', '請看 https://example.org'],
     ['Email', '寫信到 someone@example.org'],
     ['電話', '請撥 0912-345-678'],
@@ -225,7 +257,7 @@ describe('writing rules', () => {
   });
 
   it('does not flag ordinary numbers', () => {
-    const body = '這片濕地有 120 隻鳥，2026 年調查。';
+    const body = `${validBody}\n這片濕地有 120 隻鳥，2026 年調查。`;
     expect(run({ scenarios: [q('daily-001', {}, body)] }).errors).toEqual([]);
   });
 

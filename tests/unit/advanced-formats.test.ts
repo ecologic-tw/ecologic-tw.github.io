@@ -61,7 +61,11 @@ const choice = {
   ],
 };
 
-const doc = (id: string, data: Record<string, unknown>, body = ''): SourceDoc => ({
+const doc = (
+  id: string,
+  data: Record<string, unknown>,
+  body = '## 情境\n情境。\n## 解說\n解說。',
+): SourceDoc => ({
   file: `${id}.md`,
   fileId: id,
   data: { ...data, id },

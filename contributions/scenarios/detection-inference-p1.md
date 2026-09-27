@@ -30,7 +30,10 @@ status: draft
 reviewers: []
 updated: 2026-09-27
 isControl: false
-id: cons-013
+target: cons-013
+baseHash: 04ac238629d8c7167d26bcd99a67542ec84edd03f7f354e4b659d41c5c3d94e4
+nextSteps: []
+promotedTo: cons-013
 ---
 
 ## 情境
