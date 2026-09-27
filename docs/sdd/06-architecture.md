@@ -23,13 +23,14 @@
 ├─ public/ fonts/  favicon.svg  social-card.png
 ├─ src/
 │  ├─ content.config.ts
-│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/
+│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/  updates/zh-TW/
 │  ├─ i18n/zh-TW.ts            # 介面字串
 │  ├─ lib/
 │  │  ├─ progress.ts           # localStorage 讀寫、匯出匯入（zod 驗證）
 │  │  ├─ badges.ts             # 徽章規則（純函式）
 │  │  ├─ quiz.ts               # 選項組合與打亂（純函式）
 │  │  ├─ feedback.ts           # 產生回饋連結
+│  │  ├─ updates.ts            # 更新紀錄分組與 Atom 訂閱源（ADR-0024）
 │  │  └─ content.ts            # 取 reviewed 內容的唯一入口
 │  ├─ components/  layouts/  pages/  styles/
 ├─ scripts/check-content.ts    # 03 的建置期檢查

@@ -17,6 +17,15 @@
 - **既有文件落差**：目前內容檢查為名詞 30/33、圖鑑 30/33、情境 31/34 reviewed；舊里程碑仍列訴諸傳統與進階題待審、cons-013 待重審，與目前內容狀態有落差。應由維護者依實際審核／Git 紀錄同步，未由 AI 代認定人工審核完成。
 - **相關文件**：[內容格式](sdd/03-content-schema.md)、[防誤用](sdd/08-misuse-prevention.md)、[知識範圍 §6](sdd/12-knowledge-scope.md)、[里程碑](sdd/11-milestones.md)、[審核指南](review/review-guide.md)、[ADR-0020](adr/0020-concept-kind-and-knowledge-scope.md)、[ADR-0021](adr/0021-bias-evidence-strength-and-psychology-scope.md)。
 
+## 2026-09-27：更新紀錄頁與 Atom 訂閱源（更新通知第 1 項）
+- **目標與範圍**：讓使用者得知內容更新，且不違反紅線（無推播、無 Email、無追蹤、無黑帽文案）。使用者選擇先做第 1 項；本機「新」標記與 `/me/` 提示未做。
+- **分支**：`feat/updates-feed`，自 `origin/main`（`0238dbf`，PR #43 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。工作目錄中既有的未追蹤 `.claude/` 未觸碰。
+- **已完成**：ADR-0024（使用者接受，Decision Owner @Wang-Yi-Zhang）；內容 `published` 欄位（schema 版本 3）；`npm run review` 首次審核自動填 `published`、既有值不覆寫；`updates` 集合與第一則說明；`/updates/` 頁（依月份、首批內容只顯示數量）；`/updates/feed.xml`（僅 reviewed、最多 50 筆、草稿建置為空）；各頁 `<head>` alternate 連結與頁尾連結；sitemap 納入；`check-dist` 檢查訂閱源格式與不含未審內容；同步 01、03、04、06、07、11、CONTEXT、審核指南。
+- **驗證**：提交前以 Node 24.11.1 重新執行 `npm run lint`、`npm run check`、222 個單元測試、`npm run build`（69 頁，產物與站內連結檢查通過）、85 個 e2e，皆通過；並修正「首批內容」段落句號後多出的空白。原始驗證為本機副本（Node 22，專案要求 Node 24）`npm run check`、`npm run lint`、222 個單元測試、正式 `npm run build`（69 頁，產物檢查通過）；訂閱源以 XML 解析器驗證為合法 Atom。含草稿建置的 85 個 e2e（含新增 4 個：頁尾連結、訂閱源無草稿、淺色／深色 axe）全數通過。
+- **待人工確認**：`updates.yaml` 第一則說明的日期與文字；既有已審內容沒有 `published`，一律顯示為「首批內容」，不推測日期。
+- **下一步**：審閱後提交並開 PR；依 ADR-0024 Review Point 評估第 2、3 項。
+- **相關文件**：[ADR-0024](adr/0024-updates-page-and-feed.md)、[schema](sdd/03-content-schema.md)、[審核指南](review/review-guide.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：兩項 P1 修正
 - **目標／分支**：修正必要段落驗證缺口與 cons-013 的推論說明；`codex/p1-content-validation`，基底 `de62097`；本節隨修正提交並依使用者要求建立 PR，commit／PR 以 GitHub 與 Git 紀錄為準。前次架構檢視報告一併保存供追溯；原有 `.claude/` 不納入提交。
 - **已完成**：`scenario-sections.ts` 提供共用必要段落驗證，正式內容檢查、提案轉入與人工標記工具皆使用；新增缺漏／空白／錯誤標題、CRLF、reviewed 本文缺失及人工工具不寫入的回歸測試。人工標記仍須另跑全站 check 驗證引用與比例，本次未改變其全部發布規則。

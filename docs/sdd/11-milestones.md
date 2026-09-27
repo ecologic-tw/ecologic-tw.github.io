@@ -67,6 +67,12 @@
 - [x] 人工審核 cons-013（@Wang-Yi-Zhang）；同批開放對照題 cons-012
 - [ ] cons-013 機率推論修訂重新人工審核（2026-09-27 修訂版已退回 draft；先前審核紀錄保留於 Git）
 
+## 更新通知（ADR-0024）
+- [x] 第 1 項：`published` 欄位、`npm run review` 自動填入、`/updates/` 頁、Atom 訂閱源、頁尾與 `<head>` 連結、sitemap、產物檢查、單元與 e2e 測試
+- [x] ADR-0024 接受（Decision Owner：@Wang-Yi-Zhang）
+- [ ] 人工確認 `updates.yaml` 第一則說明的文字
+- [ ] 第 2、3 項（本機「新」標記、`/me/` 提示）：依 ADR-0024 Review Point 再評估
+
 ## 持續
 - [x] 非暴力溝通、主觀意義與客觀意義：3 張 concept 卡及 3 條名詞 draft（語言／溝通角度，見 12 §6）
 - [x] 人工審核上述溝通與意義內容（2026-09-27，使用者完成標記，reviewer：Wang-Yi-Zhang）；審核規範見 12 §5–6

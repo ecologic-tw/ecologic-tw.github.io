@@ -58,6 +58,25 @@ for (const doc of [...content.entries, ...content.scenarios]) {
   if (data.status !== 'reviewed' && paths.includes(`/${prefix}/${data.id}/`))
     errors.push(`${data.id}: 未審或下架內容進入正式產物`);
 }
+// 訂閱源只能含已審內容（ADR-0024）
+const feed = readFileSync(join(DIST, 'updates', 'feed.xml'), 'utf8');
+if (!feed.startsWith('<?xml') || !feed.includes('<feed xmlns="http://www.w3.org/2005/Atom"'))
+  errors.push('updates/feed.xml: 不是 Atom 訂閱源');
+for (const [kind, docs] of [
+  ['guide', content.entries],
+  ['scenario', content.scenarios],
+] as const) {
+  for (const doc of docs) {
+    const data = doc.data as { id: string; status: string };
+    if (data.status !== 'reviewed' && feed.includes(`/${kind}/${data.id}/`))
+      errors.push(`updates/feed.xml: 未審內容 ${data.id} 進入訂閱源`);
+  }
+}
+for (const doc of content.terms) {
+  const data = doc.data as { id: string; status: string };
+  if (data.status !== 'reviewed' && feed.includes(`/terms/#${data.id}"`))
+    errors.push(`updates/feed.xml: 未審名詞 ${data.id} 進入訂閱源`);
+}
 for (const e of errors) console.error(`✖ ${e}`);
 if (errors.length > 0) {
   console.error(`\n建置產物檢查失敗：${errors.length} 個錯誤`);

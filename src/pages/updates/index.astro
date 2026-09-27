@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import {
+  getPublishedEntries,
+  getPublishedScenarios,
+  getPublishedTerms,
+  getUpdateNotes,
+} from '../../lib/content.ts';
+import { FEED_PATH } from '../../lib/site.ts';
+import {
+  contentUpdates,
+  groupByMonth,
+  itemHeading,
+  itemKindLabel,
+  monthLabel,
+  noteKindLabel,
+  noteUpdates,
+} from '../../lib/updates.ts';
+
+const entries = contentUpdates('entry', await getPublishedEntries());
+const scenarios = contentUpdates('scenario', await getPublishedScenarios());
+const terms = contentUpdates('term', await getPublishedTerms());
+const months = groupByMonth([
+  ...noteUpdates(await getUpdateNotes()),
+  ...entries.items,
+  ...scenarios.items,
+  ...terms.items,
+]);
+const baseline = [
+  { label: '圖鑑卡', count: entries.baseline },
+  { label: '情境題', count: scenarios.baseline },
+  { label: '名詞', count: terms.baseline },
+].filter((b) => b.count > 0);
+---
+
+<Base title="更新紀錄" description="邏生門新上架的圖鑑卡、情境題、名詞與網站更新。">
+  <h1>更新紀錄</h1>
+  <p class="lead">新上架的內容和網站的變化都記在這裡。</p>
+  <p class="lead">
+    想在閱讀器裡收到通知，可以訂閱
+    <a href={FEED_PATH} type="application/atom+xml">
+      RSS／Atom 訂閱源
+    </a>
+    。訂閱由你的閱讀器處理，本站不會知道誰訂閱了。
+  </p>
+
+  {months.map(({ month, items }) => (
+    <section class="month" aria-labelledby={`month-${month}`}>
+      <h2 id={`month-${month}`}>{monthLabel(month)}</h2>
+      <ul class="updates">
+        {items.map((item) => (
+          <li class="update">
+            <p class="meta">
+              <time datetime={item.date}>{item.date}</time>
+              <span class="tag">
+                {item.kind === 'note' && item.noteKind
+                  ? noteKindLabel[item.noteKind]
+                  : itemKindLabel[item.kind]}
+              </span>
+            </p>
+            <p class="title">
+              {item.path ? <a href={item.path}>{itemHeading(item)}</a> : itemHeading(item)}
+            </p>
+            {item.summary && <p class="summary">{item.summary}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  {baseline.length > 0 && (
+    <section class="month" aria-labelledby="baseline-title">
+      <h2 id="baseline-title">首批內容</h2>
+      <p>
+        網站最初上線的內容：
+        {baseline.map((b, i) => `${i > 0 ? '、' : ''}${b.label} ${b.count} 項`).join('')}。可以到
+        <a href="/guide/">圖鑑</a>、<a href="/practice/daily/">日常</a>與
+        <a href="/practice/conservation/">保育</a>題目、<a href="/terms/">名詞</a>頁瀏覽。
+      </p>
+    </section>
+  )}
+</Base>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+    max-width: var(--measure);
+  }
+
+  .month {
+    margin-top: 2.5rem;
+  }
+
+  .month h2 {
+    font-size: var(--step-1);
+  }
+
+  .updates {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--mist);
+  }
+
+  .update {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .tag {
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+  }
+
+  .title {
+    margin-top: 0.2rem;
+    font-weight: 500;
+  }
+
+  .summary {
+    margin-top: 0.2rem;
+    max-width: var(--measure);
+  }
+</style>
