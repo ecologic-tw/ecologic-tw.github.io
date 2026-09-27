@@ -18,6 +18,17 @@ export const THEMES = ['daily', 'conservation'] as const;
 export { NO_PROBLEM } from './quiz.ts';
 
 const reviewMeta = {
+  // 本人同意的公開名稱／筆名與實際貢獻，不等同 reviewers。
+  contributors: z
+    .array(
+      z
+        .object({
+          name: z.string().trim().min(1).max(80),
+          contribution: z.string().trim().min(1).max(160),
+        })
+        .strict(),
+    )
+    .default([]),
   status: z.enum(STATUSES),
   reviewers: z
     .array(

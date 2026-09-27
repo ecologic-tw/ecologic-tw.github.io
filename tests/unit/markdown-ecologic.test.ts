@@ -2,6 +2,7 @@ import { markdownToHtml } from 'satteri';
 import { describe, expect, it } from 'vitest';
 import {
   ecologicAdvanced,
+  ecologicExternalLinks,
   ecologicTerms,
   splitTermMarkers,
   type TermInfo,
@@ -12,13 +13,22 @@ const terms = new Map<string, TermInfo>([
 ]);
 
 const render = (md: string): string => {
-  const result = markdownToHtml(md, { hastPlugins: [ecologicTerms(terms), ecologicAdvanced] });
+  const result = markdownToHtml(md, {
+    hastPlugins: [ecologicTerms(terms), ecologicExternalLinks, ecologicAdvanced],
+  });
   // 外掛都是同步的，結果不會是 Promise
   if (result instanceof Promise) throw new Error('unexpected async markdown result');
   return result.html;
 };
 
 describe('term markers', () => {
+  it('opens external Markdown links separately while preserving internal navigation', () => {
+    const html = render('[外站](https://example.org/) [本站](/about/)');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="noopener noreferrer"');
+    expect(html).toContain('外站（另開視窗）');
+    expect(html).toContain('<a href="/about/">本站</a>');
+  });
   it('turns [[id]] into a popover button with the term name, keeping surrounding text', () => {
     const html = render('先確認[[premise]]是否成立。');
     expect(html).toContain('先確認<span class="term">');

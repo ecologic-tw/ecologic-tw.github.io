@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：外部連結與漸進情境協作
+- **基底與狀態**：已確認 PR #18 合併至 main，merge commit `500158018799a0c803761ae0c8766696b84fef3e`。本次分支 `codex/scenario-contributions`，本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準；未修改既有題目與審核狀態、未啟用對照題雙審。
+- **外連**：參考資料、頁尾原始碼、關於／參與／授權等連結改用 ExternalLink，共用另開視窗提示與安全屬性；Markdown 外連自動轉換；建置拒絕漏設 target 的外連。內部導航保持原樣。
+- **降低維護門檻**：`npm run scenario -- new|edit|check|promote` 建立不完整提案、列待辦、複製修訂及驗證後轉入 draft。提案在 `contributions/scenarios/`，不影響網站。工具自動題號／對照題旗標、清舊審核者、保留 YAML 註解與貢獻者，檢查原題 hash 避免覆寫其他人的修改；保留所有正式審核門檻。
+- **協作署名**：可選 contributors（公開名稱／筆名、實際貢獻）供三種內容顯示，不取代 reviewers。未猜測或批次補填舊內容作者；Issue 模板、CONTRIBUTING、關於頁及協作指南支援只做一小部分與交接 nextSteps。
+- **驗證**：lint、160 個單元測試、Astro／內容 check、49 頁正式 build 通過；57 個 e2e 全部通過。手機 390px 回饋區無橫向溢出，已檢視截圖；Issue YAML 解析及 git diff --check 通過。工具測試只寫暫存 fixtures，未實際轉入正式情境。早期建置發現舊內容未帶 contributors 預設值，已在顯示元件加入空陣列相容處理並重建通過。
+- **待人工確認／下一步**：依使用者要求建立 PR，待 CI 與人工審閱，尚未要求合併。檢閱 ADR-0019 與 [情境協作指南](review/scenario-contributions.md)，首次多人接力時確認流程及署名同意。M5 全部內容人工審核仍未完成。
+
 ## 2026-09-27：P2／P3 來源、搜尋與品質工具
 - **目標與狀態**：從已合併 PR #17 的 `origin/main`（`f3240a2`）建立 `codex/content-quality-p2-p3`；本節隨 P2／P3 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。未修改內容審核狀態，對照題雙審仍關閉。
 - **完成**：三種內容共用參考資料區塊（情境置於答案內）；canonical／Open Graph 與自託管 PNG；依已審內容產生 sitemap，開發預覽 noindex／禁爬；每次正式建置驗證 metadata、sitemap、草稿排除並產生來源／雙審／AI 協助覆蓋率與閱讀長度報告；每週與手動來源 URL workflow（合併後才排程）。無新增套件。

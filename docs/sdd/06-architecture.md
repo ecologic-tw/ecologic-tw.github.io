@@ -62,3 +62,8 @@ parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證�
 - `Sources.astro` 統一呈現三種內容的來源；情境題置於答案揭露區。
 - `site.ts` 集中正式網址；`Base.astro` 輸出 canonical／Open Graph。靜態 endpoints 產生 sitemap 與 robots，取內容仍經 `content.ts`；草稿預覽不索引。
 - 建置後產生 `reports/content-quality.*`（不進公開 dist）；獨立來源連結 workflow 產生 Actions 報告。操作及限制見 `docs/review/content-quality.md`。
+
+## 情境協作（ADR-0019）
+- `contributions/scenarios/` 接受不完整提案，不納入網站內容集合；`scripts/scenario.ts` 提供 new／edit／check／promote，轉入 draft 前沿用完整檢查。
+- `contributors` 保存自願公開名稱與實際貢獻，`Contributors.astro` 共用顯示；不推測既有作者、不取代 reviewers。
+- `ExternalLink.astro` 與 Markdown 轉換集中處理外部連結的新視窗提示、安全屬性；建置產物檢查避免遺漏。

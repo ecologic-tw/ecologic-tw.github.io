@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ExternalLink from '../../components/ExternalLink.astro';
 import { FEEDBACK, formUrl } from '../../lib/feedback.ts';
 import { KEY } from '../../lib/progress.ts';
 
@@ -67,17 +68,15 @@ const siteUrl = 'https://ecologic-tw.github.io/';
         <tbody>
           <tr>
             <td>
-              <a href={formUrl({ mode: 'basic' })} rel="noopener noreferrer" data-feedback-form>
+              <ExternalLink href={formUrl({ mode: 'basic' })} data-feedback-form>
                 回饋表單
-              </a>
+              </ExternalLink>
             </td>
             <td>不需要帳號。回報題目問題、分享使用心得、投稿新情境。</td>
           </tr>
           <tr>
             <td>
-              <a href={`${repo}/issues/new/choose`} rel="noopener noreferrer">
-                GitHub Issues
-              </a>
+              <ExternalLink href={`${repo}/issues/new/choose`}>GitHub Issues</ExternalLink>
             </td>
             <td>有 GitHub 帳號。內容勘誤、新情境、功能建議，可以公開討論與追蹤。</td>
           </tr>
@@ -96,22 +95,20 @@ const siteUrl = 'https://ecologic-tw.github.io/';
         我們的文化是<strong>自由決定、公開承擔、共同學習</strong>
         。不會寫程式也可以參與：回報問題、投稿情境、審核內容都很需要人手。
       </p>
+      <p>
+        不必一次完成整題。你可以只提供一段虛構對話、補一個來源，或試讀後指出不清楚的地方；
+        留下希望大家接力的部分，我們一起逐步補齊。願意署名的人可以使用公開名稱或筆名，內容採用後會列出各自的貢獻；也可以不署名。
+      </p>
       <ul>
         <li>
-          <a href={`${repo}/blob/main/CONTRIBUTING.md`} rel="noopener noreferrer">
-            參與貢獻指南
-          </a>
+          <ExternalLink href={`${repo}/blob/main/CONTRIBUTING.md`}>參與貢獻指南</ExternalLink>
         </li>
         <li>
-          <a href={`${repo}/blob/main/CODE_OF_CONDUCT.md`} rel="noopener noreferrer">
-            行為準則
-          </a>
+          <ExternalLink href={`${repo}/blob/main/CODE_OF_CONDUCT.md`}>行為準則</ExternalLink>
           （含私下回報的聯絡方式）
         </li>
         <li>
-          <a href={`${repo}/blob/main/SECURITY.md`} rel="noopener noreferrer">
-            資安問題回報方式
-          </a>
+          <ExternalLink href={`${repo}/blob/main/SECURITY.md`}>資安問題回報方式</ExternalLink>
         </li>
       </ul>
     </section>
@@ -121,18 +118,13 @@ const siteUrl = 'https://ecologic-tw.github.io/';
       <ul>
         <li>
           程式碼：
-          <a href="https://opensource.org/license/mit" rel="noopener noreferrer">
-            MIT 授權
-          </a>
+          <ExternalLink href="https://opensource.org/license/mit">MIT 授權</ExternalLink>
         </li>
         <li>
           內容（題目、解說、名詞）：
-          <a
-            href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hant"
-            rel="noopener noreferrer"
-          >
+          <ExternalLink href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hant">
             創用 CC 姓名標示－相同方式分享 4.0 國際
-          </a>
+          </ExternalLink>
         </li>
       </ul>
       <p>轉載或改作內容時，請這樣標示：</p>

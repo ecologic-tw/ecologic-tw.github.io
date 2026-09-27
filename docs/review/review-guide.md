@@ -42,6 +42,7 @@ npm run review -- --reviewer ReviewerOne --reviewer ReviewerTwo cons-001 --dry-r
 下面的批次只是相依順序，**不代表已滿足審核或來源要求**。含爭議題的批次需兩人；草稿仍需逐項審閱，不能直接照抄指令就算完成審核。
 
 ## 批次與指令
+未完成的新構想或修訂先放 [情境提案工作區](scenario-contributions.md)，不需要為了提交一小部分就滿足正式題目的全部欄位；正式發布前仍走本指南。`contributors` 記錄公開署名與實際貢獻，不取代 `reviewers`。
 每一批：審核 → 修改內容 → 執行標記指令 → `npm run check` → 開 PR（完成檢核表）→ 合併。合併後該批內容就會出現在正式網站。
 
 以下指令中的 `Wang-Yi-Zhang` 請換成實際審核者的 GitHub 帳號。先加 `--dry-run` 可只看會改哪些檔案。

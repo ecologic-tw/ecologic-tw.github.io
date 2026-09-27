@@ -1,7 +1,12 @@
 // 情境題本文分段（docs/sdd/03：`## 情境`、`## 解說`、`## 進階解說`）。
 // 作答頁要把情境與解說放在不同位置（解說在作答後才揭露），所以在建置時分段各自轉成 HTML。
 import { markdownToHtml } from 'satteri';
-import { ecologicAdvanced, ecologicTerms, type TermInfo } from './markdown-ecologic.ts';
+import {
+  ecologicAdvanced,
+  ecologicTerms,
+  ecologicExternalLinks,
+  type TermInfo,
+} from './markdown-ecologic.ts';
 
 export const SECTIONS = { scenario: '情境', explanation: '解說', advanced: '進階解說' } as const;
 
@@ -34,7 +39,7 @@ export function renderMarkdown(
   idPrefix: string,
 ): string {
   const result = markdownToHtml(markdown, {
-    hastPlugins: [ecologicTerms(terms, idPrefix), ecologicAdvanced],
+    hastPlugins: [ecologicTerms(terms, idPrefix), ecologicExternalLinks, ecologicAdvanced],
   });
   if (result instanceof Promise) throw new Error('unexpected async markdown result');
   return result.html;

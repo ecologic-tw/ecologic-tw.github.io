@@ -1,5 +1,6 @@
 ---
 import { t } from '../i18n/zh-TW.ts';
+import ExternalLink from './ExternalLink.astro';
 import { formUrl } from '../lib/feedback.ts';
 ---
 
@@ -14,9 +15,7 @@ import { formUrl } from '../lib/feedback.ts';
     >
       意見回饋（另開視窗）
     </a>
-    <a href="https://github.com/ecologic-tw" rel="noopener noreferrer">
-      {t.sourceLink}
-    </a>
+    <ExternalLink href="https://github.com/ecologic-tw">{t.sourceLink}</ExternalLink>
   </nav>
   <p>{t.notOfficial}</p>
   <p>{t.privacy}</p>

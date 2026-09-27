@@ -1,6 +1,7 @@
 ---
 import ListFilter from '../../components/ListFilter.astro';
 import Sources from '../../components/Sources.astro';
+import Contributors from '../../components/Contributors.astro';
 import { t } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
 import { getPublishedTerms } from '../../lib/content.ts';
@@ -35,6 +36,7 @@ const terms = await getPublishedTerms();
             <dd>
               {term.data.definition}
               <Sources sources={term.data.sources} />
+              <Contributors contributors={term.data.contributors} />
             </dd>
           </div>
         ))}
