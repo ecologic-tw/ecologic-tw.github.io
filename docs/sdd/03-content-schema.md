@@ -29,7 +29,7 @@ const reviewMeta = {
 ```ts
 z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),        // 與檔名一致，如 straw-man
-  kind: z.enum(['law','inference','formal-fallacy','informal-fallacy','bias']),
+  kind: z.enum(['concept','law','inference','formal-fallacy','informal-fallacy','bias']),
   title: z.string(),                           // 稻草人謬誤
   en: z.string(),                              // Straw man
   summary: z.string().max(60),                 // 一句話定義
@@ -37,7 +37,8 @@ z.object({
   pairWith: z.string().optional(),             // 形式謬誤 ↔ 有效推論
   notFallacyWhen: z.string().optional(),       // 謬誤、偏誤卡必填（refine）
   charitableResponse: z.string().optional(),   // 謬誤、偏誤卡必填（refine）
-  quickCheck: z.object({                        // 卡內小檢核；思維定律、有效推論卡必填（refine，ADR-0015）
+  evidence: z.enum(['robust','moderate','contested']).optional(), // 僅 bias；draft 偏誤卡必填（refine，ADR-0021）
+  quickCheck: z.object({                        // 卡內小檢核；基礎概念、思維定律、有效推論卡必填（refine，ADR-0015、ADR-0020）
     question: z.string(),
     options: z.array(z.string()).min(2).max(4),
     answer: z.number().int(),                   // options 的索引，從 0 開始
@@ -48,7 +49,9 @@ z.object({
   ...reviewMeta,
 })
 ```
-Markdown 本文依序使用以下二級標題：`## 說明`、`## 生活例子`、`## 保育例子`、`## 何時不算謬誤`（或 `## 何時合理`）、`## 善意回應法`、`## 進階`（進階模式才顯示）。
+Markdown 本文依序使用以下二級標題：`## 說明`、`## 生活例子`、`## 保育例子`、`## 何時不算謬誤`（或 `## 何時合理`）、`## 善意回應法`、`## 進階`（進階模式才顯示）。`concept` 卡以 `## 常見誤解` 取代「何時合理／善意回應法」。
+
+引用其他圖鑑卡時用一般連結 `[排中律](/guide/law-of-excluded-middle/)`；`[[…]]` 只用於名詞表中的名詞。
 
 範例 `entries/zh-TW/appeal-to-nature.md`：
 ```md
@@ -124,3 +127,4 @@ z.object({
 - reviewed 內容不得引用 draft 內容。
 - 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）。
 - 每個主題中對照題比例 15%–30%。
+- `evidence` 只能用於 `bias` 卡；`draft` 偏誤卡缺 `evidence` 時失敗。既有 reviewed 偏誤卡待人工補值後，改為全面必填（ADR-0021 Review Point）。

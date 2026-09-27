@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
-import { biasNote, kindLabel, t } from '../../i18n/zh-TW.ts';
+import { biasNote, evidenceLabel, kindLabel, t } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import { getPublishedEntries, getPublishedTerms, type Entry } from '../../lib/content.ts';
@@ -42,6 +42,11 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
       </p>
       <p class="summary">{data.summary}</p>
       {data.kind === 'bias' && <p class="note">{biasNote}</p>}
+      {data.evidence && (
+        <p class="note evidence" data-evidence={data.evidence}>
+          <strong>{evidenceLabel[data.evidence].label}</strong>：{evidenceLabel[data.evidence].note}
+        </p>
+      )}
       {pair && (
         <p class="note">
           容易和<a href={`/guide/${pair.id}/`}>{pair.data.title}</a>

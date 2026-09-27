@@ -75,6 +75,31 @@ describe('schema', () => {
     expect(run({ entries: [...cards, inference] }).errors.join()).toMatch(/quickCheck/);
   });
 
+  it('requires a quickCheck on concept cards (ADR-0020)', () => {
+    const concept = { kind: 'concept', notFallacyWhen: undefined, charitableResponse: undefined };
+    expect(run({ entries: [...cards, entry('d', concept)] }).errors.join()).toMatch(/quickCheck/);
+    expect(run({ entries: [...cards, entry('d', { ...concept, quickCheck })] }).errors).toEqual([]);
+  });
+
+  it('requires evidence on draft bias cards (ADR-0021)', () => {
+    const bias = entry('d', { kind: 'bias' });
+    expect(run({ entries: [...cards, bias] }).errors.join()).toMatch(/evidence/);
+    const withEvidence = entry('d', { kind: 'bias', evidence: 'moderate' });
+    expect(run({ entries: [...cards, withEvidence] }).errors).toEqual([]);
+  });
+
+  it('rejects evidence on non-bias cards', () => {
+    const { errors } = run({ entries: [...cards, entry('d', { evidence: 'robust' })] });
+    expect(errors.join()).toMatch(/evidence/);
+  });
+
+  it('rejects an unknown evidence level', () => {
+    const { errors } = run({
+      entries: [...cards, entry('d', { kind: 'bias', evidence: 'strong' })],
+    });
+    expect(errors.join()).toMatch(/evidence/);
+  });
+
   it('rejects a quickCheck answer outside the options', () => {
     const law = entry('d', { kind: 'law', quickCheck: { ...quickCheck, answer: 2 } });
     expect(run({ entries: [...cards, law] }).errors.join()).toMatch(/quickCheck\.answer/);

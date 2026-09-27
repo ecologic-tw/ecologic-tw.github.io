@@ -1,5 +1,18 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：知識擴充第一階段（基礎概念卡、訴諸無知、偏誤證據強度）
+- **目標與範圍**：依使用者要求補充「真」的哲學定義與邏輯知識、評估心理學內容；使用者選擇「分階段」：本次只做基礎概念卡別與證據強度欄位，多選／進階題型另開分支。
+- **分支**：`docs/knowledge-scope-concept-evidence`，自 `origin/main`（`dfd6cc5`，PR #19 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
+- **已完成**：`concept` 卡別（必填小檢核、色標「溪」並同步 DESIGN.md）；`evidence` 欄位（僅偏誤卡、頁面顯示標籤；draft 偏誤卡必填）；7 張 draft 新卡（命題與真值、有效與健全、演繹／歸納／溯因、必要與充分條件、條件句的四種變形、什麼是「真」？、訴諸無知）；新增 SDD 12 知識範圍、ADR-0020、ADR-0021（皆「提議」）；更新 02、03、05、08、11、CONTEXT、AGENTS 文件地圖。
+- **驗證**：在本機副本（Node 22，專案要求 Node 24）執行 `npm run check`、`npm run lint`、166 個單元測試、正式 `npm run build`（49 頁，新草稿未發布）皆通過；含草稿建置 60 頁，57 個 e2e（含淺色／深色 axe）全數通過。新卡閱讀長度皆未超過門檻。
+- **待人工確認**：
+  - 7 張新卡的正確性與來源：來源由 AI 列出（SEP 條目、OpenStax、Walton 1996、Tarski 1944、Hurley 教科書、MacKenzie 2002），**未逐一以原文核對**；Hurley 與 Walton 未附網址。
+  - 既有 3 張偏誤卡的 `evidence` 值，AI 建議（僅供參考）：確認偏誤 `robust`、倖存者偏誤 `robust`（統計選樣偏差概念）、可得性捷思 `moderate`（原始研究穩健，部分延伸效果的重複驗證結果不一）。補值後依 ADR-0021 改為全面必填。
+  - ADR-0020、0021 的 Decision Owner 與是否接受。
+- **過程中的問題（Learning Review 素材）**：本次開工時 AI 未先核對 Git 現況，直接覆寫了 `docs/sdd/02`、`03` 並修改 `CONTEXT.md`；發現後以 `git show HEAD:<file>` 還原（當時工作區無其他未提交變更，未遺失資料）。另外，資料夾預設禁止刪除，git 鎖定檔無法移除，已取得使用者授權刪除權限。
+- **下一步**：人工審核新卡；進階題型與多選題另開分支並先寫 ADR（見 SDD 12 §4）；新增一題「訴諸無知／偵測率」保育情境題。
+- **相關文件**：[知識範圍](sdd/12-knowledge-scope.md)、[ADR-0020](adr/0020-concept-kind-and-knowledge-scope.md)、[ADR-0021](adr/0021-bias-evidence-strength-and-psychology-scope.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：外部連結與漸進情境協作
 - **基底與狀態**：已確認 PR #18 合併至 main，merge commit `500158018799a0c803761ae0c8766696b84fef3e`。本次分支 `codex/scenario-contributions`，本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準；未修改既有題目與審核狀態、未啟用對照題雙審。
 - **外連**：參考資料、頁尾原始碼、關於／參與／授權等連結改用 ExternalLink，共用另開視窗提示與安全屬性；Markdown 外連自動轉換；建置拒絕漏設 target 的外連。內部導航保持原樣。

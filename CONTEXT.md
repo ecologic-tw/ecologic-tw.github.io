@@ -5,7 +5,7 @@
 | 用語 | 英文識別字 | 定義 |
 |---|---|---|
 | 圖鑑卡 | `entry` | 一個邏輯概念的說明頁。種類見「卡別」。 |
-| 卡別 | `kind` | `law` 思維定律與哲學原則／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
+| 卡別 | `kind` | `concept` 基礎概念／`law` 思維定律與哲學原則／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
 | 情境題 | `scenario` | 一段虛構對話或陳述，讓使用者判讀其推理是否有問題。 |
 | 情境提案 | scenario proposal | 可不完整的構想或修訂稿，放在 contributions/scenarios，不進網站；完成後轉為正式 draft。 |
 | 內容貢獻者 | `contributors` | 同意公開署名或筆名、實際參與構想／來源／改寫／試讀等工作的人；不等同審核者。 |
@@ -31,3 +31,4 @@
 | Learning Review | learning review | 出錯後理解問題如何形成、改善系統的檢討（不找戰犯）。 |
 | 角色檢視 | role review | 每半年公開檢視角色與權力分配，防止隱形主管。 |
 | 紅線 | red line | `AGENTS.md` 所列不可違反的規則；修改屬社群基本規則。 |
+| 證據強度 | `evidence` | 認知偏誤卡的研究證據等級：`robust` 證據穩健／`moderate` 證據中等／`contested` 證據有爭議（ADR-0021）。 |
