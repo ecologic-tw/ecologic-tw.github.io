@@ -2,6 +2,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { checkHtml } from '../src/lib/dist-checks.ts';
+import { checkInternalLinks } from '../src/lib/internal-links.ts';
 import { checkSearchPage, checkSitemap } from '../src/lib/search-checks.ts';
 import { SITE_URL } from '../src/lib/site.ts';
 import { loadContent } from './load-content.ts';
@@ -31,6 +32,16 @@ const paths = htmlFiles.map(
 for (const [index, path] of paths.entries()) {
   errors.push(...checkSearchPage(path, readFileSync(htmlFiles[index] ?? '', 'utf8')));
 }
+// 站內連結的目標必須存在於產物中（Issue #41）
+const distFiles = new Set(
+  readdirSync(DIST, { recursive: true, encoding: 'utf8' }).map((f) => `/${f.split(sep).join('/')}`),
+);
+errors.push(
+  ...checkInternalLinks(
+    paths.map((path, index) => ({ path, html: readFileSync(htmlFiles[index] ?? '', 'utf8') })),
+    distFiles,
+  ),
+);
 errors.push(...checkSitemap(readFileSync(join(DIST, 'sitemap.xml'), 'utf8'), paths));
 if (!readFileSync(join(DIST, 'robots.txt'), 'utf8').includes(`Sitemap: ${SITE_URL}/sitemap.xml`))
   errors.push('robots.txt: 缺少 sitemap 網址');
