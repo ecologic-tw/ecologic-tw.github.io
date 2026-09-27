@@ -37,7 +37,6 @@ sources:
       - "補充品功效需依研究，天然不保證安全；未對題目中的虛構產品提供功效背書。"
 updated: 2026-09-27
 aiAssisted: true
-published: 2026-09-27
 ---
 
 ## 說明
