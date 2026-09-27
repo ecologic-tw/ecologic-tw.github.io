@@ -1,7 +1,7 @@
 # ADR-0025 內容修訂的揭露方式
 
 - 日期：2026-09-27
-- 狀態：提議（待決定事項已由 Decision Owner 於 2026-09-27 決定，見文末；接受後由 Decision Owner 更新狀態）
+- 狀態：接受（2026-09-27，@Wang-Yi-Zhang；待決定事項的決定見文末）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：第一則附 `about` 的勘誤說明上線後，檢查內容頁、`/updates/` 與訂閱源是否一致；與 ADR-0024 一起在半年後依回饋表單意見檢視分級是否合用
 
