@@ -2,11 +2,17 @@
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
-import { biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import { advancedQuiz, biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import { getPublishedEntries, getPublishedScenarios, type Scenario } from '../../lib/content.ts';
-import { NO_PROBLEM, buildOptions } from '../../lib/quiz.ts';
+import {
+  PREMISE_VERDICTS,
+  SCENARIO_FORMATS,
+  VALIDITY_VERDICTS,
+  multiOptionIds,
+} from '../../lib/content-schema.ts';
+import { NO_PROBLEM, buildOptions, soundnessOf, type MultiRole } from '../../lib/quiz.ts';
 import { SECTIONS, renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
 import { loadTermInfo } from '../../lib/terms-source.ts';
 
@@ -21,17 +27,39 @@ interface Props {
 
 const { scenario } = Astro.props;
 const { data } = scenario;
-// ADR-0022：judge 以外的題型在第 2 階段才有作答頁；先讓建置明確失敗，避免發布無法作答的題目。
-if (data.format !== 'judge') {
-  throw new Error(`${scenario.id}: 尚未支援 ${data.format} 題型的作答頁（ADR-0022 第 2 階段）`);
+// 內容快取可能沿用舊 schema 解析的資料（沒有 format），此時頁面會沒有任何選項；改為明確報錯。
+if (!(SCENARIO_FORMATS as readonly string[]).includes(data.format)) {
+  throw new Error(
+    `${scenario.id}: 題型「${String(data.format)}」不明。內容快取可能過期：請停止開發伺服器，刪除 .astro/data-store.json 後重新啟動。`,
+  );
 }
 
 const entries = new Map((await getPublishedEntries()).map((e) => [e.id, e]));
 const titleOf = (id: string) =>
   id === NO_PROBLEM ? quiz.noProblem : (entries.get(id)?.data.title ?? id);
 
-// 建置時的順序；前端再打亂（02 規則 2）。沒有 JavaScript 時選項不顯示。
-const options = buildOptions(data.answer, data.distractors);
+// 建置時的順序；前端再打亂（02 規則 2）。沒有 JavaScript 時選項不顯示，答案與解說收在「看答案與解說」。
+const judgeOptions = data.format === 'judge' ? buildOptions(data.answer, data.distractors) : [];
+const multiOptions =
+  data.format === 'multi'
+    ? (
+        [
+          ...data.answers.map((id) => ({ id, role: 'answer' })),
+          ...data.acceptable.map((id) => ({ id, role: 'acceptable' })),
+          ...data.distractors.map((id) => ({ id, role: 'distractor' })),
+        ] as { id: string; role: MultiRole }[]
+      ).map((o) => ({ ...o, title: titleOf(o.id), note: data.notes[o.id] ?? '' }))
+    : [];
+const choices = data.format === 'choice' ? data.choices : [];
+const choiceAnswer = String(choices.findIndex((c) => c.correct));
+const soundness =
+  data.format === 'validity-soundness' ? soundnessOf(data.validity, data.premises) : undefined;
+const chooseFirst = {
+  judge: quiz.chooseFirst,
+  multi: advancedQuiz.multiChooseFirst,
+  'validity-soundness': advancedQuiz.axesChooseFirst,
+  choice: advancedQuiz.choiceChooseFirst,
+}[data.format];
 
 const terms = loadTermInfo();
 const sections = splitSections(scenario.body ?? '');
@@ -43,8 +71,23 @@ const scenarioHtml = html('scenario');
 const explanationHtml = html('explanation');
 const advancedHtml = html('advanced');
 
-const answerEntry = entries.get(data.answer);
-const related = [data.answer, ...data.distractors].flatMap((id) => entries.get(id) ?? []);
+const answerEntry = data.format === 'judge' ? entries.get(data.answer) : undefined;
+const multiAnswers =
+  data.format === 'multi' ? data.answers.flatMap((id) => entries.get(id) ?? []) : [];
+const showBiasNote =
+  answerEntry?.data.kind === 'bias' || multiAnswers.some((e) => e.data.kind === 'bias');
+const relatedIds =
+  data.format === 'judge'
+    ? [data.answer, ...data.distractors]
+    : data.format === 'multi'
+      ? multiOptionIds(data)
+      : [];
+const related = relatedIds.flatMap((id) => entries.get(id) ?? []);
+// 改寫練習：judge、multi 必填；其他題型選填，沒有時不顯示（ADR-0022 §3）
+const rewrite =
+  data.betterPhrasing && data.checklist
+    ? { betterPhrasing: data.betterPhrasing, checklist: data.checklist }
+    : undefined;
 
 const themeScenarios = await getPublishedScenarios(data.theme);
 const index = themeScenarios.findIndex((s) => s.id === scenario.id);
@@ -54,7 +97,7 @@ const next = themeScenarios[index + 1];
 <Base title={data.title} description={`${themeLabel[data.theme]}情境題：${data.title}`}>
   {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
 
-  <article class="scenario" data-quiz data-scenario-id={scenario.id} data-answer={data.answer}>
+  <article class="scenario" data-quiz data-scenario-id={scenario.id} data-format={data.format}>
     <header>
       <p class="meta">
         <a href={`/practice/${data.theme}/`}>{themeLabel[data.theme]}</a>
@@ -66,22 +109,94 @@ const next = themeScenarios[index + 1];
     <section class="situation prose" aria-label={SECTIONS.scenario} set:html={scenarioHtml} />
 
     <form class="judge" data-quiz-form hidden>
-      <fieldset>
-        <legend>{quiz.question}</legend>
-        <ul data-quiz-options>
-          {options.map((id) => (
-            <li data-option-id={id}>
-              <label>
-                <input type="radio" name="choice" value={id} />
-                <span data-option-label>{titleOf(id)}</span>
-                <span class="option-tag" data-option-tag hidden />
-              </label>
-            </li>
-          ))}
-        </ul>
-      </fieldset>
+      {data.format === 'judge' && (
+        <fieldset>
+          <legend>{quiz.question}</legend>
+          <ul data-quiz-options data-quiz-group data-answer={data.answer} data-shuffle>
+            {judgeOptions.map((id) => (
+              <li data-option-id={id}>
+                <label>
+                  <input type="radio" name="choice" value={id} />
+                  <span data-option-label>{titleOf(id)}</span>
+                  <span class="option-tag" data-option-tag hidden />
+                </label>
+              </li>
+            ))}
+          </ul>
+        </fieldset>
+      )}
+      {data.format === 'choice' && (
+        <fieldset>
+          <legend>
+            <span class="task">{advancedQuiz.taskLabel[data.task]}</span>
+            {data.prompt}
+          </legend>
+          <ul data-quiz-options data-quiz-group data-answer={choiceAnswer} data-shuffle>
+            {choices.map((c, i) => (
+              <li data-option-id={String(i)}>
+                <label>
+                  <input type="radio" name="choice" value={String(i)} />
+                  <span data-option-label>{c.text}</span>
+                  <span class="option-tag" data-option-tag hidden />
+                </label>
+              </li>
+            ))}
+          </ul>
+        </fieldset>
+      )}
+      {data.format === 'validity-soundness' && (
+        <>
+          <fieldset>
+            <legend>{advancedQuiz.validityQuestion}</legend>
+            <ul data-quiz-options data-quiz-group data-answer={data.validity}>
+              {VALIDITY_VERDICTS.map((v) => (
+                <li data-option-id={v}>
+                  <label>
+                    <input type="radio" name="validity" value={v} />
+                    <span data-option-label>{advancedQuiz.validityLabel[v]}</span>
+                    <span class="option-tag" data-option-tag hidden />
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+          <fieldset>
+            <legend>{advancedQuiz.premisesQuestion}</legend>
+            <ul data-quiz-options data-quiz-group data-answer={data.premises}>
+              {PREMISE_VERDICTS.map((v) => (
+                <li data-option-id={v}>
+                  <label>
+                    <input type="radio" name="premises" value={v} />
+                    <span data-option-label>{advancedQuiz.premisesLabel[v]}</span>
+                    <span class="option-tag" data-option-tag hidden />
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        </>
+      )}
+      {data.format === 'multi' && (
+        <fieldset aria-describedby="multi-hint">
+          <legend>{advancedQuiz.multiQuestion}</legend>
+          <p class="hint" id="multi-hint">
+            {advancedQuiz.multiHint}
+          </p>
+          <ul data-quiz-options data-quiz-multi data-shuffle>
+            {multiOptions.map((o) => (
+              <li data-option-id={o.id} data-role={o.role}>
+                <label>
+                  <input type="checkbox" name="choice" value={o.id} />
+                  <span data-option-label>{o.title}</span>
+                  <span class="option-tag" data-option-tag hidden />
+                </label>
+              </li>
+            ))}
+          </ul>
+        </fieldset>
+      )}
       <p class="error" data-quiz-error hidden>
-        {quiz.chooseFirst}
+        {chooseFirst}
       </p>
       <button type="submit">{quiz.submit}</button>
     </form>
@@ -94,16 +209,76 @@ const next = themeScenarios[index + 1];
 
     <details class="reveal" data-quiz-reveal>
       <summary>{quiz.reveal}</summary>
-      <p class="answer">
-        {quiz.answerIs}：
-        {answerEntry ? (
-          <a href={`/guide/${answerEntry.id}/`}>{answerEntry.data.title}</a>
-        ) : (
-          <strong>{quiz.noProblem}</strong>
-        )}
-      </p>
+      {data.format === 'judge' && (
+        <p class="answer">
+          {quiz.answerIs}：
+          {answerEntry ? (
+            <a href={`/guide/${answerEntry.id}/`}>{answerEntry.data.title}</a>
+          ) : (
+            <strong>{quiz.noProblem}</strong>
+          )}
+        </p>
+      )}
+      {data.format === 'multi' && (
+        <p class="answer">
+          {advancedQuiz.multiAnswerIs}：
+          {multiAnswers.map((e, i) => (
+            <>
+              {i > 0 && '、'}
+              <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+            </>
+          ))}
+        </p>
+      )}
+      {data.format === 'choice' && (
+        <p class="answer">
+          {advancedQuiz.choiceAnswerIs}：<strong>{choices[Number(choiceAnswer)]?.text}</strong>
+        </p>
+      )}
       {data.isControl && <p class="note">{quiz.controlNote}</p>}
-      {answerEntry?.data.kind === 'bias' && <p class="note">{biasNote}</p>}
+      {showBiasNote && <p class="note">{biasNote}</p>}
+      {data.format === 'validity-soundness' && soundness && (
+        <dl class="axes">
+          <div>
+            <dt>{advancedQuiz.axisValidity}</dt>
+            <dd>
+              <strong>{advancedQuiz.validityLabel[data.validity]}</strong>。{data.notes.validity}
+            </dd>
+          </div>
+          <div>
+            <dt>{advancedQuiz.axisPremises}</dt>
+            <dd>
+              <strong>{advancedQuiz.premisesLabel[data.premises]}</strong>。{data.notes.premises}
+            </dd>
+          </div>
+          <div>
+            <dt>{advancedQuiz.axisSoundness}</dt>
+            <dd>
+              <strong>{advancedQuiz.soundnessLabel[soundness]}</strong>
+            </dd>
+          </div>
+        </dl>
+      )}
+      {(multiOptions.length > 0 || choices.length > 0) && (
+        <section class="option-notes" aria-labelledby="option-notes-title">
+          <h2 id="option-notes-title">{advancedQuiz.optionNotes}</h2>
+          <ul>
+            {multiOptions.map((o) => (
+              <li>
+                <strong>{o.title}</strong>
+                <span class="role">（{advancedQuiz.roleLabel[o.role]}）</span>：{o.note}
+              </li>
+            ))}
+            {choices.map((c) => (
+              <li>
+                <strong>{c.text}</strong>
+                {c.correct && <span class="role">（{advancedQuiz.roleLabel.answer}）</span>}：
+                {c.note}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <div class="prose" set:html={explanationHtml} />
       {(data.form || advancedHtml) && (
         <div class="mode-advanced advanced-block">
@@ -119,30 +294,32 @@ const next = themeScenarios[index + 1];
       <Sources sources={data.sources} />
     </details>
 
-    <section class="rewrite" data-quiz-rewrite aria-labelledby="rewrite-title">
-      <h2 id="rewrite-title">{quiz.betterPhrasing}</h2>
-      <label class="rewrite-label" for="rewrite-input">
-        {quiz.rewritePrompt}
-      </label>
-      <textarea id="rewrite-input" rows="4" autocomplete="off"></textarea>
-      <fieldset class="checklist">
-        <legend>{quiz.checklistTitle}</legend>
-        {data.checklist.map((item) => (
-          <label>
-            <input type="checkbox" />
-            {item}
-          </label>
-        ))}
-      </fieldset>
-      <details class="reference" data-reference>
-        <summary>{quiz.showReference}</summary>
-        <ul>
-          {data.betterPhrasing.map((p) => (
-            <li>{p}</li>
+    {rewrite && (
+      <section class="rewrite" data-quiz-rewrite aria-labelledby="rewrite-title">
+        <h2 id="rewrite-title">{quiz.betterPhrasing}</h2>
+        <label class="rewrite-label" for="rewrite-input">
+          {quiz.rewritePrompt}
+        </label>
+        <textarea id="rewrite-input" rows="4" autocomplete="off" />
+        <fieldset class="checklist">
+          <legend>{quiz.checklistTitle}</legend>
+          {rewrite.checklist.map((item) => (
+            <label>
+              <input type="checkbox" />
+              {item}
+            </label>
           ))}
-        </ul>
-      </details>
-    </section>
+        </fieldset>
+        <details class="reference" data-reference>
+          <summary>{quiz.showReference}</summary>
+          <ul>
+            {rewrite.betterPhrasing.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+        </details>
+      </section>
+    )}
 
     <footer class="links">
       {related.length > 0 && (
@@ -278,6 +455,76 @@ const next = themeScenarios[index + 1];
     margin-left: auto;
     font-size: var(--step--1);
     color: var(--moss);
+  }
+
+  /* 進階題型（ADR-0022） */
+  .judge fieldset + fieldset {
+    margin-top: 1.75rem;
+  }
+
+  .task {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .hint {
+    margin: -0.25rem 0 0.75rem;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .judge li.is-missed label {
+    border-style: dashed;
+    border-color: var(--moss);
+  }
+
+  .judge li.is-wrong label {
+    border-color: var(--soil);
+  }
+
+  .axes {
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .axes div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 1rem;
+  }
+
+  .axes dt {
+    color: var(--moss);
+    font-size: var(--step--1);
+    padding-top: 0.2rem;
+  }
+
+  .axes dd {
+    margin: 0;
+  }
+
+  .option-notes {
+    margin-top: 1.25rem;
+  }
+
+  .option-notes h2 {
+    font-size: var(--step-1);
+  }
+
+  .option-notes ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25em;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .role {
+    color: var(--moss);
+    font-size: var(--step--1);
   }
 
   .judge button {

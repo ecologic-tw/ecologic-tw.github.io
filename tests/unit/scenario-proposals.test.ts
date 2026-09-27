@@ -108,3 +108,51 @@ it('does not silently drop a malformed pending task list', () => {
   change(proposal, { nextSteps: '還沒查來源' });
   expect(preparePromotion(root, 'idea').issues.join()).toContain('YAML 清單');
 });
+it('creates advanced-format templates and promotes them without a judge answer (ADR-0022)', () => {
+  const root = fixture();
+  const proposal = createProposal(root, 'axes', {
+    theme: 'daily',
+    title: '有效與健全',
+    format: 'validity-soundness',
+  });
+  const created = parse(readFileSync(proposal, 'utf8').split('---')[1] ?? '');
+  expect(created).toMatchObject({ format: 'validity-soundness', difficulty: 'advanced' });
+  expect(created).not.toHaveProperty('answer');
+  expect(preparePromotion(root, 'axes').issues.join()).not.toContain('answer: 請補');
+
+  change(proposal, {
+    validity: 'valid',
+    premises: 'uncertain',
+    notes: { validity: '形式有效。', premises: '前提無法確認。' },
+    nextSteps: [],
+  });
+  writeFileSync(
+    proposal,
+    readFileSync(proposal, 'utf8')
+      .replace('## 情境\n', '## 情境\n\n一段論證。\n')
+      .replace('## 解說\n', '## 解說\n\n解說。\n'),
+  );
+  const plan = promoteProposal(root, 'axes');
+  const promoted = parse(readFileSync(plan.file, 'utf8').split('---')[1] ?? '');
+  expect(promoted).toMatchObject({
+    format: 'validity-soundness',
+    isControl: false,
+    status: 'draft',
+  });
+});
+it('checks multi option lists for blank entries and rejects unknown formats', () => {
+  const root = fixture();
+  const proposal = createProposal(root, 'multi', {
+    theme: 'daily',
+    title: '多選',
+    format: 'multi',
+  });
+  change(proposal, { answers: [' '] });
+  expect(preparePromotion(root, 'multi').issues.join()).toContain('answers: 不可用空白項目充數');
+  expect(() =>
+    createProposal(root, 'drag', { theme: 'daily', title: 'x', format: 'drag-and-drop' }),
+  ).toThrow(/--format/);
+  expect(() => createProposal(root, 'rev', { target: 'daily-001', format: 'multi' })).toThrow(
+    /沿用原題題型/,
+  );
+});

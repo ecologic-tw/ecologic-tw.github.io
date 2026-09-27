@@ -25,6 +25,22 @@ npm run scenario -- new community-light --theme daily --title "社區路燈的�
 
 保育主題使用 `--theme conservation`。有 AI 協助撰寫時加 `--ai`，或將提案的 `aiAssisted` 設為 `true`。
 
+### 進階題型
+
+進階模式的題型用 `--format` 指定（[ADR-0022](../adr/0022-advanced-question-formats.md)），預設是一般的單選判讀：
+
+```sh
+npm run scenario -- new lunch-menu --theme daily --title "營養午餐的菜單" --format multi
+```
+
+| `--format` | 題型 | 要補的欄位 |
+|---|---|---|
+| `multi` | 多重判讀（多選） | `answers`、`acceptable`（可空）、`distractors`，合計 4–6 個圖鑑卡；`notes` 為每個選項寫一句解說 |
+| `validity-soundness` | 有效 × 健全 | `validity`（`valid`／`invalid`）、`premises`（`credible`／`not-credible`／`uncertain`），以及兩軸的 `notes` |
+| `choice` | 隱藏前提／形式辨識／反例選擇 | `task`、`prompt`、`choices`（3–4 個，恰好一個 `correct: true`，每個都有 `note`） |
+
+這些題型固定為進階題、不能當對照題。`validity-soundness` 與 `choice` 的改寫練習（`betterPhrasing`、`checklist`）是選填，需要時自行加上。修改既有題目時沿用原題題型，不能用 `edit` 換題型。
+
 ## 修改現有情境
 
 ```sh

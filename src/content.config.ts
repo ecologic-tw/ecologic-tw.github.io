@@ -6,6 +6,8 @@ import { entrySchema, scenarioSchema, termSchema } from './lib/content-schema.ts
 // 交叉參照等跨檔檢查在 scripts/check-content.ts。
 // 內容快取只在本檔變更時失效：修改 content-schema.ts 的輸出格式時，請一併更新下方版本號，
 // 否則本機既有快取會沿用舊格式的資料（ADR-0022 實作時發現）。
+// 變更時若開發伺服器正在執行，它可能用記憶體裡的舊 schema 重建快取；請停止伺服器，
+// 刪除 .astro/data-store.json 後再啟動。
 export const CONTENT_SCHEMA_VERSION = 2;
 
 const entries = defineCollection({
