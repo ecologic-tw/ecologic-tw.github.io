@@ -77,3 +77,14 @@ test('phones keep the related links below the text', async ({ page }) => {
   const links = await box(page, 'article > .links');
   expect(links.y).toBeGreaterThan(header.y + header.height);
 });
+
+test('the desktop sidebar stays in view while scrolling a long question', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 1000 });
+  await page.goto('/scenario/daily-013/');
+  await page.getByLabel('人身攻擊').check();
+  await page.getByRole('button', { name: '送出判讀' }).click();
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  const links = await box(page, 'article > .links');
+  expect(links.y).toBeGreaterThanOrEqual(0);
+  expect(links.y + links.height).toBeLessThanOrEqual(1000);
+});

@@ -350,3 +350,8 @@ details.advanced > * + * {
 html[data-mode='basic'] .mode-advanced {
   display: none !important;
 }
+
+/* 只在基礎模式顯示的替代內容（例如跳過進階題的「下一題」）；沒有 JavaScript 時不顯示 */
+html:not([data-mode='basic']) .mode-basic-only {
+  display: none !important;
+}

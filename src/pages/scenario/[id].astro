@@ -91,7 +91,18 @@ const rewrite =
 
 const themeScenarios = await getPublishedScenarios(data.theme);
 const index = themeScenarios.findIndex((s) => s.id === scenario.id);
-const next = themeScenarios[index + 1];
+const later = themeScenarios.slice(index + 1);
+// 下一題依模式：基礎模式跳過進階題；沒有 JavaScript 時不分模式（mode-basic-only 不顯示）
+const nextAny = later[0];
+const nextBasic = later.find((s) => s.data.difficulty === 'basic');
+const nextLinks = (
+  nextAny === nextBasic
+    ? [{ target: nextAny, className: undefined }]
+    : [
+        { target: nextBasic, className: 'mode-basic-only' },
+        { target: nextAny, className: 'mode-advanced' },
+      ]
+).flatMap(({ target, className }) => (target ? [{ target, className }] : []));
 ---
 
 <Base title={data.title} description={`${themeLabel[data.theme]}情境題：${data.title}`} wide>
@@ -206,6 +217,15 @@ const next = themeScenarios[index + 1];
       <span class="result-text" data-result-text></span>
       <span class="result-choice" data-result-choice></span>
     </div>
+    {/* 放在 role="status" 之外，避免連結文字被一起朗讀 */}
+    <p class="result-next" data-quiz-next hidden>
+      {nextLinks.map(({ target, className }) => (
+        <a class={className} href={`/scenario/${target.id}/`}>
+          {quiz.next}：{target.data.title}
+        </a>
+      ))}
+      <a href={`/practice/${data.theme}/`}>{quiz.backToList}</a>
+    </p>
 
     <details class="reveal" data-quiz-reveal>
       <summary>{quiz.reveal}</summary>
@@ -335,11 +355,11 @@ const next = themeScenarios[index + 1];
         </section>
       )}
       <nav class="next" aria-label="接下來">
-        {next && (
-          <a href={`/scenario/${next.id}/`}>
-            {quiz.next}：{next.data.title}
+        {nextLinks.map(({ target, className }) => (
+          <a class={className} href={`/scenario/${target.id}/`}>
+            {quiz.next}：{target.data.title}
           </a>
-        )}
+        ))}
         <a href={`/practice/${data.theme}/`}>{quiz.backToList}</a>
         <RandomScenarioButton scenarios={await getPublishedScenarios()} exclude={scenario.id} />
       </nav>
@@ -587,6 +607,17 @@ const next = themeScenarios[index + 1];
     font-size: var(--step--1);
   }
 
+  .result-next {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .result-next[hidden] {
+    display: none;
+  }
+
   .reveal {
     margin-top: 1.5rem;
   }
@@ -765,6 +796,14 @@ const next = themeScenarios[index + 1];
       padding: 0 0 0 1.5rem;
       border-top: 0;
       border-left: 1px solid var(--mist);
+    }
+  }
+
+  /* 右側欄跟著捲動，作答後不必捲回頂端；視窗太矮時維持一般捲動，避免下半部被切掉 */
+  @media (min-width: 64rem) and (min-height: 44rem) {
+    article > .links {
+      position: sticky;
+      top: 1.5rem;
     }
   }
 </style>
