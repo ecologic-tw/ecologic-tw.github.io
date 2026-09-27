@@ -85,6 +85,12 @@
 - [ ] 內容審核者確認第一批修訂說明的分級與文字
 
 ## 持續
+### 首次貢獻試行（ADR-0026，提議）
+- [x] 準備三種貢獻入口、四張小任務卡與接力範例（文件草案，見 [任務卡](../review/first-contribution-tasks.md)）
+- [ ] 人類承接 Decision Owner，檢閱 [ADR-0026](../adr/0026-first-contribution-pilot.md) 並決定試行安排
+- [ ] 至少一位自願參與者完成一次 [真人試走](../review/first-contribution-walkthrough.md)，記錄卡點與接力成本，再決定是否擴大招募
+
+### 其他持續事項
 - [x] 非暴力溝通、主觀意義與客觀意義：3 張 concept 卡及 3 條名詞 draft（語言／溝通角度，見 12 §6）
 - [x] 人工審核上述溝通與意義內容（2026-09-27，使用者完成標記，reviewer：Wang-Yi-Zhang）；審核規範見 12 §5–6
 - [ ] 每年 3 月、9 月角色檢視（第一次：2027-03）

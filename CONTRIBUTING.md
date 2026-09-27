@@ -2,6 +2,20 @@
 
 謝謝你願意一起從各說各話，走向共同思考。
 
+## 第一次參與：先選一小件事
+
+只想提供試讀意見或來源，不需要先安裝開發環境，也不需要一次完成整題。以下是 [首次貢獻試行草案](docs/adr/0026-first-contribution-pilot.md) 的入口；真人試走尚待完成，接力者尚未指定。
+
+| 我想幫忙… | 第一次可以交出什麼 | 從這裡開始 |
+|---|---|---|
+| 試讀 | 一句看不懂的文字、你的理解與疑問 | [修訂說明試讀](docs/review/first-contribution-tasks.md#task-02)、[手機操作紀錄](docs/review/first-contribution-tasks.md#task-03) |
+| 查證 | 一個主張的來源位置、支持範圍與不確定之處 | [訴諸傳統來源查核](docs/review/first-contribution-tasks.md#task-01) |
+| 技術修改 | 一處可重現的文件問題與小型修正 PR | [環境指引試走](docs/review/first-contribution-tasks.md#task-04) |
+
+選一張任務卡，照「本階段完成條件」提交即可；後續待辦不會自動成為你的責任。提交與接力的具體樣子見 [完整範例](docs/review/first-contribution-walkthrough.md)。
+
+不用 GitHub 可使用 [現有回饋表單](https://forms.gle/ZAacF8i7hQ7QF8LC9)，在說明中附任務編號；有帳號可使用 [既有 Issue 範本](https://github.com/ecologic-tw/ecologic-tw.github.io/issues/new/choose)。請勿填入個資、敏感地點或可辨識的真實事件。GitHub Issue／PR 會公開；不提供公開署名不影響貢獻。無聯絡方式的表單投稿可能無法收到個別回覆，也沒有固定回覆期限。
+
 ## 先讀這個
 我們的文化是**自由決定、公開承擔、共同學習**，詳見[《共好型自主敏捷社群指引》](docs/共好型自主敏捷社群指引.md)與[行為準則](CODE_OF_CONDUCT.md)。簡單說：
 - 你可以直接提案、直接動手，不需要等誰批准才敢開始。

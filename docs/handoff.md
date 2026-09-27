@@ -229,3 +229,24 @@
 - **待處理與風險**：ADR-0016 維持「提議」，由人類維護者確認；不同工具可能未自動讀取規範，開工時使用 CONTRIBUTING 的提示確認。AI 不得自行核准或合併 PR。
 - **下一步**：審閱本次文件變更；切換工具時要求摘要適用規範與 Git 現況，確認能接手。M5 的人工內容審核等事項仍未完成，不因本次文件更新而勾選。
 - **相關文件**：[共用規範](../AGENTS.md)、[開工提示](../CONTRIBUTING.md#使用-ai-工具協作)、[ADR-0016](adr/0016-shared-ai-instructions.md)、[治理與傳承](sdd/10-governance.md)、[里程碑](sdd/11-milestones.md)。
+
+## 2026-09-27：人與 AI 協作框架檢視
+- **目標與範圍**：檢視共用規範、架構、CI、內容審核、治理及交接的優缺點；僅評估，未實施流程或架構決策。
+- **Git 現況**：main，HEAD `72c78c2`；開工時只有未追蹤 `.claude/`，完整保留。本次僅追加本交接紀錄，未提交。
+- **主要發現**：靜態架構、共用規範、schema、產物檢查與分層測試可降低 AI 修改風險；人工責任仍集中一人。更新說明無 status 且全量取用，里程碑卻仍記載文字待確認，需釐清紅線與 ADR-0025 的適用範圍及實際審核證據。現有 schema 檢查審核者欄位，不能證明其審核了目前版本；來源存在也不證明主張成立。含草稿的 Chromium e2e 與正式發布集合不同。交接文件已有同檔頂端衝突紀錄，文件同步成本可見。
+- **驗證**：`npm test` 因使用者 npm 啟動器找不到 npm-cli.js 失敗；改以 `node node_modules/vitest/vitest.mjs run` 執行，17 個檔案、235 個測試通過。沒有重跑 lint、Astro check、build、e2e，沒有查核遠端 GitHub ruleset、CODEOWNERS team 或正式部署。文件差異執行 `git diff --check`。
+- **待人工決定／下一步**：優先核對更新說明的發布與人工審核紀錄、CODEOWNERS 與分支保護實況，並評估內容修訂與審核版本綁定、第二位審核者及正式建置 smoke test。上述均為建議；如採納架構或流程變更須另走 ADR，不由 AI 自行決策。
+- **相關文件**：[架構](sdd/06-architecture.md)、[資安](sdd/07-security-privacy.md)、[治理](sdd/10-governance.md)、[里程碑](sdd/11-milestones.md)、[審核指南](review/review-guide.md)、[ADR-0025](adr/0025-revision-disclosure.md)。
+
+## 2026-09-27：首次貢獻入口與接力草案
+- **目標與範圍**：依使用者「開始」指示，完成首次貢獻流程的第一輪文件；新增 ADR-0026 提議、四張任務卡與接力／真人試走範例，更新 CONTRIBUTING、README 和里程碑。
+- **分支與差異**：main，基底 `72c78c2`；本次尚未提交。開工既有 `docs/handoff.md` 的框架檢視追加紀錄與未追蹤 `.claude/` 均保留。本次三個新檔為 `docs/adr/0026-first-contribution-pilot.md`、`docs/review/first-contribution-tasks.md`、`docs/review/first-contribution-walkthrough.md`。
+- **完成**：試讀、查證、技術修改三種入口；來源查核、修訂說明試讀、手機操作與環境指引四張任務卡，均有範圍、交付條件、提交管道及接力需求。範例區分個人貢獻、待審與發布；接力者及 Decision Owner 未自行指定。
+- **驗證**：Node 唯讀檢查六份新增／修改入口文件的 55 個本機連結（包含頁內錨點），全部通過；對照既有 Issue 範本、提案及審核指南檢查流程一致性；`git diff --check` 通過。文件未新增執行指令，任務引用 README 既有操作；未重跑環境安裝、lint、check、單元測試、build 或 e2e，因本次僅修改文件。外部表單／網站操作及真人試走尚未實測。
+- **待人工決定與下一步**：ADR 維持提議；由人類承接 Decision Owner，安排一位自願參與者試走一張卡並確認接力者。未建立對外招募 Issue、未發布、未修改正式內容或審核狀態。里程碑只勾選文件草案準備，未把真人驗證寫成完成。
+- **相關文件**：[ADR-0026](adr/0026-first-contribution-pilot.md)、[任務卡](review/first-contribution-tasks.md)、[接力與試走](review/first-contribution-walkthrough.md)、[里程碑](sdd/11-milestones.md)。
+
+## 2026-09-27：提交首次貢獻試行文件
+- **授權與分支**：使用者要求 commit、發 PR；分支 `codex/first-contribution-pilot`，基底 `72c78c2`。本節隨文件提交，PR 與 commit 以 Git 紀錄為準。
+- **提交範圍**：首次貢獻入口、四張任務卡、接力範例、ADR-0026 提議、README／里程碑及本次對話的框架檢視交接紀錄；未追蹤 `.claude/` 不納入。
+- **驗證與待辦**：沿用上一節 55 個本機連結與錨點檢查結果，提交前再跑 `git diff --check`。本次僅文件修改，未重跑程式測試；遠端 CI 與人工審閱待 PR 建立後確認。ADR 仍待人類決定，未進行真人試走，未授權或執行合併。
