@@ -16,6 +16,52 @@
   updated: 2026-09-26
   aiAssisted: true
 
+- id: nonviolent-communication-term
+  term: 非暴力溝通
+  en: Nonviolent communication
+  definition: 區分觀察、感受、需要與請求，透過誠實表達和同理聆聽理解彼此的溝通框架；請求容許拒絕與協商。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: Center for Nonviolent Communication — Preparation, Self-development and
+        Self-responsibility
+      url: https://www.cnvc.org/certification/cpp/preparation/
+      supports:
+        - 溝通要素與觀察／評價、感受／想法、請求／命令的區分。
+  updated: 2026-09-27
+  aiAssisted: true
+
+- id: subjective-meaning-term
+  term: 主觀意義
+  en: Speaker meaning
+  definition: 本站指說話者在特定場合想傳達的意思，也稱說話者意義；不等於聽者的猜測，不是在談人生價值。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: Stanford Encyclopedia of Philosophy — Paul Grice
+      url: https://plato.stanford.edu/entries/grice/
+      supports:
+        - 說話者意義與語句意義之區分；主觀意義為本站教學用語。
+  updated: 2026-09-27
+  aiAssisted: true
+
+- id: objective-meaning-term
+  term: 客觀意義
+  en: Public linguistic meaning in context
+  definition: 本站指依公共語言慣例與可共享語境可支持的理解；不代表唯一解讀、脫離語境或內容必定為真，亦非統一的理論名稱。
+  status: reviewed
+  reviewers:
+    - Wang-Yi-Zhang
+  sources:
+    - title: Stanford Encyclopedia of Philosophy — Pragmatics
+      url: https://plato.stanford.edu/entries/pragmatics/
+      supports:
+        - 語言慣例、語境與理解的關係；客觀意義為本站教學用語。
+  updated: 2026-09-27
+  aiAssisted: true
+
 - id: premise
   term: 前提
   en: Premise

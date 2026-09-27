@@ -1,5 +1,22 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：提交溝通與意義內容 PR
+- **目標／分支**：使用者表示已執行人工審核指令並要求 commit、發 PR；分支 `codex/communication-meaning`，基底 `0238dbf`，本節隨提交保存，commit／PR 以 Git 紀錄為準。既有 `.claude/` 不納入提交。
+- **完成**：核對三張新圖鑑卡與三條新名詞皆為 reviewed、審核帳號 Wang-Yi-Zhang；保留使用者的審核變更，AI 未執行標記。同步 SDD 11／12 的本批完成狀態；下方草稿階段紀錄為歷史狀態。
+- **驗證**：重新執行 lint、Astro／內容 check（0 診斷）、215 項單元測試、正式 build 及 71 頁產物檢查均通過；已審名詞 33/33、圖鑑 33/33、情境 31/34。沿用已確認的系統 npm CLI 路徑。未跑 e2e，本次未改互動程式；git diff --check 通過。
+- **下一步**：建立 PR 後由維護者查看 CI、審閱並決定是否合併；AI 不核准或合併。非暴力溝通審核者背景等人工資格仍依 [知識範圍](sdd/12-knowledge-scope.md) §5，由人類負責確認。其他舊里程碑落差未在本批處理。
+
+## 2026-09-27：非暴力溝通、主觀意義與客觀意義
+- **審核指令補正**：後續核對 `mark-reviewed.ts` 發現圖鑑與名詞同 ID 會被工具拒絕；三條新名詞 ID 已改為 `nonviolent-communication-term`、`subjective-meaning-term`、`objective-meaning-term`，卡片的 `terms` 與內文引用同步更新。六項合併 `--dry-run` 通過，未執行正式標記。此為前次新增內容的相容性修正，非工具規則變更。
+- **目標／分支**：依使用者要求加入三個概念；使用者確認「主觀／客觀意義」採語言／溝通角度。沿用 `main`，基底 `0238dbf`，本次尚未提交或發布；既有未追蹤 `.claude/` 保留。
+- **已完成／檔案**：新增 `src/content/entries/zh-TW/` 下的 `nonviolent-communication.md`、`subjective-meaning.md`、`objective-meaning.md`，以及 `src/content/terms/zh-TW/terms.yaml` 的 3 條名詞；皆為 `draft`、`aiAssisted: true`、空審核者。每卡包含生活／保育虛構例子、常見誤解與小檢核。同步 `CONTEXT.md`、SDD 11／12 及本紀錄，未改 schema、依賴或已審內容。
+- **來源與界線**：已讀取 CNVC 的 Preparation 與 Purpose of NVC 頁面，以及 SEP 的 Paul Grice、Pragmatics 條目。「主觀／客觀意義」明列為本站教學用語，分開說話者意圖、公共語言／語境依據、聽者理解，不宣稱為統一學術二分法。非暴力溝通介紹框架，不宣稱普遍效果或療效。
+- **驗證**：Node 24.11.1；lint、Astro／內容 check（0 診斷）、215 項單元測試、正式 build 與 68 頁產物檢查通過。含草稿 Astro build 為 74 頁；另以既有 `checkInternalLinks` 驗證全部草稿頁站內連結，確認 3 張新卡有 noindex、名詞標記已轉換、正式產物未包含新卡與新名詞；篇幅報告無新內容提醒。`git diff --check` 通過。未跑 e2e／瀏覽器視覺檢查，本次只新增內容與文件，未改互動程式。
+- **環境與驗證修正**：預設 `npm` 包裝器指向不存在的使用者 npm CLI；改以 `node 'C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js'` 執行相同 scripts，未修改環境設定。曾誤對 `dist-drafts` 執行正式 `check-dist.ts`，因草稿、noindex 與預覽 sitemap 等正式發布規則失敗；該次不算通過，已改用上述草稿專用斷言，正式 `dist` 檢查通過。
+- **待人工確認／下一步**：人工核對例子、來源支持範圍及「客觀意義」的教學簡化；非暴力溝通依 SDD 12 §5 需具心理學背景的審核者。確認後由人類依審核指南標記 reviewed；本次沒有新增正式情境題，也未核准或合併 PR。
+- **既有文件落差**：目前內容檢查為名詞 30/33、圖鑑 30/33、情境 31/34 reviewed；舊里程碑仍列訴諸傳統與進階題待審、cons-013 待重審，與目前內容狀態有落差。應由維護者依實際審核／Git 紀錄同步，未由 AI 代認定人工審核完成。
+- **相關文件**：[內容格式](sdd/03-content-schema.md)、[防誤用](sdd/08-misuse-prevention.md)、[知識範圍 §6](sdd/12-knowledge-scope.md)、[里程碑](sdd/11-milestones.md)、[審核指南](review/review-guide.md)、[ADR-0020](adr/0020-concept-kind-and-knowledge-scope.md)、[ADR-0021](adr/0021-bias-evidence-strength-and-psychology-scope.md)。
+
 ## 2026-09-27：兩項 P1 修正
 - **目標／分支**：修正必要段落驗證缺口與 cons-013 的推論說明；`codex/p1-content-validation`，基底 `de62097`；本節隨修正提交並依使用者要求建立 PR，commit／PR 以 GitHub 與 Git 紀錄為準。前次架構檢視報告一併保存供追溯；原有 `.claude/` 不納入提交。
 - **已完成**：`scenario-sections.ts` 提供共用必要段落驗證，正式內容檢查、提案轉入與人工標記工具皆使用；新增缺漏／空白／錯誤標題、CRLF、reviewed 本文缺失及人工工具不寫入的回歸測試。人工標記仍須另跑全站 check 驗證引用與比例，本次未改變其全部發布規則。
