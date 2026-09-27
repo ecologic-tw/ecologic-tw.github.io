@@ -60,12 +60,15 @@
 - [x] 進階題型第 1 階段：schema、建置期檢查、收集與徽章換算、單元測試
 - [x] 進階題型第 2 階段：作答頁與前端腳本、`npm run scenario` 支援 `format`、e2e 與 axe
 - [x] 進階題型第 3 階段：8 題 draft（日常 daily-013、014、016、017；保育 cons-014 至 017），涵蓋 multi、validity-soundness 與 choice 的三種任務
-- [ ] 人工審核 8 題進階題
+- [x] 人工審核 8 題進階題（@Wang-Yi-Zhang，PR #33）
 - [x] 新增「訴諸傳統」卡與日常情境題 daily-015（draft）
-- [ ] 人工審核「訴諸傳統」卡與 daily-015
+- [x] 人工審核「訴諸傳統」卡與 daily-015（@Wang-Yi-Zhang，PR #33）
 - [x] 至少 1 題以「訴諸無知／偵測率」為主題的保育情境題 draft（cons-013，`aiAssisted: true`）
 - [x] 人工審核 cons-013（@Wang-Yi-Zhang）；同批開放對照題 cons-012
-- [ ] cons-013 機率推論修訂重新人工審核（2026-09-27 修訂版已退回 draft；先前審核紀錄保留於 Git）
+- [x] cons-013 機率推論修訂重新人工審核（@Wang-Yi-Zhang，PR #40）
+- [ ] 修訂「不當訴諸權威」（身分與地位、理論權威與實踐權威）並重新人工審核
+- [ ] 新增「訴諸武力」卡與日常題 daily-018、對照題 daily-019，人工審核
+- [ ] 「訴諸傳統」卡的來源：SEP「Fallacies」條目未討論訴諸傳統（2026-09-27 核對），需另找來源
 
 ## 更新通知（ADR-0024）
 - [x] 第 1 項：`published` 欄位、`npm run review` 自動填入、`/updates/` 頁、Atom 訂閱源、頁尾與 `<head>` 連結、sitemap、產物檢查、單元與 e2e 測試
