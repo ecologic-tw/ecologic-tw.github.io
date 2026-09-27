@@ -18,6 +18,7 @@ const reviewMeta = {
   sources: z.array(z.object({ title: z.string().trim().min(1), url: z.string().url().optional(), supports: z.array(z.string().trim().min(1)).min(1).optional() })).default([]),
   requiresSecondReview: z.boolean().default(false), // 爭議內容：reviewed 時至少 2 位不同審核者
   updated: z.coerce.date(),
+  published: z.coerce.date().optional(),        // 首次發布日期；npm run review 首次審核時自動填入，勘誤不改（ADR-0024）
   aiAssisted: z.boolean().default(false),       // AI 參與撰寫須標 true
 };
 // refine：reviewed 時來源至少 1 項；審核帳號以不分大小寫的不同人數計算。
@@ -153,6 +154,17 @@ refine：
 來源網址限 HTTP(S)，書目與 `supports` 由共用參考資料元件顯示。建置另產生來源／雙審／AI 協助覆蓋率與閱讀篇幅提醒（ADR-0018）；篇幅提醒不改變 schema 審核狀態，不是閱讀年級評定。
 
 三種內容另可填 `contributors: [{ name, contribution }]`（預設空陣列），使用本人同意的公開名稱／筆名與實際貢獻；署名不取代 reviewers。可不完整的情境提案放在 `contributions/scenarios/`，不載入正式內容集合，轉入時才驗證完整 schema（ADR-0019）。
+
+## 更新紀錄 `updates/zh-TW/updates.yaml`（ADR-0024）
+手寫說明：功能更新、重要勘誤、公告。新上架內容依 `published` 自動列出，不必另寫。
+```yaml
+- id: updates-page            # 小寫英數與連字號
+  date: 2026-09-27
+  kind: feature               # feature 功能／content 內容／fix 勘誤／notice 公告
+  title: 新增更新紀錄與訂閱      # ≤ 60 字
+  summary: ……                 # ≤ 200 字，純文字
+  link: /updates/             # 選填，只能是站內路徑
+```
 
 ## 建置期檢查（`npm run check`）
 - 已審圖鑑卡、情境題與名詞都須有來源與足夠的不同審核者；草稿不要求先填審核者或來源。

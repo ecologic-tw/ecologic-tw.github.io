@@ -38,7 +38,14 @@ export function prepareReview(
     const people = [
       ...new Map([...existing, ...reviewers].map((r) => [r.toLowerCase(), r])).values(),
     ];
-    const candidate = { ...data, status: 'reviewed', reviewers: people, updated: today };
+    // 首次發布日期只在第一次審核時填入（ADR-0024）
+    const candidate = {
+      ...data,
+      status: 'reviewed',
+      reviewers: people,
+      updated: today,
+      published: data.published ?? today,
+    };
     const checked = schemas[kind].safeParse(candidate);
     if (!checked.success) {
       throw new Error(
@@ -67,6 +74,7 @@ export function prepareReview(
       doc.set('status', 'reviewed');
       doc.set('reviewers', people);
       doc.set('updated', today);
+      if (!doc.has('published')) doc.set('published', today);
       plan.writes.push({ file, text: text.replace(match[1], doc.toString().trimEnd()) });
     }
   }
@@ -81,6 +89,7 @@ export function prepareReview(
     doc.setIn([index, 'status'], 'reviewed');
     doc.setIn([index, 'reviewers'], people);
     doc.setIn([index, 'updated'], today);
+    if (!doc.hasIn([index, 'published'])) doc.setIn([index, 'published'], today);
     changed = true;
   }
   if (changed) plan.writes.push({ file, text: doc.toString() });

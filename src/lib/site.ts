@@ -6,7 +6,10 @@ export const INDEX_PATHS = [
   '/terms/',
   '/practice/daily/',
   '/practice/conservation/',
+  '/updates/',
 ];
+
+export const FEED_PATH = '/updates/feed.xml';
 
 export function canonicalUrl(path: string): string {
   const url = new URL(path, SITE_URL);

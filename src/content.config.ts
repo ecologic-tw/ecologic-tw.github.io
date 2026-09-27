@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
-import { entrySchema, scenarioSchema, termSchema } from './lib/content-schema.ts';
+import { entrySchema, scenarioSchema, termSchema, updateSchema } from './lib/content-schema.ts';
 
 // schema 驗證失敗 → astro sync／build 失敗（docs/sdd/03）。
 // 交叉參照等跨檔檢查在 scripts/check-content.ts。
@@ -8,7 +8,7 @@ import { entrySchema, scenarioSchema, termSchema } from './lib/content-schema.ts
 // 否則本機既有快取會沿用舊格式的資料（ADR-0022 實作時發現）。
 // 變更時若開發伺服器正在執行，它可能用記憶體裡的舊 schema 重建快取；請停止伺服器，
 // 刪除 .astro/data-store.json 後再啟動。
-export const CONTENT_SCHEMA_VERSION = 2;
+export const CONTENT_SCHEMA_VERSION = 3;
 
 const entries = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/entries/zh-TW' }),
@@ -25,4 +25,9 @@ const terms = defineCollection({
   schema: termSchema,
 });
 
-export const collections = { entries, scenarios, terms };
+const updates = defineCollection({
+  loader: file('./src/content/updates/zh-TW/updates.yaml'),
+  schema: updateSchema,
+});
+
+export const collections = { entries, scenarios, terms, updates };

@@ -33,3 +33,5 @@
 | 角色檢視 | role review | 每半年公開檢視角色與權力分配，防止隱形主管。 |
 | 紅線 | red line | `AGENTS.md` 所列不可違反的規則；修改屬社群基本規則。 |
 | 證據強度 | `evidence` | 認知偏誤卡的研究證據等級：`robust` 證據穩健／`moderate` 證據中等／`contested` 證據有爭議（ADR-0021）。 |
+| 首次發布日期 | `published` | 內容第一次標為 reviewed 的日期；勘誤不改動，用於更新紀錄與訂閱源（ADR-0024）。 |
+| 更新紀錄 | updates | `/updates/` 頁與 Atom 訂閱源，列出新上架內容與手寫說明。 |

@@ -31,6 +31,7 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 - localStorage 只存 `ecologic:v1`（進度與模式），`/me/` 提供一鍵清除。
 - 改寫練習內容**不儲存**（只存完成次數）。
 - `/about/` 隱私段落以白話說明以上事項。
+- 更新通知只用靜態 Atom 訂閱源：由使用者的閱讀器自行抓取，本站不知道誰訂閱；不做推播、不蒐集 Email（ADR-0024）。建置產物檢查確認訂閱源不含未審內容。
 
 ## GitHub Organization 設定清單（維護者初始化時執行）
 最近一次檢查：2026-09-26（以 `gh api` 唯讀查詢）。

@@ -5,7 +5,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { t } from '../i18n/zh-TW.ts';
 import { CSP } from '../lib/csp.ts';
-import { canonicalUrl, SITE_URL } from '../lib/site.ts';
+import { canonicalUrl, FEED_PATH, SITE_URL } from '../lib/site.ts';
 import { showDrafts } from '../lib/content.ts';
 
 interface Props {
@@ -44,6 +44,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
     <meta property="og:image:alt" content="邏生門 EcoLogic：學會檢查推理，而不是替別人貼標籤。" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/atom+xml" title="邏生門更新紀錄" href={FEED_PATH} />
     <title>{fullTitle}</title>
     <slot name="head" />
   </head>

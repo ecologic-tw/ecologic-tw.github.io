@@ -50,6 +50,24 @@ describe('human review preparation (temporary fixtures only)', () => {
     });
   });
 
+  it('sets published on first review only (ADR-0024)', () => {
+    const { root, file } = fixture();
+    const first = prepareReview(root, ['premise'], ['alice'], '2026-09-27');
+    expect(parse(first.writes[0]?.text ?? '')[0]).toMatchObject({ published: '2026-09-27' });
+    writeFileSync(
+      file,
+      readFileSync(file, 'utf8').replace(
+        'updated: 2026-09-26',
+        'updated: 2026-09-26\n  published: 2026-01-05',
+      ),
+    );
+    const again = prepareReview(root, ['premise'], ['alice'], '2026-09-28');
+    expect(parse(again.writes[0]?.text ?? '')[0]).toMatchObject({
+      published: '2026-01-05',
+      updated: '2026-09-28',
+    });
+  });
+
   it('rejects missing sources and unknown ids before any write', () => {
     const { root, file } = fixture();
     const text = readFileSync(file, 'utf8');
