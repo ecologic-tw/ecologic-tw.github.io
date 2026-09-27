@@ -16,8 +16,9 @@ quickCheck:
   explanation: '「沒提到」可能是真的沒有，也可能是沒調查或沒記錄。第三個選項則走向另一個極端，同樣缺乏證據。'
 related: [ modus-tollens, hasty-generalization, conditional-variants ]
 terms: [ burden-of-proof, sample, fallacy ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Walton, D. (1996). Arguments from Ignorance. Pennsylvania State
       University Press."
