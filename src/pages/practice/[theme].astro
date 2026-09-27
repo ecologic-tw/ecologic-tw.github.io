@@ -2,8 +2,9 @@
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import { quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
-import { getPublishedScenarios, type Theme } from '../../lib/content.ts';
+import { getPublishedScenarios, getUpdateNotes, type Theme } from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
+import { revisionsFor } from '../../lib/updates.ts';
 
 export function getStaticPaths() {
   return THEMES.map((theme) => ({ params: { theme } }));
@@ -11,6 +12,8 @@ export function getStaticPaths() {
 
 const theme = Astro.params.theme as Theme;
 const scenarios = await getPublishedScenarios(theme);
+const notes = await getUpdateNotes();
+const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).answerChangedOn;
 ---
 
 <Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]} wide>
@@ -28,6 +31,7 @@ const scenarios = await getPublishedScenarios(theme);
         {scenarios.map((s) => (
           <li
             data-scenario-id={s.id}
+            data-answer-changed={answerChangedOn(s.id)}
             class={s.data.difficulty === 'advanced' ? 'mode-advanced' : undefined}
           >
             <a href={`/scenario/${s.id}/`}>{s.data.title}</a>

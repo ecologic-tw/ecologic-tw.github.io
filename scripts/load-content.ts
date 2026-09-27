@@ -24,7 +24,7 @@ function readMarkdownDir(dir: string): SourceDoc[] {
     });
 }
 
-function readTerms(file: string): SourceDoc[] {
+function readYamlList(file: string): SourceDoc[] {
   if (!existsSync(file)) return [];
   const items: unknown = parse(readFileSync(file, 'utf8'));
   if (items == null) return [];
@@ -37,6 +37,7 @@ export function loadContent(root = 'src/content', locale = 'zh-TW'): ContentInpu
   return {
     entries: readMarkdownDir(join(root, 'entries', locale)),
     scenarios: readMarkdownDir(join(root, 'scenarios', locale)),
-    terms: readTerms(join(root, 'terms', locale, 'terms.yaml')),
+    terms: readYamlList(join(root, 'terms', locale, 'terms.yaml')),
+    updates: readYamlList(join(root, 'updates', locale, 'updates.yaml')),
   };
 }

@@ -7,9 +7,11 @@ import {
   scenarioSchema,
   scenarioTexts,
   termSchema,
+  updateSchema,
   type EntryData,
   type ScenarioData,
   type TermData,
+  type UpdateData,
 } from './content-schema.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
 import { collectableEntries } from './quiz.ts';
@@ -28,6 +30,8 @@ export type ContentInput = {
   entries: SourceDoc[];
   scenarios: SourceDoc[];
   terms: SourceDoc[];
+  /** 更新紀錄的手寫說明（ADR-0024、0025）；測試資料可省略 */
+  updates?: SourceDoc[];
 };
 
 export type CheckResult = { errors: string[]; warnings: string[] };
@@ -185,6 +189,37 @@ export function checkContent(input: ContentInput): CheckResult {
     if (data.status === 'reviewed' && !data.quickCheck && !collectable.has(data.id)) {
       errors.push(
         `${doc.file}: 已審圖鑑卡無法點亮：需要 quickCheck，或至少一題已審情境題以它為正解（docs/sdd/02 規則 4）`,
+      );
+    }
+  }
+
+  // 修訂說明（ADR-0025）：about 必須指向存在的內容。補充、勘誤說明只在內容已發布時顯示，
+  // 指向未審內容時提醒；撤下公告不受此限。
+  const notes = indexById(validate<UpdateData>(input.updates ?? [], updateSchema, errors), errors);
+  const collections = { entry: entries, scenario: scenarios, term: terms } as const;
+  const noticed = new Set(
+    [...notes.values()].flatMap(({ data }) =>
+      data.kind === 'notice' && data.about ? [data.about] : [],
+    ),
+  );
+  for (const { doc, data } of notes.values()) {
+    if (!data.about) continue;
+    const [kind, id = ''] = data.about.split('/') as [keyof typeof collections, string];
+    const target = collections[kind].get(id);
+    if (!target) {
+      errors.push(`${doc.file}: about 參照的內容「${data.about}」不存在`);
+      continue;
+    }
+    if (
+      data.impact === 'answer-changed' &&
+      kind === 'entry' &&
+      !(target.data as EntryData).quickCheck
+    ) {
+      errors.push(`${doc.file}: 「${data.about}」沒有小檢核，不能標為 answer-changed`);
+    }
+    if (data.kind !== 'notice' && target.data.status !== 'reviewed' && !noticed.has(data.about)) {
+      warnings.push(
+        `${doc.file}: 說明「${data.id}」指向未審內容「${data.about}」，內容通過審核前不會顯示`,
       );
     }
   }

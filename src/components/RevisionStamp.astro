@@ -1,0 +1,40 @@
+---
+// 標題下的最近修訂日期（ADR-0025）：只看補充與勘誤說明，不用 updated。
+import { revision } from '../i18n/zh-TW.ts';
+import type { RevisionInfo } from '../lib/updates.ts';
+interface Props {
+  info: RevisionInfo;
+  /** 修訂紀錄收在作答後才出現的區塊時（情境題）不加連結，避免指向隱藏的內容 */
+  linked?: boolean;
+}
+const { info, linked = true } = Astro.props;
+const { latest } = info;
+const kind = latest ? `（${revision.kind[latest.kind]}）` : '';
+---
+
+{latest && (
+  <p class="revised">
+    {linked ? (
+      <a href="#revisions">
+        {revision.latest}：<time datetime={latest.date}>{latest.date}</time>
+        {kind}
+      </a>
+    ) : (
+      <span>
+        {revision.latest}：<time datetime={latest.date}>{latest.date}</time>
+        {kind}
+      </span>
+    )}
+  </p>
+)}
+
+<style>
+  .revised {
+    margin-top: 0.5rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+  a {
+    color: inherit;
+  }
+</style>

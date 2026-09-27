@@ -85,6 +85,18 @@ export const quiz = {
   advancedOnly: '進階',
   answered: '已作答',
   answeredCorrect: '已答對',
+  answeredBeforeFix: '已作答（題目後來修正過）',
+} as const;
+
+/** 內容修訂的揭露文字（ADR-0025）：中性說明，不催促重做 */
+export const revision = {
+  latest: '最近修訂',
+  history: '修訂紀錄',
+  kind: { feature: '功能', content: '補充', fix: '勘誤', notice: '公告' },
+  impact: '影響',
+  scenarioAnswerChanged: (date: string) => `本題答案已於 ${date} 修正，說明見解說。`,
+  quickCheckAnswerChanged: (date: string) =>
+    `這題小檢核的答案已於 ${date} 修正，說明見頁尾的修訂紀錄。`,
 } as const;
 
 /** 進階題型的介面字串（ADR-0022 §4）：標記一律圖示＋文字，不只靠顏色 */

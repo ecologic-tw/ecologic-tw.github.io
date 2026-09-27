@@ -6,18 +6,23 @@ import {
   getUpdateNotes,
   showDrafts,
 } from '../../lib/content.ts';
-import { atomFeed, contentUpdates, noteUpdates } from '../../lib/updates.ts';
+import { atomFeed, contentUpdates, noteUpdates, publishedKeys } from '../../lib/updates.ts';
 
 export async function GET() {
   const reviewed = <T extends { data: { status: string } }>(docs: T[]) =>
     docs.filter((doc) => doc.data.status === 'reviewed');
+  const published = {
+    entry: reviewed(await getPublishedEntries()),
+    scenario: reviewed(await getPublishedScenarios()),
+    term: reviewed(await getPublishedTerms()),
+  };
   const items = showDrafts
     ? []
     : [
-        ...noteUpdates(await getUpdateNotes()),
-        ...contentUpdates('entry', reviewed(await getPublishedEntries())).items,
-        ...contentUpdates('scenario', reviewed(await getPublishedScenarios())).items,
-        ...contentUpdates('term', reviewed(await getPublishedTerms())).items,
+        ...noteUpdates(await getUpdateNotes(), publishedKeys(published)),
+        ...contentUpdates('entry', published.entry).items,
+        ...contentUpdates('scenario', published.scenario).items,
+        ...contentUpdates('term', published.term).items,
       ];
   return new Response(atomFeed(items), {
     headers: { 'Content-Type': 'application/atom+xml; charset=utf-8' },

@@ -164,7 +164,13 @@ refine：
   title: 新增更新紀錄與訂閱      # ≤ 60 字
   summary: ……                 # ≤ 200 字，純文字
   link: /updates/             # 選填，只能是站內路徑
+  about: scenario/cons-013    # 選填，被修訂的內容：entry/、scenario/、term/ 加 id（ADR-0025）
+  impact: reread              # 選填，需搭配 about：none／reread／answer-changed
 ```
+修訂說明（ADR-0025）：
+- `about` 只用於 `content`、`fix`、`notice`；`impact` 必須搭配 `about`；`answer-changed` 只用於 `fix`，且對象須為情境題或有小檢核的圖鑑卡。
+- 撤下公告（`notice` + `about`）不附 `link`。其他修訂說明沒有 `link` 時，自動連到 `about` 指向的內容頁。
+- `content`、`fix` 說明跟著內容的審核狀態：內容未發布時不列出，也不進訂閱源。
 
 ## 建置期檢查（`npm run check`）
 - 已審圖鑑卡、情境題與名詞都須有來源與足夠的不同審核者；草稿不要求先填審核者或來源。
@@ -173,5 +179,6 @@ refine：
 - 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）；也檢查 `notes`、`prompt`、`choices` 等題型專屬文字。
 - 每個主題中對照題比例 15%–30%，以該主題全部情境題（含進階題型）為分母。
 - `evidence` 只能用於 `bias` 卡；任何偏誤卡缺 `evidence` 時失敗（ADR-0021）。
+- 更新紀錄說明的 `about` 必須指向存在的內容；`content`、`fix` 說明指向未審內容且沒有撤下公告時警告（ADR-0025）。
 
 `npm run build` 的產物檢查另外確認：每個站內 `<a href>` 的目標頁面或檔案存在於正式產物中，頁面連結需以 `/` 結尾；第一版不檢查 `#錨點` 是否存在（Issue #41）。

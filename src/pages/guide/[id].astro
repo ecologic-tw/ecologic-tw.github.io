@@ -2,10 +2,18 @@
 import { render } from 'astro:content';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
-import { biasNote, evidenceLabel, kindLabel, t } from '../../i18n/zh-TW.ts';
+import RevisionHistory from '../../components/RevisionHistory.astro';
+import RevisionStamp from '../../components/RevisionStamp.astro';
+import { biasNote, evidenceLabel, kindLabel, revision, t } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
-import { getPublishedEntries, getPublishedTerms, type Entry } from '../../lib/content.ts';
+import {
+  getPublishedEntries,
+  getPublishedTerms,
+  getUpdateNotes,
+  type Entry,
+} from '../../lib/content.ts';
+import { revisionsFor } from '../../lib/updates.ts';
 
 export async function getStaticPaths() {
   const entries = await getPublishedEntries();
@@ -26,6 +34,7 @@ const termById = new Map((await getPublishedTerms()).map((term) => [term.id, ter
 const pair = data.pairWith ? byId.get(data.pairWith) : undefined;
 const related = data.related.flatMap((id) => byId.get(id) ?? []);
 const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
+const revisions = revisionsFor(await getUpdateNotes(), `entry/${entry.id}`);
 ---
 
 <Base title={data.title} description={data.summary} wide>
@@ -41,6 +50,7 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
         {data.en}
       </p>
       <p class="summary">{data.summary}</p>
+      <RevisionStamp info={revisions} />
       {data.kind === 'bias' && <p class="note">{biasNote}</p>}
       {data.evidence && (
         <p class="note evidence" data-evidence={data.evidence}>
@@ -74,6 +84,11 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
         aria-labelledby="qc-title"
       >
         <h2 id="qc-title">小檢核</h2>
+        {revisions.answerChangedOn && (
+          <p class="answer-changed">
+            {revision.quickCheckAnswerChanged(revisions.answerChangedOn)}
+          </p>
+        )}
         <p class="qc-question">{data.quickCheck.question}</p>
         <form data-qc-form hidden>
           <fieldset>
@@ -98,6 +113,7 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
 
     <div data-read-marker data-entry-id={entry.id} aria-hidden="true" />
     <Sources sources={data.sources} />
+    <RevisionHistory info={revisions} />
     <Contributors contributors={data.contributors} />
 
     {(related.length > 0 || terms.length > 0) && (
