@@ -1,5 +1,21 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：進階題型第 1 階段（ADR-0022 接受）
+- **目標與範圍**：使用者接受 ADR-0022、擔任 Decision Owner，要求執行 §6 第 1 階段：schema、建置期檢查、收集與徽章換算、單元測試；不含作答頁、工具與新內容。
+- **分支**：`feat/advanced-formats-schema`，自 `origin/main`（`a972057`，PR #23 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
+- **已完成**：
+  - 情境題 schema 改為依 `format` 區分的聯集（`judge` 預設／`multi`／`validity-soundness`／`choice`），既有 25 題不需修改即通過。
+  - refine：新題型必須 `advanced`、不可為對照題；`multi` 選項互斥、不含 `none`、合計 4–6 個、每個選項都有 `notes`；`choice` 恰好一個正確選項。
+  - 建置期檢查：`multi` 的 `answers`／`acceptable`／`distractors` 參照；題型專屬文字納入個資檢查與閱讀篇幅報告。
+  - `collectableEntries` 把各題型換算成「答對可點亮的卡」，收集與「謬誤的謬誤」徽章改用它；對既有題目結果不變。
+  - 情境題頁遇到 `judge` 以外的題型會讓建置失敗，直到第 2 階段完成作答頁。
+  - ADR-0022 改為「接受」；更新 02、03、CONTEXT、里程碑。
+- **驗證**：Node 24.11.1；`npm run lint`、`npm run check`、187 個單元測試（新增 21 個）、`npm run build`（49 頁）、57 個 e2e（含淺色／深色 axe）皆通過。
+- **過程中的問題（Learning Review 素材）**：第一次 build 失敗，既有題目的 `format` 是 `undefined`。原因是 Astro 內容快取（`node_modules/.astro/data-store.json`）只重新解析有變更的內容檔，修改 `content-schema.ts` 不會讓快取失效；只有 `src/content.config.ts` 變更才會清除。已在該檔加入 `CONTENT_SCHEMA_VERSION` 與註解，本次變更會讓每個人的本機快取自動重建。CI 只快取 npm 下載，不受影響。之後修改 schema 輸出格式時要一併調高這個版本號。另外，AI 在第 1 階段尚未 commit 時請使用者執行 `git switch -c content/review-concept-cards origin/main`，未提交的變更因此被帶到審核分支；已先 commit 審核標記，再以 `git stash` 把第 1 階段變更移回本分支，沒有遺失。之後請先 commit 或暫存，再請使用者切換分支。
+- **人工審核（未由 AI 標記）**：使用者表示 PR #20 的 7 張新卡已確認無誤。依紅線 4 與 `scripts/mark-reviewed.ts`，AI 不執行標記；AI 只以 `--dry-run` 確認可通過 schema；使用者已自行執行 `npm run review`，標記另開 `content/review-concept-cards`（PR #24），與本 PR 分開。里程碑的「人工審核 7 張新卡」在本 PR 勾選。
+- **下一步**：第 2 階段（作答頁、前端腳本、`npm run scenario` 支援 `format`、e2e 與 axe；同步更新 04）。
+- **相關文件**：[ADR-0022](adr/0022-advanced-question-formats.md)、[內容格式](sdd/03-content-schema.md)、[領域模型](sdd/02-domain-model.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：進階題型與多選題 ADR（ADR-0022）
 - **目標與範圍**：依 SDD 12 §4，先寫進階題型與多選題的 ADR；本次只有文件，不改程式與內容。
 - **分支**：`docs/adr-advanced-question-types`，自 `origin/main`（`5f0ae3f`，PR #21 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。

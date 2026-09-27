@@ -22,3 +22,19 @@ export function shuffle<T>(items: readonly T[], random: () => number = Math.rand
 export function isCorrect(choice: string, answer: string): boolean {
   return choice === answer;
 }
+
+/** 收集判定需要的作答欄位；其餘題型沒有對應的圖鑑卡 */
+export type ScenarioAnswerKey =
+  | { format: 'judge'; answer: string }
+  | { format: 'multi'; answers: readonly string[] }
+  | { format: 'validity-soundness' | 'choice' };
+
+/**
+ * 答對後可點亮的圖鑑卡（ADR-0022）：judge 為正解（「沒有問題」除外），
+ * multi 為全部 answers，validity-soundness 與 choice 不點亮任何卡。
+ */
+export function collectableEntries(key: ScenarioAnswerKey): string[] {
+  if (key.format === 'judge') return key.answer === NO_PROBLEM ? [] : [key.answer];
+  if (key.format === 'multi') return [...key.answers];
+  return [];
+}

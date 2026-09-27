@@ -4,6 +4,10 @@ import { entrySchema, scenarioSchema, termSchema } from './lib/content-schema.ts
 
 // schema 驗證失敗 → astro sync／build 失敗（docs/sdd/03）。
 // 交叉參照等跨檔檢查在 scripts/check-content.ts。
+// 內容快取只在本檔變更時失效：修改 content-schema.ts 的輸出格式時，請一併更新下方版本號，
+// 否則本機既有快取會沿用舊格式的資料（ADR-0022 實作時發現）。
+export const CONTENT_SCHEMA_VERSION = 2;
+
 const entries = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/entries/zh-TW' }),
   schema: entrySchema,

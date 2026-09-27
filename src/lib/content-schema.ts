@@ -157,37 +157,195 @@ export const entrySchema = z
     }
   });
 
+// 情境題題型（ADR-0022）：沒有 format 的既有題目視為 judge，不需遷移或重審。
+export const SCENARIO_FORMATS = ['judge', 'multi', 'validity-soundness', 'choice'] as const;
+export const CHOICE_TASKS = ['hidden-premise', 'form', 'counterexample'] as const;
+export const VALIDITY_VERDICTS = ['valid', 'invalid'] as const;
+export const PREMISE_VERDICTS = ['credible', 'not-credible', 'uncertain'] as const;
+/** multi 題的選項總數（answers ∪ acceptable ∪ distractors） */
+export const MULTI_OPTION_COUNT = { min: 4, max: 6 } as const;
+
+const note = z.string().trim().min(1);
+const betterPhrasing = z.array(z.string()).min(1).max(2);
+const checklist = z.array(z.string()).min(3).max(4);
+
+const scenarioBase = {
+  id: z.string().regex(/^(daily|cons)-\d{3}$/),
+  theme: z.enum(THEMES),
+  title: z.string(),
+  isControl: z.boolean().default(false),
+  difficulty: z.enum(['basic', 'advanced']),
+  form: z.string().optional(),
+  terms: z.array(z.string()).default([]),
+  ...reviewMeta,
+};
+
+const judgeScenario = z
+  .object({
+    ...scenarioBase,
+    format: z.literal('judge').default('judge'),
+    answer: z.string(),
+    distractors: z.array(z.string()).min(2).max(3),
+    betterPhrasing,
+    checklist,
+  })
+  .strict();
+
+const multiScenario = z
+  .object({
+    ...scenarioBase,
+    format: z.literal('multi'),
+    answers: z.array(z.string()).min(1).max(3),
+    acceptable: z.array(z.string()).max(2).default([]),
+    distractors: z.array(z.string()).min(1).max(3),
+    notes: z.record(z.string(), note),
+    betterPhrasing,
+    checklist,
+  })
+  .strict();
+
+const validitySoundnessScenario = z
+  .object({
+    ...scenarioBase,
+    format: z.literal('validity-soundness'),
+    validity: z.enum(VALIDITY_VERDICTS),
+    premises: z.enum(PREMISE_VERDICTS),
+    notes: z.object({ validity: note, premises: note }).strict(),
+    betterPhrasing: betterPhrasing.optional(),
+    checklist: checklist.optional(),
+  })
+  .strict();
+
+const choiceScenario = z
+  .object({
+    ...scenarioBase,
+    format: z.literal('choice'),
+    task: z.enum(CHOICE_TASKS),
+    prompt: note,
+    choices: z
+      .array(z.object({ text: note, correct: z.boolean().default(false), note }).strict())
+      .min(3)
+      .max(4),
+    betterPhrasing: betterPhrasing.optional(),
+    checklist: checklist.optional(),
+  })
+  .strict();
+
+type AnyScenario = z.output<
+  | typeof judgeScenario
+  | typeof multiScenario
+  | typeof validitySoundnessScenario
+  | typeof choiceScenario
+>;
+
+/** multi 題的全部選項 id，依 answers、acceptable、distractors 的順序 */
+export function multiOptionIds(data: {
+  answers: string[];
+  acceptable: string[];
+  distractors: string[];
+}): string[] {
+  return [...data.answers, ...data.acceptable, ...data.distractors];
+}
+
+function checkFormat(data: AnyScenario, ctx: z.RefinementCtx) {
+  if (data.format === 'judge') return;
+  if (data.difficulty !== 'advanced') {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['difficulty'],
+      message: `${data.format} 題型只出現在進階模式，difficulty 必須為 advanced`,
+    });
+  }
+  if (data.format === 'multi') {
+    const options = multiOptionIds(data);
+    if (new Set(options).size !== options.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['answers'],
+        message: 'answers、acceptable、distractors 不可重複或互相重疊',
+      });
+    }
+    if (options.includes(NO_PROBLEM)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['answers'],
+        message: `multi 題不提供「${NO_PROBLEM}」選項`,
+      });
+    }
+    const count = new Set(options).size;
+    if (count < MULTI_OPTION_COUNT.min || count > MULTI_OPTION_COUNT.max) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['distractors'],
+        message: `multi 題選項共 ${MULTI_OPTION_COUNT.min}–${MULTI_OPTION_COUNT.max} 個，目前 ${count} 個`,
+      });
+    }
+    const noted = Object.keys(data.notes);
+    const missing = options.filter((id) => !noted.includes(id));
+    const extra = noted.filter((id) => !options.includes(id));
+    if (missing.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['notes'],
+        message: `每個選項都要有個別解說，缺少：${missing.join(', ')}`,
+      });
+    }
+    if (extra.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['notes'],
+        message: `notes 含有不是選項的 id：${extra.join(', ')}`,
+      });
+    }
+  }
+  if (data.format === 'choice') {
+    const correct = data.choices.filter((c) => c.correct).length;
+    if (correct !== 1) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['choices'],
+        message: `choices 必須恰好一個 correct: true，目前 ${correct} 個`,
+      });
+    }
+  }
+}
+
 export const createScenarioSchema = (policy: ReviewPolicy = REVIEW_POLICY) =>
   z
-    .object({
-      id: z.string().regex(/^(daily|cons)-\d{3}$/),
-      theme: z.enum(THEMES),
-      title: z.string(),
-      isControl: z.boolean().default(false),
-      answer: z.string(),
-      distractors: z.array(z.string()).min(2).max(3),
-      difficulty: z.enum(['basic', 'advanced']),
-      betterPhrasing: z.array(z.string()).min(1).max(2),
-      checklist: z.array(z.string()).min(3).max(4),
-      form: z.string().optional(),
-      terms: z.array(z.string()).default([]),
-      ...reviewMeta,
-    })
-    .strict()
+    .discriminatedUnion('format', [
+      judgeScenario,
+      multiScenario,
+      validitySoundnessScenario,
+      choiceScenario,
+    ])
     .superRefine((data, ctx) => {
       requireReviewers(data, ctx, policy);
-      if (data.isControl !== (data.answer === NO_PROBLEM)) {
+      // 對照題只存在於 judge 題（ADR-0022）
+      const noProblem = data.format === 'judge' && data.answer === NO_PROBLEM;
+      if (data.isControl !== noProblem) {
         ctx.addIssue({
           code: 'custom',
           path: ['isControl'],
-          message: `isControl 為 true 若且唯若 answer 為 '${NO_PROBLEM}'`,
+          message: `isControl 為 true 若且唯若 answer 為 '${NO_PROBLEM}'（只有 judge 題可以是對照題）`,
         });
       }
       const idTheme = data.id.startsWith('daily-') ? 'daily' : 'conservation';
       if (idTheme !== data.theme) {
         ctx.addIssue({ code: 'custom', path: ['theme'], message: `id 前綴與 theme 不一致` });
       }
+      checkFormat(data, ctx);
     });
+
+/** 情境題除了標題與本文以外，會顯示給讀者的文字（隱私檢查、閱讀篇幅報告用） */
+export function scenarioTexts(data: AnyScenario): string[] {
+  const texts = [...(data.betterPhrasing ?? []), ...(data.checklist ?? [])];
+  if (data.format === 'multi') texts.push(...Object.values(data.notes));
+  if (data.format === 'validity-soundness') texts.push(data.notes.validity, data.notes.premises);
+  if (data.format === 'choice') {
+    texts.push(data.prompt, ...data.choices.flatMap((c) => [c.text, c.note]));
+  }
+  return texts;
+}
 
 // 名詞與圖鑑卡、情境題適用相同的審核門檻（ADR-0017）。
 export const scenarioSchema = createScenarioSchema();

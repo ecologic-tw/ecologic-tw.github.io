@@ -5,6 +5,7 @@ import {
   THEMES,
   entrySchema,
   scenarioSchema,
+  scenarioTexts,
   termSchema,
   type EntryData,
   type ScenarioData,
@@ -124,18 +125,26 @@ export function checkContent(input: ContentInput): CheckResult {
 
   for (const item of scenarios.values()) {
     const { data, doc } = item;
-    if (data.answer !== NO_PROBLEM) checkRef(item, 'answer', entries, '圖鑑卡', data.answer);
-    if (new Set(data.distractors).size !== data.distractors.length) {
-      errors.push(`${doc.file}: distractors 不可重複`);
+    if (data.format === 'judge') {
+      if (data.answer !== NO_PROBLEM) checkRef(item, 'answer', entries, '圖鑑卡', data.answer);
+      if (new Set(data.distractors).size !== data.distractors.length) {
+        errors.push(`${doc.file}: distractors 不可重複`);
+      }
+      for (const id of data.distractors) {
+        if (id === data.answer) errors.push(`${doc.file}: distractors 不可包含正解「${id}」`);
+        else checkRef(item, 'distractors', entries, '圖鑑卡', id);
+      }
     }
-    for (const id of data.distractors) {
-      if (id === data.answer) errors.push(`${doc.file}: distractors 不可包含正解「${id}」`);
-      else checkRef(item, 'distractors', entries, '圖鑑卡', id);
+    // multi 題的重複與重疊由 schema 檢查，這裡只檢查參照（ADR-0022）
+    if (data.format === 'multi') {
+      for (const field of ['answers', 'acceptable', 'distractors'] as const) {
+        for (const id of data[field]) checkRef(item, field, entries, '圖鑑卡', id);
+      }
     }
     for (const id of data.terms) checkRef(item, 'terms', terms, '名詞', id);
     for (const id of bodyTermIds(item.doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
 
-    const text = [data.title, ...data.betterPhrasing, ...data.checklist, doc.body].join('\n');
+    const text = [data.title, ...scenarioTexts(data), doc.body].join('\n');
     for (const [label, pattern] of PRIVATE_INFO_PATTERNS) {
       if (pattern.test(text)) errors.push(`${doc.file}: 情境題文字不得含${label}`);
     }
