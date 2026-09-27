@@ -30,6 +30,7 @@
       supports:
         - 溝通要素與觀察／評價、感受／想法、請求／命令的區分。
   updated: 2026-09-27
+  published: 2026-09-27
   aiAssisted: true
 
 - id: subjective-meaning-term
@@ -45,6 +46,7 @@
       supports:
         - 說話者意義與語句意義之區分；主觀意義為本站教學用語。
   updated: 2026-09-27
+  published: 2026-09-27
   aiAssisted: true
 
 - id: objective-meaning-term
@@ -60,6 +62,7 @@
       supports:
         - 語言慣例、語境與理解的關係；客觀意義為本站教學用語。
   updated: 2026-09-27
+  published: 2026-09-27
   aiAssisted: true
 
 - id: premise

@@ -28,6 +28,7 @@ sources:
     supports:
       - 誠實表達、同理聆聽、不以強迫達成目的，並準備好聽到拒絕。
 updated: 2026-09-27
+published: 2026-09-27
 aiAssisted: true
 ---
 

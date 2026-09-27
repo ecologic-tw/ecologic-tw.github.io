@@ -27,6 +27,7 @@ sources:
     supports:
       - 語句意義與說話者意義之區分，不把兩者視為毫無關聯的對立面。
 updated: 2026-09-27
+published: 2026-09-27
 aiAssisted: true
 ---
 

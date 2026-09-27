@@ -27,6 +27,7 @@ sources:
     supports:
       - 語境、溝通意圖與語用理解的關係；虛構例子為本站編寫。
 updated: 2026-09-27
+published: 2026-09-27
 aiAssisted: true
 ---
 
