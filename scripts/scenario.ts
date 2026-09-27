@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parse, parseDocument, stringify } from 'yaml';
 import { loadContent } from './load-content.ts';
-import { scenarioSchema } from '../src/lib/content-schema.ts';
+import { SCENARIO_FORMATS, scenarioSchema } from '../src/lib/content-schema.ts';
 import { checkContent } from '../src/lib/content-checks.ts';
 import { splitSections } from '../src/lib/scenario-sections.ts';
 
@@ -37,7 +37,36 @@ export type ProposalOptions = {
   contributor?: string;
   contribution?: string;
   ai?: boolean;
+  /** 題型（ADR-0022），預設 judge */
+  format?: string;
 };
+
+// 各題型的空白欄位；judge 以外的題型只出現在進階模式。
+// validity-soundness 與 choice 的改寫練習為選填，需要時再自行加上 betterPhrasing、checklist。
+function formatFields(format: string): Record<string, unknown> {
+  if (format === 'multi')
+    return {
+      format,
+      answers: [],
+      acceptable: [],
+      distractors: [],
+      notes: {},
+      difficulty: 'advanced',
+      betterPhrasing: [],
+      checklist: [],
+    };
+  if (format === 'validity-soundness')
+    return {
+      format,
+      validity: '',
+      premises: '',
+      notes: { validity: '', premises: '' },
+      difficulty: 'advanced',
+    };
+  if (format === 'choice')
+    return { format, task: '', prompt: '', choices: [], difficulty: 'advanced' };
+  return { answer: '', distractors: [], difficulty: 'basic', betterPhrasing: [], checklist: [] };
+}
 export function createProposal(root: string, slug: string, options: ProposalOptions) {
   const file = proposalPath(root, slug);
   if (existsSync(file)) throw new Error('提案已存在，請編輯原檔或另取名稱');
@@ -45,6 +74,7 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
     throw new Error('署名需同時提供 --contributor 與 --contribution，或兩者都不填');
   let data: Record<string, unknown>;
   let body: string;
+  if (options.target && options.format) throw new Error('修訂提案沿用原題題型，不可指定 --format');
   if (options.target) {
     const text = readFileSync(scenarioPath(root, options.target), 'utf8');
     const original = readDocument(text);
@@ -53,14 +83,13 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
   } else {
     if (!['daily', 'conservation'].includes(options.theme ?? '') || !options.title?.trim())
       throw new Error('新提案需 --theme daily|conservation 與 --title 標題');
+    const format = options.format ?? 'judge';
+    if (!(SCENARIO_FORMATS as readonly string[]).includes(format))
+      throw new Error(`--format 需為 ${SCENARIO_FORMATS.join('|')}`);
     data = {
       title: options.title,
       theme: options.theme,
-      answer: '',
-      distractors: [],
-      difficulty: 'basic',
-      betterPhrasing: [],
-      checklist: [],
+      ...formatFields(format),
       terms: [],
       sources: [],
       contributors: [],
@@ -125,18 +154,20 @@ export function preparePromotion(root: string, slug: string) {
     status: 'draft',
     reviewers: [],
     updated: today(),
-    isControl: data.answer === 'none',
+    // 對照題只存在於 judge 題（ADR-0022）
+    isControl: (data.format ?? 'judge') === 'judge' && data.answer === 'none',
   });
   const parsed = scenarioSchema.safeParse(candidate);
   const issues = parsed.success
     ? []
     : parsed.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`);
   if (!String(data.title ?? '').trim()) issues.push('title: 請補標題');
-  if (!String(data.answer ?? '').trim()) issues.push('answer: 請補圖鑑卡 ID 或 none');
+  if ((data.format ?? 'judge') === 'judge' && !String(data.answer ?? '').trim())
+    issues.push('answer: 請補圖鑑卡 ID 或 none');
   const sections = splitSections(body);
   for (const name of ['情境', '解說'])
     if (!sections.get(name)?.trim()) issues.push(`本文: 請補「## ${name}」`);
-  for (const key of ['betterPhrasing', 'checklist', 'distractors']) {
+  for (const key of ['betterPhrasing', 'checklist', 'distractors', 'answers', 'acceptable']) {
     if (
       Array.isArray(data[key]) &&
       data[key].some((value) => typeof value !== 'string' || !value.trim())
@@ -201,7 +232,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     for (let i = 0; i < args.length; i++) {
       const arg = args[i] ?? '';
       if (['--ai', '--dry-run'].includes(arg)) flags.set(arg, 'true');
-      else if (['--title', '--theme', '--contributor', '--contribution'].includes(arg)) {
+      else if (
+        ['--title', '--theme', '--format', '--contributor', '--contribution'].includes(arg)
+      ) {
         const value = args[++i];
         if (!value || value.startsWith('--')) throw new Error(`${arg} 缺少值`);
         flags.set(arg, value);
@@ -215,7 +248,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       const slug = positionals[command === 'edit' ? 1 : 0];
       if (!slug)
         throw new Error(
-          '用法：scenario new <提案名稱> --theme daily --title 標題；或 scenario edit <題號> <提案名稱>',
+          '用法：scenario new <提案名稱> --theme daily --title 標題 [--format multi]；或 scenario edit <題號> <提案名稱>',
         );
       console.log(
         createProposal(root, slug, {
@@ -225,6 +258,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
           contributor: flags.get('--contributor'),
           contribution: flags.get('--contribution'),
           ai: flags.has('--ai'),
+          format: flags.get('--format'),
         }),
       );
       console.log('已建立可不完整的提案；先補自己想做的部分，留下 nextSteps 讓其他人接力。');

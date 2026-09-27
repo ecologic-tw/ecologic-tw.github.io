@@ -158,5 +158,4 @@ refine：
 - reviewed 內容不得引用 draft 內容。
 - 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）；也檢查 `notes`、`prompt`、`choices` 等題型專屬文字。
 - 每個主題中對照題比例 15%–30%，以該主題全部情境題（含進階題型）為分母。
-- `judge` 以外的題型在作答頁完成前（ADR-0022 第 2 階段）會讓 `npm run build` 失敗，避免發布無法作答的題目。
 - `evidence` 只能用於 `bias` 卡；`draft` 偏誤卡缺 `evidence` 時失敗。既有 reviewed 偏誤卡待人工補值後，改為全面必填（ADR-0021 Review Point）。

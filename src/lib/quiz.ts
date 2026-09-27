@@ -38,3 +38,35 @@ export function collectableEntries(key: ScenarioAnswerKey): string[] {
   if (key.format === 'multi') return [...key.answers];
   return [];
 }
+
+// ── 進階題型的判定（ADR-0022 §4）：不計分，只回傳是否完全答對與逐項標記 ──
+
+export type MultiRole = 'answer' | 'acceptable' | 'distractor';
+/** hit 選到的正解／missed 還沒選到的正解／wrong 選了但不適用／acceptable 可接受／clear 沒選的不適用選項 */
+export type MultiMark = 'hit' | 'missed' | 'wrong' | 'acceptable' | 'clear';
+
+/** 多重判讀：選中全部 answers，且沒選任何 distractors；acceptable 選不選都可以。 */
+export function gradeMulti(
+  options: readonly { id: string; role: MultiRole }[],
+  selected: ReadonlySet<string>,
+): { correct: boolean; marks: Map<string, MultiMark> } {
+  const marks = new Map<string, MultiMark>();
+  for (const { id, role } of options) {
+    const chosen = selected.has(id);
+    if (role === 'acceptable') marks.set(id, 'acceptable');
+    else if (role === 'answer') marks.set(id, chosen ? 'hit' : 'missed');
+    else marks.set(id, chosen ? 'wrong' : 'clear');
+  }
+  const correct = [...marks.values()].every((m) => m !== 'missed' && m !== 'wrong');
+  return { correct, marks };
+}
+
+export type Validity = 'valid' | 'invalid';
+export type Premises = 'credible' | 'not-credible' | 'uncertain';
+export type Soundness = 'sound' | 'unsound' | 'unknown';
+
+/** 健全＝有效且前提可信；形式無效或前提不可信即不健全；有效但前提無法判斷時，健全與否也無法判斷。 */
+export function soundnessOf(validity: Validity, premises: Premises): Soundness {
+  if (validity === 'invalid' || premises === 'not-credible') return 'unsound';
+  return premises === 'credible' ? 'sound' : 'unknown';
+}

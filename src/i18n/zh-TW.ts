@@ -87,4 +87,41 @@ export const quiz = {
   answeredCorrect: '已答對',
 } as const;
 
+/** 進階題型的介面字串（ADR-0022 §4）：標記一律圖示＋文字，不只靠顏色 */
+export const advancedQuiz = {
+  multiQuestion: '這段推理有哪些問題？',
+  multiHint: '選出所有適用的，可能只有一個。',
+  multiChooseFirst: '至少選一項，再送出。',
+  multiAnswerIs: '這段推理的問題',
+  multiMarks: {
+    hit: { icon: '✓', text: '正解，你選到了' },
+    missed: { icon: '↻', text: '正解，這次沒選到' },
+    wrong: { icon: '✗', text: '這項不適用' },
+    acceptable: { icon: '△', text: '可接受，選不選都可以' },
+  },
+  roleLabel: { answer: '正解', acceptable: '可接受', distractor: '不適用' },
+  optionNotes: '各選項的解說',
+  validityQuestion: '推理形式有效嗎？（假設前提都為真，結論是否一定為真）',
+  premisesQuestion: '前提可信嗎？',
+  validityLabel: { valid: '有效', invalid: '無效' },
+  premisesLabel: { credible: '可信', 'not-credible': '不可信', uncertain: '無法從題幹判斷' },
+  soundnessLabel: {
+    sound: '有效，前提也可信，所以健全',
+    unsound: '不健全',
+    unknown: '形式有效，但前提無法判斷，所以還不能說它健全',
+  },
+  axisValidity: '形式',
+  axisPremises: '前提',
+  axisSoundness: '所以這個論證',
+  axesChooseFirst: '兩個問題都要選，再送出。',
+  choiceChooseFirst: '先選一個答案，再送出。',
+  taskLabel: {
+    'hidden-premise': '找出沒說出口的前提',
+    form: '辨識形式結構',
+    counterexample: '找出反例',
+  },
+  choiceAnswerIs: '正解',
+  yourChoice: '你的選擇',
+} as const;
+
 export const modeLabel = { basic: '基礎', advanced: '進階', legend: '模式' } as const;

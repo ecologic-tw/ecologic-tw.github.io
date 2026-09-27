@@ -58,8 +58,8 @@
 - [x] 進階題型與多選題：另開分支，先寫 ADR（ADR-0022）
 - [x] ADR-0022 接受（Decision Owner：@Wang-Yi-Zhang）
 - [x] 進階題型第 1 階段：schema、建置期檢查、收集與徽章換算、單元測試
-- [ ] 進階題型第 2 階段：作答頁與前端腳本、`npm run scenario` 支援 `format`、e2e 與 axe
-- [ ] 進階題型第 3 階段：8 題 draft（每主題 4 題，四種題型各至少 1 題）
+- [x] 進階題型第 2 階段：作答頁與前端腳本、`npm run scenario` 支援 `format`、e2e 與 axe
+- [ ] 進階題型第 3 階段：8 題 draft（每主題 4 題，四種題型各至少 1 題）；第 2 階段已先完成 3 題供測試（daily-013 multi、daily-014 choice、cons-014 validity-soundness），尚缺日常 2 題、保育 3 題
 - [x] 至少 1 題以「訴諸無知／偵測率」為主題的保育情境題 draft（cons-013，`aiAssisted: true`）
 - [ ] 人工審核 cons-013（正解與干擾選項、立場平衡、來源 `supports`）
 

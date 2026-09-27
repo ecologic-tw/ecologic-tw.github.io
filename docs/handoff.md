@@ -1,5 +1,24 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：進階題型第 2 階段（作答頁、工具、e2e）
+- **目標與範圍**：依 ADR-0022 §6 第 2 階段，做出 `multi`、`validity-soundness`、`choice` 的作答頁與前端腳本，讓 `npm run scenario` 支援 `--format`，並補 e2e 與 axe。
+- **分支**：`feat/advanced-formats-ui`，自 `origin/main`（`1b0f39a`，PR #26 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
+- **已完成**：
+  - `quiz.ts` 新增 `gradeMulti`、`soundnessOf` 純函式；情境題頁依 `format` 呈現作答區與「看答案與解說」（逐項解說、兩軸說明），移除第 1 階段的建置失敗保護。
+  - 前端腳本：單選題與 `validity-soundness` 的兩軸共用「單選群組」流程；`multi` 逐項標示 ✓／↻／✗／△，圖示搭配文字。沒有 JavaScript 時答案與逐項解說收在 `<details>`。
+  - `npm run scenario -- new … --format multi|validity-soundness|choice` 產生對應欄位；`edit` 不可換題型。
+  - 3 題 draft（`aiAssisted: true`）：daily-013（multi）、daily-014（choice／隱藏前提）、cons-014（validity-soundness），皆以工具建立提案再轉入，算進第 3 階段的 8 題。
+  - 更新 03、04、情境協作指南、里程碑。
+- **為什麼先寫 3 題**：e2e 以含草稿的建置執行，沒有新題型內容就無法測作答頁；另建測試專用的內容載入機制會增加正式程式的複雜度，因此改以草稿題測試。草稿不會發布。
+- **驗證**：見對應 PR 說明。
+- **待人工確認**：
+  - 3 題的正解與選項是否有第二個合理答案，特別是 daily-013 把稻草人列為「可接受」、daily-014 的干擾選項是否太容易排除。
+  - daily-014 的 OpenStax 來源是否討論隱藏前提，尚未逐字核對；「省略三段論」的說法未附來源。
+  - cons-014 由開發方提出論證；保育題由保育方犯錯的比例為 5／14，仍符合 08 的三分之一原則。
+- **過程中的問題（Learning Review 素材）**：使用者的開發伺服器上，judge 題（如 daily-010、cons-004）沒有選項。原因是第 1 階段變更 `content.config.ts` 時，執行中的舊開發伺服器偵測到設定指紋改變、清除快取，卻用記憶體裡的舊 schema 重建；指紋是新的、資料是舊格式，重開伺服器後仍沿用。處理方式：情境題頁遇到不明題型時改為明確報錯並說明處理方法，`content.config.ts` 註解補上「先停止伺服器、刪除 `.astro/data-store.json`」；本次修改該檔也讓使用者目前的伺服器自動重建快取，已確認兩題恢復。正式建置與 CI 不受影響。
+- **下一步**：第 3 階段補齊其餘 5 題（日常 2、保育 3，含形式辨識與反例選擇），再人工審核 8 題。
+- **相關文件**：[ADR-0022](adr/0022-advanced-question-formats.md)、[畫面與互動](sdd/04-ux-interaction.md)、[內容格式](sdd/03-content-schema.md)、[情境協作指南](review/scenario-contributions.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：進階題型第 1 階段（ADR-0022 接受）
 - **目標與範圍**：使用者接受 ADR-0022、擔任 Decision Owner，要求執行 §6 第 1 階段：schema、建置期檢查、收集與徽章換算、單元測試；不含作答頁、工具與新內容。
 - **分支**：`feat/advanced-formats-schema`，自 `origin/main`（`a972057`，PR #23 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。

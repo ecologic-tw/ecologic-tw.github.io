@@ -3,8 +3,10 @@ import {
   NO_PROBLEM,
   buildOptions,
   collectableEntries,
+  gradeMulti,
   isCorrect,
   shuffle,
+  soundnessOf,
 } from '../../src/lib/quiz.ts';
 
 describe('buildOptions', () => {
@@ -77,5 +79,47 @@ describe('collectableEntries (ADR-0022)', () => {
   it('returns nothing for question types that are not about a card', () => {
     expect(collectableEntries({ format: 'validity-soundness' })).toEqual([]);
     expect(collectableEntries({ format: 'choice' })).toEqual([]);
+  });
+});
+
+describe('gradeMulti (ADR-0022)', () => {
+  const options = [
+    { id: 'ad-hominem', role: 'answer' },
+    { id: 'false-dilemma', role: 'answer' },
+    { id: 'straw-man', role: 'acceptable' },
+    { id: 'slippery-slope', role: 'distractor' },
+  ] as const;
+  const grade = (...ids: string[]) => gradeMulti(options, new Set(ids));
+
+  it('is correct only with every answer and no distractor', () => {
+    expect(grade('ad-hominem', 'false-dilemma').correct).toBe(true);
+    expect(grade('ad-hominem').correct).toBe(false);
+    expect(grade('ad-hominem', 'false-dilemma', 'slippery-slope').correct).toBe(false);
+  });
+
+  it('ignores acceptable options either way', () => {
+    expect(grade('ad-hominem', 'false-dilemma', 'straw-man').correct).toBe(true);
+    expect(grade('ad-hominem', 'false-dilemma').marks.get('straw-man')).toBe('acceptable');
+  });
+
+  it('marks every option', () => {
+    const { marks } = grade('ad-hominem', 'slippery-slope');
+    expect(Object.fromEntries(marks)).toEqual({
+      'ad-hominem': 'hit',
+      'false-dilemma': 'missed',
+      'straw-man': 'acceptable',
+      'slippery-slope': 'wrong',
+    });
+    expect(grade('ad-hominem', 'false-dilemma').marks.get('slippery-slope')).toBe('clear');
+  });
+});
+
+describe('soundnessOf', () => {
+  it('is sound only when valid with credible premises', () => {
+    expect(soundnessOf('valid', 'credible')).toBe('sound');
+    expect(soundnessOf('valid', 'not-credible')).toBe('unsound');
+    expect(soundnessOf('invalid', 'credible')).toBe('unsound');
+    expect(soundnessOf('invalid', 'uncertain')).toBe('unsound');
+    expect(soundnessOf('valid', 'uncertain')).toBe('unknown');
   });
 });
