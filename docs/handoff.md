@@ -1,5 +1,12 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：兩項 P1 修正
+- **目標／分支**：修正必要段落驗證缺口與 cons-013 的推論說明；`codex/p1-content-validation`，基底 `de62097`；本節隨修正提交並依使用者要求建立 PR，commit／PR 以 GitHub 與 Git 紀錄為準。前次架構檢視報告一併保存供追溯；原有 `.claude/` 不納入提交。
+- **已完成**：`scenario-sections.ts` 提供共用必要段落驗證，正式內容檢查、提案轉入與人工標記工具皆使用；新增缺漏／空白／錯誤標題、CRLF、reviewed 本文缺失及人工工具不寫入的回歸測試。人工標記仍須另跑全站 check 驗證引用與比例，本次未改變其全部發布規則。
+- **內容修正**：依提案流程建立並轉入 `contributions/scenarios/detection-inference-p1.md`，cons-013 明確區分必然條件句與機率性證據判斷；退回 draft、清空舊審核者，先前審核保留於 Git。正式建置暫不包含該題，未代為人工審核；其餘題目狀態不變。
+- **驗證**：201 項單元測試通過；lint 首次發現測試中的 non-null assertion，修正後通過；Astro／內容 check 通過（30/34 情境題 reviewed），正式 build 與 67 頁產物檢查通過。未跑 e2e（本次無 UI 互動變更）。既有 USGS 來源頁本次存取回傳 403，未宣稱重新查核全文。
+- **待人工確認／下一步**：閱讀 cons-013 的進階解說，確認不把機率判斷當成演繹保證；核對來源適用範圍後，依審核指南重新標記 reviewed。P2 項目未處理。相關規範：[內容格式](sdd/03-content-schema.md)、[防誤用](sdd/08-misuse-prevention.md)、[逐步協作](review/scenario-contributions.md)、[審核指南](review/review-guide.md)。
+
 ## 2026-09-27：進階題型第 3 階段與「訴諸傳統」
 - **目標與範圍**：使用者要求執行 ADR-0022 §6 第 3 階段，並補充「訴諸傳統」謬誤的圖鑑卡與情境題；ADR-0020 改為接受另開分支（`docs/accept-adr-0020`）。
 - **分支**：`content/phase3-and-appeal-to-tradition`，自 `origin/main`（`3797c60`，PR #30 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。兩項內容放在同一分支，是為了避免分別開分支時都分配到 `daily-015` 造成題號衝突，也讓第 3 階段的題目能把新卡當作選項。

@@ -5,6 +5,7 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseDocument, isSeq, isMap } from 'yaml';
 import { entrySchema, scenarioSchema, termSchema } from '../src/lib/content-schema.ts';
+import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
 
 export type ReviewPlan = { writes: { file: string; text: string }[]; ids: string[] };
 
@@ -59,6 +60,10 @@ export function prepareReview(
       if (doc.errors.length) throw new Error(`${file}: ${doc.errors[0]?.message}`);
       const people = mark(doc.toJS() as Record<string, unknown>, kind, file);
       if (!people) continue;
+      if (kind === 'scenarios') {
+        const issues = validateScenarioBody(text.slice(match[0].length));
+        if (issues.length) throw new Error(`${file}: ${issues.join('; ')}`);
+      }
       doc.set('status', 'reviewed');
       doc.set('reviewers', people);
       doc.set('updated', today);

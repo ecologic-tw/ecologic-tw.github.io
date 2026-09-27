@@ -10,6 +10,14 @@ import {
 
 export const SECTIONS = { scenario: '情境', explanation: '解說', advanced: '進階解說' } as const;
 
+/** 正式情境與待轉入提案共用的必要本文檢查；與頁面使用相同的分段規則。 */
+export function validateScenarioBody(body: string): string[] {
+  const sections = splitSections(body);
+  return [SECTIONS.scenario, SECTIONS.explanation]
+    .filter((name) => !sections.get(name)?.trim())
+    .map((name) => `本文: 請補「## ${name}」及非空白內容`);
+}
+
 /** 依二級標題切成「標題 → Markdown」；標題前的文字與未列出的標題會被忽略。 */
 export function splitSections(body: string): Map<string, string> {
   const sections = new Map<string, string>();
