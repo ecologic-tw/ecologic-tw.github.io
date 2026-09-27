@@ -13,11 +13,20 @@ quickCheck:
   answer: 1
   explanation: '必要條件的意思是「沒有它就不會發生」。所以只要發生了（成功繁殖），就能推出必要條件成立（水源乾淨）。但必要條件不保證結果：水乾淨，也可能因為其他因素而無法繁殖。'
 related: [ conditional-variants, affirming-the-consequent, denying-the-antecedent ]
-terms: [ necessary-condition, sufficient-condition, conditional, antecedent, consequent ]
-status: draft
-reviewers: []
+terms:
+  [
+    necessary-condition,
+    sufficient-condition,
+    conditional,
+    antecedent,
+    consequent
+  ]
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Brennan, A. Necessary and Sufficient Conditions. Stanford Encyclopedia of Philosophy."
+  - title: "Brennan, A. Necessary and Sufficient Conditions. Stanford Encyclopedia
+      of Philosophy."
     url: https://plato.stanford.edu/entries/necessary-sufficient/
     supports:
       - "必要條件與充分條件的定義，以及它們與條件句的對應。"

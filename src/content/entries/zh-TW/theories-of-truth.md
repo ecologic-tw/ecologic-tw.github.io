@@ -14,18 +14,21 @@ quickCheck:
   explanation: '符應論認為真取決於命題與事實是否相符。專家共識與紀錄一致性是我們「判斷」真假的重要證據，但依符應論，它們本身不等於真。第三個選項比較接近融貫論的想法。'
 related: [ proposition-and-truth-value, validity-and-soundness ]
 terms: [ proposition, truth-value ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Glanzberg, M. Truth. Stanford Encyclopedia of Philosophy."
     url: https://plato.stanford.edu/entries/truth/
     supports:
       - "符應論、融貫論、實用論與緊縮論等主要真理理論的概述。"
-  - title: "David, M. The Correspondence Theory of Truth. Stanford Encyclopedia of Philosophy."
+  - title: "David, M. The Correspondence Theory of Truth. Stanford Encyclopedia of
+      Philosophy."
     url: https://plato.stanford.edu/entries/truth-correspondence/
     supports:
       - "符應論的主張與常見批評。"
-  - title: "Tarski, A. (1944). The Semantic Conception of Truth and the Foundations of Semantics. Philosophy and Phenomenological Research, 4(3), 341–376."
+  - title: "Tarski, A. (1944). The Semantic Conception of Truth and the Foundations
+      of Semantics. Philosophy and Phenomenological Research, 4(3), 341–376."
     supports:
       - "T 語句：「雪是白的」為真，若且唯若雪是白的。"
 updated: 2026-09-27

@@ -13,15 +13,23 @@ quickCheck:
     - '如果可以任意飼養，就不是保育類野生動物。'
   answer: 2
   explanation: '第三句是逆否句，和原句等價。第一句是逆句，第二句是否句；其他法規或理由也可能限制飼養，所以它們都不能從原句推出。'
-related: [ necessary-and-sufficient-conditions, modus-tollens, affirming-the-consequent, denying-the-antecedent ]
+related:
+  [
+    necessary-and-sufficient-conditions,
+    modus-tollens,
+    affirming-the-consequent,
+    denying-the-antecedent
+  ]
 terms: [ conditional, antecedent, consequent, negation ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Hurley, P. J. A Concise Introduction to Logic（命題邏輯章節：條件句與邏輯等價）"
     supports:
       - "條件句與其逆否句等價，逆句與否句不等價。"
-  - title: "Brennan, A. Necessary and Sufficient Conditions. Stanford Encyclopedia of Philosophy."
+  - title: "Brennan, A. Necessary and Sufficient Conditions. Stanford Encyclopedia
+      of Philosophy."
     url: https://plato.stanford.edu/entries/necessary-sufficient/
     supports:
       - "條件句與必要、充分條件的對應。"

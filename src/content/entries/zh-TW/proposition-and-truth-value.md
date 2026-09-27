@@ -14,8 +14,9 @@ quickCheck:
   explanation: '命題是可以問「是真還是假」的陳述。命令句和感嘆句表達的是要求或感受，無法判斷真假；第二句無論實際上是真是假，都可以查證。'
 related: [ validity-and-soundness, theories-of-truth ]
 terms: [ proposition, truth-value, argument, premise, conclusion ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
     url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
