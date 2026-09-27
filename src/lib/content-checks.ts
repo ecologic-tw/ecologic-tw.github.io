@@ -12,6 +12,7 @@ import {
   type TermData,
 } from './content-schema.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
+import { collectableEntries } from './quiz.ts';
 import { validateScenarioBody } from './scenario-sections.ts';
 
 export type SourceDoc = {
@@ -169,6 +170,21 @@ export function checkContent(input: ContentInput): CheckResult {
     } else if (inTheme.length > 0 && outOfRange(ratio(inTheme))) {
       warnings.push(
         `主題 ${theme} 情境題（含草稿）的對照題比例 ${pct(ratio(inTheme))}，目標 15%–30%`,
+      );
+    }
+  }
+
+  // 每張已發布的圖鑑卡都要能點亮（docs/sdd/02 規則 4），否則「圖鑑收藏家」徽章無法達成：
+  // 有卡內小檢核，或至少一題已發布情境題答對後會點亮它（judge 的正解、multi 的 answers）。
+  const collectable = new Set(
+    [...scenarios.values()]
+      .filter((s) => s.data.status === 'reviewed')
+      .flatMap((s) => collectableEntries(s.data)),
+  );
+  for (const { doc, data } of entries.values()) {
+    if (data.status === 'reviewed' && !data.quickCheck && !collectable.has(data.id)) {
+      errors.push(
+        `${doc.file}: 已審圖鑑卡無法點亮：需要 quickCheck，或至少一題已審情境題以它為正解（docs/sdd/02 規則 4）`,
       );
     }
   }

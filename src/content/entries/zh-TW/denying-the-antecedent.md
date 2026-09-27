@@ -8,6 +8,14 @@ form: 'P → Q, ¬P ∴ ¬Q'
 pairWith: modus-tollens
 notFallacyWhen: 當 P 是 Q 的唯一原因（也就是「只有 P 才會 Q」）有理由支持時，推理是合理的。
 charitableResponse: 「P 沒發生是好消息。不過 Q 會不會還有其他途徑發生？」
+quickCheck:
+  question: '「如果有會員卡，結帳就能打九折。小明沒有會員卡，所以他結帳一定不能打折。」這個推論？'
+  options:
+    - '有效：前提為真時，結論一定為真'
+    - '無效：沒有會員卡，也可能有其他打折方式'
+    - '有效，因為這是否定後件'
+  answer: 1
+  explanation: '這是否定前件：從「前件不成立（沒有會員卡）」推出「後件不成立（不能打折）」。條件句只說有會員卡就能打折，沒說只有會員卡才能打折。有效的是否定後件：「結帳沒打折，所以沒有會員卡」。'
 related: [ modus-tollens ]
 terms: [ conditional, antecedent, necessary-condition, counterexample ]
 status: reviewed
@@ -18,7 +26,7 @@ sources:
     url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
     supports:
       - "論證、演繹有效性與歸納強度的區分；虛構情境的前提須另行查證。"
-updated: 2026-09-26
+updated: 2026-09-27
 aiAssisted: true
 ---
 

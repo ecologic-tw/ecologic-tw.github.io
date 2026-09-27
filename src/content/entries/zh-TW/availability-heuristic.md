@@ -7,6 +7,14 @@ en: Availability heuristic
 summary: 用「容易想起來的程度」來判斷一件事有多常發生。
 notFallacyWhen: 容易想起的事常常確實比較常見，當作初步判斷的線索是合理的；做重要決定前，再查實際的發生比例。
 charitableResponse: 「那則新聞確實讓人印象深刻。我們來查查看，實際上這種事多常發生？」
+quickCheck:
+  question: '「最近連續看到幾則遊樂設施意外的新聞，阿美就覺得搭遊樂設施比開車上班更危險。」她的判斷最可能受到什麼影響？'
+  options:
+    - '這類事件最近很容易被想起，影響了她對發生頻率的判斷'
+    - '她比較過兩者的事故統計資料'
+    - '她自己經歷過遊樂設施意外'
+  answer: 0
+  explanation: '容易想起來，不等於常發生。新聞密集報導會讓某類事件特別容易被想起；要比較兩者的風險，需要看事故率等資料。題幹沒有提到統計資料或親身經歷。'
 related: [ hasty-generalization, confirmation-bias ]
 terms: [ cognitive-bias, base-rate ]
 status: reviewed
@@ -18,7 +26,7 @@ sources:
     url: https://doi.org/10.1016/0010-0285(73)90033-9
     supports:
       - "可得性捷思的概念；生活與保育對話是教學示例，不是對個人的診斷。"
-updated: 2026-09-26
+updated: 2026-09-27
 aiAssisted: true
 ---
 

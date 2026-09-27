@@ -36,6 +36,7 @@ function scenario(id: string, extra: Record<string, unknown>, body = validBody):
 }
 
 const cards = [entry('a'), entry('b'), entry('c')];
+const quickCheck = { question: '問題？', options: ['甲', '乙'], answer: 1, explanation: '說明' };
 const q = (id: string, extra: Record<string, unknown> = {}, body = validBody) =>
   scenario(id, { answer: 'a', distractors: ['b', 'c'], ...extra }, body);
 
@@ -59,8 +60,6 @@ describe('schema', () => {
     });
     expect(errors.join()).toMatch(/notFallacyWhen/);
   });
-
-  const quickCheck = { question: '問題？', options: ['甲', '乙'], answer: 1, explanation: '說明' };
 
   it('does not require them for law / inference cards', () => {
     const law = entry('d', {
@@ -174,7 +173,10 @@ describe('references', () => {
 
   it('allows reviewed content referencing reviewed content', () => {
     const r = { status: 'reviewed', reviewers: ['someone'] };
-    const list = [entry('a', r), entry('d', { ...r, related: ['a'] })];
+    const list = [
+      entry('a', { ...r, quickCheck }),
+      entry('d', { ...r, quickCheck, related: ['a'] }),
+    ];
     expect(run({ entries: list }).errors).toEqual([]);
   });
 });
@@ -270,9 +272,43 @@ describe('writing rules', () => {
   });
 });
 
+describe('every published card can be collected (docs/sdd/02 rule 4)', () => {
+  const reviewed = { status: 'reviewed', reviewers: ['someone'] };
+  const others = ['b', 'c'].map((id) => entry(id, { ...reviewed, quickCheck }));
+  const errorsFor = (id: string, input: Parameters<typeof run>[0]) =>
+    run(input).errors.filter((e) => e.startsWith(`${id}.md`));
+
+  it('rejects a reviewed card with neither a quick check nor a reviewed question answering it', () => {
+    expect(errorsFor('a', { entries: [entry('a', reviewed), ...others] }).join()).toMatch(
+      /已審圖鑑卡無法點亮/,
+    );
+  });
+
+  it('accepts a card that has a quick check', () => {
+    expect(
+      errorsFor('a', { entries: [entry('a', { ...reviewed, quickCheck }), ...others] }),
+    ).toEqual([]);
+  });
+
+  it('accepts a card answered by a reviewed question, but not by a draft question or as a distractor', () => {
+    const entries = [entry('a', reviewed), ...others];
+    const published = q('daily-001', { ...reviewed, answer: 'a', distractors: ['b', 'c'] });
+    const draft = q('daily-001', { answer: 'a', distractors: ['b', 'c'] });
+    const distractorOnly = q('daily-001', { ...reviewed, answer: 'b', distractors: ['a', 'c'] });
+    expect(errorsFor('a', { entries, scenarios: [published] })).toEqual([]);
+    expect(errorsFor('a', { entries, scenarios: [draft] })).toHaveLength(1);
+    expect(errorsFor('a', { entries, scenarios: [distractorOnly] })).toHaveLength(1);
+  });
+
+  it('ignores draft cards', () => {
+    expect(errorsFor('a', { entries: [entry('a'), ...others] })).toEqual([]);
+  });
+});
+
 describe('control ratio', () => {
   const reviewed = { status: 'reviewed', reviewers: ['someone'] };
-  const reviewedCards = cards.map((c) => entry(c.fileId ?? '', reviewed));
+  // 附小檢核，讓每張卡都能點亮，只測對照題比例
+  const reviewedCards = cards.map((c) => entry(c.fileId ?? '', { ...reviewed, quickCheck }));
   const questions = (controls: number, total: number, extra = reviewed) =>
     Array.from({ length: total }, (_, i) => {
       const id = `daily-${String(i + 1).padStart(3, '0')}`;
