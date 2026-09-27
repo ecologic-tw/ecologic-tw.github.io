@@ -16,9 +16,8 @@ quickCheck:
   explanation: '「沒提到」可能是真的沒有，也可能是沒調查或沒記錄。第三個選項則走向另一個極端，同樣缺乏證據。'
 related: [ modus-tollens, hasty-generalization, conditional-variants ]
 terms: [ burden-of-proof, sample, fallacy ]
-status: reviewed
-reviewers:
-  - Wang-Yi-Zhang
+status: draft
+reviewers: []
 sources:
   - title: "Walton, D. (1996). Arguments from Ignorance. Pennsylvania State
       University Press."
@@ -68,4 +67,6 @@ aiAssisted: true
 
 ## 進階
 
-Walton 把合理的無知論證寫成「如果 A 為真，我們應該會知道；我們不知道 A；所以 A 可能為假」。關鍵在第一個前提（知識是否夠完備），這其實是一個[否定後件](/guide/modus-tollens/)的形式。生態學的佔據模型（occupancy model）就是用重複調查估計偵測率，讓「沒偵測到」能被量化解讀。
+Walton 把合理的無知論證寫成「如果 A 為真，我們應該會知道；我們不知道 A；所以 A 可能為假」。它看起來像[否定後件](/guide/modus-tollens/)，但並不相同：否定後件需要「只要 A 為真，我們就**一定**會知道」這個前提，才能推出必然的「A 為假」；無知論證的前提只是「應該會知道」，結論也只能是「可能為假」，屬於可以被新證據推翻的推定推理。
+
+關鍵在第一個前提：我們的調查或知識有多完備。生態學的佔據模型（occupancy model）用重複調查估計偵測率，評估「沒偵測到」能提供多少證據；這仍是機率性的判斷，不是演繹的必然。
