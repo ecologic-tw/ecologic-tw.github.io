@@ -25,8 +25,9 @@ sources:
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 updated: 2026-09-27
 id: daily-017
 isControl: false

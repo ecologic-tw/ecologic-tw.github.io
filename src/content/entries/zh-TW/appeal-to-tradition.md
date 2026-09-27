@@ -8,8 +8,9 @@ notFallacyWhen: 當討論的正是某個做法的文化或歷史意義時，傳�
 charitableResponse: 「這個做法能延續這麼久，應該有它的道理。我們來看看當初是為了解決什麼問題，現在的條件還一樣嗎？」
 related: [ appeal-to-nature, appeal-to-authority ]
 terms: [ premise, conclusion ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Stanford Encyclopedia of Philosophy — Fallacies"
     url: https://plato.stanford.edu/entries/fallacies/
