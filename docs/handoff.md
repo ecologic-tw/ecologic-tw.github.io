@@ -1,5 +1,18 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：訴諸無知保育情境題（cons-013）
+- **目標與範圍**：依 PR #20 後的下一步，新增一題以「訴諸無知／偵測率」為主題的保育情境題；不修改既有題目、圖鑑卡與審核狀態。
+- **分支**：`content/argument-from-ignorance-scenario`，自 `origin/main`（`15c0354`，PR #20 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。開工前已將本機 `main` 快轉至 `15c0354`，並以 `git branch -d` 刪除 6 個已合併的本機分支。
+- **已完成**：以 `npm run scenario` 建立提案 `contributions/scenarios/frog-call-survey.md`，promote 為 `cons-013`「溪邊沒聽到蛙叫」（draft、`aiAssisted: true`、basic）。社區保育志工隊長只調查兩晚、且兩晚都很冷，就宣布樹蛙已消失；正解 `argument-from-ignorance`，干擾選項 `survivorship-bias`、`correlation-causation`。
+- **立場平衡**：既有 12 題保育題中有 4 題由支持保育的一方犯錯（剛好 1/3）；若新題由另一方犯錯，會降到 4/13 而違反 08 的平衡原則，因此本題由保育方犯錯（5/13）。
+- **驗證**：Node 24.11.1；`npm run lint`、`npm run check`（已審情境題 20／25）、166 個單元測試、`npm run build`（49 頁，新草稿未發布）、57 個 e2e（含草稿建置、淺色／深色 axe）皆通過。閱讀長度報告中 cons-013 未觸發提醒。
+- **待人工確認**：
+  - 刻意不用 `hasty-generalization` 當干擾選項，因為「兩晚沒聽到 → 已消失」也可能被讀成草率概括而出現第二個正解；請審核者確認目前的干擾選項是否太容易排除。
+  - 「低溫時可能較少鳴叫」在解說中只以假設語氣出現，未附來源；若要改成事實陳述，需補兩生類調查的文獻。
+  - 來源只有 MacKenzie et al. (2002)，沿用 cons-004 的條目，支援範圍同樣限於「偵測率小於一」。
+- **下一步**：人工審核 cons-013 與 PR #20 的 7 張新卡；補 3 張偏誤卡的 `evidence`；進階題型與多選題另開分支並先寫 ADR（SDD 12 §4）。
+- **相關文件**：[知識範圍](sdd/12-knowledge-scope.md)、[ADR-0020](adr/0020-concept-kind-and-knowledge-scope.md)、[情境協作指南](review/scenario-contributions.md)、[防誤用準則](sdd/08-misuse-prevention.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：知識擴充第一階段（基礎概念卡、訴諸無知、偏誤證據強度）
 - **目標與範圍**：依使用者要求補充「真」的哲學定義與邏輯知識、評估心理學內容；使用者選擇「分階段」：本次只做基礎概念卡別與證據強度欄位，多選／進階題型另開分支。
 - **分支**：`docs/knowledge-scope-concept-evidence`，自 `origin/main`（`dfd6cc5`，PR #19 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
