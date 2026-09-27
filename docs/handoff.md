@@ -1,5 +1,21 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：進階題型第 3 階段與「訴諸傳統」
+- **目標與範圍**：使用者要求執行 ADR-0022 §6 第 3 階段，並補充「訴諸傳統」謬誤的圖鑑卡與情境題；ADR-0020 改為接受另開分支（`docs/accept-adr-0020`）。
+- **分支**：`content/phase3-and-appeal-to-tradition`，自 `origin/main`（`3797c60`，PR #30 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。兩項內容放在同一分支，是為了避免分別開分支時都分配到 `daily-015` 造成題號衝突，也讓第 3 階段的題目能把新卡當作選項。
+- **已完成**：
+  - `appeal-to-tradition` 卡（draft，與訴諸自然成對；保育例子兩方各一）與日常情境題 `daily-015`「中秋晚會照舊」（judge、basic）。
+  - 5 題進階題 draft，皆以 `npm run scenario -- new … --format` 建立再轉入：`daily-016`（choice／反例）、`daily-017`（choice／形式辨識）、`cons-015`（multi）、`cons-016`（validity-soundness，形式無效）、`cons-017`（choice／反例）。連同第 2 階段的 3 題，每主題各 4 題。
+  - 更新 SDD 02、05、11、12。
+- **立場平衡**：保育題共 17 題，由保育方犯錯 7 題（cons-015、cons-017 為新增），超過三分之一。
+- **驗證**：見對應 PR 說明。
+- **待人工確認**：
+  - 「訴諸傳統」卡與 daily-015、daily-016、cons-017 引用的 SEP／OpenStax 是否直接討論該概念，尚未逐字核對，已在 `supports` 註明。
+  - cons-015 把草率概括與訴諸自然列為「可接受」；cons-017 的「外來種／入侵種」區分未附生態學來源，情境中的例子明確標為假設情況。
+  - daily-016 的第二個選項（短會也有好決定）是否會被認為也能推翻原主張。
+- **下一步**：人工審核 8 題進階題、「訴諸傳統」卡與 daily-015。
+- **相關文件**：[ADR-0022](adr/0022-advanced-question-formats.md)、[知識範圍](sdd/12-knowledge-scope.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：進階題型第 2 階段（作答頁、工具、e2e）
 - **目標與範圍**：依 ADR-0022 §6 第 2 階段，做出 `multi`、`validity-soundness`、`choice` 的作答頁與前端腳本，讓 `npm run scenario` 支援 `--format`，並補 e2e 與 axe。
 - **分支**：`feat/advanced-formats-ui`，自 `origin/main`（`1b0f39a`，PR #26 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
