@@ -26,6 +26,7 @@
 
 ## 參與
 我們的文化：自由決定、公開承擔、共同學習（[社群指引](docs/共好型自主敏捷社群指引.md)）。
+第一次參與可從 [試讀、查證或技術小任務](CONTRIBUTING.md#第一次參與先選一小件事) 開始；入口目前為試行草案，允許只完成一部分，由其他人接力。
 請見 [CONTRIBUTING.md](CONTRIBUTING.md)、[行為準則](CODE_OF_CONDUCT.md)；資安問題請見 [SECURITY.md](SECURITY.md)。
 設計文件在 [docs/sdd/](docs/sdd/)，決策紀錄在 [docs/adr/](docs/adr/)。
 
