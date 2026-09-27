@@ -2,9 +2,15 @@
 import { kindLabel, themeLabel } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
 import { BADGES, type ContentIndex } from '../../lib/badges.ts';
-import { getPublishedEntries, getPublishedScenarios, groupByKind } from '../../lib/content.ts';
+import {
+  getPublishedEntries,
+  getPublishedScenarios,
+  getUpdateNotes,
+  groupByKind,
+} from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
 import { collectableEntries } from '../../lib/quiz.ts';
+import { publishedKeys, withdrawnIds } from '../../lib/updates.ts';
 
 const entries = await getPublishedEntries();
 const scenarios = await getPublishedScenarios();
@@ -21,6 +27,11 @@ const index: ContentIndex = {
     collects: collectableEntries(s.data),
   })),
 };
+// 暫時撤下的內容：匯入時保留紀錄，重新發布後接回（ADR-0025）
+const withdrawn = withdrawnIds(
+  await getUpdateNotes(),
+  publishedKeys({ entry: entries, scenario: scenarios }),
+);
 ---
 
 <Base title="我的圖鑑" description="你的練習進度、點亮的圖鑑卡與徽章，只存在你的瀏覽器。" wide>
@@ -28,7 +39,12 @@ const index: ContentIndex = {
   <noscript slot="head">
     <link rel="stylesheet" href="/nojs-me.css" />
   </noscript>
-  <div class="me" data-me data-index={JSON.stringify(index)}>
+  <div
+    class="me"
+    data-me
+    data-index={JSON.stringify(index)}
+    data-withdrawn={JSON.stringify(withdrawn)}
+  >
     <h1>我的圖鑑</h1>
     <p class="lead">這裡的紀錄只存在你現在使用的瀏覽器，不會上傳到任何地方。</p>
 

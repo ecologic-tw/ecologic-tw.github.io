@@ -19,9 +19,14 @@ const root = document.querySelector<HTMLElement>('[data-me]');
 
 if (root) {
   const index = JSON.parse(root.dataset.index ?? '{}') as ContentIndex;
+  // 暫時撤下的內容也算認得，匯入時保留紀錄（ADR-0025）；畫面與徽章仍只依已發布內容
+  const withdrawn = JSON.parse(root.dataset.withdrawn ?? '{}') as {
+    entries?: string[];
+    scenarios?: string[];
+  };
   const known: KnownIds = {
-    scenarios: new Set(index.scenarios.map((s) => s.id)),
-    entries: new Set(index.entries),
+    scenarios: new Set([...index.scenarios.map((s) => s.id), ...(withdrawn.scenarios ?? [])]),
+    entries: new Set([...index.entries, ...(withdrawn.entries ?? [])]),
     badges: new Set(BADGES.map((b) => b.id)),
   };
 

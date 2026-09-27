@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   IMPORT_MAX_BYTES,
+  answeredBeforeFix,
   clear,
   collect,
   exportJson,
@@ -211,5 +212,13 @@ describe('parseImport rejects malicious or broken files (M3 驗收)', () => {
     delete old.read;
     const result = parseImport(JSON.stringify(old), known);
     expect(result.ok && result.progress.read).toEqual([]);
+  });
+});
+
+describe('answeredBeforeFix (ADR-0025)', () => {
+  it('treats answers up to and including the fix date as before the fix', () => {
+    expect(answeredBeforeFix({ at: '2026-09-26T23:00:00.000Z' }, '2026-09-27')).toBe(true);
+    expect(answeredBeforeFix({ at: '2026-09-27T10:00:00.000Z' }, '2026-09-27')).toBe(true);
+    expect(answeredBeforeFix({ at: '2026-09-28T00:00:00.000Z' }, '2026-09-27')).toBe(false);
   });
 });
