@@ -2,9 +2,27 @@
 # 新上架的圖鑑卡、情境題、名詞會依 published 日期自動列出，這裡只寫需要補充說明的事。
 # kind：feature 功能／content 內容／fix 勘誤／notice 公告
 # link：只能填站內路徑，例如 /guide/ 或 /terms/#premise
+# 修訂說明（docs/adr/0025-revision-disclosure.md）：
+#   about：被修訂的內容，entry/<id>、scenario/<id> 或 term/<id>；沒有 link 時自動連到該內容頁
+#   impact：none 不影響先前的理解／reread 建議重新閱讀／answer-changed 正解已修正（只用於 fix）
+#   summary 寫清楚改了什麼、為什麼改；和內容修訂放在同一個 PR，由同一位審核者確認
 - id: updates-page
   date: 2026-09-27
   kind: feature
   title: 新增更新紀錄與訂閱
   summary: 新上架的圖鑑卡、情境題與名詞會列在這裡，也可以用 RSS／Atom 閱讀器訂閱，本站不會知道誰訂閱了。
   link: /updates/
+- id: cons-013-detection-inference
+  date: 2026-09-27
+  kind: fix
+  title: 「溪邊沒聽到蛙叫」修正進階解說
+  summary: 原說明把「很有機會聽到」的推理當成否定後件，容易讓人以為調查夠多次就能推出牠們很可能不在。已改為分開說明：否定後件需要「一定會偵測到」的前提；沒偵測到是機率性的證據，強弱要看調查條件與偵測率。
+  about: scenario/cons-013
+  impact: reread
+- id: appeal-to-authority-role
+  date: 2026-09-27
+  kind: content
+  title: 「不當訴諸權威」補充職位與身分的界線
+  summary: 摘要從「名人說的」擴大為「身分、地位或名氣」。補上何時不算這種謬誤：父母、主管在職責範圍內做決定，是給行動的理由，不是證明某件事為真；並新增主管例子，以及理論權威與實踐權威的區分。
+  about: entry/appeal-to-authority
+  impact: reread
