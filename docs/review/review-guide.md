@@ -84,6 +84,21 @@ npm run review -- --reviewer Wang-Yi-Zhang ad-hominem affirming-the-consequent a
 
 可先審核並發布 `cons-002`、`cons-003`、`cons-004`、`cons-006`、`cons-007`、`cons-008`、`cons-010`、`cons-011` 共 8 題，對照題為 2／8＝25%；`cons-012` 暫留草稿。這是發布組合建議，每題仍須實際完成審核。若分成更小批次，每次都需重新檢查比例。
 
+## 修訂的揭露（ADR-0025）
+
+修改已發布內容時，依是否改變內容意義決定要不要寫說明。判斷有疑義時，由內容審核者決定，寧可往上一級揭露。
+
+| 級別 | 例子 | 做法 |
+|---|---|---|
+| 細微 | 錯字、排版、不影響意思的潤飾 | 只改 `updated`，不寫說明 |
+| 補充 | 補例子、來源、適用條件 | `updates.yaml` 加 `kind: content`、`about` |
+| 勘誤 | 定義、推論、正解或重要事實修正 | `kind: fix`、`about`、`impact`；正解改變用 `answer-changed` |
+| 撤下 | 退回草稿重新審核 | `kind: notice`、`about`，不附 `link` |
+
+- `summary` 寫清楚改了什麼、為什麼改；`impact` 說明對先前理解的影響。正解改變時，不要在說明裡寫出新答案。
+- 說明和它描述的內容修訂放在**同一個 PR**，由**同一位內容審核者**一起確認。AI 起草的說明要在 PR 中標明。
+- 舊說明不刪除；`published` 維持首次發布日期。
+
 ## 退回審核或暫緩發布
 
 發現內容需修訂、原審核不完整，或要調整發布批次時，可以將 `reviewed` 改回 `draft`。目前標記工具只支援送審完成的標記，**沒有退回指令**，請手動編輯指定項目，避免整批取代。
@@ -93,7 +108,7 @@ npm run review -- --reviewer Wang-Yi-Zhang ad-hominem affirming-the-consequent a
 3. 依退回原因處理 `reviewers`：
    - **只暫緩發布、內容與審核結論未變**：保留實際審核者紀錄。
    - **內容需重審或原審核無效**：將 `reviewers` 清為 `[]`；先前紀錄由 Git 歷史保留。標記工具會合併既有帳號，因此不要把舊版審核者留作新版已通過的依據。
-4. 在 PR 或交接紀錄寫明題目 ID、退回原因、是否需重審與恢復條件。保留 `sources`、`aiAssisted`、`requiresSecondReview` 與正確的 `isControl`，不要為通過檢查改變題目分類或審核門檻。
+4. 在 PR 或交接紀錄寫明題目 ID、退回原因、是否需重審與恢復條件。已發布過的內容，在 `updates.yaml` 加一則撤下公告（見上一節），避免讀者只看到失效連結。保留 `sources`、`aiAssisted`、`requiresSecondReview` 與正確的 `isControl`，不要為通過檢查改變題目分類或審核門檻。
 5. 執行 `npm run check`。若有已審內容引用這筆草稿，需連同受影響內容調整發布安排；圖鑑卡互相引用時可能連帶影響多張卡與情境題。每個主題已審情境題的對照題比例仍須在 15%–30%。完成調整後再跑 `npm run build`，確認正式產物。
    - `npm run check` 不檢查內文中的一般 Markdown 連結（例如 `[訴諸無知](/guide/argument-from-ignorance/)`）；這類連結由 `npm run build` 的產物檢查確認目標存在，所以 `check` 通過、`build` 仍可能失敗。錯誤訊息會列出來源頁與 `href`（Issue #41）。
    - 處理方式先判斷該連結是**延伸閱讀**，還是**理解內容所必需**：延伸閱讀可以提出「移除連結、保留文字」的修訂；理解所必需時，來源內容可能也要一起退回。不要為了通過檢查而自動刪除連結或自動發布草稿，內容修訂仍走既有審核流程。

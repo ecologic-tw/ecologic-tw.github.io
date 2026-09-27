@@ -368,6 +368,9 @@ export type TermData = z.output<typeof termSchema>;
 
 // 更新紀錄的手寫說明（ADR-0024）：功能更新、重要勘誤、公告。新上架內容由 published 自動列出。
 export const UPDATE_KINDS = ['feature', 'content', 'fix', 'notice'] as const;
+// 修訂揭露（ADR-0025）：about 指向被修訂的內容，impact 說明對學習的影響。
+export const REVISION_KINDS = ['content', 'fix', 'notice'] as const;
+export const UPDATE_IMPACTS = ['none', 'reread', 'answer-changed'] as const;
 export const updateSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9-]+$/),
@@ -380,6 +383,27 @@ export const updateSchema = z
       .string()
       .regex(/^\/[a-z0-9\-/]*(#[a-z0-9-]+)?$/)
       .optional(),
+    about: z
+      .string()
+      .regex(/^(entry|scenario|term)\/[a-z0-9-]+$/)
+      .optional(),
+    impact: z.enum(UPDATE_IMPACTS).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((data, ctx) => {
+    const issue = (path: string, message: string) =>
+      ctx.addIssue({ code: 'custom', path: [path], message });
+    if (data.about && !(REVISION_KINDS as readonly string[]).includes(data.kind)) {
+      issue('about', 'about 只用於 content、fix、notice 說明（ADR-0025）');
+    }
+    if (data.impact && !data.about) issue('impact', 'impact 需要搭配 about（ADR-0025）');
+    if (data.impact === 'answer-changed') {
+      if (data.kind !== 'fix') issue('impact', '正解改變屬於勘誤，kind 需為 fix（ADR-0025）');
+      if (data.about?.startsWith('term/')) issue('impact', '名詞沒有正解，不能標為 answer-changed');
+    }
+    // 撤下公告不連到可能已不存在的頁面
+    if (data.kind === 'notice' && data.about && data.link) {
+      issue('link', '撤下公告不附 link（ADR-0025）');
+    }
+  });
 export type UpdateData = z.output<typeof updateSchema>;

@@ -2,10 +2,17 @@
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
-import { advancedQuiz, biasNote, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import RevisionHistory from '../../components/RevisionHistory.astro';
+import RevisionStamp from '../../components/RevisionStamp.astro';
+import { advancedQuiz, biasNote, quiz, revision, t, themeLabel } from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
-import { getPublishedEntries, getPublishedScenarios, type Scenario } from '../../lib/content.ts';
+import {
+  getPublishedEntries,
+  getPublishedScenarios,
+  getUpdateNotes,
+  type Scenario,
+} from '../../lib/content.ts';
 import {
   PREMISE_VERDICTS,
   SCENARIO_FORMATS,
@@ -15,6 +22,7 @@ import {
 import { NO_PROBLEM, buildOptions, soundnessOf, type MultiRole } from '../../lib/quiz.ts';
 import { SECTIONS, renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
 import { loadTermInfo } from '../../lib/terms-source.ts';
+import { revisionsFor } from '../../lib/updates.ts';
 
 export async function getStaticPaths() {
   const scenarios = await getPublishedScenarios();
@@ -89,6 +97,9 @@ const rewrite =
     ? { betterPhrasing: data.betterPhrasing, checklist: data.checklist }
     : undefined;
 
+// 修訂紀錄可能提到答案，收在作答後才出現的解說區塊（ADR-0025）
+const revisions = revisionsFor(await getUpdateNotes(), `scenario/${scenario.id}`);
+
 const themeScenarios = await getPublishedScenarios(data.theme);
 const index = themeScenarios.findIndex((s) => s.id === scenario.id);
 const later = themeScenarios.slice(index + 1);
@@ -115,7 +126,12 @@ const nextLinks = (
         {data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
       </p>
       <h1>{data.title}</h1>
+      <RevisionStamp info={revisions} linked={false} />
     </header>
+
+    {revisions.answerChangedOn && (
+      <p class="answer-changed">{revision.scenarioAnswerChanged(revisions.answerChangedOn)}</p>
+    )}
 
     <section class="situation prose" aria-label={SECTIONS.scenario} set:html={scenarioHtml} />
 
@@ -312,6 +328,7 @@ const nextLinks = (
         </div>
       )}
       <Sources sources={data.sources} />
+      <RevisionHistory info={revisions} />
     </details>
 
     {rewrite && (

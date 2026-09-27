@@ -153,6 +153,15 @@ export function exportJson(progress: Progress): string {
   return JSON.stringify(progress, null, 2);
 }
 
+/**
+ * 作答是否早於正解修正（ADR-0025）。修正當天的作答也算在修正前：
+ * 部署時間不固定，寧可少顯示一次「答對」，也不把舊正解下的結果當成答對。
+ * @param fixedOn YYYY-MM-DD
+ */
+export function answeredBeforeFix(record: { at: string }, fixedOn: string): boolean {
+  return record.at.slice(0, 10) <= fixedOn;
+}
+
 export type KnownIds = {
   scenarios: ReadonlySet<string>;
   entries: ReadonlySet<string>;

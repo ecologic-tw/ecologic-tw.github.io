@@ -1,5 +1,16 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：內容修訂揭露（ADR-0025）與第一批修訂說明
+- **目標與範圍**：評估「重要修訂主動揭露、細微修改保留紀錄」建議，起草 ADR-0025 並依 Decision Owner（@Wang-Yi-Zhang）在對話中的決定實作：說明不設 `status`，以同 PR、同審核者把關；補寫 cons-013 與不當訴諸權威的修訂說明；一併處理撤下期間匯入遺失紀錄。
+- **分支**：`docs/revision-disclosure`，自 `origin/main`（`7b183ec`，PR #46 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。既有未追蹤 `.claude/` 不納入。
+- **已完成**：
+  - `updateSchema` 加 `about`、`impact` 與交叉檢查；`npm run check` 讀入 `updates.yaml` 並檢查 `about` 對象。
+  - 圖鑑卡與情境題頁顯示最近修訂日期與修訂紀錄（情境題的紀錄收在作答後的解說內）、`answer-changed` 提示；題目列表對修正前的作答不顯示「答對」；`/me/` 匯入保留有撤下公告的內容紀錄。
+  - `updates.yaml` 新增兩則說明（AI 起草）：cons-013 列為 `fix`、`impact: reread`（正解未變）；不當訴諸權威列為 `content`、`impact: reread`。
+  - 更新 SDD 01／03／04／11、CONTEXT、審核指南、PR 範本。
+- **更正**：ADR 初稿說「沒有檢查說明的 `link` 是否指向實際頁面」有誤；產物的站內連結檢查（Issue #41）已涵蓋 `/updates/` 頁，已在 ADR 背景改正。
+- **驗證**：見對應 PR 說明。
+- **待人工確認**：ADR-0025 是否接受（狀態仍為提議）；兩則說明的分級與文字，特別是不當訴諸權威摘要的改動算「補充」還是「勘誤」。
 ## 2026-09-27：身分權威、訴諸武力與「我是你媽」情境
 - **目標與範圍**：使用者問「我是你媽你要聽我的」如何歸類；依討論修訂「不當訴諸權威」、新增「訴諸武力」卡與一組日常情境題。
 - **分支**：`content/authority-and-force`，自 `origin/main`（`9ad0157`，PR #45 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。

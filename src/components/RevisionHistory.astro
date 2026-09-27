@@ -1,0 +1,67 @@
+---
+// 內容頁的修訂紀錄（ADR-0025）：資料來自 updates.yaml 中 about 指向本頁的說明，新到舊，舊紀錄不刪。
+import { revision } from '../i18n/zh-TW.ts';
+import { impactLabel, type RevisionInfo } from '../lib/updates.ts';
+interface Props {
+  info: RevisionInfo;
+}
+const { history } = Astro.props.info;
+---
+
+{history.length > 0 && (
+  <details class="revisions" id="revisions">
+    <summary>{revision.history}</summary>
+    <ol>
+      {history.map((item) => (
+        <li>
+          <p class="meta">
+            <time datetime={item.date}>{item.date}</time>
+            <span class="tag">{revision.kind[item.kind]}</span>
+          </p>
+          <p class="title">{item.title}</p>
+          <p>{item.summary}</p>
+          {item.impact && (
+            <p class="impact">
+              {revision.impact}：{impactLabel[item.impact]}
+            </p>
+          )}
+        </li>
+      ))}
+    </ol>
+  </details>
+)}
+
+<style>
+  .revisions {
+    margin-top: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  ol {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+  li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+  .meta,
+  .impact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+  .tag {
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+  }
+  .title {
+    font-weight: 500;
+  }
+</style>

@@ -36,3 +36,22 @@ test.describe('/updates/（ADR-0024）', () => {
     });
   }
 });
+
+test.describe('內容頁的修訂紀錄（ADR-0025）', () => {
+  test('a card shows its latest revision and history', async ({ page }) => {
+    await page.goto('/guide/appeal-to-authority/');
+    const stamp = page.locator('.revised a');
+    await expect(stamp).toHaveText(/最近修訂：\d{4}-\d{2}-\d{2}（補充）/);
+    await stamp.click();
+    await page.locator('#revisions summary').click();
+    await expect(page.locator('#revisions')).toContainText('影響：建議重新閱讀');
+  });
+
+  test('a question keeps its revision history with the answer', async ({ page }) => {
+    await page.goto('/scenario/cons-013/');
+    await expect(page.locator('.revised')).toHaveText(/（勘誤）/);
+    await expect(page.locator('.revised a')).toHaveCount(0);
+    // 修訂紀錄可能提到答案，作答前不顯示
+    await expect(page.locator('[data-quiz-reveal] #revisions')).toBeHidden();
+  });
+});

@@ -8,6 +8,10 @@ import {
   itemHeading,
   monthLabel,
   noteUpdates,
+  publishedKeys,
+  revisionsFor,
+  withdrawnIds,
+  type NoteDoc,
   type UpdateItem,
 } from '../../src/lib/updates.ts';
 
@@ -97,5 +101,68 @@ describe('atomFeed', () => {
       title: `卡 ${i}`,
     }));
     expect(atomFeed(many).match(/<entry>/g)).toHaveLength(FEED_LIMIT);
+  });
+});
+
+describe('revision notes (ADR-0025)', () => {
+  const note = (id: string, data: Partial<NoteDoc['data']>): NoteDoc => ({
+    id,
+    data: { date: d('2026-10-01'), kind: 'content', title: id, summary: '摘要', ...data },
+  });
+  const notes = [
+    note('fix', {
+      kind: 'fix',
+      about: 'scenario/q1',
+      impact: 'answer-changed',
+      date: d('2026-10-03'),
+    }),
+    note('more', { kind: 'content', about: 'scenario/q1', impact: 'reread' }),
+    note('pulled', { kind: 'notice', about: 'scenario/q1', date: d('2026-09-30') }),
+    note('other', { kind: 'content', about: 'entry/a' }),
+    note('site', { kind: 'feature', link: '/updates/' }),
+  ];
+  const published = publishedKeys({ scenario: [{ id: 'q1' }], entry: [] });
+
+  it('builds content keys', () => {
+    expect([...published]).toEqual(['scenario/q1']);
+  });
+
+  it('links revisions to the content page and hides those about unpublished content', () => {
+    const items = noteUpdates(notes, published);
+    const byKey = new Map(items.map((i) => [i.key, i]));
+    expect(byKey.get('note/fix')).toMatchObject({
+      path: '/scenario/q1/',
+      impact: 'answer-changed',
+    });
+    // 撤下公告不連到內容頁
+    expect(byKey.get('note/pulled')?.path).toBeUndefined();
+    // entry/a 未發布，補充說明先不列出
+    expect(byKey.has('note/other')).toBe(false);
+    expect(byKey.get('note/site')?.path).toBe('/updates/');
+  });
+
+  it('collects the history of one item, newest first', () => {
+    const info = revisionsFor(notes, 'scenario/q1');
+    expect(info.history.map((r) => r.title)).toEqual(['fix', 'more', 'pulled']);
+    expect(info.latest?.title).toBe('fix');
+    expect(info.answerChangedOn).toBe('2026-10-03');
+    expect(revisionsFor(notes, 'scenario/none')).toEqual({ history: [] });
+  });
+
+  it('ignores withdrawal notices when looking for the latest revision', () => {
+    const info = revisionsFor([note('pulled', { kind: 'notice', about: 'entry/a' })], 'entry/a');
+    expect(info.latest).toBeUndefined();
+    expect(info.history).toHaveLength(1);
+  });
+
+  it('lists withdrawn content so imports keep its progress', () => {
+    expect(withdrawnIds(notes, published)).toEqual({ entries: [], scenarios: [] });
+    expect(withdrawnIds(notes, new Set())).toEqual({ entries: [], scenarios: ['q1'] });
+  });
+
+  it('adds the impact to the feed summary', () => {
+    const [item] = noteUpdates([notes[0] as NoteDoc], published);
+    if (!item) throw new Error('fixture');
+    expect(atomFeed([item])).toContain('<summary>摘要　影響：正解已修正</summary>');
   });
 });

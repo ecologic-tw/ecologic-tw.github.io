@@ -10,18 +10,25 @@ import { FEED_PATH } from '../../lib/site.ts';
 import {
   contentUpdates,
   groupByMonth,
+  impactLabel,
   itemHeading,
   itemKindLabel,
   monthLabel,
   noteKindLabel,
   noteUpdates,
+  publishedKeys,
 } from '../../lib/updates.ts';
 
-const entries = contentUpdates('entry', await getPublishedEntries());
-const scenarios = contentUpdates('scenario', await getPublishedScenarios());
-const terms = contentUpdates('term', await getPublishedTerms());
+const published = {
+  entry: await getPublishedEntries(),
+  scenario: await getPublishedScenarios(),
+  term: await getPublishedTerms(),
+};
+const entries = contentUpdates('entry', published.entry);
+const scenarios = contentUpdates('scenario', published.scenario);
+const terms = contentUpdates('term', published.term);
 const months = groupByMonth([
-  ...noteUpdates(await getUpdateNotes()),
+  ...noteUpdates(await getUpdateNotes(), publishedKeys(published)),
   ...entries.items,
   ...scenarios.items,
   ...terms.items,
@@ -62,6 +69,7 @@ const baseline = [
               {item.path ? <a href={item.path}>{itemHeading(item)}</a> : itemHeading(item)}
             </p>
             {item.summary && <p class="summary">{item.summary}</p>}
+            {item.impact && <p class="impact">影響：{impactLabel[item.impact]}</p>}
           </li>
         ))}
       </ul>
@@ -133,5 +141,11 @@ const baseline = [
   .summary {
     margin-top: 0.2rem;
     max-width: var(--measure);
+  }
+
+  .impact {
+    margin-top: 0.2rem;
+    color: var(--moss);
+    font-size: var(--step--1);
   }
 </style>

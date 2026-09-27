@@ -40,7 +40,12 @@ const quickCheck = { question: '問題？', options: ['甲', '乙'], answer: 1, 
 const q = (id: string, extra: Record<string, unknown> = {}, body = validBody) =>
   scenario(id, { answer: 'a', distractors: ['b', 'c'], ...extra }, body);
 
-function run(input: { entries?: SourceDoc[]; scenarios?: SourceDoc[]; terms?: SourceDoc[] }) {
+function run(input: {
+  entries?: SourceDoc[];
+  scenarios?: SourceDoc[];
+  terms?: SourceDoc[];
+  updates?: SourceDoc[];
+}) {
   return checkContent({ entries: cards, scenarios: [], terms: [], ...input });
 }
 
@@ -329,6 +334,68 @@ describe('control ratio', () => {
     const result = run({ scenarios: questions(0, 5, { status: 'draft', reviewers: [] }) });
     expect(result.errors).toEqual([]);
     expect(result.warnings.join()).toMatch(/對照題比例/);
+  });
+});
+
+describe('update notes (ADR-0025)', () => {
+  const note = (id: string, extra: Record<string, unknown>): SourceDoc => ({
+    file: `updates.yaml[${id}]`,
+    data: { id, date: '2026-09-27', title: '修訂', summary: '改了什麼、為什麼改。', ...extra },
+    body: '',
+  });
+
+  it('accepts a revision note about existing content', () => {
+    const { errors, warnings } = run({
+      updates: [note('n1', { kind: 'content', about: 'entry/a', impact: 'reread' })],
+    });
+    expect(errors).toEqual([]);
+    // 測試卡是草稿：說明會等到內容通過審核才顯示
+    expect(warnings.join()).toMatch(/內容通過審核前不會顯示/);
+  });
+
+  it('does not warn about unpublished content that has a withdrawal notice', () => {
+    const { warnings } = run({
+      updates: [
+        note('n1', { kind: 'fix', about: 'entry/a' }),
+        note('n2', { kind: 'notice', about: 'entry/a' }),
+      ],
+    });
+    expect(warnings.join()).not.toMatch(/不會顯示/);
+  });
+
+  it('rejects about pointing to missing content', () => {
+    const { errors } = run({ updates: [note('n1', { kind: 'fix', about: 'scenario/nope' })] });
+    expect(errors.join()).toMatch(/scenario\/nope」不存在/);
+  });
+
+  it('rejects answer-changed on a card without a quick check', () => {
+    const { errors } = run({
+      updates: [note('n1', { kind: 'fix', about: 'entry/a', impact: 'answer-changed' })],
+    });
+    expect(errors.join()).toMatch(/沒有小檢核/);
+  });
+
+  it('enforces how about, impact and link combine', () => {
+    const { errors } = run({
+      updates: [
+        note('n1', { kind: 'feature', about: 'entry/a' }),
+        note('n2', { kind: 'content', impact: 'reread' }),
+        note('n3', { kind: 'content', about: 'entry/a', impact: 'answer-changed' }),
+        note('n4', { kind: 'notice', about: 'entry/a', link: '/guide/a/' }),
+      ],
+    });
+    const text = errors.join('\n');
+    expect(text).toMatch(/n1\].*about 只用於/);
+    expect(text).toMatch(/n2\].*impact 需要搭配 about/);
+    expect(text).toMatch(/n3\].*kind 需為 fix/);
+    expect(text).toMatch(/n4\].*撤下公告不附 link/);
+  });
+
+  it('rejects duplicate note ids', () => {
+    const { errors } = run({
+      updates: [note('n1', { kind: 'feature' }), note('n1', { kind: 'feature' })],
+    });
+    expect(errors.join()).toMatch(/重複/);
   });
 });
 
