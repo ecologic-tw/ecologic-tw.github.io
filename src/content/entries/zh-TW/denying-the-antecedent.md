@@ -18,8 +18,9 @@ quickCheck:
   explanation: '這是否定前件：從「前件不成立（沒有會員卡）」推出「後件不成立（不能打折）」。條件句只說有會員卡就能打折，沒說只有會員卡才能打折。有效的是否定後件：「結帳沒打折，所以沒有會員卡」。'
 related: [ modus-tollens ]
 terms: [ conditional, antecedent, necessary-condition, counterexample ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
     url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments

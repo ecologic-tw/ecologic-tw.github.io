@@ -17,8 +17,9 @@ quickCheck:
   explanation: '只挑支持原本想法的評論來看，略過其他資訊，是確認偏誤的典型情況。倖存者偏誤談的是被淘汰的案例看不到；多看好評本身不是問題，問題在於刻意略過其他評論。'
 related: [ availability-heuristic, correlation-causation ]
 terms: [ cognitive-bias, counterexample ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: 'Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in
       many guises. Review of General Psychology, 2(2), 175–220.'

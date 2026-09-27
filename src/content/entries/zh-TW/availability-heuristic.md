@@ -17,8 +17,9 @@ quickCheck:
   explanation: '容易想起來，不等於常發生。新聞密集報導會讓某類事件特別容易被想起；要比較兩者的風險，需要看事故率等資料。題幹沒有提到統計資料或親身經歷。'
 related: [ hasty-generalization, confirmation-bias ]
 terms: [ cognitive-bias, base-rate ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Tversky and Kahneman (1973). Availability: A heuristic for judging
       frequency and probability. Cognitive Psychology 5, 207–232."
