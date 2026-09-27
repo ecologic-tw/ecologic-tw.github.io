@@ -237,6 +237,7 @@ components:
 - **kind-label-***：圖鑑卡頁的卡別文字與列表色條。
 - **draft-banner**：開發環境才會出現的草稿提示。
 - **divider**：分隔線與未選取邊框（mist）。
+- **prose-table**：Markdown 本文的對照表。表頭苔色小字、下方 2px 苔色線，列與列之間用 mist 細線，不畫直線；窄螢幕在儲存格內換行，不橫向捲動。
 
 對比度（WCAG）：所有文字與背景組合皆達 AA 4.5:1。餘裕最小的是 panel-secondary-text（4.60:1）與 kind-label-formal-fallacy（4.62:1），調整 moss、paper-deep 或赭色時要先確認這兩組。
 
