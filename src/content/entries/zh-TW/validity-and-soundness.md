@@ -14,14 +14,16 @@ quickCheck:
   explanation: '如果前提都為真，結論就必然為真，所以形式有效。但「所有鳥都會飛」是假的，因此不健全，結論也剛好是假的。'
 related: [ proposition-and-truth-value, modus-ponens, fallacy-fallacy ]
 terms: [ validity, soundness, premise, conclusion, argument ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "OpenStax — Introduction to Philosophy, 5.3 Arguments"
     url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
     supports:
       - "演繹有效性與健全性的定義，以及有效性與前提真假的區分。"
-  - title: "Beall, J., Restall, G., & Sagi, G. Logical Consequence. Stanford Encyclopedia of Philosophy."
+  - title: "Beall, J., Restall, G., & Sagi, G. Logical Consequence. Stanford
+      Encyclopedia of Philosophy."
     url: https://plato.stanford.edu/entries/logical-consequence/
     supports:
       - "邏輯後承（有效性）指前提為真時結論不可能為假。"

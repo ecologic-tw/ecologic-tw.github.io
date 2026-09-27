@@ -14,8 +14,9 @@ quickCheck:
   explanation: '從觀察到的線索，推論最能解釋這些線索的原因，是溯因推理。它很有用，但結論是暫定的：其他動物、其他時間點都可能是替代解釋。'
 related: [ validity-and-soundness, hasty-generalization, correlation-causation ]
 terms: [ deduction, induction, inference, sample, representative-sample ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Douven, I. Abduction. Stanford Encyclopedia of Philosophy."
     url: https://plato.stanford.edu/entries/abduction/
