@@ -1,5 +1,20 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：遊蕩犬貓餵食爭議保育題
+- **目標與範圍**：使用者要求新增遊蕩犬貓餵食爭議情境。依 08 寫作準則，這屬於爭議保育議題，需要呈現多方觀點並標記雙審，因此做成一組兩題，兩方各犯一次錯。
+- **分支**：`content/stray-feeding`，自 `origin/main`（`a0f92a6`，PR #48 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。既有未追蹤 `.claude/` 不納入。
+- **已完成**：以提案工具建立 `contributions/scenarios/stray-feeding-meeting.md`、`stray-feeding-post.md`，轉入 draft：
+  - `cons-018`「河堤邊的餵食點」：志工提議調整餵食時間、地點並討論結紮，長期餵食的居民回應「要讓牠們餓死」，答案稻草人。
+  - `cons-019`「步道口的飼料」：保育志工看到兩次有人亂倒飼料，就說餵狗貓的人都不在乎環境，答案草率概括；另一位居民的回覆是反例。
+  - 兩題都是 `aiAssisted: true`、`requiresSecondReview: true`，沒有真實地名、團體或敏感物種。
+- **來源核對**：已讀取 Loss 等（2013，Nature Communications）與 Doherty 等（2017，Biological Conservation）的摘要，`supports` 只寫摘要支持的範圍，並註明美國研究不代表本題社區。SEP「Fallacies」§1 有稻草人謬誤的定義。cons-019 沿用 cons-006 的 AAPOR 抽樣來源。
+- **驗證**：見對應 PR 說明。
+- **待人工確認**：兩題的正解與干擾選項、立場平衡、措辭。爭議保育題需要兩位不同審核者；目前角色名冊只有一位審核者，需要找第二位才能發布。
+- **另外修正**：里程碑、SDD 02 與 SDD 12 仍把「訴諸武力」、「不當訴諸權威」修訂與 daily-018、019 列為未完成／draft；這些內容在 main 上已是 reviewed（審核者 Wang-Yi-Zhang，PR #46），經使用者要求已更新為完成。
+- **發布安排**：使用者決定 cons-018、cons-019 先維持 draft、暫不公開，待找到第二位審核者。
+- **PR #50 衝突處理**：合入最新 `origin/main`（PR #49）；唯一衝突為本檔頂端雙方各自新增的紀錄，完整保留兩節。PR #49 紀錄提到的里程碑與審核狀態落差，已由本節「另外修正」處理。
+- **相關文件**：[防誤用](sdd/08-misuse-prevention.md)、[情境協作](review/scenario-contributions.md)、[審核指南](review/review-guide.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：README 環境準備與快速上手
 - **目標與範圍**：補齊新接手者的環境準備、取得專案、啟動、檢查與預覽步驟；只修改 `README.md` 與本交接紀錄。
 - **分支與狀態**：分支 `codex/readme-quickstart`，基底 `9ad0157`；使用者已要求 commit 與建立 PR，本節隨提交保存，commit／PR 以 Git 紀錄為準。既有未追蹤 `.claude/` 保留，未納入本次成果。

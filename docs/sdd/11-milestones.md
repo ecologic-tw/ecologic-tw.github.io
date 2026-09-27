@@ -66,9 +66,11 @@
 - [x] 至少 1 題以「訴諸無知／偵測率」為主題的保育情境題 draft（cons-013，`aiAssisted: true`）
 - [x] 人工審核 cons-013（@Wang-Yi-Zhang）；同批開放對照題 cons-012
 - [x] cons-013 機率推論修訂重新人工審核（@Wang-Yi-Zhang，PR #40）
-- [ ] 修訂「不當訴諸權威」（身分與地位、理論權威與實踐權威）並重新人工審核
-- [ ] 新增「訴諸武力」卡與日常題 daily-018、對照題 daily-019，人工審核
+- [x] 修訂「不當訴諸權威」（身分與地位、理論權威與實踐權威）並重新人工審核（@Wang-Yi-Zhang，PR #46）
+- [x] 新增「訴諸武力」卡與日常題 daily-018、對照題 daily-019，人工審核（@Wang-Yi-Zhang，PR #46）
 - [ ] 「訴諸傳統」卡的來源：SEP「Fallacies」條目未討論訴諸傳統（2026-09-27 核對），需另找來源
+- [x] 遊蕩犬貓餵食爭議保育題 draft：cons-018（餵食方犯稻草人）、cons-019（保育方犯草率概括），`requiresSecondReview: true`
+- [ ] 人工審核 cons-018、cons-019（爭議保育題，需兩位不同審核者確認平衡）；找到第二位審核者前維持 draft，暫不公開
 
 ## 更新通知（ADR-0024）
 - [x] 第 1 項：`published` 欄位、`npm run review` 自動填入、`/updates/` 頁、Atom 訂閱源、頁尾與 `<head>` 連結、sitemap、產物檢查、單元與 e2e 測試
