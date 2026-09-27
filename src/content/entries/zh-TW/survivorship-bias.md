@@ -1,6 +1,7 @@
 ---
 id: survivorship-bias
 kind: bias
+evidence: robust
 title: 倖存者偏誤
 en: Survivorship bias
 summary: 只看到「留下來」或「成功」的案例，就對全體下結論。
