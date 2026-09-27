@@ -218,6 +218,39 @@ a:hover {
   font-size: 1.05em;
 }
 
+/* 表格：像圖鑑的對照表，只用橫線分隔；窄螢幕靠儲存格內換行，不橫向捲動 */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  line-height: 1.6;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.75rem;
+  text-align: start;
+  vertical-align: top;
+  border-bottom: 1px solid var(--mist);
+}
+
+.prose th {
+  color: var(--moss);
+  font-size: var(--step--1);
+  font-weight: 600;
+  border-bottom: 2px solid var(--moss);
+}
+
+.prose th:first-child,
+.prose td:first-child {
+  padding-left: 0;
+  white-space: nowrap;
+}
+
+.prose th:last-child,
+.prose td:last-child {
+  padding-right: 0;
+}
+
 details.advanced {
   margin-top: 2.75rem;
   padding: 0.75rem 1rem 1rem;
