@@ -1,5 +1,18 @@
 # AI 協作交接紀錄
 
+## 2026-09-27：進階題型與多選題 ADR（ADR-0022）
+- **目標與範圍**：依 SDD 12 §4，先寫進階題型與多選題的 ADR；本次只有文件，不改程式與內容。
+- **分支**：`docs/adr-advanced-question-types`，自 `origin/main`（`5f0ae3f`，PR #21 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。
+- **已完成**：新增 [ADR-0022](adr/0022-advanced-question-formats.md)（提議）；SDD 12 §4 改為引用 ADR-0022；里程碑勾選「先寫 ADR」並新增「決定是否接受」「分階段實作」兩項。
+- **主要提議**：以 `format` 欄位（`judge` 預設／`multi`／`validity-soundness`／`choice`）區分題型，**不照 12 §4 原規劃把 `answer` 改為 `answers[]`**，理由是遷移會動到 20 題已審情境題（依 ADR-0019 會退回 draft，或未經審核就被修改），且非圖鑑卡的題型也裝不下。新題型只出現在進階模式；進度格式不變，只記錄是否完全答對。
+- **驗證**：只改文件；已執行 `npx prettier --check`、`git diff --check`，並以 grep 核對 ADR 列出的 `answer` 使用點。
+- **待人工決定**：
+  - ADR-0022 的 Decision Owner 與是否接受，特別是「不遷移既有題目」與原 12 §4 規劃不同。
+  - `multi` 不提供「沒有問題」選項，可能強化「一定有錯」的印象（ADR-0022 風險 1）；備案是加入互斥的「沒有問題」選項。
+  - 每個選項都要個別解說，審核量約為現行題目的 2–3 倍；目前只有一位審核者。
+- **下一步**：ADR 接受後依 §6 分三個 PR 實作；02、03、04 在實作 PR 中同步更新，不在本 PR 先改。
+- **相關文件**：[ADR-0022](adr/0022-advanced-question-formats.md)、[知識範圍 §4](sdd/12-knowledge-scope.md)、[ADR-0019](adr/0019-incremental-scenario-contributions.md)、[ADR-0015](adr/0015-m3-quick-check-badges-and-import.md)、[里程碑](sdd/11-milestones.md)。
+
 ## 2026-09-27：訴諸無知保育情境題（cons-013）
 - **目標與範圍**：依 PR #20 後的下一步，新增一題以「訴諸無知／偵測率」為主題的保育情境題；不修改既有題目、圖鑑卡與審核狀態。
 - **分支**：`content/argument-from-ignorance-scenario`，自 `origin/main`（`15c0354`，PR #20 合併後）建立；本節隨 commit 提交，PR 與 commit 以 GitHub／Git 紀錄為準。開工前已將本機 `main` 快轉至 `15c0354`，並以 `git branch -d` 刪除 6 個已合併的本機分支。
