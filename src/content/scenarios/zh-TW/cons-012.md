@@ -13,7 +13,7 @@ checklist:
   - 說明了目前的事實
   - 結論沒有超出規定所要求的範圍
 terms: [ conditional ]
-status: draft
+status: reviewed
 reviewers:
   - Wang-Yi-Zhang
 sources:
@@ -21,7 +21,7 @@ sources:
     url: https://openstax.org/books/introduction-philosophy/pages/5-3-arguments
     supports:
       - "演繹有效性與前提真假的區分；來源不是虛構例子的事實紀錄。"
-updated: 2026-09-26
+updated: 2026-09-27
 aiAssisted: true
 ---
 

@@ -1,6 +1,7 @@
 ---
 id: availability-heuristic
 kind: bias
+evidence: moderate
 title: 可得性捷思
 en: Availability heuristic
 summary: 用「容易想起來的程度」來判斷一件事有多常發生。

@@ -37,7 +37,7 @@ z.object({
   pairWith: z.string().optional(),             // 形式謬誤 ↔ 有效推論
   notFallacyWhen: z.string().optional(),       // 謬誤、偏誤卡必填（refine）
   charitableResponse: z.string().optional(),   // 謬誤、偏誤卡必填（refine）
-  evidence: z.enum(['robust','moderate','contested']).optional(), // 僅 bias；draft 偏誤卡必填（refine，ADR-0021）
+  evidence: z.enum(['robust','moderate','contested']).optional(), // 僅 bias；所有偏誤卡必填（refine，ADR-0021）
   quickCheck: z.object({                        // 卡內小檢核；基礎概念、思維定律、有效推論卡必填（refine，ADR-0015、ADR-0020）
     question: z.string(),
     options: z.array(z.string()).min(2).max(4),
@@ -158,4 +158,4 @@ refine：
 - reviewed 內容不得引用 draft 內容。
 - 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）；也檢查 `notes`、`prompt`、`choices` 等題型專屬文字。
 - 每個主題中對照題比例 15%–30%，以該主題全部情境題（含進階題型）為分母。
-- `evidence` 只能用於 `bias` 卡；`draft` 偏誤卡缺 `evidence` 時失敗。既有 reviewed 偏誤卡待人工補值後，改為全面必填（ADR-0021 Review Point）。
+- `evidence` 只能用於 `bias` 卡；任何偏誤卡缺 `evidence` 時失敗（ADR-0021）。

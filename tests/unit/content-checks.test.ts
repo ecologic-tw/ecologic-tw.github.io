@@ -81,9 +81,12 @@ describe('schema', () => {
     expect(run({ entries: [...cards, entry('d', { ...concept, quickCheck })] }).errors).toEqual([]);
   });
 
-  it('requires evidence on draft bias cards (ADR-0021)', () => {
+  it('requires evidence on every bias card, draft or reviewed (ADR-0021)', () => {
     const bias = entry('d', { kind: 'bias' });
     expect(run({ entries: [...cards, bias] }).errors.join()).toMatch(/evidence/);
+    const reviewed = { status: 'reviewed', reviewers: ['someone'] };
+    const reviewedBias = entry('d', { kind: 'bias', ...reviewed });
+    expect(run({ entries: [...cards, reviewedBias] }).errors.join()).toMatch(/evidence/);
     const withEvidence = entry('d', { kind: 'bias', evidence: 'moderate' });
     expect(run({ entries: [...cards, withEvidence] }).errors).toEqual([]);
   });
