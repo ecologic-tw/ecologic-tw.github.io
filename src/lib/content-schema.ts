@@ -140,8 +140,8 @@ export const entrySchema = z
     if (data.evidence && data.kind !== 'bias') {
       ctx.addIssue({ code: 'custom', path: ['evidence'], message: 'evidence 只適用於認知偏誤卡' });
     }
-    // 過渡期（ADR-0021）：新增或退回草稿的偏誤卡必填；既有 reviewed 卡待人工補值後改為全面必填。
-    if (data.kind === 'bias' && data.status !== 'reviewed' && !data.evidence) {
+    // ADR-0021：所有偏誤卡都必填（既有 reviewed 卡已於 2026-09-27 由人工補值）。
+    if (data.kind === 'bias' && !data.evidence) {
       ctx.addIssue({
         code: 'custom',
         path: ['evidence'],
