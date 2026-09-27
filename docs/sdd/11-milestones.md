@@ -77,7 +77,7 @@
 - [ ] 第 2、3 項（本機「新」標記、`/me/` 提示）：依 ADR-0024 Review Point 再評估
 
 ## 修訂揭露（ADR-0025）
-- [ ] ADR-0025 接受（Decision Owner：@Wang-Yi-Zhang）
+- [x] ADR-0025 接受（Decision Owner：@Wang-Yi-Zhang）
 - [x] 更新說明加入 `about`、`impact`，內容頁顯示修訂日期與紀錄、正解修正提示；匯入保留撤下內容紀錄
 - [x] 起草第一批修訂說明：cons-013、不當訴諸權威（AI 起草）
 - [ ] 內容審核者確認第一批修訂說明的分級與文字
