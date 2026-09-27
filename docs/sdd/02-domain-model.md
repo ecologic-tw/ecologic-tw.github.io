@@ -16,6 +16,7 @@ erDiagram
   SCENARIO {
     string id
     enum theme
+    enum format
     bool isControl
     string answer
     enum status
@@ -28,10 +29,10 @@ erDiagram
 ```
 
 ## 規則
-1. 情境題的 `answer` 為某圖鑑卡 `id`，或 `none`（對照題必為 `none`）。
-2. 每題選項由 `distractors`（2–3 個圖鑑卡 id）＋正解＋「沒有問題」組成，順序於前端打亂。
+1. 情境題依 `format` 分為四種題型（ADR-0022）：`judge`（預設，單選判讀）、`multi`（多重判讀）、`validity-soundness`（有效 × 健全）、`choice`（隱藏前提／形式辨識／反例選擇）。`judge` 以外的題型只出現在進階模式。
+2. `judge` 題的 `answer` 為某圖鑑卡 `id`，或 `none`（對照題必為 `none`，且只有 `judge` 題可以是對照題）；選項由 `distractors`（2–3 個圖鑑卡 id）＋正解＋「沒有問題」組成，順序於前端打亂。`multi` 題的選項為 `answers`、`acceptable`、`distractors` 的圖鑑卡，不提供「沒有問題」。
 3. 發布時只取 `status: reviewed`；若 reviewed 情境題引用了非 reviewed 的圖鑑卡，建置失敗。
-4. 圖鑑卡「收集」條件：答對任一 `answer` 為該卡的情境題；基礎概念、思維定律與有效推論卡必有卡內小檢核，可透過「閱讀完並完成小檢核」收集。其他卡別若尚無對應情境題，也應附小檢核，避免「圖鑑收藏家」無法達成。
+4. 圖鑑卡「收集」條件：答對任一 `answer` 為該卡的情境題，或完全答對 `answers` 含該卡的 `multi` 題（`acceptable` 不算）；基礎概念、思維定律與有效推論卡必有卡內小檢核，可透過「閱讀完並完成小檢核」收集。其他卡別若尚無對應情境題，也應附小檢核，避免「圖鑑收藏家」無法達成。
 5. 認知偏誤卡在介面上一律加註：「這是心理上的推理陷阱，不是邏輯形式錯誤」，並顯示證據強度標籤（ADR-0021）。
 
 ## 卡別與 MVP 清單

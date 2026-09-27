@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { NO_PROBLEM, buildOptions, isCorrect, shuffle } from '../../src/lib/quiz.ts';
+import {
+  NO_PROBLEM,
+  buildOptions,
+  collectableEntries,
+  isCorrect,
+  shuffle,
+} from '../../src/lib/quiz.ts';
 
 describe('buildOptions', () => {
   it('includes the answer, every distractor and "none"', () => {
@@ -53,5 +59,23 @@ describe('isCorrect', () => {
   it('compares the choice with the answer', () => {
     expect(isCorrect('straw-man', 'straw-man')).toBe(true);
     expect(isCorrect(NO_PROBLEM, 'straw-man')).toBe(false);
+  });
+});
+
+describe('collectableEntries (ADR-0022)', () => {
+  it('keeps judge questions as before: the answer, or nothing for controls', () => {
+    expect(collectableEntries({ format: 'judge', answer: 'straw-man' })).toEqual(['straw-man']);
+    expect(collectableEntries({ format: 'judge', answer: NO_PROBLEM })).toEqual([]);
+  });
+
+  it('returns every answer of a multi question, but not acceptable ones', () => {
+    expect(
+      collectableEntries({ format: 'multi', answers: ['straw-man', 'false-dilemma'] }),
+    ).toEqual(['straw-man', 'false-dilemma']);
+  });
+
+  it('returns nothing for question types that are not about a card', () => {
+    expect(collectableEntries({ format: 'validity-soundness' })).toEqual([]);
+    expect(collectableEntries({ format: 'choice' })).toEqual([]);
   });
 });

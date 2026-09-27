@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { BADGES, type ContentIndex } from '../../lib/badges.ts';
 import { getPublishedEntries, getPublishedScenarios, groupByKind } from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
+import { collectableEntries } from '../../lib/quiz.ts';
 
 const entries = await getPublishedEntries();
 const scenarios = await getPublishedScenarios();
@@ -17,7 +18,7 @@ const index: ContentIndex = {
     theme: s.data.theme,
     difficulty: s.data.difficulty,
     isControl: s.data.isControl,
-    answer: s.data.answer,
+    collects: collectableEntries(s.data),
   })),
 };
 ---

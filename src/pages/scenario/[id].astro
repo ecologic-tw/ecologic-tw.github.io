@@ -21,6 +21,10 @@ interface Props {
 
 const { scenario } = Astro.props;
 const { data } = scenario;
+// ADR-0022：judge 以外的題型在第 2 階段才有作答頁；先讓建置明確失敗，避免發布無法作答的題目。
+if (data.format !== 'judge') {
+  throw new Error(`${scenario.id}: 尚未支援 ${data.format} 題型的作答頁（ADR-0022 第 2 階段）`);
+}
 
 const entries = new Map((await getPublishedEntries()).map((e) => [e.id, e]));
 const titleOf = (id: string) =>

@@ -75,23 +75,54 @@ aiAssisted: true
 ```
 
 ## 情境題 `scenarios`
+依 `format` 區分題型的聯集（ADR-0022）；沒有 `format` 的題目視為 `judge`，既有題目不需修改。共用欄位：
 ```ts
-z.object({
+const scenarioBase = {
   id: z.string().regex(/^(daily|cons)-\d{3}$/),  // daily-001 / cons-001
   theme: z.enum(['daily','conservation']),
   title: z.string(),
   isControl: z.boolean().default(false),
-  answer: z.string(),                              // entry id 或 'none'
-  distractors: z.array(z.string()).min(2).max(3),
   difficulty: z.enum(['basic','advanced']),        // basic 題兩種模式都出；advanced 只在進階模式出
-  betterPhrasing: z.array(z.string()).min(1).max(2),
-  checklist: z.array(z.string()).min(3).max(4),
   form: z.string().optional(),                     // 進階：此情境的形式結構
   terms: z.array(z.string()).default([]),
   ...reviewMeta,
-})
-// refine：isControl ⇔ answer === 'none'
+}
 ```
+各題型另外的欄位：
+```ts
+// judge（預設）：現行單選判讀
+{ format: 'judge', answer: z.string(),            // entry id 或 'none'
+  distractors: z.array(z.string()).min(2).max(3),
+  betterPhrasing: z.array(z.string()).min(1).max(2),
+  checklist: z.array(z.string()).min(3).max(4) }
+
+// multi：多重判讀（多選）
+{ format: 'multi',
+  answers: z.array(z.string()).min(1).max(3),     // 全部選中才算答對
+  acceptable: z.array(z.string()).max(2).default([]), // 選或不選都不算錯
+  distractors: z.array(z.string()).min(1).max(3),
+  notes: z.record(z.string(), z.string()),        // 每個選項 id 都要有個別解說
+  betterPhrasing, checklist }                     // 同 judge，必填
+
+// validity-soundness：有效 × 健全（健全＝有效且前提可信，由程式推導）
+{ format: 'validity-soundness',
+  validity: z.enum(['valid','invalid']),
+  premises: z.enum(['credible','not-credible','uncertain']),
+  notes: z.object({ validity: z.string(), premises: z.string() }),
+  betterPhrasing?, checklist? }                   // 選填，沒有時不顯示改寫區
+
+// choice：隱藏前提／形式辨識／反例選擇，共用一個作答元件
+{ format: 'choice',
+  task: z.enum(['hidden-premise','form','counterexample']),
+  prompt: z.string(),
+  choices: z.array(z.object({ text, correct: z.boolean().default(false), note })).min(3).max(4),
+  betterPhrasing?, checklist? }
+```
+refine：
+- `isControl` ⇔ `format: judge` 且 `answer === 'none'`（只有 `judge` 題可以是對照題）。
+- `judge` 以外的題型必須 `difficulty: advanced`。
+- `multi`：`answers`、`acceptable`、`distractors` 互不重疊、不含 `none`，合計 4–6 個；`notes` 的鍵必須恰好是這些選項。
+- `choice`：恰好一個 `correct: true`。
 本文結構：`## 情境`（對話或陳述）、`## 解說`、`## 進階解說`（選填）。
 
 對話以引用區塊書寫，**每位說話者一段，段與段之間空一行 `>`**，否則會被合併成同一段：
@@ -123,8 +154,9 @@ z.object({
 
 ## 建置期檢查（`npm run check`）
 - 已審圖鑑卡、情境題與名詞都須有來源與足夠的不同審核者；草稿不要求先填審核者或來源。
-- 所有 `related`、`answer`、`distractors`、`pairWith`、`terms` 參照存在。
+- 所有 `related`、`answer`、`answers`、`acceptable`、`distractors`、`pairWith`、`terms` 參照存在。
 - reviewed 內容不得引用 draft 內容。
-- 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）。
-- 每個主題中對照題比例 15%–30%。
+- 情境題文字不得含網址、電話、Email（regex 檢查，防止個資與外連）；也檢查 `notes`、`prompt`、`choices` 等題型專屬文字。
+- 每個主題中對照題比例 15%–30%，以該主題全部情境題（含進階題型）為分母。
+- `judge` 以外的題型在作答頁完成前（ADR-0022 第 2 階段）會讓 `npm run build` 失敗，避免發布無法作答的題目。
 - `evidence` 只能用於 `bias` 卡；`draft` 偏誤卡缺 `evidence` 時失敗。既有 reviewed 偏誤卡待人工補值後，改為全面必填（ADR-0021 Review Point）。

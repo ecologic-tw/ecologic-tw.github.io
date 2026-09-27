@@ -7,6 +7,7 @@
 | 圖鑑卡 | `entry` | 一個邏輯概念的說明頁。種類見「卡別」。 |
 | 卡別 | `kind` | `concept` 基礎概念／`law` 思維定律與哲學原則／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
 | 情境題 | `scenario` | 一段虛構對話或陳述，讓使用者判讀其推理是否有問題。 |
+| 題型 | `format` | `judge` 單選判讀（預設）／`multi` 多重判讀／`validity-soundness` 有效 × 健全／`choice` 隱藏前提、形式辨識、反例選擇（ADR-0022）。 |
 | 情境提案 | scenario proposal | 可不完整的構想或修訂稿，放在 contributions/scenarios，不進網站；完成後轉為正式 draft。 |
 | 內容貢獻者 | `contributors` | 同意公開署名或筆名、實際參與構想／來源／改寫／試讀等工作的人；不等同審核者。 |
 | 主題 | `theme` | `daily` 日常生活／`conservation` 野生生物保育 |

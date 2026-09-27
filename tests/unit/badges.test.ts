@@ -7,13 +7,14 @@ import {
   type ScenarioInfo,
 } from '../../src/lib/badges.ts';
 import { defaults, type Progress } from '../../src/lib/progress.ts';
+import { collectableEntries } from '../../src/lib/quiz.ts';
 
 const s = (id: string, answer: string, extra: Partial<ScenarioInfo> = {}): ScenarioInfo => ({
   id,
   theme: id.startsWith('daily') ? 'daily' : 'conservation',
   difficulty: 'basic',
   isControl: answer === 'none',
-  answer,
+  collects: collectableEntries({ format: 'judge', answer }),
   ...extra,
 });
 
@@ -132,5 +133,43 @@ describe('collectedEntries', () => {
   it('ignores stored ids of cards that are not published', () => {
     const p = progress({ collected: ['modus-ponens', 'retired-card'] });
     expect([...collectedEntries(p, index)]).toEqual(['modus-ponens']);
+  });
+});
+
+describe('advanced formats (ADR-0022)', () => {
+  const advanced: ContentIndex = {
+    entries: ['straw-man', 'false-dilemma', 'fallacy-fallacy'],
+    scenarios: [
+      s('daily-001', 'straw-man'),
+      {
+        ...s('daily-010', 'none', { difficulty: 'advanced', isControl: false }),
+        collects: collectableEntries({
+          format: 'multi',
+          answers: ['false-dilemma', 'fallacy-fallacy'],
+        }),
+      },
+      {
+        ...s('daily-011', 'none', { difficulty: 'advanced', isControl: false }),
+        collects: collectableEntries({ format: 'choice' }),
+      },
+    ],
+  };
+
+  it('a fully correct multi question lights every one of its answers', () => {
+    const p = progress({ answered: answers(['daily-010', true]) });
+    expect([...collectedEntries(p, advanced)].sort()).toEqual(['fallacy-fallacy', 'false-dilemma']);
+    const wrong = progress({ answered: answers(['daily-010', false]) });
+    expect(collectedEntries(wrong, advanced).size).toBe(0);
+  });
+
+  it('choice and validity-soundness questions light no card', () => {
+    const p = progress({ answered: answers(['daily-011', true]) });
+    expect(collectedEntries(p, advanced).size).toBe(0);
+  });
+
+  it('a multi answer can complete 謬誤的謬誤, and advanced questions never count as controls', () => {
+    const p = progress({ read: ['fallacy-fallacy'], answered: answers(['daily-010', true]) });
+    expect(earnedBadges(p, advanced)).toContain('fallacy-of-fallacy');
+    expect(earnedBadges(p, advanced)).not.toContain('gentle');
   });
 });

@@ -1,14 +1,14 @@
 // 徽章規則（docs/sdd/05）：只依學習里程碑發放，不依時間或頻率。純函式。
 // 「手下留情」與「謬誤的謬誤」刻意獎勵不亂貼標籤（docs/sdd/08）。
 import type { Progress } from './progress.ts';
-import { NO_PROBLEM } from './quiz.ts';
 
 export type ScenarioInfo = {
   id: string;
   theme: 'daily' | 'conservation';
   difficulty: 'basic' | 'advanced';
   isControl: boolean;
-  answer: string;
+  /** 答對後可點亮的圖鑑卡，由 collectableEntries 換算（ADR-0022） */
+  collects: string[];
 };
 
 export type ContentIndex = {
@@ -44,16 +44,15 @@ export type BadgeId = (typeof BADGES)[number]['id'];
 const correctlyAnswered = (p: Progress, id: string) => p.answered[id]?.correct === true;
 
 /**
- * 點亮的圖鑑卡：答對以該卡為正解的情境題（docs/sdd/05「收集」），
+ * 點亮的圖鑑卡：答對以該卡為正解的情境題（docs/sdd/05「收集」；multi 題為全部正解），
  * 或完成卡內小檢核（存於 progress.collected，docs/sdd/02 規則 4）。只計目前已發布的卡。
  */
 export function collectedEntries(p: Progress, index: ContentIndex): Set<string> {
   const published = new Set(index.entries);
   const lit = new Set(p.collected.filter((id) => published.has(id)));
   for (const s of index.scenarios) {
-    if (s.answer !== NO_PROBLEM && published.has(s.answer) && correctlyAnswered(p, s.id)) {
-      lit.add(s.answer);
-    }
+    if (!correctlyAnswered(p, s.id)) continue;
+    for (const id of s.collects) if (published.has(id)) lit.add(id);
   }
   return lit;
 }
@@ -75,7 +74,7 @@ const rules: Record<BadgeId, (p: Progress, index: ContentIndex) => boolean> = {
     index.entries.length > 0 && collectedEntries(p, index).size === index.entries.length,
   'fallacy-of-fallacy': (p, index) =>
     p.read.includes(FALLACY_FALLACY) &&
-    index.scenarios.some((s) => s.answer === FALLACY_FALLACY && correctlyAnswered(p, s.id)),
+    index.scenarios.some((s) => s.collects.includes(FALLACY_FALLACY) && correctlyAnswered(p, s.id)),
 };
 
 /** 依目前進度符合條件的徽章（尚未合併先前已得的徽章） */

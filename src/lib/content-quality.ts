@@ -1,5 +1,5 @@
 import type { ContentInput } from './content-checks.ts';
-import { entrySchema, scenarioSchema, termSchema } from './content-schema.ts';
+import { entrySchema, scenarioSchema, scenarioTexts, termSchema } from './content-schema.ts';
 
 // 初始編輯預算；以字元而非英文單字計數，不是閱讀年級評估。
 export const READING_LIMITS = {
@@ -84,8 +84,7 @@ export function makeQualityReport(input: ContentInput) {
       if (data.quickCheck)
         basic += `\n${data.quickCheck.question}\n${data.quickCheck.options.join('\n')}\n${data.quickCheck.explanation}`;
     }
-    if ('betterPhrasing' in data)
-      basic += `\n${data.betterPhrasing.join('\n')}\n${data.checklist.join('\n')}`;
+    if ('format' in data) basic += `\n${scenarioTexts(data).join('\n')}`;
     basic = readingText(basic, labels);
     advanced = readingText(advanced, labels);
     const basicCharacters = textLength(basic);
