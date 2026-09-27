@@ -10,7 +10,8 @@
 - **來源核對**：已讀取 Loss 等（2013，Nature Communications）與 Doherty 等（2017，Biological Conservation）的摘要，`supports` 只寫摘要支持的範圍，並註明美國研究不代表本題社區。SEP「Fallacies」§1 有稻草人謬誤的定義。cons-019 沿用 cons-006 的 AAPOR 抽樣來源。
 - **驗證**：見對應 PR 說明。
 - **待人工確認**：兩題的正解與干擾選項、立場平衡、措辭。爭議保育題需要兩位不同審核者；目前角色名冊只有一位審核者，需要找第二位才能發布。
-- **另外發現**：里程碑與 SDD 12 仍把「訴諸武力」、「不當訴諸權威」修訂與 daily-018、019 列為未完成／draft，但這些內容在 main 上已是 reviewed（PR #46）。本次沒有改動，留待人工確認後更新。
+- **另外修正**：里程碑、SDD 02 與 SDD 12 仍把「訴諸武力」、「不當訴諸權威」修訂與 daily-018、019 列為未完成／draft；這些內容在 main 上已是 reviewed（審核者 Wang-Yi-Zhang，PR #46），經使用者要求已更新為完成。
+- **發布安排**：使用者決定 cons-018、cons-019 先維持 draft、暫不公開，待找到第二位審核者。
 - **相關文件**：[防誤用](sdd/08-misuse-prevention.md)、[情境協作](review/scenario-contributions.md)、[審核指南](review/review-guide.md)、[里程碑](sdd/11-milestones.md)。
 
 ## 2026-09-27：內容修訂揭露（ADR-0025）與第一批修訂說明
