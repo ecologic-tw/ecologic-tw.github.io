@@ -6,10 +6,17 @@ en: Appeal to inappropriate authority
 summary: 用身分、地位或名氣取代理由，而對方在這個主題上並不具相關專業。
 notFallacyWhen: 相關專家的證言可以作為暫定理由；還要看證據、可信度、利益衝突與不同意見，共識不是唯一的必要條件。父母、主管在職責範圍內做決定，是在給「行動」的理由，不是在證明某件事為真，也不是這種謬誤。
 charitableResponse: 「他在自己的領域很有經驗。這個主題上，相關領域的研究怎麼說？」
-related: [ principle-of-sufficient-reason, ad-hominem, appeal-to-force, nonviolent-communication ]
+related:
+  [
+    principle-of-sufficient-reason,
+    ad-hominem,
+    appeal-to-force,
+    nonviolent-communication
+  ]
 terms: [ premise, burden-of-proof ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Stanford Encyclopedia of Philosophy — Informal Logic"
     url: https://plato.stanford.edu/entries/logic-informal/
@@ -30,6 +37,7 @@ sources:
       - "補充品功效需依研究，天然不保證安全；未對題目中的虛構產品提供功效背書。"
 updated: 2026-09-27
 aiAssisted: true
+published: 2026-09-27
 ---
 
 ## 說明

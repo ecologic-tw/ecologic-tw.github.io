@@ -16,15 +16,19 @@ quickCheck:
   explanation: '第一句用「不能加入社團」的威脅，要人相信「這個品牌最好」，但威脅和品牌好不好無關。另外兩句說明的是某個行為的後果，是在提供「要不要這樣做」的理由，不是要人相信某件事為真。'
 related: [ appeal-to-authority, ad-hominem, nonviolent-communication ]
 terms: [ premise, conclusion ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Stanford Encyclopedia of Philosophy — Fallacies"
     url: https://plato.stanford.edu/entries/fallacies/
     supports:
-      - "ad baculum 意為「訴諸棍棒」，通常涉及對聽者的傷害威脅；威脅可以提供行動的理由而不構成謬誤（如勞資爭議中的罷工），用來要人相信某個說法時，才是不相干的證據（§1 核心謬誤第 11 項）。"
+      - "ad baculum
+        意為「訴諸棍棒」，通常涉及對聽者的傷害威脅；威脅可以提供行動的理由而不構成謬誤（如勞資爭議中的罷工），用來要人相信某個說法時，才是不相干的證據\
+        （§1 核心謬誤第 11 項）。"
 updated: 2026-09-27
 aiAssisted: true
+published: 2026-09-27
 ---
 
 ## 說明
