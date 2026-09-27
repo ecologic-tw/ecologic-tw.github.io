@@ -23,7 +23,7 @@ const index: ContentIndex = {
 };
 ---
 
-<Base title="我的圖鑑" description="你的練習進度、點亮的圖鑑卡與徽章，只存在你的瀏覽器。">
+<Base title="我的圖鑑" description="你的練習進度、點亮的圖鑑卡與徽章，只存在你的瀏覽器。" wide>
   {/* 互動區預設顯示以免版面跳動；沒有 JavaScript 時以外部樣式表隱藏（CSP 不允許行內樣式） */}
   <noscript slot="head">
     <link rel="stylesheet" href="/nojs-me.css" />
@@ -341,5 +341,29 @@ const index: ContentIndex = {
 
   .message {
     margin-top: 1rem;
+  }
+
+  .lead {
+    max-width: var(--measure);
+  }
+
+  @media (min-width: 64rem) {
+    .me {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 4rem;
+    }
+
+    .me > * {
+      grid-column: 1 / -1;
+    }
+
+    .me > section[aria-labelledby='practice-title'] {
+      grid-column: 1;
+    }
+
+    .me > section[aria-labelledby='badges-title'] {
+      grid-column: 2;
+    }
   }
 </style>

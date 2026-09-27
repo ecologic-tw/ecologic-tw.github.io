@@ -21,39 +21,41 @@ const steps = [
 ];
 ---
 
-<Base>
-  <section class="hero" aria-labelledby="mission">
-    <h1 id="mission">
-      從各說各話
-      <br />
-      走向共同思考
-    </h1>
-    <TrackLine />
-    <p class="lead">
-      擺脫羅生門式的溝通困境。學會辨識邏輯瑕疵、調整表述視角，讓每一次對話都成為推進共識的契機。
-    </p>
-  </section>
+<Base wide>
+  <div class="intro">
+    <section class="hero" aria-labelledby="mission">
+      <h1 id="mission">
+        從各說各話
+        <br />
+        走向共同思考
+      </h1>
+      <TrackLine />
+      <p class="lead">
+        擺脫羅生門式的溝通困境。學會辨識邏輯瑕疵、調整表述視角，讓每一次對話都成為推進共識的契機。
+      </p>
+    </section>
 
-  <section class="themes" aria-labelledby="themes-title">
-    <h2 id="themes-title">兩個主題</h2>
-    <ul class="theme-list">
-      {themes.map(({ theme, count }) => (
-        <li class="theme">
-          <HabitatIcon kind={theme} />
-          <div>
-            <h3>
-              <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
-            </h3>
-            <p>{themeIntro[theme]}</p>
-            <p class="status">{count > 0 ? `${count} 題` : '題目整理中'}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-    <p class="random">
-      <RandomScenarioButton scenarios={scenarios} />
-    </p>
-  </section>
+    <section class="themes" aria-labelledby="themes-title">
+      <h2 id="themes-title">兩個主題</h2>
+      <ul class="theme-list">
+        {themes.map(({ theme, count }) => (
+          <li class="theme">
+            <HabitatIcon kind={theme} />
+            <div>
+              <h3>
+                <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
+              </h3>
+              <p>{themeIntro[theme]}</p>
+              <p class="status">{count > 0 ? `${count} 題` : '題目整理中'}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="random">
+        <RandomScenarioButton scenarios={scenarios} />
+      </p>
+    </section>
+  </div>
 
   <section class="how" aria-labelledby="how-title">
     <h2 id="how-title">一題怎麼進行</h2>
@@ -190,5 +192,28 @@ const steps = [
   .note h2 {
     font-size: var(--step-1);
     margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    /* 右欄較窄，兩個主題改為上下排列，避免說明文字過度換行 */
+    .intro .theme-list {
+      grid-template-columns: 1fr;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      column-gap: 5rem;
+      align-items: center;
+    }
+
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 2rem;
+    }
+
+    .note {
+      max-width: calc(var(--measure) + 3rem);
+    }
   }
 </style>

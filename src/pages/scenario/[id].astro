@@ -94,7 +94,7 @@ const index = themeScenarios.findIndex((s) => s.id === scenario.id);
 const next = themeScenarios[index + 1];
 ---
 
-<Base title={data.title} description={`${themeLabel[data.theme]}情境題：${data.title}`}>
+<Base title={data.title} description={`${themeLabel[data.theme]}情境題：${data.title}`} wide>
   {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
 
   <article class="scenario" data-quiz data-scenario-id={scenario.id} data-format={data.format}>
@@ -741,5 +741,30 @@ const next = themeScenarios[index + 1];
     flex-wrap: wrap;
     gap: 0.75rem 1.5rem;
     align-items: center;
+  }
+
+  /* 桌機：內文維持易讀寬度，相關連結移到右側欄 */
+  @media (min-width: 64rem) {
+    article {
+      display: grid;
+      grid-template-columns: minmax(0, var(--measure)) minmax(14rem, 20rem);
+      justify-content: space-between;
+      column-gap: 4rem;
+    }
+
+    article > * {
+      grid-column: 1;
+    }
+
+    article > .links {
+      grid-column: 2;
+      grid-row: 1 / span 20;
+      align-self: start;
+      grid-template-columns: 1fr;
+      margin-top: 3rem;
+      padding: 0 0 0 1.5rem;
+      border-top: 0;
+      border-left: 1px solid var(--mist);
+    }
   }
 </style>

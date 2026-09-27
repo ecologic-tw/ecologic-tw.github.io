@@ -11,9 +11,11 @@ import { showDrafts } from '../lib/content.ts';
 interface Props {
   title?: string;
   description?: string;
+  /** 桌機使用寬版容器（列表、雙欄頁面）；長篇文字頁維持易讀寬度 */
+  wide?: boolean;
 }
 
-const { title, description = t.tagline } = Astro.props;
+const { title, description = t.tagline, wide = false } = Astro.props;
 const fullTitle = title ? `${title}｜${t.siteName}` : `${t.siteName}｜${t.siteNameEn}`;
 const canonical = canonicalUrl(Astro.url.pathname);
 ---
@@ -50,7 +52,7 @@ const canonical = canonicalUrl(Astro.url.pathname);
       {t.skipToContent}
     </a>
     <SiteHeader />
-    <main id="main" class="page">
+    <main id="main" class:list={['page', { 'page-wide': wide }]}>
       <slot />
     </main>
     <SiteFooter />

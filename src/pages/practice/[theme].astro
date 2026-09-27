@@ -13,7 +13,7 @@ const theme = Astro.params.theme as Theme;
 const scenarios = await getPublishedScenarios(theme);
 ---
 
-<Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]}>
+<Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]} wide>
   <h1>{themeLabel[theme]}</h1>
   <p class="lead">{themeIntro[theme]}</p>
 
@@ -109,5 +109,17 @@ const scenarios = await getPublishedScenarios(theme);
     margin-left: auto;
     font-size: var(--step--1);
     color: var(--moss);
+  }
+
+  .lead {
+    max-width: var(--measure);
+  }
+
+  @media (min-width: 64rem) {
+    .scenarios {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 3rem;
+    }
   }
 </style>

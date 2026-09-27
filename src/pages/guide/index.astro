@@ -7,7 +7,7 @@ import { getPublishedEntries, groupByKind } from '../../lib/content.ts';
 const groups = groupByKind(await getPublishedEntries());
 ---
 
-<Base title="圖鑑" description="邏輯定律、有效推論、謬誤與認知偏誤的圖鑑卡。">
+<Base title="圖鑑" description="邏輯定律、有效推論、謬誤與認知偏誤的圖鑑卡。" wide>
   <h1>圖鑑</h1>
   <p class="lead">
     每張卡說明一種推理方式：它是什麼、在生活和保育討論裡長什麼樣子，以及什麼時候其實合理。
@@ -143,5 +143,13 @@ const groups = groupByKind(await getPublishedEntries());
 
   .entries p {
     margin-top: 0.15rem;
+  }
+
+  @media (min-width: 64rem) {
+    .entries {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+      column-gap: 2.5rem;
+    }
   }
 </style>

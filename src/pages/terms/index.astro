@@ -9,7 +9,7 @@ import { getPublishedTerms } from '../../lib/content.ts';
 const terms = await getPublishedTerms();
 ---
 
-<Base title="名詞" description="討論推理時常用的名詞與白話說明。">
+<Base title="名詞" description="討論推理時常用的名詞與白話說明。" wide>
   <h1>名詞</h1>
   <p class="lead">圖鑑和題目裡用到的名詞，都可以在這裡查到白話說明。</p>
 
@@ -111,5 +111,17 @@ const terms = await getPublishedTerms();
 
   dd {
     margin: 0.2rem 0 0;
+  }
+
+  .lead {
+    max-width: var(--measure);
+  }
+
+  @media (min-width: 64rem) {
+    .terms {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+      column-gap: 3rem;
+    }
   }
 </style>
