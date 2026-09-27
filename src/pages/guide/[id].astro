@@ -333,4 +333,12 @@ const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
       border-left: 1px solid var(--mist);
     }
   }
+
+  /* 右側欄跟著捲動，作答後不必捲回頂端；視窗太矮時維持一般捲動，避免下半部被切掉 */
+  @media (min-width: 64rem) and (min-height: 44rem) {
+    article > .links {
+      position: sticky;
+      top: 1.5rem;
+    }
+  }
 </style>

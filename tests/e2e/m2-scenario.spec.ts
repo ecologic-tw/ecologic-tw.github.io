@@ -179,3 +179,28 @@ test.describe('axe：情境題相關頁面', () => {
     expect(await seriousViolations(page)).toEqual([]);
   });
 });
+
+test.describe('結果框的下一題', () => {
+  const nextInResult = (page: Page) =>
+    page.locator('[data-quiz-next] a:visible', { hasText: '下一題' });
+
+  test('appears after answering and skips advanced-only questions in basic mode', async ({
+    page,
+  }) => {
+    await page.goto('/scenario/daily-012/');
+    await expect(page.locator('[data-quiz-next]')).toBeHidden();
+    await page.getByLabel('沒有問題').check();
+    await page.getByRole('button', { name: '送出判讀' }).click();
+    await expect(nextInResult(page)).toHaveCount(1);
+    await expect(nextInResult(page)).toHaveAttribute('href', '/scenario/daily-015/');
+  });
+
+  test('goes to the very next question in advanced mode', async ({ page }) => {
+    await page.goto('/scenario/daily-012/');
+    await page.getByText('進階', { exact: true }).first().click();
+    await page.getByLabel('沒有問題').check();
+    await page.getByRole('button', { name: '送出判讀' }).click();
+    await expect(nextInResult(page)).toHaveCount(1);
+    await expect(nextInResult(page)).toHaveAttribute('href', '/scenario/daily-013/');
+  });
+});

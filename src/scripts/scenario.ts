@@ -89,6 +89,7 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
   const result = root.querySelector<HTMLElement>('[data-quiz-result]');
   const reveal = root.querySelector<HTMLDetailsElement>('[data-quiz-reveal]');
   const rewrite = root.querySelector<HTMLElement>('[data-quiz-rewrite]');
+  const nextLinks = root.querySelector<HTMLElement>('[data-quiz-next]');
   const first = lists[0];
   if (!form || !first || !result || !reveal) continue;
 
@@ -126,6 +127,7 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
     if (text) text.textContent = outcome.correct ? quiz.correct : quiz.tryAnotherAngle;
     if (choice) choice.textContent = `${chosenTag}：${outcome.labels.join('、')}`;
     result.hidden = false;
+    if (nextLinks) nextLinks.hidden = false;
 
     reveal.hidden = false;
     reveal.open = true;
