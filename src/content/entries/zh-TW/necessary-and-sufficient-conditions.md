@@ -30,7 +30,7 @@ sources:
     url: https://plato.stanford.edu/entries/necessary-sufficient/
     supports:
       - "必要條件與充分條件的定義，以及它們與條件句的對應。"
-updated: 2026-09-27
+updated: 2026-09-29
 aiAssisted: true
 ---
 
@@ -61,8 +61,8 @@ aiAssisted: true
 
 ## 常見誤解
 
-- **「必要條件成立，結果就會發生。」**這是把必要當充分，和[肯定後件](/guide/affirming-the-consequent/)是同一種錯誤。
-- **「一個結果只有一個條件。」**許多事情需要多個必要條件同時成立，合起來才構成充分條件。
+- 「**必要條件成立，結果就會發生**。」這是把必要當充分，和[肯定後件](/guide/affirming-the-consequent/)是同一種錯誤。
+- 「**一個結果只有一個條件**。」許多事情需要多個必要條件同時成立，合起來才構成充分條件。
 
 ## 進階
 

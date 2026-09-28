@@ -275,6 +275,19 @@ describe('writing rules', () => {
     });
     expect(errors.filter((e) => e.includes('HTML'))).toHaveLength(2);
   });
+
+  it('rejects bold markers that CommonMark leaves as literal asterisks', () => {
+    const { errors } = run({
+      entries: [...cards, entry('d', {}, '- **「理解就是同意。」**善意詮釋')],
+      scenarios: [q('daily-001', {}, `${validBody}\n\n**如果你是居民：**你可能`)],
+    });
+    expect(errors.filter((e) => e.includes('粗體沒有生效'))).toHaveLength(2);
+  });
+
+  it('accepts bold with punctuation moved outside the markers', () => {
+    const body = `${validBody}\n\n**如果你是居民**：你可能\n\n- 「**理解就是同意**。」善意\n\n\`a**b\``;
+    expect(run({ scenarios: [q('daily-001', {}, body)] }).errors).toEqual([]);
+  });
 });
 
 describe('every published card can be collected (docs/sdd/02 rule 4)', () => {
