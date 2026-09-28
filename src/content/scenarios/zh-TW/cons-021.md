@@ -24,16 +24,19 @@ checklist:
   - 用提問找出雙方都能接受的做法
 terms: [ principle-of-charity, argument ]
 sources:
-  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W. W. Norton."
+  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W.
+      W. Norton."
     supports:
       - "Rapoport 規則：先把對方的立場重述到對方滿意，再提出批評。"
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 updated: 2026-09-29
 isControl: false
+published: 2026-09-29
 ---
 
 ## 情境
