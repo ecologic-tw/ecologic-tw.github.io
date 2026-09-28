@@ -78,6 +78,7 @@ const html = (key: keyof typeof SECTIONS) => {
 const scenarioHtml = html('scenario');
 const explanationHtml = html('explanation');
 const advancedHtml = html('advanced');
+const perspectiveHtml = html('perspective');
 
 const answerEntry = data.format === 'judge' ? entries.get(data.answer) : undefined;
 const multiAnswers =
@@ -316,6 +317,13 @@ const nextLinks = (
         </section>
       )}
       <div class="prose" set:html={explanationHtml} />
+      {perspectiveHtml && (
+        <section class="perspective" aria-labelledby="perspective-title" data-perspective>
+          <h2 id="perspective-title">{quiz.perspective}</h2>
+          <p class="perspective-hint">{quiz.perspectiveHint}</p>
+          <div class="prose" set:html={perspectiveHtml} />
+        </section>
+      )}
       {(data.form || advancedHtml) && (
         <div class="mode-advanced advanced-block">
           <h2>{quiz.advancedExplanation}</h2>
@@ -822,5 +830,23 @@ const nextLinks = (
       position: sticky;
       top: 1.5rem;
     }
+  }
+
+  /* 換個位置想（ADR-0029）：與解說區隔，但不搶過解說本身 */
+  .perspective {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--moss);
+    background: var(--paper-deep);
+  }
+
+  .perspective h2 {
+    font-size: var(--step-1);
+  }
+
+  .perspective-hint {
+    margin-top: 0.25rem;
+    color: var(--moss);
+    font-size: var(--step--1);
   }
 </style>

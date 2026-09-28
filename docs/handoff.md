@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：換個位置想與善意詮釋概念卡（ADR-0029）
+- **目標與範圍**：使用者希望網站幫助讀者學習「溫柔」、理解對立面；本次只做兩項：情境題「換個位置想」段落，以及「理解不等於同意」概念卡。鋼人練習題、爭點地圖、多方觀點情境等列為後續。
+- **分支**：`feat/perspective-and-charity`，自 `origin/main`（`40c8bbd`）建立。
+- **已完成**：ADR-0029（提議）；`scenario-sections.ts` 新增選填段落、情境題頁顯示區塊與提示、提案範本；4 題草稿補段落（daily-020、cons-018、cons-019、cons-020）；新增概念卡 `charity-and-steelman`（draft、aiAssisted）；單元與 e2e 測試；更新 03、04、08、11、CONTEXT。已審題目未修改。
+- **驗證**：本機副本 lint、`npm run check`、241 個單元測試、正式 build（75 頁，草稿未發布）、`check:docs` 通過；含草稿建置 91 個 e2e（含新增 4 個）全數通過。新內容閱讀長度未超過門檻。
+- **待人工確認**：兩則來源（Dennett 2013、Eyal 等 2018）AI 未核對原文；概念卡含心理學研究主張，需心理學背景審核者；cons-018、cons-019 為需第二位審核者的爭議題。
+- **下一步**：人工審核與試讀；採用後以 `npm run scenario -- edit` 分批補進已審題目。
+
 ## 2026-09-28：P3、P5 轉入草稿與兩張新偏誤卡
 - **目標與範圍**：依 Decision Owner 要求，將 P3、P5 轉入正式草稿，並起草方案 B 的新卡，方便以 `npm run dev` 檢視；全部維持 draft。
 - **分支**：`content/reading-notes-drafts`，自 `origin/main`（`16df844`，含 PR #61）建立。
