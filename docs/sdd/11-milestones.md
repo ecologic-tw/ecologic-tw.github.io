@@ -96,7 +96,7 @@
 
 ### 閱讀筆記試行（ADR-0027）
 - [x] ADR-0027 接受（2026-09-28，Decision Owner：@Wang-Yi-Zhang）
-- [ ] 依 [評估文件](../review/reading-notes-assessment.md) 起草 P3、P5 兩題提案（draft，走 [情境協作流程](../review/scenario-contributions.md)）
+- [x] 依 [評估文件](../review/reading-notes-assessment.md) 起草 P3、P5 兩題提案（AI 起草，`aiAssisted: true`）：P3 → `contributions/scenarios/two-slot-booking.md`（日常對照題）、P5 → `contributions/scenarios/summer-egret-count.md`（保育，草率概括）；尚未轉入正式草稿
 - [ ] P3、P5 來源核對、內容審閱與至少一位自願試讀者試讀，再依 Review Point 決定擴充、修訂或停止
 
 ### 其他持續事項
