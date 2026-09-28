@@ -34,9 +34,9 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 - 更新通知只用靜態 Atom 訂閱源：由使用者的閱讀器自行抓取，本站不知道誰訂閱；不做推播、不蒐集 Email（ADR-0024）。建置產物檢查確認訂閱源不含未審內容。
 
 ## GitHub Organization 設定清單（維護者初始化時執行）
-最近一次檢查：2026-09-26（以 `gh api` 唯讀查詢）。
-- [ ] Require 2FA for all members
-- [ ] 至少 2 位 Owner
+最近一次檢查：2026-09-28（以 `gh api` 唯讀查詢）。
+- [x] Require 2FA for all members
+- [ ] 至少 2 位 Owner（目前成員只有一人，待新成員加入）
 - [x] Pages：Source 設為 GitHub Actions；Enforce HTTPS
 - [x] Secret scanning＋push protection、Dependabot alerts＋security updates
 - [x] `main` branch ruleset：需 PR、1 位 CODEOWNERS 核准、CI 必要檢查 `check`、`e2e`、`docs` 通過（純文件 PR 略過的檢查視為通過，ADR-0028）、禁止 force push 與刪除（單人維護期間 Organization admin 可 bypass，僅限 PR）
