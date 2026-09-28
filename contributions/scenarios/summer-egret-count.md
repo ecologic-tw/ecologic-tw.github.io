@@ -16,6 +16,10 @@ sources:
     url: https://aapor.org/standards-and-ethics/best-practices/
     supports:
       - "樣本、抽樣方式與涵蓋及未回覆等誤差須一併評估。"
+  - title: "Wetlands International (2018). International Waterbird Census — Guidance on waterbird monitoring methodology: Field Protocol for waterbird counting."
+    url: https://iwc.wetlands.org/static/files/IWC-Guidance-on-waterbird-monitoring-methodology-2018-1.pdf
+    supports:
+      - "§6（p.14）：只做一次一月普查的國家，通常需要更頻繁的計數才足以監測水鳥；每月計數才能了解濕地在各季節的水鳥利用情形。適用物種包含鷺科（p.4）。本題數字與地點為虛構，不代表任何實際埤塘的調查結果。"
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
@@ -23,8 +27,8 @@ status: draft
 reviewers: []
 updated: 2026-09-28
 nextSteps:
-  - 人工確認正解：是否有人會合理地選其他選項（特別是與「訴諸無知」的區分）
-  - 待補來源：野外調查需涵蓋不同季節與時段的可靠來源（例如鳥類調查方法指南）；AAPOR 是問卷調查的抽樣原則，只能支持樣本涵蓋的一般概念
+  - 人工核對 IWC 指引 §6（p.14）與 p.4 原文，確認 supports 的範圍（AI 已讀 PDF 文字，2026-09-28）
+  - 備選來源（未列入 sources）：Dickie, Smith & Gilchrist (2014), Waterbirds 37(4): 394–401, https://doi.org/10.1675/063.037.0406 ；摘要指出調查時機會大幅影響計數，但對象是北極繁殖期的鷸鴴，需要時再評估
   - 至少一位試讀者試讀，記錄看不懂或可能有第二個正解的地方（ADR-0027 Review Point）
   - 轉入前確認保育題立場分布：本題由管理單位一方犯錯
 ---

@@ -46,7 +46,7 @@
 
 ## M5 審核與上線
 - [ ] 全部 MVP 內容經人工審核改為 `reviewed`（分批方式與指令見 `docs/review/review-guide.md`；`npm run check` 會顯示審核進度）
-- [x] Lighthouse：Performance ≥ 90、Accessibility ≥ 95（2026-09-28 正式網址、無痕、手機模擬：`/`、`/guide/`、`/me/` 皆為 100／100；情境題頁未量）
+- [x] Lighthouse：Performance ≥ 90、Accessibility ≥ 95（2026-09-28 正式網址、無痕、手機模擬：`/`、`/guide/`、`/me/`、`/scenario/cons-002/` 皆為 100／100）
 - [x] 手機實測（2026-09-28 iPhone／Safari：點擊、輸入、匯入／匯出／清除、無痕正常；紀錄與檢查表見 [手機實測](../review/mobile-test-checklist.md)）
 - [ ] 後續追蹤：VoiceOver「全部朗讀」會略過內文名詞按鈕的文字（例如「命題」），句子少一個詞。推測與 `popovertarget` 按鈕被當成彈出式控制項有關；下一步先確認單指滑到名詞時的朗讀角色，再決定修正（2026-09-28 決定暫緩，不擋 M5）（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
 - [ ] Org 設定清單（07）全數完成
@@ -97,7 +97,8 @@
 ### 閱讀筆記試行（ADR-0027）
 - [x] ADR-0027 接受（2026-09-28，Decision Owner：@Wang-Yi-Zhang）
 - [x] 依 [評估文件](../review/reading-notes-assessment.md) 起草 P3、P5 兩題提案（AI 起草，`aiAssisted: true`）：P3 → `contributions/scenarios/two-slot-booking.md`（日常對照題）、P5 → `contributions/scenarios/summer-egret-count.md`（保育，草率概括）；尚未轉入正式草稿
-- [ ] P3、P5 來源核對、內容審閱與至少一位自願試讀者試讀，再依 Review Point 決定擴充、修訂或停止
+- [x] P3、P5 正解確認（2026-09-28，@Wang-Yi-Zhang）
+- [ ] P3、P5 來源核對（P5 已附 AI 找到的水鳥普查方法指引，待人工核對原文）與至少一位自願試讀者試讀，再依 Review Point 決定擴充、修訂或停止
 
 ### 其他持續事項
 - [x] 非暴力溝通、主觀意義與客觀意義：3 張 concept 卡及 3 條名詞 draft（語言／溝通角度，見 12 §6）

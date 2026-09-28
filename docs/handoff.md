@@ -1,5 +1,17 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：P5 候選來源、正解確認與招募 Issue
+- **目標與範圍**：替 P5 找候選來源；記錄 Decision Owner 對 P3、P5 正解的確認；發布招募試讀者、查證者與第二位保育審核者的 Issue；補記情境題頁 Lighthouse。
+- **分支**：`content/p5-source-and-recruitment`，自 `origin/main`（`ee1718f`）建立。
+- **已完成**：
+  - P5 `sources` 加入 Wetlands International (2018) IWC 水鳥監測方法指引。AI 以 PyMuPDF 讀取 PDF 文字：§6（p.14）指出只做一月普查通常不足以監測，每月計數才能了解各季節的濕地利用；p.4 適用物種含鷺科。備選來源 Dickie, Smith & Gilchrist (2014) 列在 nextSteps，未列入 sources。
+  - P3、P5 移除「確認正解」待辦（@Wang-Yi-Zhang 於對話中確認）。
+  - 里程碑：正解確認勾選；Lighthouse 補上 `/scenario/cons-002/`（100／100，名稱連結提醒已消失，確認 PR #58 已部署）。
+  - 招募 Issue #62（使用者要求發布）：試讀者、查證者、第二位保育內容審核者，並提及第二位管理員與外部觀察員；載明不承諾回覆時限、公開、署名自願、不比較。
+- **驗證**：`npm run scenario -- check`、`npm run check`、`npm run check:docs`、`git diff --check`。
+- **待人工**：核對 IWC 指引原文與 supports 範圍；P3 的 OpenStax 來源核對；兩題試讀。
+- **下一步**：依招募 Issue 的回應安排試讀與第二審核；試讀完成後轉入正式草稿。
+
 ## 2026-09-28：ADR-0027 試行題 P3、P5 提案
 - **目標與範圍**：依已接受的 ADR-0027，以情境協作流程起草評估文件中的 P3、P5；只建立提案，不轉入正式內容、不影響網站與對照題比例。
 - **分支**：`content/reading-notes-p3-p5`，自 `origin/main`（`861bb0c`，含 PR #59）建立。
