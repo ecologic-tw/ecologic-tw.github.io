@@ -17,23 +17,30 @@ quickCheck:
   explanation: '「95% 無脂」和「含 5% 脂肪」說的是同一件事。說法不同就影響判斷，是框架效應的典型情況。題幹沒有提到廣告或容易想起的例子。'
 related: [ availability-heuristic, confirmation-bias ]
 terms: [ cognitive-bias, truth-value ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Tversky, A., & Kahneman, D. (1981). The framing of decisions and the psychology of choice. Science, 211(4481), 453–458."
+  - title: "Tversky, A., & Kahneman, D. (1981). The framing of decisions and the
+      psychology of choice. Science, 211(4481), 453–458."
     url: https://doi.org/10.1126/science.7455683
     supports:
       - "風險選擇框架的原始實驗：同一決策問題以不同方式描述，偏好出現可預測的反轉。"
-  - title: "Kühberger, A. (1998). The influence of framing on risky decisions: A meta-analysis. Organizational Behavior and Human Decision Processes, 75(1), 23–55."
+  - title: "Kühberger, A. (1998). The influence of framing on risky decisions: A
+      meta-analysis. Organizational Behavior and Human Decision Processes,
+      75(1), 23–55."
     url: https://doi.org/10.1006/obhd.1998.2781
     supports:
       - "後設分析：136 篇研究、約三萬名參與者、230 個效果量；整體框架效應小到中等，不同研究設計之間差異很大。"
-  - title: "Steiger, A., & Kühberger, A. (2018). A meta-analytic re-appraisal of the framing effect. Zeitschrift für Psychologie, 226(1), 45–55."
+  - title: "Steiger, A., & Kühberger, A. (2018). A meta-analytic re-appraisal of the
+      framing effect. Zeitschrift für Psychologie, 226(1), 45–55."
     url: https://doi.org/10.1027/2151-2604/a000321
     supports:
-      - "以 p-curve 重新分析 Kühberger (1998)，校正後效果量約 d = 0.52，結論為風險選擇框架效應可靠；與 Many Labs 重複驗證（d = 0.60）相近。只支持風險選擇框架，不涵蓋其他類型的框架。"
+      - "以 p-curve 重新分析 Kühberger (1998)，校正後效果量約 d = 0.52，結論為風險選擇框架效應可靠；與 Many
+        Labs 重複驗證（d = 0.60）相近。只支持風險選擇框架，不涵蓋其他類型的框架。"
 updated: 2026-09-28
 aiAssisted: true
+published: 2026-09-28
 ---
 
 ## 說明

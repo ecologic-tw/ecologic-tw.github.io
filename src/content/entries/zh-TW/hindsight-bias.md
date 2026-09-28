@@ -17,23 +17,30 @@ quickCheck:
   explanation: '颱風最後沒來，不代表前一天就能確定它不會來。用事後才知道的結果評價當時的決定，是後見之明偏誤。結果剛好符合他的說法，不代表當時的判斷有足夠根據。'
 related: [ confirmation-bias, survivorship-bias ]
 terms: [ cognitive-bias, inference ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Fischhoff, B. (1975). Hindsight is not equal to foresight: The effect of outcome knowledge on judgment under uncertainty. Journal of Experimental Psychology: Human Perception and Performance, 1(3), 288–299."
+  - title: "Fischhoff, B. (1975). Hindsight is not equal to foresight: The effect of
+      outcome knowledge on judgment under uncertainty. Journal of Experimental
+      Psychology: Human Perception and Performance, 1(3), 288–299."
     url: https://doi.org/10.1037/0096-1523.1.3.288
     supports:
       - "後見之明偏誤的原始研究：得知結果會影響人們對事前可預測性的判斷。"
-  - title: "Guilbault, R. L., Bryant, F. B., Brockway, J. H., & Posavac, E. J. (2004). A meta-analysis of research on hindsight bias. Basic and Applied Social Psychology, 26(2–3), 103–117."
+  - title: "Guilbault, R. L., Bryant, F. B., Brockway, J. H., & Posavac, E. J.
+      (2004). A meta-analysis of research on hindsight bias. Basic and Applied
+      Social Psychology, 26(2–3), 103–117."
     url: https://doi.org/10.1080/01973533.2004.9646399
     supports:
       - "後設分析：95 項研究、252 個效果量，整體效果量約 .39；旨在減少偏誤的操弄沒有顯著降低效果量。"
-  - title: "Roese, N. J., & Vohs, K. D. (2012). Hindsight bias. Perspectives on Psychological Science, 7(5), 411–426."
+  - title: "Roese, N. J., & Vohs, K. D. (2012). Hindsight bias. Perspectives on
+      Psychological Science, 7(5), 411–426."
     url: https://doi.org/10.1177/1745691612454303
     supports:
       - "回顧：後見之明偏誤涉及記憶扭曲、對必然性的信念與「早就能預見」的感覺；考慮其他可能的解釋有助於減少偏誤。"
 updated: 2026-09-28
 aiAssisted: true
+published: 2026-09-28
 ---
 
 ## 說明

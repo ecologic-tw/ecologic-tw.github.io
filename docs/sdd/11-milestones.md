@@ -90,10 +90,19 @@
 ## 換個位置想與善意詮釋（ADR-0029）
 - [x] 選填段落 `## 換個位置想`：作答後顯示、固定提示、提案範本、單元與 e2e 測試
 - [x] 試行內容 draft：daily-020、cons-018、cons-019、cons-020 補段落；新增概念卡「善意詮釋與鋼人論證」
-- [ ] 人工審核試行內容（概念卡需心理學背景審核者，SDD 12 §5）
-  - [x] 概念卡「善意詮釋與鋼人論證」：Decision Owner 單人審核發布（2026-09-28，@Wang-Yi-Zhang），先開放社會檢視；心理學背景審核者覆核待補
+- [ ] 人工審核試行內容
+  - [x] 概念卡「善意詮釋與鋼人論證」：Decision Owner 單人審核發布（2026-09-28，@Wang-Yi-Zhang），開放檢視（ADR-0030）
   - [ ] 4 題試行情境題（daily-020、cons-018、cons-019、cons-020；cons-018、cons-019 需第二位審核者）
 - [ ] 試讀回饋後，決定是否以 `npm run scenario -- edit` 分批補進已審題目
+
+## 心理學內容開放檢視（ADR-0030）
+- [x] ADR-0030：修訂 12 §5 第 5 條，補記已開放的卡；更新紀錄公告
+- 待具心理學背景的審核者覆核（完成後把帳號加入 `reviewers`，證據強度改變時依 ADR-0025 寫修訂說明）：
+  - [ ] 非暴力溝通 `nonviolent-communication`（2026-09-27 開放）
+  - [ ] 善意詮釋與鋼人論證 `charity-and-steelman`（2026-09-28 開放；Eyal 等 2018 適用範圍待核對原文）
+  - [ ] 後見之明偏誤 `hindsight-bias`（2026-09-28 開放；證據強度 AI 暫定 robust）
+  - [ ] 框架效應 `framing-effect`（2026-09-28 開放；證據強度 AI 暫定 robust，僅限風險選擇框架）
+- [ ] Review Point（約 2026-12-29）：檢視覆核結果與回饋，決定是否維持開放檢視做法
 
 ## 持續
 ### 首次貢獻試行（ADR-0026，提議；Decision Owner：@Wang-Yi-Zhang）
@@ -111,7 +120,7 @@
 - [ ] cons-020：人工核對 IWC 指引 p.4、p.14 原文；備選來源 Dickie, Smith & Gilchrist (2014), https://doi.org/10.1675/063.037.0406 （北極繁殖期鷸鴴，需要時再評估）；確認保育題立場分布（本題由管理單位一方犯錯）
 - [ ] daily-020、cons-020 至少一位自願試讀者試讀（招募見 Issue #62），再依 Review Point 決定擴充、修訂或停止
 - [x] 新偏誤卡 draft：框架效應 `framing-effect`、後見之明偏誤 `hindsight-bias`（2026-09-28，Decision Owner 決定與試讀並行，見 ADR-0027 修訂紀錄；AI 起草，文獻已以 Crossref 核對書目與 DOI）
-- [ ] 上述兩張卡由具心理學背景的審核者判定證據強度（AI 暫定 robust）並審核，在此之前維持 draft（SDD 12 §5）
+- [x] 上述兩張卡由 Decision Owner 審核發布，開放檢視（2026-09-28，@Wang-Yi-Zhang；ADR-0030）；證據強度仍為 AI 暫定 robust
 
 ### 其他持續事項
 - [x] 非暴力溝通、主觀意義與客觀意義：3 張 concept 卡及 3 條名詞 draft（語言／溝通角度，見 12 §6）
