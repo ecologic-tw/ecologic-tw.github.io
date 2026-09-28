@@ -1,5 +1,12 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：接受 ADR-0032
+- **目標與範圍**：PR #74 合併後，Decision Owner 接受 ADR-0032；本 PR 只改文件。
+- **分支**：`docs/accept-adr-0032`，自 `origin/main` 建立。
+- **已完成**：ADR-0032 狀態改為接受；文末記錄決定：保留逐題回顧、同意以 `sessionStorage` 暫存進行中的挑戰。11 里程碑同步。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **下一步**：實作抽題純函式與單元測試、`/challenge/` 頁面、e2e 與 axe，並更新 04、07。
+
 ## 2026-09-29：綜合挑戰 ADR（ADR-0032）
 - **目標與範圍**：依 SDD 13 建議順序，先為綜合挑戰寫 ADR；本 PR 只改文件，未實作。
 - **分支**：`docs/adr-0032-combined-challenge`，自 `origin/main`（`1ba7082`，含 PR #73）建立。
