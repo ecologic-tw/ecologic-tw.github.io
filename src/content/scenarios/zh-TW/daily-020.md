@@ -20,11 +20,13 @@ sources:
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 updated: 2026-09-29
 id: daily-020
 isControl: true
+published: 2026-09-29
 ---
 
 ## 情境
