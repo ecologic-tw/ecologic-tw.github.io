@@ -5,6 +5,7 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseDocument, isSeq, isMap } from 'yaml';
 import { entrySchema, scenarioSchema, termSchema } from '../src/lib/content-schema.ts';
+import { localDate } from '../src/lib/dates.ts';
 import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
 
 export type ReviewPlan = { writes: { file: string; text: string }[]; ids: string[] };
@@ -111,12 +112,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       else if (arg.startsWith('-')) throw new Error(`未知選項：${arg}`);
       else ids.push(arg);
     }
-    const plan = prepareReview(
-      'src/content',
-      ids,
-      reviewers,
-      new Date().toISOString().slice(0, 10),
-    );
+    const plan = prepareReview('src/content', ids, reviewers, localDate());
     if (!dryRun) for (const item of plan.writes) writeFileSync(item.file, item.text);
     console.log(`${dryRun ? '試跑通過（未寫入）' : '已標記'}：${plan.ids.join(', ')}`);
     console.log('接著執行 npm run check，確認交叉參照與對照題比例；PR 人工核准仍不可省略。');

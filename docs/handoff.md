@@ -1,5 +1,11 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：日期改用本地時區
+- **目標與範圍**：`npm run review` 與 `npm run scenario` 以 `toISOString()` 取 UTC 日期，在臺灣 08:00 前執行會記成前一天。PR #68 的兩張偏誤卡和 daily-020、cons-020 的 `published` 都因此記成 2026-09-28。
+- **分支**：`fix/local-review-date`，自 `origin/main`（`cbf699c`）建立。
+- **已完成**：新增 `src/lib/dates.ts` 的 `localDate()`，改用於上述兩個腳本，以及 `/me/` 匯出進度的檔名。已發布內容的日期不在本 PR 修改。
+- **驗證**：lint、`npm run check`、245 個單元測試（新增 2 個）、正式 build、91 個 e2e 通過；00:4x 執行時 `localDate()` 為 2026-09-29，UTC 為 2026-09-28。
+
 ## 2026-09-29：心理學內容開放檢視（ADR-0030）
 - **目標與範圍**：Decision Owner 要求寫修訂規則的 ADR，並開放後見之明偏誤、框架效應，寫進更新紀錄。
 - **分支**：`content/psychology-open-review`，自 `origin/main`（`bb04035`，含 PR #67）建立。
