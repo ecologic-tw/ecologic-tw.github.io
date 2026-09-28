@@ -1,5 +1,17 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：綜合挑戰 ADR（ADR-0032）
+- **目標與範圍**：依 SDD 13 建議順序，先為綜合挑戰寫 ADR；本 PR 只改文件，未實作。
+- **分支**：`docs/adr-0032-combined-challenge`，自 `origin/main`（`1ba7082`，含 PR #73）建立。
+- **已完成**：
+  - ADR-0032（提議）：`/challenge/`、5 題、恰好 1 題對照題、兩主題都有、同一正解卡最多 1 題；進行中存 `sessionStorage`；送出後寫入 `answered`。
+  - 依 Decision Owner 修正，結果只顯示「這次答對 N 題（共 5 題）」與逐題回顧；不做判讀習慣、混淆配對、卡別表現；第一版不做徽章。
+  - SDD 13 §3 與 11 里程碑同步。
+- **查核**：基礎模式已發布單選判讀題 25 題、對照題 7 題，非對照題的正解分屬 12 張卡，抽題條件可滿足。圖鑑點亮依 `answered` 即時計算，挑戰答錯可能讓只靠該題點亮的卡暗掉（與一般重新作答相同），已列入風險。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **待人工決定**：是否接受 ADR-0032；逐題回顧要不要保留（AI 的解讀是保留）；新增 `sessionStorage` 鍵是否符合紅線 3 的本意。
+- **下一步**：接受後實作並補 04、07。
+
 ## 2026-09-29：發布鋼人練習 3 題
 - **目標與範圍**：PR #72 合併後，Decision Owner 審核 daily-021、daily-022、cons-021。
 - **分支**：`content/review-steelman-practice`，自 `origin/main`（`d405b94`，含 PR #72）建立。
