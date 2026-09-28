@@ -48,7 +48,7 @@
 - [ ] 全部 MVP 內容經人工審核改為 `reviewed`（分批方式與指令見 `docs/review/review-guide.md`；`npm run check` 會顯示審核進度）
 - [x] Lighthouse：Performance ≥ 90、Accessibility ≥ 95（2026-09-28 正式網址、無痕、手機模擬：`/`、`/guide/`、`/me/` 皆為 100／100；情境題頁未量）
 - [x] 手機實測（2026-09-28 iPhone／Safari：點擊、輸入、匯入／匯出／清除、無痕正常；紀錄與檢查表見 [手機實測](../review/mobile-test-checklist.md)）
-- [ ] VoiceOver 讀到內文名詞按鈕時朗讀中斷：待確認中斷情形再決定是否修正（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
+- [ ] VoiceOver「全部朗讀」會跳過內文名詞按鈕、接續往下念：待確認名詞文字是否被略過，再決定修正方式（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
 - [ ] Org 設定清單（07）全數完成
 - **驗收**：正式網址上線；README 與 about 頁資訊一致
 
@@ -73,24 +73,31 @@
 - [ ] 「訴諸傳統」卡的來源：SEP「Fallacies」條目未討論訴諸傳統（2026-09-27 核對），需另找來源
 - [x] 遊蕩犬貓餵食爭議保育題 draft：cons-018（餵食方犯稻草人）、cons-019（保育方犯草率概括），`requiresSecondReview: true`
 - [ ] 人工審核 cons-018、cons-019（爭議保育題，需兩位不同審核者確認平衡）；找到第二位審核者前維持 draft，暫不公開
+- [ ] 第二位審核者：cons-001、cons-005、cons-009 同樣需要雙審而維持 draft（見審核指南），是 M5「全部 MVP 內容 reviewed」的主要卡點
 
 ## 更新通知（ADR-0024）
 - [x] 第 1 項：`published` 欄位、`npm run review` 自動填入、`/updates/` 頁、Atom 訂閱源、頁尾與 `<head>` 連結、sitemap、產物檢查、單元與 e2e 測試
 - [x] ADR-0024 接受（Decision Owner：@Wang-Yi-Zhang）
-- [ ] 人工確認 `updates.yaml` 第一則說明的文字
+- [x] 人工確認 `updates.yaml` 第一則說明的文字（2026-09-28，@Wang-Yi-Zhang，文字不改）
 - [ ] 第 2、3 項（本機「新」標記、`/me/` 提示）：依 ADR-0024 Review Point 再評估
 
 ## 修訂揭露（ADR-0025）
 - [x] ADR-0025 接受（Decision Owner：@Wang-Yi-Zhang）
 - [x] 更新說明加入 `about`、`impact`，內容頁顯示修訂日期與紀錄、正解修正提示；匯入保留撤下內容紀錄
 - [x] 起草第一批修訂說明：cons-013、不當訴諸權威（AI 起草）
-- [ ] 內容審核者確認第一批修訂說明的分級與文字
+- [x] 內容審核者確認第一批修訂說明的分級與文字（2026-09-28，@Wang-Yi-Zhang，兩則皆不改）
 
 ## 持續
-### 首次貢獻試行（ADR-0026，提議）
+### 首次貢獻試行（ADR-0026，提議；Decision Owner：@Wang-Yi-Zhang）
 - [x] 準備三種貢獻入口、四張小任務卡與接力範例（文件草案，見 [任務卡](../review/first-contribution-tasks.md)）
-- [ ] 人類承接 Decision Owner，檢閱 [ADR-0026](../adr/0026-first-contribution-pilot.md) 並決定試行安排
+- [x] 人類承接 Decision Owner（2026-09-28，@Wang-Yi-Zhang）
+- [ ] Decision Owner 檢閱 [ADR-0026](../adr/0026-first-contribution-pilot.md) 並決定試行安排（目前維持提議）
 - [ ] 至少一位自願參與者完成一次 [真人試走](../review/first-contribution-walkthrough.md)，記錄卡點與接力成本，再決定是否擴大招募
+
+### 閱讀筆記試行（ADR-0027）
+- [x] ADR-0027 接受（2026-09-28，Decision Owner：@Wang-Yi-Zhang）
+- [ ] 依 [評估文件](../review/reading-notes-assessment.md) 起草 P3、P5 兩題提案（draft，走 [情境協作流程](../review/scenario-contributions.md)）
+- [ ] P3、P5 來源核對、內容審閱與至少一位自願試讀者試讀，再依 Review Point 決定擴充、修訂或停止
 
 ### 其他持續事項
 - [x] 非暴力溝通、主觀意義與客觀意義：3 張 concept 卡及 3 條名詞 draft（語言／溝通角度，見 12 §6）

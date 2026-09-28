@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：錯字勘誤與維護者確認事項
+- **目標與範圍**：修正 cons-004 簡體字，並記錄 Decision Owner 在對話中做出的確認與決定；只改內容錯字與文件。
+- **分支**：`docs/maintainer-confirmations`，自 `origin/main`（`c57ae17`，含 PR #58）建立。
+- **已完成**：cons-004「僅凭」改為「僅憑」，依 ADR-0025 屬細微修改，只改 `updated`、不寫修訂說明。依 @Wang-Yi-Zhang 的決定：`updates.yaml` 第一則與第一批兩則修訂說明確認不改；承接 ADR-0026 Decision Owner（維持提議）；接受 ADR-0027 並將試行列入里程碑。里程碑補列 cons-001、005、009 缺第二位審核者；手機檢查表補上 VoiceOver 全部朗讀的實測。
+- **驗證**：見 PR 說明。
+- **待人工處理**：org 層級「Require two-factor authentication」仍為關閉（API 確認），成員只有一人且已開 2FA，可由管理員在 org 設定開啟；第二位 Owner 需等新成員。VoiceOver 需確認名詞文字是否被略過。
+- **下一步**：確認 VoiceOver 情形後決定修正；ADR-0027 試作 P3、P5。
+
 ## 2026-09-28：Lighthouse、手機實測與網站名稱連結
 - **目標與範圍**：M5 的 Lighthouse 與手機實測；修正 Lighthouse 指出的網站名稱連結無障礙名稱問題。
 - **分支**：`fix/wordmark-accessible-name`，自 `origin/main`（`4eaa7c7`）建立。
