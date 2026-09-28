@@ -39,7 +39,7 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 - [ ] 至少 2 位 Owner
 - [x] Pages：Source 設為 GitHub Actions；Enforce HTTPS
 - [x] Secret scanning＋push protection、Dependabot alerts＋security updates
-- [x] `main` branch ruleset：需 PR、1 位 CODEOWNERS 核准、CI 通過、禁止 force push 與刪除（單人維護期間 Organization admin 可 bypass，僅限 PR）
+- [x] `main` branch ruleset：需 PR、1 位 CODEOWNERS 核准、CI 必要檢查 `check`、`e2e`、`docs` 通過（純文件 PR 略過的檢查視為通過，ADR-0028）、禁止 force push 與刪除（單人維護期間 Organization admin 可 bypass，僅限 PR）
 - [x] Actions：Workflow permissions 預設 read-only；禁止 Actions 建立／核准 PR
 - [x] Private vulnerability reporting 開啟（配合 SECURITY.md）
 

@@ -26,7 +26,7 @@
 ## 已知風險
 - 日後有程式開始讀取 `docs/` 或其他根目錄 Markdown 時，純文件判斷會漏跑測試 → 新增這類讀取時必須同步修改 `changes` 規則（Review Point 檢查）。
 - 純文件 PR 不檢查外部網址 → 由既有每週 `source-links.yml` 與人工審閱補足。
-- 目前 `e2e` 與 `docs` 不是必要檢查，失敗也不會阻擋合併 → 建議管理員將 `e2e`、`docs` 加入 ruleset 必要檢查（需在 GitHub 設定中操作，AI 無權限）。
+- 決策當時 `e2e` 與 `docs` 不是必要檢查，失敗也不會阻擋合併 → 已由管理員於 2026-09-28 將 `e2e`、`docs` 加入 ruleset 必要檢查（見文末實施紀錄）。
 
 ## 考慮過的選項（含不同意見）
 - `paths-ignore`：最簡單，但必要檢查會停在等待，純文件 PR 無法合併。
@@ -35,3 +35,8 @@
 
 ## 後果
 純文件 PR 只需幾十秒的輕量檢查；程式與內容 PR 行為不變。新增 `check:docs` 指令與對應單元測試。
+
+## 實施紀錄（2026-09-28）
+- 程式 PR #55（改 `.github/`）：`changes`、`docs`、`check`、`e2e` 四項皆執行並通過。
+- 純文件 PR #56：`changes`、`docs` 通過，`check`、`e2e` 顯示為略過且可合併；合併後 Deploy 未觸發。
+- ruleset `protect-main` 必要檢查改為 `check`、`e2e`、`docs`（來源 GitHub Actions，經 GitHub API 確認）；`changes` 不列入，因其失敗時 `check`、`e2e` 會照跑完整檢查。

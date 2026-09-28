@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：ADR-0028 實施確認與必要檢查
+- **目標與範圍**：記錄 ADR-0028 在 GitHub 上的實際驗證結果，以及 ruleset 必要檢查的調整；只改文件。
+- **分支**：`docs/adr-0028-required-checks`，自 `origin/main`（`1595ed2`，含 PR #56）建立。
+- **已完成**：管理員（@Wang-Yi-Zhang）在 ruleset `protect-main` 將必要檢查改為 `check`、`e2e`、`docs`，AI 以 GitHub API 確認；ADR-0028 補實施紀錄並更新已知風險；SDD 07 的 ruleset 描述同步列出三項必要檢查。
+- **已驗證**：純文件 PR #56 的 `check`、`e2e` 為略過且可合併，合併後 Deploy 未觸發；本機跑 `git diff --check`、`npm run check:docs`。
+- **待確認**：本 PR 是新 ruleset 下第一個純文件 PR，應確認略過的 `e2e` 被視為通過、PR 可合併。
+- **下一步**：依 ADR-0028 Review Point，約 2026-10-28 檢查誤判情形。
+
 ## 2026-09-28：接受 ADR-0028 並以純文件 PR 驗證
 - **目標與範圍**：PR #55 合併後，Decision Owner 接受 ADR-0028；本 PR 只改文件，同時作為純文件 PR 的第一次實際驗證。
 - **分支**：`docs/accept-adr-0028`，自 `origin/main`（`f152a1d`，含 PR #55）建立。
