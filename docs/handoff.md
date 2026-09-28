@@ -1,5 +1,16 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：發布「善意詮釋與鋼人論證」概念卡
+- **目標與範圍**：Decision Owner 確認概念卡 `charity-and-steelman`，以單人審核先發布、開放社會檢視；本 PR 只含標記與紀錄，未改卡片文字。
+- **分支**：`content/review-charity-card`，自 `origin/main`（`fdf344f`，含 PR #65）建立。
+- **已完成**：@Wang-Yi-Zhang 自行執行 `npm run review`，標記為 reviewed（`published: 2026-09-28`）；AI 只跑 `--dry-run` 預覽、檢查與紀錄。更新 11 里程碑。
+- **驗證**：lint、`npm run check`（圖鑑卡已審 35／37）、241 個單元測試、正式 build（76 頁，含本卡）、91 個 e2e 全數通過。
+- **待人工決定**：
+  - 本次發布與 [SDD 12](sdd/12-knowledge-scope.md) §5 第 5 條「心理學卡需具心理學背景審核者，之前維持 draft」不一致；非暴力溝通卡（2026-09-27）有同樣落差，12 §6 仍寫待審。需決定是否以 ADR 修訂規則並補記兩張卡的例外。
+  - Eyal 等（2018）的支持說明仍保留「適用範圍待人工核對原文」，會顯示於網站。
+  - 心理學背景審核者覆核：可開 Issue 邀請社群檢視。
+- **下一步**：處理上述規則落差；4 題試行情境題待審。
+
 ## 2026-09-28：接受 ADR-0029
 - **目標與範圍**：PR #64 合併後，Decision Owner 接受 ADR-0029；本 PR 只改文件。
 - **分支**：`docs/accept-adr-0029`，自 `origin/main`（`32bacc7`，含 PR #64）建立。

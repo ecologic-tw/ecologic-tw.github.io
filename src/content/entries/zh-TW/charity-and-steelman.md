@@ -14,17 +14,24 @@ quickCheck:
   explanation: '第二個重述抓住阿明在意的事，並用提問確認。第一個是稻草人，把擔心換成「不想參加」；第三個直接同意到更極端的結論，看起來體貼，其實也沒有回應阿明真正說的話。'
 related: [ straw-man, fallacy-fallacy, nonviolent-communication ]
 terms: [ principle-of-charity, argument, premise ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W. W. Norton."
+  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W.
+      W. Norton."
     supports:
       - "Rapoport 規則：先把對方的立場重述到對方滿意，列出同意之處與從對方學到的事，再提出批評。"
-  - title: "Eyal, T., Steffel, M., & Epley, N. (2018). Perspective mistaking: Accurately understanding the mind of another requires getting perspective, not taking perspective. Journal of Personality and Social Psychology, 114(4), 547–571."
+  - title: "Eyal, T., Steffel, M., & Epley, N. (2018). Perspective mistaking:
+      Accurately understanding the mind of another requires getting perspective,
+      not taking perspective. Journal of Personality and Social Psychology,
+      114(4), 547–571."
     supports:
-      - "在其實驗情境中，想像對方觀點（perspective-taking）未提高理解準確度，直接詢問對方（perspective-getting）較能提高；適用範圍待人工核對原文。"
+      - "在其實驗情境中，想像對方觀點（perspective-taking）未提高理解準確度，直接詢問對方（perspective-getting）\
+        較能提高；適用範圍待人工核對原文。"
 updated: 2026-09-28
 aiAssisted: true
+published: 2026-09-28
 ---
 
 ## 說明
