@@ -1,5 +1,16 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：心理學內容開放檢視（ADR-0030）
+- **目標與範圍**：Decision Owner 要求寫修訂規則的 ADR，並開放後見之明偏誤、框架效應，寫進更新紀錄。
+- **分支**：`content/psychology-open-review`，自 `origin/main`（`bb04035`，含 PR #67）建立。
+- **已完成**：
+  - ADR-0030（提議）：修訂 12 §5 第 5 條，暫無心理學背景審核者時可由 Decision Owner 審核後開放檢視；`contested` 偏誤卡與「需心理學審核者後」的主題不適用。補記非暴力溝通、善意詮釋卡，修正 12 §6 的過時說明。
+  - @Wang-Yi-Zhang 自行執行 `npm run review`，標記 `hindsight-bias`、`framing-effect`；AI 只跑 `--dry-run`。
+  - 更新紀錄新增 `psychology-open-review` 公告；11 里程碑新增待覆核清單與 Review Point。
+- **已知落差**：`npm run review` 以 UTC 取日期，在臺灣 08:00 前執行會記成前一天；兩張卡的 `published` 因此是 2026-09-28，里程碑依此記錄。修正腳本另開 PR。
+- **待人工決定**：接受 ADR-0030；確認本條屬流程變更、不需 14 天公開徵詢。兩張偏誤卡的證據強度仍標示為 AI 暫定。
+- **下一步**：邀請具心理學背景的審核者覆核；約 2026-12-29 依 Review Point 檢視。
+
 ## 2026-09-29：修正粗體沒有生效
 - **目標與範圍**：使用者回報 `charity-and-steelman` 的粗體顯示成 `**`。原因是 CommonMark 規定：結尾的 `**` 前面是標點、後面緊接文字時，不算粗體結尾（例如 `**「理解就是同意。」**善意`）。Sätteri 沒有中日韓相關選項，因此改內容並加檢查，不改 Markdown 處理器。
 - **分支**：`fix/cjk-bold-markers`，自 `origin/main`（`4ebc4e0`，含 PR #66）建立。
