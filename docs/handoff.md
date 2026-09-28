@@ -1,5 +1,15 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：ADR-0027 試行題 P3、P5 提案
+- **目標與範圍**：依已接受的 ADR-0027，以情境協作流程起草評估文件中的 P3、P5；只建立提案，不轉入正式內容、不影響網站與對照題比例。
+- **分支**：`content/reading-notes-p3-p5`，自 `origin/main`（`861bb0c`，含 PR #59）建立。
+- **已完成**：
+  - P3 `two-slot-booking`（日常對照題，`answer: none`）：管理室只開放兩個時段、上午已被登記，推出「要借活動中心的話」只剩下午；結論刻意限縮，避免變成假兩難。解說對照「所以讀書會只能下午辦」會變成假兩難。
+  - P5 `summer-egret-count`（保育，草率概括）：三次調查都在七月週六早上，推論全年都相同。刻意不寫生態事實（不主張鷺鷥數量會隨季節變化），只談樣本涵蓋；由管理單位一方犯錯。解說區分訴諸無知。
+- **驗證**：`npm run scenario -- check` 兩份皆只剩 nextSteps；以暫存副本（nextSteps 清空）執行 `promote --dry-run`，兩份皆可轉入（將分配 daily-020、cons-020），副本已刪除。另跑 `npm run check`、`npm run check:docs`、`git diff --check`。
+- **待人工**：正解與干擾選項是否有合理的第二解；P3 來源 OpenStax 5.3 的支持範圍核對；P5 缺野外調查時段／季節涵蓋的可靠來源（AAPOR 只支持抽樣的一般概念）；至少一位試讀者試讀；轉入前確認日常對照題比例（目前 4／19，加入後 5／20）與保育題立場分布。
+- **下一步**：人工核對與試讀，完成後清空 nextSteps，執行 `npm run scenario -- promote`，再依 ADR-0027 Review Point 決定是否擴充。
+
 ## 2026-09-28：錯字勘誤與維護者確認事項
 - **目標與範圍**：修正 cons-004 簡體字，並記錄 Decision Owner 在對話中做出的確認與決定；只改內容錯字與文件。
 - **分支**：`docs/maintainer-confirmations`，自 `origin/main`（`c57ae17`，含 PR #58）建立。
