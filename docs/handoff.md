@@ -1,5 +1,17 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：發布 daily-020、cons-020
+- **目標與範圍**：Decision Owner 審核兩題沒有爭議標記的試行題（ADR-0027、ADR-0029）。
+- **分支**：`content/publish-daily-020-cons-020`，自 `origin/main`（`cbf699c`）建立。
+- **已完成**：
+  - @Wang-Yi-Zhang 自行執行 `npm run review` 標記；AI 未標記。
+  - 腳本以 UTC 記成 2026-09-28，AI 更正 `published` 為 2026-09-29（修正腳本見 PR #70）。
+  - 更新 11 里程碑。
+- **比例**：日常對照題 5／20＝25%；保育題 15 題中由保育方犯錯 6 題（40%），立場為 AI 逐題判讀，cons-020 管理處承辦人歸為非保育方。
+- **驗證**：見 PR。
+- **待人工確認**：OpenStax 5.3、IWC 指引 p.4、p.14 原文是否已核對（里程碑相關項目維持未勾）；兩張偏誤卡的 `published` 同樣受 UTC 影響，是否更正由 Decision Owner 決定。
+- **下一步**：招募試讀者（Issue #62）；cons-018、cons-019 待第二位審核者。
+
 ## 2026-09-29：心理學內容開放檢視（ADR-0030）
 - **目標與範圍**：Decision Owner 要求寫修訂規則的 ADR，並開放後見之明偏誤、框架效應，寫進更新紀錄。
 - **分支**：`content/psychology-open-review`，自 `origin/main`（`bb04035`，含 PR #67）建立。
