@@ -1,8 +1,8 @@
 # ADR-0029 「換個位置想」段落與善意詮釋概念卡
 
 - 日期：2026-09-28
-- 狀態：提議
-- Decision Owner：人類維護者
+- 狀態：接受（2026-09-28，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：4 題試行內容完成人工審核並有至少一位試讀者回饋後，決定是否以 `npm run scenario -- edit` 分批補進已審題目
 
 ## 背景
