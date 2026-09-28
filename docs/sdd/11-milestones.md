@@ -46,7 +46,9 @@
 
 ## M5 審核與上線
 - [ ] 全部 MVP 內容經人工審核改為 `reviewed`（分批方式與指令見 `docs/review/review-guide.md`；`npm run check` 會顯示審核進度）
-- [ ] Lighthouse：Performance ≥ 90、Accessibility ≥ 95；手機實測
+- [x] Lighthouse：Performance ≥ 90、Accessibility ≥ 95（2026-09-28 正式網址、無痕、手機模擬：`/`、`/guide/`、`/me/` 皆為 100／100；情境題頁未量）
+- [x] 手機實測（2026-09-28 iPhone／Safari：點擊、輸入、匯入／匯出／清除、無痕正常；紀錄與檢查表見 [手機實測](../review/mobile-test-checklist.md)）
+- [ ] VoiceOver 讀到內文名詞按鈕時朗讀中斷：待確認中斷情形再決定是否修正（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
 - [ ] Org 設定清單（07）全數完成
 - **驗收**：正式網址上線；README 與 about 頁資訊一致
 

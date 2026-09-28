@@ -1,5 +1,14 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：Lighthouse、手機實測與網站名稱連結
+- **目標與範圍**：M5 的 Lighthouse 與手機實測；修正 Lighthouse 指出的網站名稱連結無障礙名稱問題。
+- **分支**：`fix/wordmark-accessible-name`，自 `origin/main`（`4eaa7c7`）建立。
+- **已完成**：`SiteHeader.astro` 移除 aria-label，改以可見文字加隱藏的「，回首頁」組成名稱（WCAG 2.5.3，axe `label-content-name-mismatch`）。里程碑記錄 Lighthouse 與手機實測結果；新增 [手機實測檢查表與紀錄](review/mobile-test-checklist.md)。
+- **驗證**：lint、check、238 項單元測試、build、87 項 e2e 通過；以 axe 單獨檢查 `/`、`/about/`、`/me/` 無違規。Lighthouse 與手機實測由使用者在正式網址執行，AI 解析報告：無痕模式下 `/`、`/guide/`、`/me/` 效能與無障礙皆 100；網站 JS 約 10–12 KB，字型 480–850 KB 為最大下載量。
+- **待確認**：VoiceOver 在名詞按鈕處朗讀中斷，AI 無法重現，需使用者確認中斷情形（評估見檢查表）。尚未測 Android、字級最大、慢速網路、深色、橫向。
+- **另外發現**：`cons-004` 解說有簡體字「凭」（應為「憑」），全站只有這一處；屬已審內容，未在本 PR 修改，待決定是否另開勘誤。
+- **下一步**：確認 VoiceOver 中斷情形；M5 剩餘項目為內容審核（雙審題缺第二審核者）與 Org 設定（2FA、第二位 Owner）。
+
 ## 2026-09-28：ADR-0028 實施確認與必要檢查
 - **目標與範圍**：記錄 ADR-0028 在 GitHub 上的實際驗證結果，以及 ruleset 必要檢查的調整；只改文件。
 - **分支**：`docs/adr-0028-required-checks`，自 `origin/main`（`1595ed2`，含 PR #56）建立。
