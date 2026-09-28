@@ -6,6 +6,7 @@ export const INDEX_PATHS = [
   '/terms/',
   '/practice/daily/',
   '/practice/conservation/',
+  '/challenge/',
   '/updates/',
 ];
 

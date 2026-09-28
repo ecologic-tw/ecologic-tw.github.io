@@ -1,6 +1,6 @@
 ---
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
-import { quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
+import { challenge, quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
 import { getPublishedScenarios, getUpdateNotes, type Theme } from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
@@ -26,6 +26,7 @@ const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).an
     <>
       <div class="actions">
         <RandomScenarioButton scenarios={scenarios} />
+        <a href="/challenge/">{challenge.entry}</a>
       </div>
       <ol class="scenarios">
         {scenarios.map((s) => (
@@ -65,6 +66,10 @@ const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).an
   }
 
   .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
     margin-top: 1.5rem;
   }
 

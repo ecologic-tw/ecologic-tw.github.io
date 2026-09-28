@@ -143,7 +143,8 @@
 - [ ] 1 綜合挑戰（每次 5 題、算進點亮圖鑑、第一版只看單次結果）
   - [x] ADR-0032 起草（提議）：結果只顯示答對幾題與逐題回顧（Decision Owner 2026-09-29 修正）
   - [x] ADR-0032 接受（2026-09-29，Decision Owner：@Wang-Yi-Zhang；保留逐題回顧，同意使用 `sessionStorage`）
-  - [ ] 實作：抽題純函式與單元測試、`/challenge/` 頁面、e2e 與 axe；同步 04、07
+  - [x] 實作：抽題純函式 `src/lib/challenge.ts` 與單元測試、`/challenge/` 頁面、首頁與題目列表入口、e2e 與 axe；同步 04、07、CONTEXT 與關於頁隱私說明
+  - [ ] 至少一位試讀者走完兩輪後，依 ADR-0032 Review Point 檢視
 - [ ] 2 討論引導卡（可列印）與概念卡「分歧的種類」
 - [ ] 3 爭點地圖（`classify` 題型）
 - [ ] 4 多方觀點情境（`cases` 集合）

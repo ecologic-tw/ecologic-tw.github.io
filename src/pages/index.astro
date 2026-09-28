@@ -2,7 +2,7 @@
 import HabitatIcon from '../components/HabitatIcon.astro';
 import RandomScenarioButton from '../components/RandomScenarioButton.astro';
 import TrackLine from '../components/TrackLine.astro';
-import { themeIntro, themeLabel } from '../i18n/zh-TW.ts';
+import { challenge, themeIntro, themeLabel } from '../i18n/zh-TW.ts';
 import Base from '../layouts/Base.astro';
 import { getPublishedScenarios } from '../lib/content.ts';
 import { THEMES } from '../lib/content-schema.ts';
@@ -53,6 +53,7 @@ const steps = [
       </ul>
       <p class="random">
         <RandomScenarioButton scenarios={scenarios} />
+        <a href="/challenge/">{challenge.entry}</a>
       </p>
     </section>
   </div>
@@ -152,6 +153,10 @@ const steps = [
   }
 
   .random {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
     margin-top: 1.5rem;
   }
 

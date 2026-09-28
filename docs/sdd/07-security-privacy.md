@@ -29,6 +29,7 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 ## 隱私
 - 無 cookie、無分析、無第三方請求；可宣告「本站不蒐集任何個人資料」。
 - localStorage 只存 `ecologic:v1`（進度與模式），`/me/` 提供一鍵清除。
+- sessionStorage 只存 `ecologic:challenge`：進行中的綜合挑戰的題目 id、已選答案與題號（ADR-0032），分頁關閉即清除；讀回時逐欄驗證，不符就捨棄。
 - 改寫練習內容**不儲存**（只存完成次數）。
 - `/about/` 隱私段落以白話說明以上事項。
 - 更新通知只用靜態 Atom 訂閱源：由使用者的閱讀器自行抓取，本站不知道誰訂閱；不做推播、不蒐集 Email（ADR-0024）。建置產物檢查確認訂閱源不含未審內容。

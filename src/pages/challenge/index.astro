@@ -1,0 +1,397 @@
+---
+// 綜合挑戰（ADR-0032）：所有可抽的單選判讀題都在建置時產生、預設隱藏；
+// 前端抽 5 題依序顯示，全部送出後才揭露結果與逐題回顧。沒有 JavaScript 時只顯示說明。
+import Base from '../../layouts/Base.astro';
+import { biasNote, challenge, quiz } from '../../i18n/zh-TW.ts';
+import { getPublishedEntries, getPublishedScenarios } from '../../lib/content.ts';
+import type { ChallengeItem } from '../../lib/challenge.ts';
+import { NO_PROBLEM, buildOptions } from '../../lib/quiz.ts';
+import { SECTIONS, renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
+import { loadTermInfo } from '../../lib/terms-source.ts';
+
+const entries = new Map((await getPublishedEntries()).map((e) => [e.id, e]));
+const titleOf = (id: string) =>
+  id === NO_PROBLEM ? quiz.noProblem : (entries.get(id)?.data.title ?? id);
+const terms = loadTermInfo();
+
+const questions = (await getPublishedScenarios()).flatMap((scenario) => {
+  const { data } = scenario;
+  if (data.format !== 'judge') return [];
+  const sections = splitSections(scenario.body ?? '');
+  const html = (key: keyof typeof SECTIONS) => {
+    const md = sections.get(SECTIONS[key]);
+    // 同一頁有多題，名詞說明框的 id 以題號區分
+    return md ? renderMarkdown(md, terms, `${scenario.id}-${key}-`) : '';
+  };
+  const answerEntry = entries.get(data.answer);
+  return [
+    {
+      id: scenario.id,
+      title: data.title,
+      theme: data.theme,
+      advanced: data.difficulty === 'advanced',
+      control: data.isControl,
+      answer: data.answer,
+      options: buildOptions(data.answer, data.distractors).map((id) => ({
+        id,
+        title: titleOf(id),
+      })),
+      answerEntry,
+      showBiasNote: answerEntry?.data.kind === 'bias',
+      scenarioHtml: html('scenario'),
+      explanationHtml: html('explanation'),
+      perspectiveHtml: html('perspective'),
+    },
+  ];
+});
+const items: ChallengeItem[] = questions.map(({ id, theme, advanced, control, answer }) => ({
+  id,
+  theme,
+  advanced,
+  control,
+  answer,
+}));
+---
+
+<Base title={challenge.title} description={challenge.description} wide>
+  <div class="challenge" data-challenge data-items={JSON.stringify(items)}>
+    <header class="intro">
+      <h1>{challenge.title}</h1>
+      {challenge.intro.map((line) => (
+        <p>{line}</p>
+      ))}
+      <p class="note">{challenge.overwriteNote}</p>
+      <noscript>
+        <p class="notice" data-challenge-nojs>
+          {challenge.noScript}
+          <a href="/practice/daily/">日常生活</a>、
+          <a href="/practice/conservation/">野生生物保育</a>
+        </p>
+      </noscript>
+      <p class="notice" data-challenge-unavailable hidden>
+        {challenge.unavailable}
+        <a href="/practice/daily/">日常生活</a>、<a href="/practice/conservation/">野生生物保育</a>
+      </p>
+      <p class="start">
+        <button type="button" data-challenge-start hidden>
+          {challenge.start}
+        </button>
+      </p>
+    </header>
+
+    <form class="run" data-challenge-form hidden novalidate>
+      <p class="progress" data-challenge-progress aria-live="polite"></p>
+      {questions.map((q) => (
+        <section class="question" data-question={q.id} aria-labelledby={`${q.id}-title`} hidden>
+          <h2 id={`${q.id}-title`} tabindex="-1">
+            {q.title}
+          </h2>
+          <div class="situation prose" set:html={q.scenarioHtml} />
+          <fieldset>
+            <legend>{quiz.question}</legend>
+            <ul data-question-options>
+              {q.options.map((o) => (
+                <li data-option-id={o.id}>
+                  <label>
+                    <input type="radio" name={`choice-${q.id}`} value={o.id} />
+                    <span data-option-label>{o.title}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        </section>
+      ))}
+      <p class="error" data-challenge-error hidden>
+        {challenge.chooseFirst}
+      </p>
+      <p class="controls">
+        <button type="button" class="secondary" data-challenge-previous>
+          {challenge.previous}
+        </button>
+        <button type="button" data-challenge-next>
+          {challenge.next}
+        </button>
+        <button type="submit" data-challenge-submit hidden>
+          {challenge.submit}
+        </button>
+      </p>
+    </form>
+
+    <section class="result" data-challenge-result aria-labelledby="result-title" hidden>
+      <h2 id="result-title" tabindex="-1">
+        {challenge.resultTitle}
+      </h2>
+      <p class="count" data-challenge-count></p>
+      <p class="note" data-challenge-includes-answered hidden>
+        {challenge.includesAnswered}
+      </p>
+
+      <h2 class="review-title">{challenge.reviewTitle}</h2>
+      <ol class="review" data-challenge-review>
+        {questions.map((q) => (
+          <li data-review={q.id} hidden>
+            <h3>
+              <a href={`/scenario/${q.id}/`}>{q.title}</a>
+            </h3>
+            <p class="verdict">
+              <span class="verdict-icon" data-review-icon aria-hidden="true"></span>
+              <span data-review-verdict></span>
+            </p>
+            <p class="choice">
+              {challenge.yourChoice}：<span data-review-choice></span>
+            </p>
+            <p class="answer">
+              {challenge.answer}：
+              {q.answerEntry ? (
+                <a href={`/guide/${q.answerEntry.id}/`}>{q.answerEntry.data.title}</a>
+              ) : (
+                <strong>{quiz.noProblem}</strong>
+              )}
+            </p>
+            {q.control && <p class="note">{quiz.controlNote}</p>}
+            {q.showBiasNote && <p class="note">{biasNote}</p>}
+            <div class="prose" set:html={q.explanationHtml} />
+            {q.perspectiveHtml && (
+              <section class="perspective" aria-labelledby={`${q.id}-perspective`}>
+                <h4 id={`${q.id}-perspective`}>{quiz.perspective}</h4>
+                <p class="perspective-hint">{quiz.perspectiveHint}</p>
+                <div class="prose" set:html={q.perspectiveHtml} />
+              </section>
+            )}
+            <p class="more">
+              <a href={`/scenario/${q.id}/`}>{challenge.openScenario}</a>
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <p class="controls">
+        <button type="button" data-challenge-again>
+          {challenge.again}
+        </button>
+        <a href="/practice/daily/">{quiz.backToList}（日常生活）</a>
+        <a href="/practice/conservation/">{quiz.backToList}（野生生物保育）</a>
+      </p>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/challenge.ts';
+</script>
+
+<style>
+  .intro {
+    margin-top: 3rem;
+    max-width: var(--measure);
+  }
+
+  h1 {
+    font-size: var(--step-3);
+  }
+
+  .intro p {
+    margin-top: 0.75rem;
+  }
+
+  .note {
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .notice {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  .notice[hidden],
+  .start button[hidden],
+  .run[hidden],
+  .question[hidden],
+  .result[hidden],
+  .review li[hidden],
+  .controls button[hidden] {
+    display: none;
+  }
+
+  button {
+    font: inherit;
+    color: var(--paper);
+    background: var(--ink);
+    border: 0;
+    border-radius: 3px;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+  }
+
+  button.secondary {
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--soil);
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .run,
+  .result {
+    margin-top: 2.5rem;
+    max-width: var(--measure);
+  }
+
+  .progress {
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .question h2 {
+    margin-top: 0.4rem;
+    font-size: var(--step-2);
+  }
+
+  /* 情境：與單題頁相同，像田野筆記裡抄下的一段對話 */
+  .situation {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--paper-deep);
+    border-radius: 3px;
+  }
+
+  .situation :global(blockquote) {
+    border-left-color: var(--soil);
+  }
+
+  fieldset {
+    margin: 2rem 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    font-family: var(--font-hand);
+    font-size: var(--step-2);
+    margin-bottom: 0.75rem;
+  }
+
+  fieldset ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  fieldset label:has(input:checked) {
+    border-color: var(--ink);
+    box-shadow: inset 3px 0 0 var(--ink);
+  }
+
+  fieldset input {
+    accent-color: var(--ink);
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+  }
+
+  .error {
+    margin-top: 0.75rem;
+    color: var(--soil);
+  }
+
+  .error[hidden] {
+    display: none;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .count {
+    margin-top: 0.5rem;
+    font-family: var(--font-hand);
+    font-size: var(--step-2);
+  }
+
+  .review-title {
+    margin-top: 2.5rem;
+    font-size: var(--step-2);
+  }
+
+  .review {
+    margin: 1rem 0 0;
+    padding-left: 1.5em;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .review h3 {
+    font-size: var(--step-1);
+  }
+
+  .verdict {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    margin-top: 0.5rem;
+    font-family: var(--font-hand);
+    font-size: var(--step-1);
+  }
+
+  .verdict-icon {
+    color: var(--soil);
+  }
+
+  .is-correct .verdict-icon {
+    color: var(--moss);
+  }
+
+  .choice,
+  .answer {
+    margin-top: 0.4rem;
+  }
+
+  .review .prose {
+    margin-top: 0.75rem;
+  }
+
+  /* 換個位置想（ADR-0029）：與單題頁相同的樣式 */
+  .perspective {
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--moss);
+    background: var(--paper-deep);
+  }
+
+  .perspective h4 {
+    font-size: var(--step-1);
+  }
+
+  .perspective-hint {
+    margin-top: 0.25rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .more {
+    margin-top: 0.75rem;
+    font-size: var(--step--1);
+  }
+</style>
