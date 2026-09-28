@@ -7,7 +7,7 @@
   - P5 `sources` 加入 Wetlands International (2018) IWC 水鳥監測方法指引。AI 以 PyMuPDF 讀取 PDF 文字：§6（p.14）指出只做一月普查通常不足以監測，每月計數才能了解各季節的濕地利用；p.4 適用物種含鷺科。備選來源 Dickie, Smith & Gilchrist (2014) 列在 nextSteps，未列入 sources。
   - P3、P5 移除「確認正解」待辦（@Wang-Yi-Zhang 於對話中確認）。
   - 里程碑：正解確認勾選；Lighthouse 補上 `/scenario/cons-002/`（100／100，名稱連結提醒已消失，確認 PR #58 已部署）。
-  - 招募 Issue：使用者要求發布，內容見 Issue 本文。
+  - 招募 Issue #62（使用者要求發布）：試讀者、查證者、第二位保育內容審核者，並提及第二位管理員與外部觀察員；載明不承諾回覆時限、公開、署名自願、不比較。
 - **驗證**：`npm run scenario -- check`、`npm run check`、`npm run check:docs`、`git diff --check`。
 - **待人工**：核對 IWC 指引原文與 supports 範圍；P3 的 OpenStax 來源核對；兩題試讀。
 - **下一步**：依招募 Issue 的回應安排試讀與第二審核；試讀完成後轉入正式草稿。
