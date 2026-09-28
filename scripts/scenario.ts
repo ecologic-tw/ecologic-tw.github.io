@@ -7,10 +7,11 @@ import { parse, parseDocument, stringify } from 'yaml';
 import { loadContent } from './load-content.ts';
 import { SCENARIO_FORMATS, scenarioSchema } from '../src/lib/content-schema.ts';
 import { checkContent } from '../src/lib/content-checks.ts';
+import { localDate } from '../src/lib/dates.ts';
 import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
 
 const hash = (text: string) => createHash('sha256').update(text).digest('hex');
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => localDate();
 function proposalPath(root: string, slug: string): string {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('提案名稱請用小寫英數及連字號');
   return join(root, 'contributions/scenarios', `${slug}.md`);

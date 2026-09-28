@@ -12,6 +12,12 @@
 - **人工確認**：Decision Owner 已核對 OpenStax 5.3、IWC 指引 p.4、p.14 原文（里程碑已勾）。兩張偏誤卡的 `published`（2026-09-28）同樣受 UTC 影響，Decision Owner 決定不改。
 - **下一步**：招募試讀者（Issue #62）；cons-018、cons-019 待第二位審核者。
 
+## 2026-09-29：日期改用本地時區
+- **目標與範圍**：`npm run review` 與 `npm run scenario` 以 `toISOString()` 取 UTC 日期，在臺灣 08:00 前執行會記成前一天。PR #68 的兩張偏誤卡和 daily-020、cons-020 的 `published` 都因此記成 2026-09-28。
+- **分支**：`fix/local-review-date`，自 `origin/main`（`cbf699c`）建立。
+- **已完成**：新增 `src/lib/dates.ts` 的 `localDate()`，改用於上述兩個腳本，以及 `/me/` 匯出進度的檔名。已發布內容的日期不在本 PR 修改。
+- **驗證**：lint、`npm run check`、245 個單元測試（新增 2 個）、正式 build、91 個 e2e 通過；00:4x 執行時 `localDate()` 為 2026-09-29，UTC 為 2026-09-28。
+
 ## 2026-09-29：接受 ADR-0030
 - **目標與範圍**：PR #68 合併後，Decision Owner 接受 ADR-0030；本 PR 只改文件。
 - **分支**：`docs/accept-adr-0030`，自 `origin/main`（`cbf699c`，含 PR #68）建立。
