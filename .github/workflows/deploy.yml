@@ -4,6 +4,12 @@ name: Deploy
 on:
   push:
     branches: [main]
+    # 純文件變更不影響網站，不重新部署（ADR-0028）；DESIGN.md 有測試比對色票，仍觸發
+    paths:
+      - '**'
+      - '!docs/**'
+      - '!*.md'
+      - 'DESIGN.md'
   workflow_dispatch:
 
 permissions:

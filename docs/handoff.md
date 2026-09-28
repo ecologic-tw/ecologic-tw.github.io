@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：純文件 PR 略過完整 CI（ADR-0028）
+- **目標與範圍**：純文件 PR 不再跑完整 check 與 e2e、合併後不重新部署；程式與內容 PR 行為不變。
+- **分支**：`ci/skip-docs-only`，自 `origin/main`（`4784e97`）建立，後 rebase 至 `30263dc`（含 PR #54）。
+- **已完成**：ADR-0028（提議）；`ci.yml` 新增 `changes`（shell 判斷，不用第三方 Action）與 `docs` job，`check`、`e2e` 以 fail-safe 條件略過；`deploy.yml` 以 `paths` 排除純文件；新增 `npm run check:docs`、`src/lib/doc-links.ts` 與單元測試；同步 07、AGENTS 常用指令。
+- **發現**：ruleset 目前只要求 `check`；`e2e` 失敗不會阻擋合併。建議管理員將 `e2e`、`docs` 加入必要檢查。
+- **驗證**：見 PR 說明；workflow 實際行為需在 GitHub 上以一個純文件 PR 與一個程式 PR 各驗證一次。
+- **下一步**：使用者推送並開 PR；合併後以純文件 PR 確認 `check` 顯示為略過且可合併。
+
 ## 2026-09-28：閱讀筆記評估補充候選
 - **目標與範圍**：依使用者要求，將先前討論中 PR #53 評估未涵蓋的想法補進 `docs/review/reading-notes-assessment.md`；不寫閱讀筆記範本段落，不改 ADR-0027 的試行順序。
 - **分支**：`docs/reading-notes-supplement`，自 `origin/main`（`4784e97`）建立。
