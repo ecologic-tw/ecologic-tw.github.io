@@ -161,7 +161,7 @@ export const entrySchema = z
 
 // 情境題題型（ADR-0022）：沒有 format 的既有題目視為 judge，不需遷移或重審。
 export const SCENARIO_FORMATS = ['judge', 'multi', 'validity-soundness', 'choice'] as const;
-export const CHOICE_TASKS = ['hidden-premise', 'form', 'counterexample'] as const;
+export const CHOICE_TASKS = ['hidden-premise', 'form', 'counterexample', 'steelman'] as const;
 export const VALIDITY_VERDICTS = ['valid', 'invalid'] as const;
 export const PREMISE_VERDICTS = ['credible', 'not-credible', 'uncertain'] as const;
 /** multi 題的選項總數（answers ∪ acceptable ∪ distractors） */

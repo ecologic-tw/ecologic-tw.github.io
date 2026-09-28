@@ -37,7 +37,7 @@ npm run scenario -- new lunch-menu --theme daily --title "營養午餐的菜單"
 |---|---|---|
 | `multi` | 多重判讀（多選） | `answers`、`acceptable`（可空）、`distractors`，合計 4–6 個圖鑑卡；`notes` 為每個選項寫一句解說 |
 | `validity-soundness` | 有效 × 健全 | `validity`（`valid`／`invalid`）、`premises`（`credible`／`not-credible`／`uncertain`），以及兩軸的 `notes` |
-| `choice` | 隱藏前提／形式辨識／反例選擇 | `task`、`prompt`、`choices`（3–4 個，恰好一個 `correct: true`，每個都有 `note`） |
+| `choice` | 隱藏前提／形式辨識／反例選擇／鋼人練習 | `task`（`hidden-premise`／`form`／`counterexample`／`steelman`）、`prompt`、`choices`（3–4 個，恰好一個 `correct: true`，每個都有 `note`） |
 
 這些題型固定為進階題、不能當對照題。`validity-soundness` 與 `choice` 的改寫練習（`betterPhrasing`、`checklist`）是選填，需要時自行加上。修改既有題目時沿用原題題型，不能用 `edit` 換題型。
 
