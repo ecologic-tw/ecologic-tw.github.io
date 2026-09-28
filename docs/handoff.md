@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：發布鋼人練習 3 題
+- **目標與範圍**：PR #72 合併後，Decision Owner 審核 daily-021、daily-022、cons-021。
+- **分支**：`content/review-steelman-practice`，自 `origin/main`（`d405b94`，含 PR #72）建立。
+- **已完成**：@Wang-Yi-Zhang 自行執行 `npm run review` 標記，日期為 2026-09-29（PR #70 修正後以本地時區記錄）；AI 未標記。更新 11 里程碑。
+- **比例**：日常對照題 5／22＝22.7%；保育對照題 3／16＝18.8%；保育題由保育方犯錯 6／16＝37.5%。
+- **發現**：另一個 session 在同一工作目錄 commit 的 `525cb00`（SDD 13 規劃），落在 `content/steelman-practice` 分支上，隨 PR #72 一起合併；PR #72 說明沒有提到。內容只有規劃文件，不影響網站。
+- **下一步**：至少一位試讀者試讀後，依 ADR-0031 Review Point 決定擴充、修訂或停止。
+
 ## 2026-09-29：鋼人練習題（ADR-0031）
 - **目標與範圍**：Decision Owner 要求撰寫 2–3 題鋼人論證練習草稿。沿用 `choice` 題型，新增 `steelman` 任務；不另開新題型。
 - **Decision Owner 決定（2026-09-29）**：接受 ADR-0031；cons-021 不屬爭議議題；Dennett（2013）原文已核對；daily-021 改為社區公共空間使用的題材（中庭打球）。
