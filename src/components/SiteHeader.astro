@@ -13,9 +13,10 @@ const path = Astro.url.pathname;
 ---
 
 <header class="site-header page page-wide">
-  <a class="wordmark" href="/" aria-label={`${t.siteName} ${t.siteNameEn}，回首頁`}>
+  <a class="wordmark" href="/">
     <span class="name">{t.siteName}</span>
     <span class="latin">{t.siteNameEn}</span>
+    <span class="visually-hidden">，回首頁</span>
   </a>
   <nav aria-label="主要">
     <ul>
