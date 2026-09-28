@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：接受 ADR-0028 並以純文件 PR 驗證
+- **目標與範圍**：PR #55 合併後，Decision Owner 接受 ADR-0028；本 PR 只改文件，同時作為純文件 PR 的第一次實際驗證。
+- **分支**：`docs/accept-adr-0028`，自 `origin/main`（`f152a1d`，含 PR #55）建立。
+- **已完成**：ADR-0028 狀態改為接受，Decision Owner 為 @Wang-Yi-Zhang（依其在對話中的指示）。
+- **已驗證**：PR #55（改 `.github/`）在 GitHub 上跑了 `changes`、`docs`、`check`、`e2e` 四項並全數通過，確認程式 PR 仍跑完整檢查。本次本機只跑 `git diff --check` 與 `npm run check:docs`。
+- **待確認**：本 PR 上 `check`、`e2e` 應顯示為略過且可合併；合併後 Deploy 不應觸發。管理員仍需將 `e2e`、`docs` 加入 ruleset 必要檢查。
+- **下一步**：依 ADR-0028 Review Point，實施一個月後（約 2026-10-28）檢查是否有誤判。
+
 ## 2026-09-28：純文件 PR 略過完整 CI（ADR-0028）
 - **目標與範圍**：純文件 PR 不再跑完整 check 與 e2e、合併後不重新部署；程式與內容 PR 行為不變。
 - **分支**：`ci/skip-docs-only`，自 `origin/main`（`4784e97`）建立，後 rebase 至 `30263dc`（含 PR #54）。
