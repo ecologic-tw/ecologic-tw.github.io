@@ -48,3 +48,4 @@ font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'self'; object
 - `permissions: { contents: read, pages: write, id-token: write }`，僅部署 job 有 pages 權限。
 - 步驟：checkout → setup-node（讀 .nvmrc）→ `npm ci` → `npm run check` → `npm test` → `npm run build` → upload-pages-artifact → deploy-pages。
 - PR 觸發另一個 `ci.yml`：同樣檢查但不部署，`permissions: contents: read`。
+- 純文件 PR（只改 `docs/**` 或根目錄 `*.md`，`DESIGN.md` 除外）略過 `check`、`e2e`，只跑 `docs` job（`git diff --check`、`npm run check:docs`）；判斷失敗時照跑完整檢查。純文件合併到 main 不重新部署（ADR-0028）。

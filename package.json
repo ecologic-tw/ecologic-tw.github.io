@@ -19,6 +19,7 @@
     "review": "node scripts/mark-reviewed.ts",
     "report:content": "node scripts/content-quality.ts",
     "check:links": "node scripts/check-links.ts",
+    "check:docs": "node scripts/check-doc-links.ts",
     "scenario": "node scripts/scenario.ts"
   },
   "dependencies": {
