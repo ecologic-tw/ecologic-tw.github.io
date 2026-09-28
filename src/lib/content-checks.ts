@@ -13,6 +13,7 @@ import {
   type TermData,
   type UpdateData,
 } from './content-schema.ts';
+import { findLiteralBold, LITERAL_BOLD_HINT } from './emphasis-check.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
 import { collectableEntries } from './quiz.ts';
 import { validateScenarioBody } from './scenario-sections.ts';
@@ -99,6 +100,12 @@ export function checkContent(input: ContentInput): CheckResult {
   );
   const terms = indexById(validate<TermData>(input.terms, termSchema, errors), errors);
 
+  function checkBold(doc: SourceDoc) {
+    for (const line of findLiteralBold(doc.body)) {
+      errors.push(`${doc.file}: 粗體沒有生效「${line.slice(0, 30)}」；${LITERAL_BOLD_HINT}`);
+    }
+  }
+
   function checkRef(
     from: { doc: SourceDoc; data: { status: string } },
     field: string,
@@ -127,6 +134,7 @@ export function checkContent(input: ContentInput): CheckResult {
     if (RAW_HTML.test(item.doc.body)) {
       errors.push(`${item.doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
     }
+    checkBold(item.doc);
   }
 
   for (const item of scenarios.values()) {
@@ -156,6 +164,7 @@ export function checkContent(input: ContentInput): CheckResult {
       if (pattern.test(text)) errors.push(`${doc.file}: 情境題文字不得含${label}`);
     }
     if (RAW_HTML.test(doc.body)) errors.push(`${doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
+    checkBold(doc);
   }
 
   // 對照題比例：已發布（reviewed）集合不合格 → 錯誤；含草稿的集合不合格 → 僅警告，避免撰寫途中卡住。
