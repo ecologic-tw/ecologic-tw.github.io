@@ -97,9 +97,11 @@
 - [ ] 試讀回饋後，決定是否以 `npm run scenario -- edit` 分批補進已審題目
 
 ## 鋼人練習（ADR-0031）
+- [x] ADR-0031 接受（2026-09-29，Decision Owner：@Wang-Yi-Zhang）
 - [x] `choice` 題型新增 `steelman` 任務，題目上方顯示「找出最強的版本」；單元測試
-- [x] 試行 3 題 draft：daily-021 社區課程要改成線上、daily-022 家裡要不要養狗、cons-021 螢火蟲季的步道路燈（AI 起草）
-- [ ] 人工審核 3 題，特別檢查正解是否唯一；Dennett（2013）原文待核對
+- [x] 試行 3 題 draft：daily-021 中庭可以打球嗎（依 Decision Owner 要求改為社區公共空間使用的題材）、daily-022 家裡要不要養狗、cons-021 螢火蟲季的步道路燈（AI 起草）
+- [x] Dennett（2013）原文核對（2026-09-29，@Wang-Yi-Zhang）；cons-021 不屬爭議議題（Decision Owner 判斷）
+- [ ] 人工審核 3 題，特別檢查正解是否唯一
 - [ ] 至少一位試讀者試讀後，依 Review Point 決定擴充、修訂或停止
 
 ## 心理學內容開放檢視（ADR-0030）

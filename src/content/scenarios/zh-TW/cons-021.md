@@ -26,7 +26,7 @@ terms: [ principle-of-charity, argument ]
 sources:
   - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W. W. Norton."
     supports:
-      - "Rapoport 規則：先把對方的立場重述到對方滿意，再提出批評；原文待人工核對。"
+      - "Rapoport 規則：先把對方的立場重述到對方滿意，再提出批評。"
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
