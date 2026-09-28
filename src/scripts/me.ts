@@ -1,6 +1,7 @@
 // 「我的圖鑑」（docs/sdd/04、05、07）：一切都在這個瀏覽器內完成，不上傳。
 // 所有文字以 textContent 寫入；匯入檔的字串永遠不顯示，只用來比對已知 id。
 import { BADGES, collectedEntries, earnedBadges, type ContentIndex } from '../lib/badges.ts';
+import { localDate } from '../lib/dates.ts';
 import {
   IMPORT_MAX_BYTES,
   clear,
@@ -102,7 +103,7 @@ if (root) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `ecologic-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `ecologic-progress-${localDate()}.json`;
     document.body.append(link);
     link.click();
     link.remove();
