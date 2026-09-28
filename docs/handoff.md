@@ -6,6 +6,13 @@
 - **已完成**：新增 `src/lib/dates.ts` 的 `localDate()`，改用於上述兩個腳本，以及 `/me/` 匯出進度的檔名。已發布內容的日期不在本 PR 修改。
 - **驗證**：lint、`npm run check`、245 個單元測試（新增 2 個）、正式 build、91 個 e2e 通過；00:4x 執行時 `localDate()` 為 2026-09-29，UTC 為 2026-09-28。
 
+## 2026-09-29：接受 ADR-0030
+- **目標與範圍**：PR #68 合併後，Decision Owner 接受 ADR-0030；本 PR 只改文件。
+- **分支**：`docs/accept-adr-0030`，自 `origin/main`（`cbf699c`，含 PR #68）建立。
+- **已完成**：ADR-0030 狀態改為接受，文末記錄公開徵詢的決定：目前沒有其他人參與，不走 14 天公開徵詢；之後有其他維護者或審核者加入時，可提出異議並依 10「決策方式」補行徵詢。11 里程碑同步。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **下一步**：daily-020、cons-020 可由 Decision Owner 一人審核（無爭議標記）；cons-001、005、009、018、019 仍需第二位審核者。
+
 ## 2026-09-29：心理學內容開放檢視（ADR-0030）
 - **目標與範圍**：Decision Owner 要求寫修訂規則的 ADR，並開放後見之明偏誤、框架效應，寫進更新紀錄。
 - **分支**：`content/psychology-open-review`，自 `origin/main`（`bb04035`，含 PR #67）建立。
