@@ -118,8 +118,8 @@
 - [x] 依 [評估文件](../review/reading-notes-assessment.md) 起草 P3、P5 兩題提案（AI 起草，`aiAssisted: true`）：P3 → `contributions/scenarios/two-slot-booking.md`（日常對照題）、P5 → `contributions/scenarios/summer-egret-count.md`（保育，草率概括）
 - [x] P3、P5 正解確認（2026-09-28，@Wang-Yi-Zhang）
 - [x] P3、P5 轉入正式草稿 daily-020、cons-020（2026-09-28，Decision Owner 決定提前轉入，方便以 `npm run dev` 檢視；仍為 draft，不公開）
-- [ ] daily-020：核對 OpenStax 5.3 的支持範圍；標記 reviewed 前確認日常對照題比例（目前 5／20）
-- [ ] cons-020：人工核對 IWC 指引 p.4、p.14 原文；備選來源 Dickie, Smith & Gilchrist (2014), https://doi.org/10.1675/063.037.0406 （北極繁殖期鷸鴴，需要時再評估）；確認保育題立場分布（本題由管理單位一方犯錯）
+- [x] daily-020：核對 OpenStax 5.3 的支持範圍（2026-09-29，@Wang-Yi-Zhang）；日常對照題比例 5／20
+- [x] cons-020：人工核對 IWC 指引 p.4、p.14 原文（2026-09-29，@Wang-Yi-Zhang）；備選來源 Dickie, Smith & Gilchrist (2014), https://doi.org/10.1675/063.037.0406 （北極繁殖期鷸鴴，需要時再評估）；確認保育題立場分布（本題由管理單位一方犯錯）
 - [x] daily-020、cons-020 審核發布（2026-09-29，@Wang-Yi-Zhang）：日常對照題 5／20＝25%；保育題由保育方犯錯 6／15＝40%（AI 逐題判讀，本題歸為非保育方）
 - [ ] daily-020、cons-020 至少一位自願試讀者試讀（招募見 Issue #62），再依 Review Point 決定擴充、修訂或停止
 - [x] 新偏誤卡 draft：框架效應 `framing-effect`、後見之明偏誤 `hindsight-bias`（2026-09-28，Decision Owner 決定與試讀並行，見 ADR-0027 修訂紀錄；AI 起草，文獻已以 Crossref 核對書目與 DOI）
