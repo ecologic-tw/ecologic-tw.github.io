@@ -24,7 +24,6 @@ status: draft
 reviewers: []
 updated: 2026-09-28
 nextSteps:
-  - 人工確認正解：題幹的兩個選項是否確實窮盡，是否有人會合理地選「假兩難」
   - 核對來源 OpenStax 5.3 是否支持 supports 所寫範圍
   - 至少一位試讀者試讀，記錄看不懂或可能有第二個正解的地方（ADR-0027 Review Point）
   - 轉入前確認日常主題對照題比例仍在 15%–30%
