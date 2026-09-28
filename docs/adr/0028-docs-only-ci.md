@@ -1,8 +1,8 @@
 # ADR-0028 純文件 PR 略過完整 CI 與部署
 
 - 日期：2026-09-28
-- 狀態：提議
-- Decision Owner：人類維護者
+- 狀態：接受（2026-09-28，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：實施後第一個月，檢查是否有純文件 PR 被誤判、或程式變更被誤判為純文件；若 `docs/` 開始被建置或測試讀取，須修改判斷規則
 
 ## 背景
