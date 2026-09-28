@@ -161,6 +161,11 @@ describe('validity-soundness and choice', () => {
     );
   });
 
+  it('accepts the steelman task and rejects unknown tasks (ADR-0031)', () => {
+    expect(errorsOf({ ...choice, task: 'steelman' })).toBe('');
+    expect(errorsOf({ ...choice, task: 'strawman' })).toMatch(/task/);
+  });
+
   it('requires exactly one correct choice', () => {
     const none = choice.choices.map((c) => ({ ...c, correct: false }));
     const two = choice.choices.map((c, i) => ({ ...c, correct: i < 2 }));

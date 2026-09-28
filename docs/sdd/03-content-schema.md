@@ -112,9 +112,9 @@ const scenarioBase = {
   notes: z.object({ validity: z.string(), premises: z.string() }),
   betterPhrasing?, checklist? }                   // 選填，沒有時不顯示改寫區
 
-// choice：隱藏前提／形式辨識／反例選擇，共用一個作答元件
+// choice：隱藏前提／形式辨識／反例選擇／鋼人練習（ADR-0031），共用一個作答元件
 { format: 'choice',
-  task: z.enum(['hidden-premise','form','counterexample']),
+  task: z.enum(['hidden-premise','form','counterexample','steelman']),
   prompt: z.string(),
   choices: z.array(z.object({ text, correct: z.boolean().default(false), note })).min(3).max(4),
   betterPhrasing?, checklist? }

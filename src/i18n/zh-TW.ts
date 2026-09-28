@@ -133,6 +133,7 @@ export const advancedQuiz = {
     'hidden-premise': '找出沒說出口的前提',
     form: '辨識形式結構',
     counterexample: '找出反例',
+    steelman: '找出最強的版本',
   },
   choiceAnswerIs: '正解',
   yourChoice: '你的選擇',
