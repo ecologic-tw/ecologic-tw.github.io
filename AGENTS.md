@@ -39,6 +39,7 @@
 | 資安與隱私 | `docs/sdd/07-security-privacy.md` |
 | 防誤用與內容寫作準則 | `docs/sdd/08-misuse-prevention.md` |
 | 知識範圍、真理理論、心理學範圍、進階題型規劃 | `docs/sdd/12-knowledge-scope.md` |
+| 互動擴充規劃（綜合挑戰、討論引導卡、爭點地圖、多方觀點、分支對話） | `docs/sdd/13-interaction-roadmap.md` |
 | 回饋機制 | `docs/sdd/09-feedback.md`、`docs/feedback/google-form-design.md` |
 | 社群文化、決策方式、Learning Review | `docs/共好型自主敏捷社群指引.md` |
 | 審核、治理、角色輪替、傳承 | `docs/sdd/10-governance.md`、`CODE_OF_CONDUCT.md` |
