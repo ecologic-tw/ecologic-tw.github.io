@@ -1,5 +1,17 @@
 # AI 協作交接紀錄
 
+## 2026-09-28：P3、P5 轉入草稿與兩張新偏誤卡
+- **目標與範圍**：依 Decision Owner 要求，將 P3、P5 轉入正式草稿，並起草方案 B 的新卡，方便以 `npm run dev` 檢視；全部維持 draft。
+- **分支**：`content/reading-notes-drafts`，自 `origin/main`（`16df844`，含 PR #61）建立。
+- **已完成**：
+  - `npm run scenario -- promote`：P3 → `daily-020`（對照題）、P5 → `cons-020`。轉入前把未完成的待辦（來源核對、試讀、比例與立場確認）移到里程碑，再清空提案的 nextSteps。
+  - 新增 `framing-effect`（框架效應）、`hindsight-bias`（後見之明偏誤），皆 `kind: bias`、`aiAssisted: true`、`status: draft`。`evidence` 由 AI 暫定 robust，並在本文註明待心理學審核者判定。
+  - 文獻以 Crossref API 核對書目與 DOI：Tversky & Kahneman (1981)、Kühberger (1998)、Steiger & Kühberger (2018)、Fischhoff (1975)、Guilbault 等 (2004)、Roese & Vohs (2012)。`supports` 依 Crossref／出版社摘要與搜尋摘要撰寫，**未讀全文**。
+  - ADR-0027 新增修訂紀錄；里程碑更新。
+- **驗證**：見 PR 說明。
+- **待人工**：心理學背景審核者（目前沒有，#62 未招募此角色）；兩題來源核對與試讀。
+- **下一步**：在 #62 或另開 Issue 補招心理學背景審核者；試讀回饋後依 Review Point 決定。
+
 ## 2026-09-28：P5 候選來源、正解確認與招募 Issue
 - **目標與範圍**：替 P5 找候選來源；記錄 Decision Owner 對 P3、P5 正解的確認；發布招募試讀者、查證者與第二位保育審核者的 Issue；補記情境題頁 Lighthouse。
 - **分支**：`content/p5-source-and-recruitment`，自 `origin/main`（`ee1718f`）建立。
