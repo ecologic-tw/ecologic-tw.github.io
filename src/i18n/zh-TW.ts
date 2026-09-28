@@ -72,6 +72,8 @@ export const quiz = {
   reveal: '看答案與解說',
   explanation: '解說',
   advancedExplanation: '進階解說',
+  perspective: '換個位置想',
+  perspectiveHint: '理解不等於同意。試著想想對方在意什麼，再用提問確認，而不是替對方下結論。',
   form: '形式結構',
   betterPhrasing: '更好的說法',
   rewritePrompt: '試著改寫看看（選填，不會儲存或上傳）',

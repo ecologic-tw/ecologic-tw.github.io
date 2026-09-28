@@ -96,7 +96,8 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
       aiAssisted: false,
       requiresSecondReview: false,
     };
-    body = '\n## 情境\n\n## 解說\n\n## 進階解說\n';
+    // 「換個位置想」為選填段落（ADR-0029），留空不會顯示
+    body = '\n## 情境\n\n## 解說\n\n## 進階解說\n\n## 換個位置想\n';
   }
   delete data.id;
   data.status = 'draft';

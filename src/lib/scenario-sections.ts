@@ -1,4 +1,4 @@
-// 情境題本文分段（docs/sdd/03：`## 情境`、`## 解說`、`## 進階解說`）。
+// 情境題本文分段（docs/sdd/03：`## 情境`、`## 解說`、`## 進階解說`、選填 `## 換個位置想`［ADR-0029］）。
 // 作答頁要把情境與解說放在不同位置（解說在作答後才揭露），所以在建置時分段各自轉成 HTML。
 import { markdownToHtml } from 'satteri';
 import {
@@ -8,7 +8,12 @@ import {
   type TermInfo,
 } from './markdown-ecologic.ts';
 
-export const SECTIONS = { scenario: '情境', explanation: '解說', advanced: '進階解說' } as const;
+export const SECTIONS = {
+  scenario: '情境',
+  explanation: '解說',
+  advanced: '進階解說',
+  perspective: '換個位置想',
+} as const;
 
 /** 正式情境與待轉入提案共用的必要本文檢查；與頁面使用相同的分段規則。 */
 export function validateScenarioBody(body: string): string[] {
