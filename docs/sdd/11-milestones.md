@@ -48,7 +48,7 @@
 - [ ] 全部 MVP 內容經人工審核改為 `reviewed`（分批方式與指令見 `docs/review/review-guide.md`；`npm run check` 會顯示審核進度）
 - [x] Lighthouse：Performance ≥ 90、Accessibility ≥ 95（2026-09-28 正式網址、無痕、手機模擬：`/`、`/guide/`、`/me/` 皆為 100／100；情境題頁未量）
 - [x] 手機實測（2026-09-28 iPhone／Safari：點擊、輸入、匯入／匯出／清除、無痕正常；紀錄與檢查表見 [手機實測](../review/mobile-test-checklist.md)）
-- [ ] VoiceOver「全部朗讀」會跳過內文名詞按鈕、接續往下念：待確認名詞文字是否被略過，再決定修正方式（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
+- [ ] 後續追蹤：VoiceOver「全部朗讀」會略過內文名詞按鈕的文字（例如「命題」），句子少一個詞。推測與 `popovertarget` 按鈕被當成彈出式控制項有關；下一步先確認單指滑到名詞時的朗讀角色，再決定修正（2026-09-28 決定暫緩，不擋 M5）（評估見[手機實測](../review/mobile-test-checklist.md#voiceover-在名詞處中斷2026-09-28調查中)）
 - [ ] Org 設定清單（07）全數完成
 - **驗收**：正式網址上線；README 與 about 頁資訊一致
 
