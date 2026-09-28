@@ -29,8 +29,8 @@ requiresSecondReview: false
 status: draft
 reviewers: []
 updated: 2026-09-28
-nextSteps: []
-promotedTo: cons-020
+id: cons-020
+isControl: false
 ---
 
 ## 情境

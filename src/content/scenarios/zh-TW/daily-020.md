@@ -23,8 +23,8 @@ requiresSecondReview: false
 status: draft
 reviewers: []
 updated: 2026-09-28
-nextSteps: []
-promotedTo: daily-020
+id: daily-020
+isControl: true
 ---
 
 ## 情境
