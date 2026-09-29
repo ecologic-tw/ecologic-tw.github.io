@@ -157,7 +157,6 @@ export const cases = {
   closingHint: '建議答完小題後再讀',
   toolkitLink: '把這些方法帶到課堂或會議：討論引導卡',
   partOf: (title: string, n: number, total: number) => `多方觀點：${title}（第 ${n}／${total} 題）`,
-  listTag: (title: string) => `多方觀點：${title}`,
   context: '背景與角色卡',
   backToCase: '回到案例',
   toClosing: '回到案例：換個位置想',

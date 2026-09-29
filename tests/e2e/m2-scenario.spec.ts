@@ -1,10 +1,14 @@
-import { readdirSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
 const scenarioIds = readdirSync('src/content/scenarios/zh-TW')
   .filter((f) => f.endsWith('.md'))
   .map((f) => f.replace(/\.md$/, ''));
+// 多方觀點案例的小題不列在題目列表（ADR-0036 §5）
+const listedIds = scenarioIds.filter(
+  (id) => !/^case: /m.test(readFileSync(`src/content/scenarios/zh-TW/${id}.md`, 'utf8')),
+);
 
 const KEY = 'ecologic:v1';
 const stored = (page: Page) => page.evaluate((k) => localStorage.getItem(k), KEY);
@@ -147,7 +151,7 @@ test.describe('關閉 JavaScript 仍可閱讀情境與解說（NFR-07）', () =>
 
   test('practice list shows every question', async ({ page }) => {
     await page.goto('/practice/conservation/');
-    const count = scenarioIds.filter((id) => id.startsWith('cons-')).length;
+    const count = listedIds.filter((id) => id.startsWith('cons-')).length;
     await expect(page.locator('[data-scenario-id]')).toHaveCount(count);
   });
 });

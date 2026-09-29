@@ -16,12 +16,11 @@ export function getStaticPaths() {
 }
 
 const theme = Astro.params.theme as Theme;
-const scenarios = await getPublishedScenarios(theme);
+// 案例小題不列在這裡，只從 /cases/ 進入（ADR-0036 §5，2026-09-29 修正）
+const scenarios = (await getPublishedScenarios(theme)).filter((s) => !s.data.case);
 const notes = await getUpdateNotes();
 const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).answerChangedOn;
-// 案例小題照常列出，並標出案例名稱（ADR-0036 §5）
 const themeCases = await getPublishedCases(theme);
-const caseTitle = new Map(themeCases.map((item) => [item.id, item.data.title]));
 ---
 
 <Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]} wide>
@@ -46,9 +45,6 @@ const caseTitle = new Map(themeCases.map((item) => [item.id, item.data.title]));
           >
             <a href={`/scenario/${s.id}/`}>{s.data.title}</a>
             {s.data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
-            {s.data.case && caseTitle.has(s.data.case) && (
-              <span class="tag">{cases.listTag(caseTitle.get(s.data.case) ?? '')}</span>
-            )}
             {s.data.status === 'draft' && <span class="tag draft">{t.draftBadge}</span>}
             <span class="status" data-status hidden />
           </li>
