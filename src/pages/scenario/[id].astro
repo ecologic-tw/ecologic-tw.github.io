@@ -140,6 +140,9 @@ const nextLinks = (
       <span class="result-icon" data-result-icon aria-hidden="true"></span>
       <span class="result-text" data-result-text></span>
       <span class="result-choice" data-result-choice></span>
+      <span class="result-encourage" data-result-encourage hidden>
+        {quiz.everyTry}
+      </span>
     </div>
     {/* 放在 role="status" 之外，避免連結文字被一起朗讀 */}
     <p class="result-next" data-quiz-next hidden>
@@ -323,6 +326,16 @@ const nextLinks = (
     width: 100%;
     color: var(--moss);
     font-size: var(--step--1);
+  }
+
+  /* 答錯時的補充（ADR-0037） */
+  .result-encourage {
+    width: 100%;
+    font-size: var(--step--1);
+  }
+
+  .result-encourage[hidden] {
+    display: none;
   }
 
   .result-next {

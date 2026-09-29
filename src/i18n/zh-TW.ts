@@ -67,6 +67,8 @@ export const quiz = {
   chooseFirst: '先選一個判讀，再送出。',
   correct: '判讀正確',
   tryAnotherAngle: '換個角度看看',
+  /** 答錯時的補充（ADR-0037）：嘗試本身就算數 */
+  everyTry: '每一次嘗試都算數：這次作答已經記在「我的圖鑑」，看完解說，隨時可以回來再試一次。',
   yourChoice: '你的判讀',
   answerIs: '這段推理',
   reveal: '看答案與解說',
@@ -195,3 +197,14 @@ export const advancedQuiz = {
 } as const;
 
 export const modeLabel = { basic: '基礎', advanced: '進階', legend: '模式' } as const;
+
+/** 我的應對工具箱（ADR-0037） */
+export const toolbox = {
+  title: '我的應對工具箱',
+  intro:
+    '答對一題、點亮一張謬誤或認知偏誤卡，那張卡的善意回應句就會收進這裡。用之前，先確認對方真正的意思。',
+  empty:
+    '工具箱還是空的。不用一開始就很厲害，要開始才有機會變厲害。試一題看看，答對後，那張卡的回應句就會放進來。',
+  count: (n: number) => `工具箱裡有 ${n} 句回應`,
+  print: '列印我的工具箱',
+};

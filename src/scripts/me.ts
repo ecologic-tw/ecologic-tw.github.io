@@ -2,6 +2,8 @@
 // 所有文字以 textContent 寫入；匯入檔的字串永遠不顯示，只用來比對已知 id。
 import { BADGES, collectedEntries, earnedBadges, type ContentIndex } from '../lib/badges.ts';
 import { localDate } from '../lib/dates.ts';
+import { toolbox } from '../i18n/zh-TW.ts';
+import { ownedTools } from '../lib/toolbox.ts';
 import {
   IMPORT_MAX_BYTES,
   clear,
@@ -59,6 +61,28 @@ if (root) {
     const litCount = $('[data-lit-count]');
     if (litCount) litCount.textContent = `${lit.size}／${index.entries.length}`;
 
+    // 應對工具箱（ADR-0037）：只顯示已收進的句子，不列出還沒收進的
+    const toolItems = $$('[data-tool-id]');
+    const tools = new Set(
+      ownedTools(
+        toolItems.map((item) => item.dataset.toolId ?? ''),
+        lit,
+      ),
+    );
+    for (const item of toolItems) item.hidden = !tools.has(item.dataset.toolId ?? '');
+    for (const group of $$('[data-tool-group]')) {
+      group.hidden = !group.querySelector('[data-tool-id]:not([hidden])');
+    }
+    const toolCount = $('[data-toolbox-count]');
+    if (toolCount) {
+      toolCount.textContent = toolbox.count(tools.size);
+      toolCount.hidden = tools.size === 0;
+    }
+    const toolEmpty = $('[data-toolbox-empty]');
+    if (toolEmpty) toolEmpty.hidden = tools.size > 0;
+    const printButton = $<HTMLButtonElement>('[data-toolbox-print]');
+    if (printButton) printButton.hidden = tools.size === 0;
+
     for (const row of $$('[data-theme-progress]')) {
       const theme = row.dataset.themeProgress;
       const inTheme = index.scenarios.filter((s) => s.theme === theme);
@@ -66,7 +90,7 @@ if (root) {
       const correct = answered.filter((s) => progress.answered[s.id]?.correct);
       const text = row.querySelector('[data-progress-text]');
       if (text) {
-        text.textContent = `已作答 ${answered.length}／${inTheme.length} 題，其中答對 ${correct.length} 題`;
+        text.textContent = `試過 ${answered.length}／${inTheme.length} 題，答對 ${correct.length} 題`;
       }
       const bar = row.querySelector<HTMLProgressElement>('progress');
       if (bar) {
@@ -97,6 +121,8 @@ if (root) {
   }
 
   refresh();
+
+  $('[data-toolbox-print]')?.addEventListener('click', () => window.print());
 
   $('[data-export]')?.addEventListener('click', () => {
     const blob = new Blob([exportJson(load())], { type: 'application/json' });
