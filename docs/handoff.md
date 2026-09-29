@@ -1,5 +1,14 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：討論引導卡 ADR（ADR-0033）
+- **目標與範圍**：依 SDD 13 建議順序，為討論引導卡寫 ADR；本 PR 只改文件，未實作。
+- **分支**：`docs/adr-0033-discussion-card`，自 `origin/main`（`1b61080`，含 PR #77）建立。
+- **已完成**：ADR-0033（提議）：`/toolkit/discussion/` 一張 A4 正反兩面；新集合 `toolkit` 走審核閘門；瀏覽器列印、不在建置時產生 PDF；同批起草概念卡「分歧的種類」；入口放在圖鑑總覽與關於頁；發布時同 PR 補更新紀錄。SDD 13 §4 與 11 里程碑同步。
+- **查核**：目前沒有任何列印樣式；內容集合只有 entries、scenarios、terms、updates；引導卡要連的圖鑑卡（稻草人、人身攻擊、假兩難、草率概括、謬誤謬誤、善意詮釋與鋼人論證、非暴力溝通）都已發布。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **待人工決定**：是否接受 ADR-0033；入口位置；是否新增集合（或改寫死在頁面）。
+- **下一步**：接受後實作，並起草引導卡與「分歧的種類」概念卡。
+
 ## 2026-09-29：更新紀錄補上綜合挑戰
 - **目標與範圍**：PR #76 合併後，Decision Owner 指出更新紀錄沒有綜合挑戰的說明；本 PR 在 `updates.yaml` 補一則 `kind: feature`，連到 `/challenge/`。
 - **分支**：`docs/updates-combined-challenge`，自 `origin/main`（`9ca1feb`，含 PR #76）建立。
