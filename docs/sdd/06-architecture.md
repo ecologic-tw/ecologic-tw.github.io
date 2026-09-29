@@ -23,7 +23,7 @@
 ├─ public/ fonts/  favicon.svg  social-card.png
 ├─ src/
 │  ├─ content.config.ts
-│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/  updates/zh-TW/
+│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/  updates/zh-TW/  toolkit/zh-TW/
 │  ├─ i18n/zh-TW.ts            # 介面字串
 │  ├─ lib/
 │  │  ├─ progress.ts           # localStorage 讀寫、匯出匯入（zod 驗證）

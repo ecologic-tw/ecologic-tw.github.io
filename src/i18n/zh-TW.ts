@@ -120,6 +120,15 @@ export const challenge = {
   again: '再挑戰一次',
 } as const;
 
+/** 討論引導卡等可列印的線下工具（ADR-0033） */
+export const toolkit = {
+  entry: '討論引導卡（可列印）',
+  entryHint: '把善意回應、換個位置想與分歧的種類整理成一張 A4，可以帶到課堂、座談或會議。',
+  printHint: '用瀏覽器的「列印」可以印成一張 A4 正反兩面，也可以另存成 PDF。',
+  print: '列印這張卡',
+  license: '內容以 CC BY-SA 4.0 授權，歡迎標示出處後分享與改作。',
+} as const;
+
 /** 內容修訂的揭露文字（ADR-0025）：中性說明，不催促重做 */
 export const revision = {
   latest: '最近修訂',

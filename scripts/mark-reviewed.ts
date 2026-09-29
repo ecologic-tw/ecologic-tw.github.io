@@ -1,12 +1,18 @@
 // 人工審核者專用；AI 不得在正式內容上執行標記（AGENTS.md 紅線 4）。
 // npm run review -- --reviewer alice [--reviewer bob] <id> ... [--dry-run]
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseDocument, isSeq, isMap } from 'yaml';
-import { entrySchema, scenarioSchema, termSchema } from '../src/lib/content-schema.ts';
+import {
+  entrySchema,
+  scenarioSchema,
+  termSchema,
+  toolkitSchema,
+} from '../src/lib/content-schema.ts';
 import { localDate } from '../src/lib/dates.ts';
 import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
+import { validateToolkitBody } from '../src/lib/toolkit.ts';
 
 export type ReviewPlan = { writes: { file: string; text: string }[]; ids: string[] };
 
@@ -27,7 +33,12 @@ export function prepareReview(
   const wanted = new Set(ids);
   const found = new Set<string>();
   const plan: ReviewPlan = { writes: [], ids: [] };
-  const schemas = { entries: entrySchema, scenarios: scenarioSchema, terms: termSchema };
+  const schemas = {
+    entries: entrySchema,
+    scenarios: scenarioSchema,
+    terms: termSchema,
+    toolkit: toolkitSchema,
+  };
 
   function mark(data: Record<string, unknown>, kind: keyof typeof schemas, file: string) {
     const id = String(data.id);
@@ -57,8 +68,9 @@ export function prepareReview(
     return people;
   }
 
-  for (const kind of ['entries', 'scenarios'] as const) {
+  for (const kind of ['entries', 'scenarios', 'toolkit'] as const) {
     const dir = join(root, kind, 'zh-TW');
+    if (!existsSync(dir)) continue;
     for (const name of readdirSync(dir).filter((n) => n.endsWith('.md'))) {
       const file = join(dir, name);
       const text = readFileSync(file, 'utf8');
@@ -68,8 +80,11 @@ export function prepareReview(
       if (doc.errors.length) throw new Error(`${file}: ${doc.errors[0]?.message}`);
       const people = mark(doc.toJS() as Record<string, unknown>, kind, file);
       if (!people) continue;
-      if (kind === 'scenarios') {
-        const issues = validateScenarioBody(text.slice(match[0].length));
+      const validateBody = { scenarios: validateScenarioBody, toolkit: validateToolkitBody }[
+        kind as 'scenarios' | 'toolkit'
+      ];
+      if (validateBody) {
+        const issues = validateBody(text.slice(match[0].length));
         if (issues.length) throw new Error(`${file}: ${issues.join('; ')}`);
       }
       doc.set('status', 'reviewed');

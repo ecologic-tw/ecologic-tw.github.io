@@ -45,6 +45,7 @@ function run(input: {
   scenarios?: SourceDoc[];
   terms?: SourceDoc[];
   updates?: SourceDoc[];
+  toolkit?: SourceDoc[];
 }) {
   return checkContent({ entries: cards, scenarios: [], terms: [], ...input });
 }
@@ -287,6 +288,46 @@ describe('writing rules', () => {
   it('accepts bold with punctuation moved outside the markers', () => {
     const body = `${validBody}\n\n**如果你是居民**：你可能\n\n- 「**理解就是同意**。」善意\n\n\`a**b\``;
     expect(run({ scenarios: [q('daily-001', {}, body)] }).errors).toEqual([]);
+  });
+});
+
+describe('toolkit cards (ADR-0033)', () => {
+  const sides = '## 正面：回應之前\n見[卡](/guide/a/)。\n\n## 反面：分歧在哪裡\n反面。';
+  const card = (extra: Record<string, unknown> = {}, body = sides): SourceDoc => ({
+    file: 'discussion.md',
+    fileId: 'discussion',
+    data: {
+      id: 'discussion',
+      title: '討論引導卡',
+      summary: '摘要',
+      status: 'draft',
+      updated: '2026-09-29',
+      ...extra,
+    },
+    body,
+  });
+
+  it('passes a card with both sides and existing links', () => {
+    expect(run({ toolkit: [card()] }).errors).toEqual([]);
+  });
+
+  it('requires both sides', () => {
+    const { errors } = run({ toolkit: [card({}, '## 正面：回應之前\n只有正面。')] });
+    expect(errors.join()).toMatch(/反面：分歧在哪裡/);
+  });
+
+  it('rejects links to missing cards', () => {
+    const body = sides.replace('/guide/a/', '/guide/missing/');
+    expect(run({ toolkit: [card({}, body)] }).errors.join()).toMatch(/missing/);
+  });
+
+  it('does not let a reviewed card link to a draft card', () => {
+    const reviewed = card({
+      status: 'reviewed',
+      reviewers: ['alice'],
+      sources: [{ title: 'Reference' }],
+    });
+    expect(run({ toolkit: [reviewed] }).errors.join()).toMatch(/未審/);
   });
 });
 

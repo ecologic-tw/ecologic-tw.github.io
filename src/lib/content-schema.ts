@@ -362,9 +362,21 @@ export const termSchema = z
   .strict()
   .superRefine(requireReviewers);
 
+// 討論引導卡等可列印的線下工具（ADR-0033）：走相同的審核閘門，本文段落見 src/lib/toolkit.ts。
+export const toolkitSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9-]+$/),
+    title: z.string().trim().min(1),
+    summary: z.string().trim().min(1).max(80),
+    ...reviewMeta,
+  })
+  .strict()
+  .superRefine(requireReviewers);
+
 export type EntryData = z.output<typeof entrySchema>;
 export type ScenarioData = z.output<typeof scenarioSchema>;
 export type TermData = z.output<typeof termSchema>;
+export type ToolkitData = z.output<typeof toolkitSchema>;
 
 // 更新紀錄的手寫說明（ADR-0024）：功能更新、重要勘誤、公告。新上架內容由 published 自動列出。
 export const UPDATE_KINDS = ['feature', 'content', 'fix', 'notice'] as const;

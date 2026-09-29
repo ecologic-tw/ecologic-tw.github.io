@@ -39,5 +39,6 @@ export function loadContent(root = 'src/content', locale = 'zh-TW'): ContentInpu
     scenarios: readMarkdownDir(join(root, 'scenarios', locale)),
     terms: readYamlList(join(root, 'terms', locale, 'terms.yaml')),
     updates: readYamlList(join(root, 'updates', locale, 'updates.yaml')),
+    toolkit: readMarkdownDir(join(root, 'toolkit', locale)),
   };
 }

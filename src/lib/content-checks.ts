@@ -11,12 +11,15 @@ import {
   type EntryData,
   type ScenarioData,
   type TermData,
+  type ToolkitData,
   type UpdateData,
+  toolkitSchema,
 } from './content-schema.ts';
 import { findLiteralBold, LITERAL_BOLD_HINT } from './emphasis-check.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
 import { collectableEntries } from './quiz.ts';
 import { validateScenarioBody } from './scenario-sections.ts';
+import { guideLinkIds, validateToolkitBody } from './toolkit.ts';
 
 export type SourceDoc = {
   /** 供錯誤訊息顯示的路徑 */
@@ -33,6 +36,8 @@ export type ContentInput = {
   terms: SourceDoc[];
   /** 更新紀錄的手寫說明（ADR-0024、0025）；測試資料可省略 */
   updates?: SourceDoc[];
+  /** 討論引導卡等線下工具（ADR-0033）；測試資料可省略 */
+  toolkit?: SourceDoc[];
 };
 
 export type CheckResult = { errors: string[]; warnings: string[] };
@@ -135,6 +140,21 @@ export function checkContent(input: ContentInput): CheckResult {
       errors.push(`${item.doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
     }
     checkBold(item.doc);
+  }
+
+  // 討論引導卡（ADR-0033）：正反兩面、圖鑑卡連結存在，已審引導卡不得連到未審的卡
+  const toolkit = indexById(
+    validate<ToolkitData>(input.toolkit ?? [], toolkitSchema, errors),
+    errors,
+  );
+  for (const item of toolkit.values()) {
+    const { doc } = item;
+    errors.push(...validateToolkitBody(doc.body).map((issue) => `${doc.file}: ${issue}`));
+    for (const id of guideLinkIds(doc.body))
+      checkRef(item, '本文圖鑑卡連結', entries, '圖鑑卡', id);
+    for (const id of bodyTermIds(doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
+    if (RAW_HTML.test(doc.body)) errors.push(`${doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
+    checkBold(doc);
   }
 
   for (const item of scenarios.values()) {
