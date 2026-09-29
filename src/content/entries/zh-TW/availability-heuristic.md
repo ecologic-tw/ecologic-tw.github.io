@@ -26,7 +26,25 @@ sources:
     url: https://doi.org/10.1016/0010-0285(73)90033-9
     supports:
       - "可得性捷思的概念；生活與保育對話是教學示例，不是對個人的診斷。"
-updated: 2026-09-27
+  - title: "Sedlmeier, P., Hertwig, R., & Gigerenzer, G. (1998). Are judgments of the
+      positional frequencies of letters systematically biased due to availability?
+      Journal of Experimental Psychology: Learning, Memory, and Cognition, 24(3),
+      754–770."
+    url: https://doi.org/10.1037/0278-7393.24.3.754
+    supports:
+      - "字母位置實驗：受試者判斷字母較常出現在第一或第二個位置時，大致符合實際比例，挑戰原本以可得性解釋的結論。"
+  - title: "Groncki, R., Beaudry, J. L., & Sauer, J. D. (2021). Investigating the
+      ease-of-retrieval effect in an eyewitness context. Memory, 29(2), 234–254."
+    url: https://doi.org/10.1080/09658211.2021.1882502
+    supports:
+      - "Study 3（N = 661）嘗試直接複製 Schwarz 等（1991）的提取容易度實驗，沒有成功。"
+  - title: "Weingarten, E., & Hutchinson, J. W. (2018). Does ease mediate the
+      ease-of-retrieval effect? A meta-analysis. Psychological Bulletin, 144(3),
+      227–283."
+    url: https://doi.org/10.1037/bul0000122
+    supports:
+      - "後設分析：142 篇論文、263 項研究；標準的「想出少數或多數例子」操弄平均為中等效果，發表偏誤最多使效果縮小約三分之一。"
+updated: 2026-09-30
 aiAssisted: true
 ---
 
@@ -55,3 +73,14 @@ aiAssisted: true
 ## 善意回應法
 
 「那幾則新聞確實讓人擔心。有沒有比較完整的統計，可以看出這幾年的變化？」
+
+## 進階
+
+可得性捷思由 Tversky 與 Kahneman（1973）提出，廣為引用，但幾個經典實驗的重複驗證並不順利：
+
+- 「字母 K 比較常出現在字首還是第三個字母」的實驗，後續研究發現，受試者對字母位置的判斷大致符合實際比例（Sedlmeier、Hertwig、Gigerenzer，1998）。
+- 「想出 6 個或 12 個自己果斷的例子，再評估自己有多果斷」的實驗（Schwarz 等，1991），近年的直接複製研究沒有得到原本的結果（Groncki、Beaudry、Sauer，2021）。
+
+另一方面，Weingarten 與 Hutchinson（2018）的後設分析彙整了 263 項研究，發現「想起來容不容易」平均有中等程度的影響；發表偏誤可能讓效果被高估，但校正後仍然存在。
+
+因此本卡的證據強度標為中等：「容易想起會影響頻率判斷」有研究支持，但經典實驗的結果不一定能重現，效果大小也因作業而不同。

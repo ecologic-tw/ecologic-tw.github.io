@@ -3,14 +3,16 @@
 - 卡別：bias
 - 證據強度：moderate（2026-09-27 由 @Wang-Yi-Zhang 決定，PR #27；本紀錄為事後補記）
 - 開放檢視：待決策者確認（本卡在 ADR-0021 前發布，未列入 ADR-0030 開放檢視清單）
-- 最近判定：尚未依 ADR-0038 由人工判定；本紀錄由 AI 起草（2026-09-29），供審核者核對
+- 最近判定：2026-09-30，決策者 @Wang-Yi-Zhang 決定維持 moderate、本文補充複製困難（PR 見修訂歷程）；原文仍未由人工核對
 
 ## 來源
 
 | 來源 | 類型 | 研究團隊 | 支持範圍 | 已核對原文 |
 |---|---|---|---|---|
-| Tversky & Kahneman (1973). Availability: A heuristic for judging frequency and probability. *Cognitive Psychology*, 5, 207–232. https://doi.org/10.1016/0010-0285(73)90033-9 | 原始研究 | Tversky、Kahneman | 可得性捷思的提出與原始實驗；卡上現有唯一來源 | 否（DOI 原文曾回應 403，見 p0-p1 檢查清單） |
-| Weingarten & Hutchinson (2018). Does ease mediate the ease-of-retrieval effect? A meta-analysis. *Psychological Bulletin*, 144(3), 227–283. https://doi.org/10.1037/bul0000122 | 後設分析 | Weingarten、Hutchinson | 「提取容易度」效果：校正發表偏誤後仍約 d ≈ 0.4（依搜尋摘要）。**卡上尚未引用** | 否 |
+| Tversky & Kahneman (1973). Availability: A heuristic for judging frequency and probability. *Cognitive Psychology*, 5, 207–232. https://doi.org/10.1016/0010-0285(73)90033-9 | 原始研究 | Tversky、Kahneman | 可得性捷思的提出與原始實驗；卡上原有的唯一來源 | 否（DOI 原文曾回應 403，見 p0-p1 檢查清單） |
+| Sedlmeier, Hertwig & Gigerenzer (1998). *JEP: LMC*, 24(3), 754–770. https://doi.org/10.1037/0278-7393.24.3.754 | 原始研究（3 項研究） | Sedlmeier、Hertwig、Gigerenzer | 字母位置判斷大致符合實際比例，挑戰以可得性解釋的結論（已核對摘要）。2026-09-30 補進卡片 | 否（摘要已核對） |
+| Groncki, Beaudry & Sauer (2021). *Memory*, 29(2), 234–254. https://doi.org/10.1080/09658211.2021.1882502 | 原始研究（含直接複製） | Groncki、Beaudry、Sauer | Study 3（N = 661）直接複製 Schwarz 等（1991）失敗（已核對摘要；「預先登記」出自 Replicability-Index 部落格，摘要未提）。2026-09-30 補進卡片 | 否（摘要已核對） |
+| Weingarten & Hutchinson (2018). Does ease mediate the ease-of-retrieval effect? A meta-analysis. *Psychological Bulletin*, 144(3), 227–283. https://doi.org/10.1037/bul0000122 | 後設分析 | Weingarten、Hutchinson | 142 篇論文、263 項研究、582 個效果量；標準操弄平均為中等效果，發表偏誤最多使效果縮小約三分之一（已核對摘要；「d ≈ 0.4」出自部落格整理，未核對）。2026-09-30 補進卡片 | 否（摘要已核對） |
 
 ## 反證搜尋
 
@@ -42,3 +44,4 @@ AI 建議：**依 ADR-0038 門檻字面，應考慮改為 `contested`，需人�
 ## 修訂歷程
 
 - 2026-09-29：AI 起草補記（ADR-0038 過渡），尚待人工判定。
+- 2026-09-30：決策者決定維持 `moderate`，本文新增「進階」段落說明經典實驗的複製困難，補三則來源；更新紀錄 `availability-heuristic-replication`（`content/evidence-revisions` 分支）。

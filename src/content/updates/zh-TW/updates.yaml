@@ -68,3 +68,24 @@
   title: 新增多方觀點情境
   summary: 一個虛構議題、幾位角色，先讀每個人在意什麼、擔心什麼，再練習找共同點、分清楚分歧、想想先問什麼。題目不會問你站在哪一邊。第一則是「巷口要不要畫紅線」，3 題小題都在進階模式。入口在日常生活題目列表。
   link: /cases/daily-case-01/
+- id: availability-heuristic-replication
+  date: 2026-09-30
+  kind: content
+  title: 「可得性捷思」補充經典實驗的複製困難
+  summary: 新增「進階」段落：字母位置實驗與「想出 6 個或 12 個例子」的實驗，後續重複驗證都沒有得到原本的結果；同時也有後設分析支持「想起來容不容易」會影響判斷。證據強度維持中等，並補上三則來源。
+  about: entry/availability-heuristic
+  impact: reread
+- id: survivorship-bias-evidence-meaning
+  date: 2026-09-30
+  kind: content
+  title: 「倖存者偏誤」說明證據強度的意思
+  summary: 補一段說明：本卡的「證據穩健」指這種推理錯誤在統計上成立，不代表已有研究證實人們多常犯這個錯。
+  about: entry/survivorship-bias
+  impact: none
+- id: framing-effect-quick-check
+  date: 2026-09-30
+  kind: content
+  title: 「框架效應」小檢核改用風險選擇的例子
+  summary: 本卡的證據範圍限於風險選擇框架，原本的小檢核（優格「95% 無脂」與「含 5% 脂肪」）屬於另一種框架，因此改成「確定救活」與「確定損失」的行道樹方案。
+  about: entry/framing-effect
+  impact: none
