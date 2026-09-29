@@ -111,15 +111,15 @@ test.describe('小題頁', () => {
     await expect(page.locator('[data-case-closing]')).toHaveAttribute('open', '');
   });
 
-  test('other questions skip the case, and random never picks it', async ({ page }) => {
+  test('the practice list, next and random all leave case questions out', async ({ page }) => {
     await page.goto('/scenario/daily-023/');
     await expect(page.locator('nav.next')).not.toContainText('巷口紅線');
     await page.goto('/practice/daily/');
     const items = await page.locator('[data-random-scenario]').getAttribute('data-items');
     expect(items).not.toContain('daily-024');
-    await expect(page.locator('[data-scenario-id="daily-024"]')).toContainText(
-      '多方觀點：巷口要不要畫紅線',
-    );
+    // 只從 /cases/ 進入（ADR-0036 §5，2026-09-29 修正）
+    await expect(page.locator('[data-scenario-id="daily-024"]')).toHaveCount(0);
+    await expect(page.getByRole('link', { name: '多方觀點情境' })).toBeVisible();
   });
 });
 

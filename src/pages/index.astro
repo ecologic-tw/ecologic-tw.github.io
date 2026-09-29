@@ -10,7 +10,8 @@ import { THEMES } from '../lib/content-schema.ts';
 const scenarios = await getPublishedScenarios();
 const themes = THEMES.map((theme) => ({
   theme,
-  count: scenarios.filter((s) => s.data.theme === theme).length,
+  // 與題目列表一致：案例小題只從 /cases/ 進入（ADR-0036 §5）
+  count: scenarios.filter((s) => s.data.theme === theme && !s.data.case).length,
 }));
 
 const steps = [
