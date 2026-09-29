@@ -1,7 +1,7 @@
 # ADR-0017 概念修正、來源與雙人審核閘門
 - 日期：2026-09-27
-- 狀態：提議
-- Decision Owner：維護者（由人類確認）
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：P0／P1 修正版首次人工審核前，以概念正確性、來源適用範圍與拒絕不完整審核資料的測試重新檢視
 
 ## 背景

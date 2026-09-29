@@ -1,8 +1,8 @@
 # ADR-0019 漸進情境協作與貢獻署名
 
 - 日期：2026-09-27
-- 狀態：提議
-- Decision Owner：人類維護者
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：完成第一次多人接力投稿後，檢視工具步驟、待辦交接與署名是否清楚
 
 ## 問題與決策

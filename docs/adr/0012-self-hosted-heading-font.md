@@ -1,6 +1,6 @@
 # ADR-0012 標題字型自託管霞鶩文楷 TC
 - 日期：2026-09-26
-- 狀態：提議
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：M5 Lighthouse 量測時；或 `dist/` 超過 50 MB 時
 

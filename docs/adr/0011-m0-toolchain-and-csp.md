@@ -1,6 +1,6 @@
 # ADR-0011 M0 工具鏈依賴與 CSP 實作方式
 - 日期：2026-09-26
-- 狀態：提議
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：M1 完成時（開始有互動腳本與內容渲染），或 Astro 下一個主版本發布時
 

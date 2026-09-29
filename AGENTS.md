@@ -34,6 +34,7 @@
 | 用語（圖鑑卡、情境題、對照題…） | `CONTEXT.md` |
 | 內容資料格式 | `docs/sdd/03-content-schema.md` |
 | 畫面與互動 | `docs/sdd/04-ux-interaction.md` |
+| 視覺設計（色票、字型、元件；與 `global.css` 同步） | `DESIGN.md` |
 | 八角框架設計 | `docs/sdd/05-octalysis.md` |
 | 架構與目錄 | `docs/sdd/06-architecture.md` |
 | 資安與隱私 | `docs/sdd/07-security-privacy.md` |
@@ -43,11 +44,12 @@
 | 回饋機制 | `docs/sdd/09-feedback.md`、`docs/feedback/google-form-design.md` |
 | 社群文化、決策方式、Learning Review | `docs/共好型自主敏捷社群指引.md` |
 | 審核、治理、角色輪替、傳承 | `docs/sdd/10-governance.md`、`CODE_OF_CONDUCT.md` |
-| 里程碑與驗收 | `docs/sdd/11-milestones.md` |
+| 里程碑與驗收（進度的唯一來源） | `docs/sdd/11-milestones.md` |
 | 為什麼這樣決定 | `docs/adr/` |
+| 目前工作狀態、待人工決定 | `docs/handoff.md`（歷史在各 PR 說明） |
 
 ## 工作方式
-- 開工先讀 `CONTRIBUTING.md`、`CONTEXT.md` 與 `docs/sdd/11-milestones.md`，再按任務讀相關 SDD 與 ADR。
+- 開工先讀 `CONTRIBUTING.md`、`CONTEXT.md`、`docs/sdd/11-milestones.md` 與 `docs/handoff.md`，再按任務讀相關 SDD 與 ADR。
 - 先確認工作目錄、分支與 `git status`，保留既有未提交變更；不要將他人的工作當作本次成果或擅自覆寫。
 - 修改程式後執行 `npm run lint`、`npm run check`、`npm test`；影響建置或互動時加跑 `npm run build` 或相關 e2e。只改文件時檢查引用、規範一致性與 `git diff --check`。未執行或失敗的檢查必須說明原因。
 - 依 `11-milestones.md` 順序推進；每個里程碑結束時更新該檔勾選狀態。
@@ -57,7 +59,7 @@
 
 ## 跨工具交接
 - 以 repo 文件、目前差異與 Issue／PR 為準，不假設能取得前一個 AI 的聊天記錄或私人記憶。
-- 任務結束或切換工具前，在既有 PR／Issue 或 repo 交接文件留下下列紀錄；沒有指定位置時可用 `docs/handoff.md`。未獲授權發布到外部平台時，先存於 repo 文件。
+- 任務結束或切換工具前，在 PR 說明的「交接」段留下下列紀錄；沒有 PR 時寫進 `docs/handoff.md` 的「目前工作區」。`docs/handoff.md` 只寫目前狀態，交接時覆寫，不追加歷史（ADR-0035）。未獲授權發布到外部平台時，先存於 repo 文件。
 - 紀錄包含：任務目標與範圍、分支與相關 commit／未提交檔案、已完成變更、實際執行的驗證與結果、未完成事項／阻礙／待人工決定事項、下一步及相關 SDD／ADR 連結。不得把未驗證或待審核事項寫成已完成。
 - 接手時先核對紀錄與 Git 現況；重要進度同步回里程碑，架構與流程決策寫入 ADR，不只留在交接摘要。
 - 其他 AI 工具若不會自動讀取本檔，使用者應要求先讀 `AGENTS.md`，再按 `CONTRIBUTING.md` 的開工提示接手。

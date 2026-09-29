@@ -1,7 +1,7 @@
 # ADR-0016 共用 AI 協作規範與跨工具交接
 - 日期：2026-09-27
-- 狀態：提議
-- Decision Owner：維護者（依 10-governance 角色名冊，由人類確認）
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：首次由 Codex 與 Claude Code 交接任務後，確認兩者都讀取同一份規範，且交接紀錄足以重現驗證結果
 
 ## 背景
@@ -31,3 +31,6 @@
 ## 後果
 - 共用規則只維護於 `AGENTS.md`，相關文件與 Issue 範本同步更新引用。
 - 不新增套件或服務；AI 仍不得自行擔任 Decision Owner、核准或合併 PR，內容仍須人工審核。
+
+## 後續修訂
+- 2026-09-29：決策 4 的交接紀錄保存方式由 [ADR-0035](0035-handoff-current-state-only.md) 修訂：`docs/handoff.md` 只寫目前狀態，每次任務的紀錄寫在 PR 說明。
