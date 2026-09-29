@@ -6,13 +6,12 @@
 - **最後更新**：2026-09-29，Claude（Claude Code）
 
 ## 目前工作區
-- **`docs/chinese-governance-terms`**（自 `main` `72f5c55` 建立，待審）：全 repo 將 Decision Owner、Review Point、Learning Review 改為「決策者」「回顧點」「學習回顧」（2026-09-29 要求）；含社群指引、ADR、SDD、Issue 範本與已審的後見之明偏誤卡一句。驗證見 PR。
-- PR #94（案例小題只從 `/cases/` 進入）已合併。
+- **`content/publish-cases`**（自 `main` `c0096e0` 建立，待審）：發布多方觀點試行案例 daily-case-01 與小題 daily-024–026（@Wang-Yi-Zhang 以 `npm run review` 標記），`updates.yaml` 加 `multi-perspective-cases` 功能說明，11 里程碑同步。驗證見 PR。
+- PR #95（治理用語改為中文）已合併。
 - **未追蹤**：`Claude outputs/`（過時草稿，可刪）。
 
 ## 待人工決定
 - 回饋表單 Q17 說明欄貼上「列名告知」（見 `docs/feedback/google-form-design.md`），需在 Google 表單後台操作。
-- ADR-0036 試行案例 daily-case-01（巷口紅線）：決策者判斷是否屬爭議議題（目前標 `requiresSecondReview: false`），再審核案例與 3 題小題。
 - `docs/review/p0-p1-checklist.md`：2026-09-27 那一輪的一次性清單，仍有 14 項未勾。建議在開頭標註「歷史清單」，並刪掉 `review-guide.md` 第 134 行已過時的「本次修訂仍是 AI 草稿」。
 - `docs/review/2026-09-27-architecture-audit.md`：當時的審查快照，ADR-0025 有引用。建議保留，只在開頭標註「歷史快照」。
 - [ADR-0026](adr/0026-first-contribution-pilot.md) 的試行安排（仍是提議，還沒有真人試走）。
@@ -26,8 +25,8 @@
 - **2027-03**：第一次角色檢視。
 
 ## 下一步
-1. 審閱並合併 `docs/chinese-governance-terms`。
-2. 審核 daily-case-01 與 daily-024–026，發布時在 `updates.yaml` 加功能說明。
+1. 審閱並合併 `content/publish-cases`。
+2. 多方觀點情境找試讀者，依 ADR-0036 回顧點檢視（讀者是否找得到入口、是否先讀角色卡、共同點與先問什麼的正解是否唯一）。
 3. 應對工具箱依 ADR-0037 回顧點找試讀者回饋。
 4. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的回顧點）。
 
