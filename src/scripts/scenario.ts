@@ -171,6 +171,8 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
     const icon = result.querySelector('[data-result-icon]');
     const text = result.querySelector('[data-result-text]');
     const choice = result.querySelector('[data-result-choice]');
+    const encourage = result.querySelector<HTMLElement>('[data-result-encourage]');
+    if (encourage) encourage.hidden = outcome.correct;
     if (icon) icon.textContent = outcome.correct ? '✓' : '↻';
     if (text) text.textContent = outcome.correct ? quiz.correct : quiz.tryAnotherAngle;
     // classify 逐句已標示，不另列選擇（也不顯示答對幾句）

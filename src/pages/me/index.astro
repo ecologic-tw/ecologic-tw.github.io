@@ -1,5 +1,5 @@
 ---
-import { kindLabel, themeLabel } from '../../i18n/zh-TW.ts';
+import { kindLabel, themeLabel, toolbox } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
 import { BADGES, type ContentIndex } from '../../lib/badges.ts';
 import {
@@ -10,11 +10,16 @@ import {
 } from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
 import { collectableEntries } from '../../lib/quiz.ts';
+import { isToolKind } from '../../lib/toolbox.ts';
 import { publishedKeys, withdrawnIds } from '../../lib/updates.ts';
 
 const entries = await getPublishedEntries();
 const scenarios = await getPublishedScenarios();
 const groups = groupByKind(entries);
+// 應對工具箱（ADR-0037）：有善意回應法的謬誤、偏誤卡，前端只顯示已點亮的
+const toolGroups = groupByKind(
+  entries.filter((e) => isToolKind(e.data.kind) && e.data.charitableResponse),
+);
 
 // 給前端的內容索引（只含 id 與規則需要的欄位）
 const index: ContentIndex = {
@@ -87,6 +92,33 @@ const withdrawn = withdrawnIds(
         )}
       </section>
 
+      <section class="toolbox" aria-labelledby="toolbox-title" data-toolbox>
+        <h2 id="toolbox-title">{toolbox.title}</h2>
+        <p class="hint">{toolbox.intro}</p>
+        <p class="toolbox-count" data-toolbox-count hidden></p>
+        <p class="empty" data-toolbox-empty>
+          {toolbox.empty}
+        </p>
+        {toolGroups.map(({ kind, entries: list }) => (
+          <div class={`tool-group kind-${kind}`} data-tool-group hidden>
+            <h3>{kindLabel[kind]}</h3>
+            <ul>
+              {list.map((e) => (
+                <li data-tool-id={e.id} hidden>
+                  <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+                  <p>{e.data.charitableResponse}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <p class="print-row">
+          <button type="button" data-toolbox-print hidden>
+            {toolbox.print}
+          </button>
+        </p>
+      </section>
+
       <section aria-labelledby="practice-title">
         <h2 id="practice-title">練習進度</h2>
         <ul class="themes">
@@ -95,8 +127,7 @@ const withdrawn = withdrawnIds(
               <a href={`/practice/${theme}/`}>{themeLabel[theme]}</a>
               <progress max="1" value="0" aria-label={`${themeLabel[theme]}作答進度`} />
               <span data-progress-text>
-                已作答 0／{index.scenarios.filter((s) => s.theme === theme).length} 題，其中答對 0
-                題
+                試過 0／{index.scenarios.filter((s) => s.theme === theme).length} 題，答對 0 題
               </span>
             </li>
           ))}
@@ -361,6 +392,103 @@ const withdrawn = withdrawnIds(
 
   .lead {
     max-width: var(--measure);
+  }
+
+  /* 應對工具箱（ADR-0037）：一句一張小卡，左緣是卡別色 */
+  .toolbox-count {
+    margin-top: 0.75rem;
+    font-weight: 500;
+  }
+
+  .tool-group ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 0.6rem;
+  }
+
+  .tool-group li {
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    box-shadow: inset 4px 0 0 var(--kind);
+  }
+
+  .tool-group a {
+    font-weight: 500;
+    font-size: var(--step--1);
+    color: var(--ink);
+  }
+
+  .tool-group li p {
+    margin-top: 0.25rem;
+  }
+
+  .print-row {
+    margin-top: 1rem;
+  }
+
+  .print-row button {
+    font: inherit;
+    font-size: var(--step--1);
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--moss);
+    border-radius: 3px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .print-row button[hidden] {
+    display: none;
+  }
+
+  /* 列印：只印工具箱，黑白也清楚（ADR-0037） */
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.skip-link),
+    :global(.draft-banner),
+    .me > h1,
+    .lead,
+    .notice,
+    [data-me-app] > section:not(.toolbox),
+    .print-row {
+      display: none !important;
+    }
+
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+      color: #000 !important;
+    }
+
+    .toolbox {
+      margin-top: 0;
+    }
+
+    .hint,
+    .toolbox-count,
+    .tool-group h3,
+    .tool-group a {
+      color: #000;
+    }
+
+    .tool-group a {
+      text-decoration: none;
+    }
+
+    .tool-group ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tool-group li {
+      break-inside: avoid;
+      border-color: #000;
+      box-shadow: none;
+    }
   }
 
   @media (min-width: 64rem) {

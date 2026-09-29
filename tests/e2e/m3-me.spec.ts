@@ -204,6 +204,45 @@ test.describe('關閉 JavaScript', () => {
   });
 });
 
+test.describe('應對工具箱（ADR-0037）', () => {
+  test('starts empty with an invitation and no print button', async ({ page }) => {
+    await page.goto('/me/');
+    await expect(page.locator('[data-toolbox-empty]')).toContainText('要開始才有機會變厲害');
+    await expect(page.locator('[data-toolbox-count]')).toBeHidden();
+    await expect(page.locator('[data-tool-id]:visible')).toHaveCount(0);
+    await expect(page.locator('[data-toolbox-print]')).toBeHidden();
+  });
+
+  test('a lit fallacy card adds only its own response line', async ({ page }) => {
+    await answer(page, 'daily-001', '稻草人謬誤');
+    await page.goto('/me/');
+    const tool = page.locator('[data-tool-id="straw-man"]');
+    await expect(tool).toBeVisible();
+    await expect(tool).toContainText('我想先確認一下');
+    await expect(page.locator('[data-tool-id="ad-hominem"]')).toBeHidden();
+    await expect(page.locator('[data-toolbox-count]')).toHaveText('工具箱裡有 1 句回應');
+    await expect(page.locator('[data-toolbox-empty]')).toBeHidden();
+    await expect(page.locator('[data-theme-progress="daily"]')).toContainText(
+      /試過 1／\d+ 題，答對 1 題/,
+    );
+
+    await expect(page.locator('[data-toolbox-print]')).toBeVisible();
+    await page.emulateMedia({ media: 'print' });
+    await expect(tool).toBeVisible();
+    await expect(page.getByRole('heading', { name: '徽章' })).toBeHidden();
+    await expect(page.locator('[data-toolbox-print]')).toBeHidden();
+  });
+
+  test('a wrong answer says the attempt still counts; a right one does not', async ({ page }) => {
+    await answer(page, 'daily-001', '沒有問題');
+    const encourage = page.locator('[data-result-encourage]');
+    await expect(encourage).toBeVisible();
+    await expect(encourage).toContainText('每一次嘗試都算數');
+    await answer(page, 'daily-001', '稻草人謬誤');
+    await expect(page.locator('[data-result-encourage]')).toBeHidden();
+  });
+});
+
 test.describe('axe：我的圖鑑', () => {
   for (const scheme of ['light', 'dark'] as const) {
     test(`/me/ with progress (${scheme})`, async ({ page }) => {
