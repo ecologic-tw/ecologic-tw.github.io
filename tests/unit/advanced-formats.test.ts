@@ -179,6 +179,88 @@ describe('validity-soundness and choice', () => {
   });
 });
 
+describe('classify (ADR-0034)', () => {
+  const kinds: SourceDoc = {
+    file: 'kinds-of-disagreement.md',
+    fileId: 'kinds-of-disagreement',
+    data: {
+      id: 'kinds-of-disagreement',
+      kind: 'concept',
+      title: '分歧的種類',
+      en: 'Kinds of disagreement',
+      summary: '一句話定義。',
+      quickCheck: { question: '問題？', options: ['甲', '乙'], answer: 0, explanation: '說明' },
+      status: 'draft',
+      updated: '2026-09-29',
+    },
+    body: '',
+  };
+  const item = (id: string, answer: string, extra: Record<string, unknown> = {}) => ({
+    id,
+    text: `${id} 的句子`,
+    answer,
+    note: `${id} 的解說`,
+    ...extra,
+  });
+  const classify = {
+    ...base,
+    difficulty: 'basic',
+    format: 'classify',
+    items: [
+      item('one', 'fact'),
+      item('two', 'value', { acceptable: ['interest'] }),
+      item('three', 'definition'),
+    ],
+  };
+  const check = (data: Record<string, unknown>, entries = [...cards, kinds]) =>
+    checkContent({ entries, scenarios: [doc('daily-001', data)], terms: [] }).errors.join('\n');
+
+  it('accepts a classify question in basic mode', () => {
+    expect(check(classify)).toBe('');
+  });
+
+  it('needs 3–5 statements', () => {
+    expect(check({ ...classify, items: classify.items.slice(0, 2) })).toMatch(/items/);
+    const six = ['a', 'b', 'c', 'd', 'e', 'f'].map((id) => item(id, 'fact'));
+    expect(check({ ...classify, items: six })).toMatch(/items/);
+  });
+
+  it('rejects duplicate ids, unknown kinds and a bad acceptable', () => {
+    expect(
+      check({ ...classify, items: [...classify.items.slice(0, 2), item('one', 'fact')] }),
+    ).toMatch(/id 不可重複/);
+    expect(
+      check({ ...classify, items: [...classify.items.slice(0, 2), item('x', 'feeling')] }),
+    ).toMatch(/answer/);
+    const same = item('x', 'fact', { acceptable: ['fact'] });
+    expect(check({ ...classify, items: [...classify.items.slice(0, 2), same] })).toMatch(
+      /acceptable 不可與 answer 相同/,
+    );
+    const two = item('x', 'fact', { acceptable: ['value', 'interest'] });
+    expect(check({ ...classify, items: [...classify.items.slice(0, 2), two] })).toMatch(
+      /acceptable/,
+    );
+  });
+
+  it('applies the private-information check to statements', () => {
+    const leaky = item('x', 'fact', { text: '請打 0912-345-678 詢問' });
+    expect(check({ ...classify, items: [...classify.items.slice(0, 2), leaky] })).toMatch(
+      /情境題文字不得含/,
+    );
+  });
+
+  it('needs the kinds-of-disagreement card, reviewed before a reviewed question', () => {
+    expect(check(classify, cards)).toMatch(/kinds-of-disagreement/);
+    const reviewed = {
+      ...classify,
+      status: 'reviewed',
+      reviewers: ['alice'],
+      sources: [{ title: 'Reference' }],
+    };
+    expect(check(reviewed)).toMatch(/未審/);
+  });
+});
+
 describe('control ratio', () => {
   it('counts advanced questions in the denominator', () => {
     const judge = (id: string, answer: string) =>

@@ -140,6 +140,17 @@ it('creates advanced-format templates and promotes them without a judge answer (
     status: 'draft',
   });
 });
+it('creates a basic-mode classify template (ADR-0034)', () => {
+  const root = fixture();
+  const proposal = createProposal(root, 'issue-map', {
+    theme: 'daily',
+    title: '爭點地圖',
+    format: 'classify',
+  });
+  const created = parse(readFileSync(proposal, 'utf8').split('---')[1] ?? '');
+  expect(created).toMatchObject({ format: 'classify', items: [], difficulty: 'basic' });
+  expect(created).not.toHaveProperty('answer');
+});
 it('checks multi option lists for blank entries and rejects unknown formats', () => {
   const root = fixture();
   const proposal = createProposal(root, 'multi', {

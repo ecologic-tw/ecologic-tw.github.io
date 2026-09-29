@@ -1,5 +1,18 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：實作爭點地圖（ADR-0034）
+- **目標與範圍**：依已接受的 ADR-0034 實作 `classify` 題型，並起草 2 題試行題。
+- **分支**：`feat/issue-map`，自 `origin/main`（`b4e0163`，含 PR #82）建立。
+- **已完成**：
+  - schema：`classifyScenario`（3–5 句、`id` 不重複、`acceptable` ≤1 且不等於 `answer`），基礎與進階皆可；`CONTENT_SCHEMA_VERSION` 升為 5。
+  - `src/lib/quiz.ts`：`DISAGREEMENT_KINDS`、`gradeClassify`；`collectableEntries` 對 `classify` 回傳「分歧的種類」。
+  - 作答頁逐句單選、送出後 ✓／△／✗ 標示，不顯示答對幾句；解說區列出各句的分歧種類。
+  - 內容檢查：句子與解說套用個資檢查；需要「分歧的種類」卡，已審題目要求它也已審。提案工具支援 `--format classify`。
+  - 草稿：daily-023（基礎，含 1 句可接受的定義／價值）、cons-022（進階）。來源沿用「分歧的種類」卡已核對的 Stevenson 1944、Fisher & Ury 1981。
+- **驗證**：見 PR。版面以截圖確認：題號在句子前、選項兩欄、標記不換行。
+- **注意**：含草稿時保育題對照題比例約 14%（僅警告）；兩題都發布後，已審保育題對照題比例為 3／17。
+- **待人工**：審核 2 題（逐句是否有第二種合理答案）；發布時同一個 PR 補 `updates.yaml` 功能說明。
+
 ## 2026-09-29：爭點地圖 ADR（ADR-0034）
 - **目標與範圍**：依 SDD 13 建議順序，為爭點地圖寫 ADR；本 PR 只改文件，未實作。另記錄 Decision Owner 以 Safari 試印討論引導卡成功。
 - **分支**：`docs/adr-0034-issue-map`，自 `origin/main`（`f37d493`，含 PR #81）建立。

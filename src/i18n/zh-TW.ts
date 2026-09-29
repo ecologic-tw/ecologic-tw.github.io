@@ -140,6 +140,22 @@ export const revision = {
     `這題小檢核的答案已於 ${date} 修正，說明見頁尾的修訂紀錄。`,
 } as const;
 
+/** 爭點地圖（ADR-0034）：逐句選分歧種類；標記一律圖示＋文字，不計分 */
+export const classifyQuiz = {
+  question: '下面每一句，比較像哪一種分歧？',
+  hint: '每一句選一種。界線模糊時，解說會說明哪些也算合理。',
+  chooseFirst: '每一句都選一種分歧，再送出。',
+  kindLabel: { fact: '事實分歧', value: '價值分歧', definition: '定義分歧', interest: '利益分歧' },
+  marks: {
+    right: { icon: '✓', text: '正解' },
+    acceptable: { icon: '△', text: '可接受' },
+    wrong: { icon: '✗', text: '你的選擇' },
+  },
+  answerTag: '正解',
+  answerIs: '各句的分歧種類',
+  acceptableAlso: '也可以接受',
+} as const;
+
 /** 進階題型的介面字串（ADR-0022 §4）：標記一律圖示＋文字，不只靠顏色 */
 export const advancedQuiz = {
   multiQuestion: '這段推理有哪些問題？',

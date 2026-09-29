@@ -157,7 +157,10 @@
 - [ ] 3 爭點地圖（`classify` 題型）
   - [x] ADR-0034 起草（提議）
   - [x] ADR-0034 接受（2026-09-29，Decision Owner：@Wang-Yi-Zhang；基礎模式可出現、答對點亮「分歧的種類」）
-  - [ ] 實作：schema、判定、作答元件、檢查與工具、測試；試行 2 題 draft
+  - [x] 實作：schema、判定 `gradeClassify`、作答元件、內容檢查、提案範本、單元與 e2e 測試；02、03、04、08、CONTEXT、投稿指南同步
+  - [x] 試行 2 題 draft（AI 起草）：daily-023 要不要改成在家上班（基礎）、cons-022 河堤草地要不要改種灌木（進階）
+  - [ ] 人工審核 2 題；發布時在同一個 PR 的 `updates.yaml` 加一則 `kind: feature`
+  - [ ] 至少一位試讀者回饋後，依 ADR-0034 Review Point 檢視
 - [ ] 4 多方觀點情境（`cases` 集合）
 - [ ] 5 分支對話練習（試行 1–2 則）
 

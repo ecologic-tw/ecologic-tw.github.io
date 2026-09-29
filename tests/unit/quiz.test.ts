@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  DISAGREEMENT_ENTRY,
   NO_PROBLEM,
   buildOptions,
   collectableEntries,
+  gradeClassify,
   gradeMulti,
   isCorrect,
   shuffle,
@@ -111,6 +113,42 @@ describe('gradeMulti (ADR-0022)', () => {
       'slippery-slope': 'wrong',
     });
     expect(grade('ad-hominem', 'false-dilemma').marks.get('slippery-slope')).toBe('clear');
+  });
+});
+
+describe('gradeClassify (ADR-0034)', () => {
+  const items = [
+    { id: 'one', answer: 'fact', acceptable: [] },
+    { id: 'two', answer: 'definition', acceptable: ['value'] },
+  ];
+
+  it('is correct when every statement is right or acceptable', () => {
+    const { correct, marks } = gradeClassify(
+      items,
+      new Map([
+        ['one', 'fact'],
+        ['two', 'value'],
+      ]),
+    );
+    expect(correct).toBe(true);
+    expect([...marks.values()]).toEqual(['right', 'acceptable']);
+  });
+
+  it('is not correct when any statement is wrong or missing', () => {
+    expect(
+      gradeClassify(
+        items,
+        new Map([
+          ['one', 'value'],
+          ['two', 'definition'],
+        ]),
+      ).correct,
+    ).toBe(false);
+    expect(gradeClassify(items, new Map([['one', 'fact']])).marks.get('two')).toBe('wrong');
+  });
+
+  it('lights the kinds-of-disagreement card', () => {
+    expect(collectableEntries({ format: 'classify' })).toEqual([DISAGREEMENT_ENTRY]);
   });
 });
 
