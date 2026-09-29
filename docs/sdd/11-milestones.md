@@ -48,12 +48,12 @@
 
 ## 證據判定紀錄（ADR-0038）
 已完成：ADR 接受（2026-09-29），修改 08、10、12 §5、審核指南、PR 模板，新增 [紀錄格式](../review/evidence/README.md)。
-- 已發布的心理學卡補證據判定紀錄（回顧點前或下次修訂時；證據強度需要改變時依 ADR-0025 處理）：
+- 已發布的心理學卡補證據判定紀錄（回顧點前或下次修訂時；證據強度需要改變時依 ADR-0025 處理）。AI 已起草 7 份紀錄（2026-09-29），人工核對並判定後勾選：
   - [ ] 確認偏誤 `confirmation-bias`
-  - [ ] 倖存者偏誤 `survivorship-bias`
-  - [ ] 可得性捷思 `availability-heuristic`
+  - [ ] 倖存者偏誤 `survivorship-bias`（AI 認為 ADR-0038 門檻不太適用統計推理錯誤，需決策者決定做法）
+  - [ ] 可得性捷思 `availability-heuristic`（找到經典範式的複製失敗，AI 建議考慮改為 `contested`）
   - [ ] 後見之明偏誤 `hindsight-bias`
-  - [ ] 框架效應 `framing-effect`
+  - [ ] 框架效應 `framing-effect`（小檢核題是屬性框架，超出證據範圍）
   - [ ] 非暴力溝通 `nonviolent-communication`
   - [ ] 善意詮釋與鋼人論證 `charity-and-steelman`
 - [ ] 回顧點（第一批三張卡依新流程審核後，或約 2026-12-29）：檢視紀錄是否幫助發現錯誤、審核時間、有無卡因反證搜尋降級
