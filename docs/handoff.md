@@ -1,5 +1,12 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：接受 ADR-0033
+- **目標與範圍**：PR #78 合併後，Decision Owner 接受 ADR-0033；本 PR 只改文件。
+- **分支**：`docs/accept-adr-0033`，自 `origin/main` 建立。
+- **已完成**：ADR-0033 狀態改為接受；文末記錄決定：入口放圖鑑總覽與關於頁、新增 `toolkit` 集合。SDD 13 §4 與 11 里程碑同步。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **下一步**：實作 `toolkit` 集合、頁面與列印樣式，並起草引導卡與「分歧的種類」概念卡。
+
 ## 2026-09-29：討論引導卡 ADR（ADR-0033）
 - **目標與範圍**：依 SDD 13 建議順序，為討論引導卡寫 ADR；本 PR 只改文件，未實作。
 - **分支**：`docs/adr-0033-discussion-card`，自 `origin/main`（`1b61080`，含 PR #77）建立。
