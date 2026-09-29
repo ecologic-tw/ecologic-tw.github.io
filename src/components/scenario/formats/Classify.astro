@@ -1,0 +1,103 @@
+---
+// classify：爭點地圖，逐句選事實／價值／定義／利益（ADR-0034）
+import { classifyQuiz } from '../../../i18n/zh-TW.ts';
+import { DISAGREEMENT_KINDS } from '../../../lib/quiz.ts';
+import QuizOption from '../QuizOption.astro';
+import type { FormatProps } from '../types.ts';
+
+type Props = FormatProps<'classify'>;
+const { data, part } = Astro.props;
+
+const items = data.items;
+---
+
+{part === 'question' && (
+  <fieldset aria-describedby="classify-hint">
+    <legend>{data.prompt ?? classifyQuiz.question}</legend>
+    <p class="hint" id="classify-hint">
+      {classifyQuiz.hint}
+    </p>
+    <ol class="classify-items" role="list">
+      {items.map((item) => (
+        <li
+          data-classify-item={item.id}
+          data-answer={item.answer}
+          data-acceptable={item.acceptable.join(' ')}
+        >
+          <fieldset>
+            <legend class="item-text">{item.text}</legend>
+            <ul data-quiz-options class="kinds">
+              {DISAGREEMENT_KINDS.map((kind) => (
+                <QuizOption
+                  id={kind}
+                  name={`item-${item.id}`}
+                  label={classifyQuiz.kindLabel[kind]}
+                />
+              ))}
+            </ul>
+          </fieldset>
+        </li>
+      ))}
+    </ol>
+  </fieldset>
+)}
+{part === 'notes' && items.length > 0 && (
+  <section class="option-notes" aria-labelledby="classify-notes-title">
+    <h2 id="classify-notes-title">{classifyQuiz.answerIs}</h2>
+    <ol>
+      {items.map((item) => (
+        <li>
+          <strong>{item.text}</strong>
+          <span class="role">
+            （{classifyQuiz.kindLabel[item.answer]}
+            {item.acceptable.length > 0 &&
+              `；${classifyQuiz.acceptableAlso}${item.acceptable.map((k) => classifyQuiz.kindLabel[k]).join('、')}`}
+            ）
+          </span>
+          ：{item.note}
+        </li>
+      ))}
+    </ol>
+  </section>
+)}
+
+<style>
+  /* 逐句一組單選。題號放在句子前（fieldset 裡的清單標記會對齊到選項列），
+     選項兩欄、手機一欄，標記文字才不會被擠到換行。選項的外框與結果標示在 src/styles/quiz.css。 */
+  .classify-items {
+    counter-reset: statement;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .classify-items > li {
+    counter-increment: statement;
+  }
+
+  .classify-items legend.item-text {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    margin-bottom: 0.5rem;
+  }
+
+  .classify-items legend.item-text::before {
+    content: counter(statement) '. ';
+    color: var(--moss);
+  }
+
+  @media (min-width: 36rem) {
+    .kinds {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .option-notes ol {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25em;
+    display: grid;
+    gap: 0.4rem;
+  }
+</style>

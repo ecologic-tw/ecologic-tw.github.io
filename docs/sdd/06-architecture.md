@@ -32,7 +32,8 @@
 │  │  ├─ feedback.ts           # 產生回饋連結
 │  │  ├─ updates.ts            # 更新紀錄分組與 Atom 訂閱源（ADR-0024）
 │  │  └─ content.ts            # 取 reviewed 內容的唯一入口
-│  ├─ components/  layouts/  pages/  styles/
+│  ├─ components/            # scenario/：情境題的題型元件（見下文）
+│  ├─ layouts/  pages/  styles/
 ├─ scripts/check-content.ts    # 03 的建置期檢查
 └─ tests/ unit/  e2e/
 ```
@@ -58,6 +59,12 @@ parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證�
 // badges.ts：earnedBadges(progress, contentIndex)、collectedEntries(progress, contentIndex)，純函式
 ```
 開發環境（`npm run dev`）顯示 draft 內容並加「草稿」浮水印；正式建置不含。
+
+## 情境題頁面與題型元件
+- `src/pages/scenario/[id].astro` 只負責共用版面與作答流程：情境、表單外框、結果、解說、改寫練習、相關連結。
+- 各題型放在 `src/components/scenario/formats/`（`Judge`、`Choice`、`Multi`、`ValiditySoundness`、`Classify`），同一個元件以 `part` 產生三處內容：`question` 題目與選項、`answer` 正解、`notes` 逐項說明；`ScenarioFormat.astro` 依 `format` 選元件。選項標記統一用 `QuizOption.astro`。
+- 新增題型：在 `formats/` 加一個元件、在 `ScenarioFormat.astro` 加一行；前端判定仍在 `src/scripts/scenario.ts`，依 `data-*` 屬性運作。
+- 選項與結果標示的樣式在 `src/styles/quiz.css`（只由情境題頁面匯入），因為頁面的 scoped 樣式套不到子元件；題型專屬樣式放在各自元件。
 
 ## 來源與搜尋（ADR-0018）
 - `Sources.astro` 統一呈現三種內容的來源；情境題置於答案揭露區。

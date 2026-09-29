@@ -1,0 +1,26 @@
+---
+// 依題型選元件。新增題型：在 formats/ 加一個元件，並在這裡多一行（見 docs/sdd/06 目錄說明）。
+import type { Entry } from '../../lib/content.ts';
+import Choice from './formats/Choice.astro';
+import Classify from './formats/Classify.astro';
+import Judge from './formats/Judge.astro';
+import Multi from './formats/Multi.astro';
+import ValiditySoundness from './formats/ValiditySoundness.astro';
+import type { FormatPart, ScenarioData } from './types.ts';
+
+interface Props {
+  data: ScenarioData;
+  entries: Map<string, Entry>;
+  part: FormatPart;
+}
+
+const { data, entries, part } = Astro.props;
+---
+
+{data.format === 'judge' && <Judge data={data} entries={entries} part={part} />}
+{data.format === 'choice' && <Choice data={data} entries={entries} part={part} />}
+{data.format === 'classify' && <Classify data={data} entries={entries} part={part} />}
+{data.format === 'validity-soundness' && (
+  <ValiditySoundness data={data} entries={entries} part={part} />
+)}
+{data.format === 'multi' && <Multi data={data} entries={entries} part={part} />}
