@@ -6,12 +6,12 @@
 - **最後更新**：2026-09-29，Claude（Claude Code）
 
 ## 目前工作區
-- **`docs/adr-0036-multi-perspective-case`**（自 `main` `8d1646c` 建立，待審）：提議 [ADR-0036](adr/0036-multi-perspective-case.md) 多方觀點情境，只改文件、尚未實作。同步 SDD 13 §6、11 里程碑。
+- **`docs/adr-0036-multi-perspective-case`**（自 `main` `8d1646c` 建立，待審）：[ADR-0036](adr/0036-multi-perspective-case.md) 多方觀點情境（Decision Owner 已接受），只改文件、尚未實作。同步 SDD 13 §6、11 里程碑。
 - PR #84–#87 都已合併，爭點地圖試行題已發布。
 - **未追蹤**：`Claude outputs/`（前一版 handoff 草稿，已過時，可刪）。
 
 ## 待人工決定
-- ADR-0036 的四個待決事項（見 ADR 最後一節）：是否接受；小題改用 `choice` 而不是 `multi`；一律雙審或日常案例依 08 判斷；試行案例的主題。
+- ADR-0036 試行案例的主題（日常或保育），在第 3 階段草稿 PR 前決定。日常案例若不屬爭議議題可單審發布；保育案例要等第二位審核者。
 - `docs/review/p0-p1-checklist.md`：2026-09-27 那一輪的一次性清單，仍有 14 項未勾。建議在開頭標註「歷史清單」，並刪掉 `review-guide.md` 第 134 行已過時的「本次修訂仍是 AI 草稿」。
 - `docs/review/2026-09-27-architecture-audit.md`：當時的審查快照，ADR-0025 有引用。建議保留，只在開頭標註「歷史快照」。
 - [ADR-0026](adr/0026-first-contribution-pilot.md) 的試行安排（仍是提議，還沒有真人試走）。
@@ -25,7 +25,7 @@
 - **2027-03**：第一次角色檢視。
 
 ## 下一步
-1. Decision Owner 決定 ADR-0036，之後依其第 12 點分三個 PR 實作（schema → 頁面 → 1 則試行草稿）。發布要等第二位審核者。
+1. 合併 ADR-0036 PR 後，依其第 12 點分三個 PR 實作：schema → 頁面 → 1 則試行草稿。
 2. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的 Review Point）。
 
 ## 參考
