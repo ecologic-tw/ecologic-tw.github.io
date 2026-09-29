@@ -1,13 +1,17 @@
 // 建置期內容檢查（docs/sdd/03「建置期檢查」、07 XSS 對策）。純函式，檔案讀取在 scripts/check-content.ts。
 import type { z } from 'astro/zod';
 import {
+  CASE_QUESTION_COUNT,
   NO_PROBLEM,
   THEMES,
+  caseSchema,
+  caseTexts,
   entrySchema,
   scenarioSchema,
   scenarioTexts,
   termSchema,
   updateSchema,
+  type CaseData,
   type EntryData,
   type ScenarioData,
   type TermData,
@@ -15,6 +19,7 @@ import {
   type UpdateData,
   toolkitSchema,
 } from './content-schema.ts';
+import { validateCaseBody } from './cases.ts';
 import { findLiteralBold, LITERAL_BOLD_HINT } from './emphasis-check.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
 import { DISAGREEMENT_ENTRY, collectableEntries } from './quiz.ts';
@@ -38,6 +43,8 @@ export type ContentInput = {
   updates?: SourceDoc[];
   /** 討論引導卡等線下工具（ADR-0033）；測試資料可省略 */
   toolkit?: SourceDoc[];
+  /** 多方觀點案例（ADR-0036）；測試資料可省略 */
+  cases?: SourceDoc[];
 };
 
 export type CheckResult = { errors: string[]; warnings: string[] };
@@ -189,6 +196,50 @@ export function checkContent(input: ContentInput): CheckResult {
     }
     if (RAW_HTML.test(doc.body)) errors.push(`${doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
     checkBold(doc);
+  }
+
+  // 多方觀點案例（ADR-0036）：小題指向存在的案例且主題一致；已審小題的案例也要已審（checkRef），
+  // 已審案例至少 2 題已審小題；同一案例的雙審標記一致。
+  const cases = indexById(validate<CaseData>(input.cases ?? [], caseSchema, errors), errors);
+  const questionsByCase = new Map<string, Parsed<ScenarioData>[]>();
+  for (const item of scenarios.values()) {
+    const caseId = item.data.case;
+    if (!caseId || item.data.status === 'retired') continue;
+    checkRef(item, 'case', cases, '案例', caseId);
+    questionsByCase.set(caseId, [...(questionsByCase.get(caseId) ?? []), item]);
+  }
+  for (const item of cases.values()) {
+    const { doc, data } = item;
+    errors.push(...validateCaseBody(doc.body).map((issue) => `${doc.file}: ${issue}`));
+    for (const id of data.terms) checkRef(item, 'terms', terms, '名詞', id);
+    for (const id of bodyTermIds(doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
+    const text = [...caseTexts(data), doc.body].join('\n');
+    for (const [label, pattern] of PRIVATE_INFO_PATTERNS) {
+      if (pattern.test(text)) errors.push(`${doc.file}: 案例文字不得含${label}`);
+    }
+    if (RAW_HTML.test(doc.body)) errors.push(`${doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
+    checkBold(doc);
+
+    const questions = questionsByCase.get(data.id) ?? [];
+    for (const q of questions) {
+      if (q.data.theme !== data.theme) {
+        errors.push(`${q.doc.file}: 主題與所屬案例「${data.id}」不一致`);
+      }
+      if (q.data.requiresSecondReview !== data.requiresSecondReview) {
+        errors.push(
+          `${q.doc.file}: requiresSecondReview 需與所屬案例「${data.id}」一致（ADR-0036）`,
+        );
+      }
+    }
+    const { min, max } = CASE_QUESTION_COUNT;
+    const reviewed = questions.filter((q) => q.data.status === 'reviewed').length;
+    if (questions.length > max) {
+      errors.push(`${doc.file}: 案例最多 ${max} 題小題，目前 ${questions.length} 題`);
+    } else if (data.status === 'reviewed' && reviewed < min) {
+      errors.push(`${doc.file}: 已審案例至少需 ${min} 題已審小題，目前 ${reviewed} 題`);
+    } else if (data.status === 'draft' && questions.length < min) {
+      warnings.push(`${doc.file}: 案例需要 ${min}–${max} 題小題，目前 ${questions.length} 題`);
+    }
   }
 
   // 對照題比例：已發布（reviewed）集合不合格 → 錯誤；含草稿的集合不合格 → 僅警告，避免撰寫途中卡住。

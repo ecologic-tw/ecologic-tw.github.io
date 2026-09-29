@@ -1,4 +1,12 @@
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { afterEach, expect, it } from 'vitest';
@@ -152,6 +160,55 @@ it('creates a basic-mode classify template (ADR-0034)', () => {
   const created = parse(readFileSync(proposal, 'utf8').split('---')[1] ?? '');
   expect(created).toMatchObject({ format: 'classify', items: [], difficulty: 'basic' });
   expect(created).not.toHaveProperty('answer');
+});
+it('creates case questions in advanced mode and inherits the case second review (ADR-0036)', () => {
+  const root = fixture();
+  const proposal = createProposal(root, 'common', {
+    theme: 'daily',
+    title: '共同點',
+    format: 'choice',
+    case: 'daily-case-01',
+  });
+  const created = parse(readFileSync(proposal, 'utf8').split('---')[1] ?? '');
+  expect(created).toMatchObject({ case: 'daily-case-01', difficulty: 'advanced' });
+  // 案例還不存在：轉入前的完整檢查會擋下
+  change(proposal, {
+    task: 'common-ground',
+    prompt: '哪一項是所有角色都會同意的？',
+    choices: [
+      { text: '甲', correct: true, note: '說明。' },
+      { text: '乙', note: '說明。' },
+      { text: '丙', note: '說明。' },
+    ],
+    nextSteps: [],
+  });
+  writeFileSync(
+    proposal,
+    readFileSync(proposal, 'utf8')
+      .replace('## 情境\n', '## 情境\n\n一段對話。\n')
+      .replace('## 解說\n', '## 解說\n\n解說。\n'),
+  );
+  expect(preparePromotion(root, 'common').issues.join()).toMatch(/daily-case-01」不存在/);
+
+  mkdirSync(join(root, 'src/content/cases/zh-TW'), { recursive: true });
+  const role = (id: string) => ({
+    id,
+    name: '角色',
+    cares: '在意',
+    grounds: '依據',
+    worries: '擔心',
+    misread: '誤解',
+  });
+  writeFileSync(
+    join(root, 'src/content/cases/zh-TW/daily-case-01.md'),
+    `---\n${stringify({ id: 'daily-case-01', theme: 'daily', title: '案例', summary: '摘要', roles: [role('a'), role('b'), role('c')], requiresSecondReview: true, status: 'draft', updated: '2026-09-29' })}---\n## 背景\n背景。\n\n## 換個位置想\n收尾。\n`,
+  );
+  const plan = preparePromotion(root, 'common');
+  expect(plan.issues).toEqual([]);
+  expect(parse(plan.text.split('---')[1] ?? '')).toMatchObject({ requiresSecondReview: true });
+  expect(() =>
+    createProposal(root, 'rev2', { target: 'daily-001', case: 'daily-case-01' }),
+  ).toThrow(/沿用原題題型與案例/);
 });
 it('checks multi option lists for blank entries and rejects unknown formats', () => {
   const root = fixture();

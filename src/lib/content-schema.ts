@@ -167,7 +167,15 @@ export const SCENARIO_FORMATS = [
   'choice',
   'classify',
 ] as const;
-export const CHOICE_TASKS = ['hidden-premise', 'form', 'counterexample', 'steelman'] as const;
+// common-ground、ask-first 是多方觀點案例的小題（ADR-0036）
+export const CHOICE_TASKS = [
+  'hidden-premise',
+  'form',
+  'counterexample',
+  'steelman',
+  'common-ground',
+  'ask-first',
+] as const;
 export const VALIDITY_VERDICTS = ['valid', 'invalid'] as const;
 export const PREMISE_VERDICTS = ['credible', 'not-credible', 'uncertain'] as const;
 /** classify 題的句數（ADR-0034） */
@@ -179,6 +187,9 @@ const note = z.string().trim().min(1);
 const betterPhrasing = z.array(z.string()).min(1).max(2);
 const checklist = z.array(z.string()).min(3).max(4);
 
+/** 多方觀點案例 id（ADR-0036）：前綴與主題一致，如 daily-case-01 */
+const CASE_ID = /^(daily|cons)-case-\d{2}$/;
+
 const scenarioBase = {
   id: z.string().regex(/^(daily|cons)-\d{3}$/),
   theme: z.enum(THEMES),
@@ -187,6 +198,8 @@ const scenarioBase = {
   difficulty: z.enum(['basic', 'advanced']),
   form: z.string().optional(),
   terms: z.array(z.string()).default([]),
+  // 所屬的多方觀點案例（ADR-0036）；案例內依題號排序
+  case: z.string().regex(CASE_ID).optional(),
   ...reviewMeta,
 };
 
@@ -285,6 +298,14 @@ export function multiOptionIds(data: {
 }
 
 function checkFormat(data: AnyScenario, ctx: z.RefinementCtx) {
+  // 第一版的案例小題都在進階模式（ADR-0036 §4）
+  if (data.case && data.difficulty !== 'advanced') {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['difficulty'],
+      message: '案例小題目前只出現在進階模式，difficulty 必須為 advanced（ADR-0036）',
+    });
+  }
   if (data.format === 'judge') return;
   // classify 基礎與進階模式都可以出現（ADR-0034，ADR-0022 §2 的例外）
   if (data.format === 'classify') {
@@ -364,6 +385,14 @@ function checkFormat(data: AnyScenario, ctx: z.RefinementCtx) {
   }
 }
 
+/** id 前綴（daily-／cons-）與 theme 一致 */
+function checkIdTheme(data: { id: string; theme: string }, ctx: z.RefinementCtx) {
+  const idTheme = data.id.startsWith('daily-') ? 'daily' : 'conservation';
+  if (idTheme !== data.theme) {
+    ctx.addIssue({ code: 'custom', path: ['theme'], message: `id 前綴與 theme 不一致` });
+  }
+}
+
 export const createScenarioSchema = (policy: ReviewPolicy = REVIEW_POLICY) =>
   z
     .discriminatedUnion('format', [
@@ -384,10 +413,7 @@ export const createScenarioSchema = (policy: ReviewPolicy = REVIEW_POLICY) =>
           message: `isControl 為 true 若且唯若 answer 為 '${NO_PROBLEM}'（只有 judge 題可以是對照題）`,
         });
       }
-      const idTheme = data.id.startsWith('daily-') ? 'daily' : 'conservation';
-      if (idTheme !== data.theme) {
-        ctx.addIssue({ code: 'custom', path: ['theme'], message: `id 前綴與 theme 不一致` });
-      }
+      checkIdTheme(data, ctx);
       checkFormat(data, ctx);
     });
 
@@ -430,10 +456,78 @@ export const toolkitSchema = z
   .strict()
   .superRefine(requireReviewers);
 
+/** 多方觀點案例的角色數與小題數（ADR-0036） */
+export const CASE_ROLE_COUNT = { min: 3, max: 4 } as const;
+export const CASE_QUESTION_COUNT = { min: 2, max: 3 } as const;
+
+// 多方觀點案例（ADR-0036）：議題背景與角色卡；小題是一般情境題，以 case 欄位指向案例。
+// 本文段落見 src/lib/cases.ts；小題數、主題與審核一致性在 content-checks 跨檔檢查。
+export const createCaseSchema = (policy: ReviewPolicy = REVIEW_POLICY) =>
+  z
+    .object({
+      id: z.string().regex(CASE_ID),
+      theme: z.enum(THEMES),
+      title: z.string().trim().min(1),
+      summary: z.string().trim().min(1).max(80),
+      roles: z
+        .array(
+          z
+            .object({
+              id: z.string().regex(/^[a-z0-9-]+$/),
+              // 虛構，不對應可辨識的真實團體、機關或個人
+              name: note,
+              cares: note,
+              grounds: note,
+              worries: note,
+              misread: note,
+            })
+            .strict(),
+        )
+        .min(CASE_ROLE_COUNT.min)
+        .max(CASE_ROLE_COUNT.max),
+      terms: z.array(z.string()).default([]),
+      ...reviewMeta,
+    })
+    .strict()
+    .superRefine((data, ctx) => {
+      requireReviewers(data, ctx, policy);
+      checkIdTheme(data, ctx);
+      const ids = data.roles.map((role) => role.id);
+      if (new Set(ids).size !== ids.length) {
+        ctx.addIssue({ code: 'custom', path: ['roles'], message: 'roles 的 id 不可重複' });
+      }
+      // 保育案例一律雙審；日常案例依 08 判斷（ADR-0036 §10）
+      if (data.theme === 'conservation' && !data.requiresSecondReview) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['requiresSecondReview'],
+          message: '保育案例必須 requiresSecondReview: true（ADR-0036）',
+        });
+      }
+    });
+
+export const caseSchema = createCaseSchema();
+
+/** 案例除了本文以外，會顯示給讀者的文字（隱私檢查用） */
+export function caseTexts(data: z.output<typeof caseSchema>): string[] {
+  return [
+    data.title,
+    data.summary,
+    ...data.roles.flatMap((role) => [
+      role.name,
+      role.cares,
+      role.grounds,
+      role.worries,
+      role.misread,
+    ]),
+  ];
+}
+
 export type EntryData = z.output<typeof entrySchema>;
 export type ScenarioData = z.output<typeof scenarioSchema>;
 export type TermData = z.output<typeof termSchema>;
 export type ToolkitData = z.output<typeof toolkitSchema>;
+export type CaseData = z.output<typeof caseSchema>;
 
 // 更新紀錄的手寫說明（ADR-0024）：功能更新、重要勘誤、公告。新上架內容由 published 自動列出。
 export const UPDATE_KINDS = ['feature', 'content', 'fix', 'notice'] as const;

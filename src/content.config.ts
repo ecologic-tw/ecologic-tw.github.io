@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import {
+  caseSchema,
   entrySchema,
   scenarioSchema,
   termSchema,
@@ -14,7 +15,7 @@ import {
 // 否則本機既有快取會沿用舊格式的資料（ADR-0022 實作時發現）。
 // 變更時若開發伺服器正在執行，它可能用記憶體裡的舊 schema 重建快取；請停止伺服器，
 // 刪除 .astro/data-store.json 後再啟動。
-export const CONTENT_SCHEMA_VERSION = 5;
+export const CONTENT_SCHEMA_VERSION = 6;
 
 const entries = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/entries/zh-TW' }),
@@ -42,4 +43,10 @@ const toolkit = defineCollection({
   schema: toolkitSchema,
 });
 
-export const collections = { entries, scenarios, terms, updates, toolkit };
+// 多方觀點案例（ADR-0036）：背景與角色卡；小題是 scenarios 中帶 case 欄位的題目
+const cases = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/cases/zh-TW' }),
+  schema: caseSchema,
+});
+
+export const collections = { entries, scenarios, terms, updates, toolkit, cases };
