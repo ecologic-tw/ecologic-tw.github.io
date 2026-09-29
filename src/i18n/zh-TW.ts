@@ -191,6 +191,8 @@ export const advancedQuiz = {
     form: '辨識形式結構',
     counterexample: '找出反例',
     steelman: '找出最強的版本',
+    'common-ground': '找出共同點',
+    'ask-first': '先問什麼',
   },
   choiceAnswerIs: '正解',
   yourChoice: '你的選擇',

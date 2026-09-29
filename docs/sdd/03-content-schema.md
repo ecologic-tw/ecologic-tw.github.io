@@ -9,6 +9,7 @@ src/content/
   scenarios/zh-TW/<id>.md     # 情境題
   terms/zh-TW/terms.yaml      # 名詞（單檔，方便非工程師編輯）
   toolkit/zh-TW/<id>.md       # 討論引導卡等可列印的線下工具（ADR-0033）
+  cases/zh-TW/<id>.md         # 多方觀點案例：背景與角色卡（ADR-0036）
 ```
 
 ## 共用欄位
@@ -87,6 +88,7 @@ const scenarioBase = {
   difficulty: z.enum(['basic','advanced']),        // basic 題兩種模式都出；advanced 只在進階模式出
   form: z.string().optional(),                     // 進階：此情境的形式結構
   terms: z.array(z.string()).default([]),
+  case: z.string().optional(),                     // 所屬的多方觀點案例 id（ADR-0036）
   ...reviewMeta,
 }
 ```
@@ -113,9 +115,9 @@ const scenarioBase = {
   notes: z.object({ validity: z.string(), premises: z.string() }),
   betterPhrasing?, checklist? }                   // 選填，沒有時不顯示改寫區
 
-// choice：隱藏前提／形式辨識／反例選擇／鋼人練習（ADR-0031），共用一個作答元件
+// choice：隱藏前提／形式辨識／反例選擇／鋼人練習（ADR-0031）／案例的共同點與先問什麼（ADR-0036），共用一個作答元件
 { format: 'choice',
-  task: z.enum(['hidden-premise','form','counterexample','steelman']),
+  task: z.enum(['hidden-premise','form','counterexample','steelman','common-ground','ask-first']),
   prompt: z.string(),
   choices: z.array(z.object({ text, correct: z.boolean().default(false), note })).min(3).max(4),
   betterPhrasing?, checklist? }
@@ -137,6 +139,7 @@ refine：
 - `multi`：`answers`、`acceptable`、`distractors` 互不重疊、不含 `none`，合計 4–6 個；`notes` 的鍵必須恰好是這些選項。
 - `choice`：恰好一個 `correct: true`。
 - `classify`：`items` 3–5 句、`id` 不重複、`acceptable` 最多 1 個且不等於 `answer`；句子與解說套用個資檢查；需要「分歧的種類」卡存在，已審題目要求它也已審。
+- 有 `case` 的題目（案例小題）必須 `difficulty: advanced`（ADR-0036 §4）。
 本文結構：`## 情境`（對話或陳述）、`## 解說`、`## 進階解說`（選填）、`## 換個位置想`（選填，作答後顯示於解說之後；寫作規則見 08 與 ADR-0029）。
 
 正式情境題（含 draft）的「情境」與「解說」必須存在且內容非空白；內容檢查、提案轉入與人工標記工具共用驗證。可不完整的提案仍放在 `contributions/scenarios/`，不影響正式內容檢查。
@@ -179,6 +182,29 @@ refine：
 ```
 本文固定兩段：`## 正面：回應之前`、`## 反面：分歧在哪裡`，列印時反面從新的一頁開始。引導卡只放摘要，陷阱與分歧的定義以圖鑑卡為準：以 `[文字](/guide/<id>/)` 連到圖鑑卡，建置期檢查連結的卡存在，已審引導卡不得連到未審的卡。入口（圖鑑總覽、關於頁）只在引導卡發布後才顯示。
 
+## 多方觀點案例 `cases/zh-TW/<id>.md`（ADR-0036）
+```ts
+{
+  id: string,            // (daily|cons)-case-NN，前綴與 theme 一致；檔名相同
+  theme: 'daily' | 'conservation',
+  title: string,
+  summary: string,       // ≤ 80 字，列表用
+  roles: z.array(z.object({
+    id,                  // 案例內不重複
+    name,                // 虛構，不對應可辨識的真實團體、機關或個人
+    cares,               // 在意什麼
+    grounds,             // 手上有什麼依據（可以是經驗；事實性依據附來源）
+    worries,             // 擔心什麼
+    misread,             // 容易被誤解的地方
+  })).min(3).max(4),     // 每個欄位都必填
+  terms: string[],       // 選填
+  ...共用欄位,
+}
+```
+- 保育案例必須 `requiresSecondReview: true`；日常案例依 08 判斷（ADR-0036 §10）。
+- 本文固定兩段：`## 背景`（議題背景）、`## 換個位置想`（全部小題答完後的收尾，寫作規則同 ADR-0029）。
+- 小題是一般情境題，以 `case` 欄位指向案例；案例內依題號排序，即作答順序（`src/lib/cases.ts` 的 `caseQuestions`）。
+
 ## 更新紀錄 `updates/zh-TW/updates.yaml`（ADR-0024）
 手寫說明：功能更新、重要勘誤、公告。新上架內容依 `published` 自動列出，不必另寫。
 ```yaml
@@ -205,6 +231,10 @@ refine：
 - `evidence` 只能用於 `bias` 卡；任何偏誤卡缺 `evidence` 時失敗（ADR-0021）。
 - 更新紀錄說明的 `about` 必須指向存在的內容；`content`、`fix` 說明指向未審內容且沒有撤下公告時警告（ADR-0025）。
 - 討論引導卡（ADR-0033）：正反兩段都存在且非空白；`/guide/<id>/` 連結的圖鑑卡存在，已審引導卡不得連到未審的卡。
-- 圖鑑卡、情境題與討論引導卡的本文以 Sätteri 轉換後不得殘留 `**`。CommonMark 規定：結尾的 `**` 前面是標點、後面緊接文字時，不算粗體結尾。請把標點移到 `**` 外，例如 `**如果你是居民**：`、`「**理解就是同意**。」`。
+- 多方觀點案例（ADR-0036）：
+  - `## 背景`、`## 換個位置想` 都存在且非空白；角色卡與本文套用個資與原生 HTML 檢查。
+  - 小題的 `case` 指向存在的案例，主題一致，`requiresSecondReview` 與案例相同；已審小題的案例也必須已審。
+  - 每個案例最多 3 題小題（不計 `retired`）；已審案例至少 2 題已審小題；草稿案例不足 2 題時只警告。
+- 圖鑑卡、情境題、討論引導卡與案例的本文以 Sätteri 轉換後不得殘留 `**`。CommonMark 規定：結尾的 `**` 前面是標點、後面緊接文字時，不算粗體結尾。請把標點移到 `**` 外，例如 `**如果你是居民**：`、`「**理解就是同意**。」`。
 
 `npm run build` 的產物檢查另外確認：每個站內 `<a href>` 的目標頁面或檔案存在於正式產物中，頁面連結需以 `/` 結尾；第一版不檢查 `#錨點` 是否存在（Issue #41）。

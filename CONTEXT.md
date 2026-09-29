@@ -7,7 +7,7 @@
 | 圖鑑卡 | `entry` | 一個邏輯概念的說明頁。種類見「卡別」。 |
 | 卡別 | `kind` | `concept` 基礎概念／`law` 思維定律與哲學原則／`inference` 有效推論／`formal-fallacy` 形式謬誤／`informal-fallacy` 非形式謬誤／`bias` 認知偏誤 |
 | 情境題 | `scenario` | 一段虛構對話或陳述，讓使用者判讀其推理是否有問題。 |
-| 題型 | `format` | `judge` 單選判讀（預設）／`multi` 多重判讀／`validity-soundness` 有效 × 健全／`choice` 隱藏前提、形式辨識、反例選擇、鋼人練習（ADR-0022、ADR-0031）／`classify` 爭點地圖（ADR-0034）。 |
+| 題型 | `format` | `judge` 單選判讀（預設）／`multi` 多重判讀／`validity-soundness` 有效 × 健全／`choice` 隱藏前提、形式辨識、反例選擇、鋼人練習、案例的共同點與先問什麼（ADR-0022、ADR-0031、ADR-0036）／`classify` 爭點地圖（ADR-0034）。 |
 | 情境提案 | scenario proposal | 可不完整的構想或修訂稿，放在 contributions/scenarios，不進網站；完成後轉為正式 draft。 |
 | 內容貢獻者 | `contributors` | 同意公開署名或筆名、實際參與構想／來源／改寫／試讀等工作的人；不等同審核者。 |
 | 主題 | `theme` | `daily` 日常生活／`conservation` 野生生物保育 |
@@ -45,3 +45,5 @@
 | 綜合挑戰 | challenge | 混合兩主題的 5 題判讀，全部答完只顯示答對題數與逐題回顧；作答照常記錄（ADR-0032）。 |
 | 換個位置想 | perspective | 情境題選填段落：作答後引導讀者站到各當事人的位置，並以提問確認（ADR-0029）。 |
 | 鋼人論證 | steelmanning | 稻草人的反面：先把對方論點整理成最強的版本再回應；理解不等於同意。 |
+| 多方觀點情境 | `case` | 一個虛構議題、3–4 張角色卡與 2–3 題小題，練習找共同點與真正的分歧點；小題是帶 `case` 欄位的情境題（ADR-0036）。 |
+| 角色卡 | `role` | 多方觀點情境中的一位虛構角色：在意什麼、手上有什麼依據、擔心什麼、容易被誤解的地方。 |

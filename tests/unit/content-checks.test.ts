@@ -46,6 +46,7 @@ function run(input: {
   terms?: SourceDoc[];
   updates?: SourceDoc[];
   toolkit?: SourceDoc[];
+  cases?: SourceDoc[];
 }) {
   return checkContent({ entries: cards, scenarios: [], terms: [], ...input });
 }
@@ -450,6 +451,167 @@ describe('update notes (ADR-0025)', () => {
       updates: [note('n1', { kind: 'feature' }), note('n1', { kind: 'feature' })],
     });
     expect(errors.join()).toMatch(/重複/);
+  });
+});
+
+describe('multi-perspective cases (ADR-0036)', () => {
+  const caseBody = '## 背景\n虛構的議題背景。\n\n## 換個位置想\n收尾。';
+  const role = (id: string) => ({
+    id,
+    name: `角色 ${id}`,
+    cares: '在意的事。',
+    grounds: '手上的依據。',
+    worries: '擔心的事。',
+    misread: '容易被誤解的地方。',
+  });
+  const caseDoc = (
+    id = 'daily-case-01',
+    extra: Record<string, unknown> = {},
+    body = caseBody,
+  ): SourceDoc => ({
+    file: `${id}.md`,
+    fileId: id,
+    data: {
+      id,
+      theme: 'daily',
+      title: '測試案例',
+      summary: '一句話摘要。',
+      roles: [role('a'), role('b'), role('c')],
+      status: 'draft',
+      updated: '2026-09-29',
+      sources: [{ title: 'Test reference' }],
+      ...extra,
+    },
+    body,
+  });
+  const choices = [
+    { text: '甲', correct: true, note: '說明。' },
+    { text: '乙', note: '說明。' },
+    { text: '丙', note: '說明。' },
+  ];
+  const sub = (id: string, extra: Record<string, unknown> = {}) =>
+    scenario(id, {
+      format: 'choice',
+      task: 'common-ground',
+      prompt: '哪一項是所有角色都會同意的？',
+      choices,
+      difficulty: 'advanced',
+      case: 'daily-case-01',
+      ...extra,
+    });
+  const reviewed = { status: 'reviewed', reviewers: ['alice'] };
+  const caseErrors = (input: Parameters<typeof run>[0]) =>
+    run(input).errors.filter((e) => !/對照題比例/.test(e));
+
+  it('accepts a draft case with two questions and the new choice tasks', () => {
+    const result = run({
+      cases: [caseDoc()],
+      scenarios: [sub('daily-001'), sub('daily-002', { task: 'ask-first' })],
+    });
+    expect(result.errors).toEqual([]);
+    expect(result.warnings.join()).not.toMatch(/案例|小題/);
+  });
+
+  it('checks the case schema: roles, id prefix and unknown fields', () => {
+    const text = run({
+      cases: [
+        caseDoc('daily-case-01', { roles: [role('a'), role('b')] }),
+        caseDoc('daily-case-02', { roles: [role('a'), role('a'), role('b')] }),
+        caseDoc('cons-case-01'),
+        caseDoc('daily-case-03', { stance: 'x' }),
+        caseDoc('daily-case-04', { roles: [{ ...role('a'), misread: '' }, role('b'), role('c')] }),
+      ],
+    }).errors.join('\n');
+    expect(text).toMatch(/daily-case-01\.md: roles/);
+    expect(text).toMatch(/daily-case-02\.md: roles — roles 的 id 不可重複/);
+    expect(text).toMatch(/cons-case-01\.md: theme — id 前綴與 theme 不一致/);
+    expect(text).toMatch(/daily-case-03\.md.*stance/);
+    expect(text).toMatch(/daily-case-04\.md: roles\.0\.misread/);
+  });
+
+  it('requires a second review for conservation cases only', () => {
+    const cons = (extra: Record<string, unknown>) =>
+      caseDoc('cons-case-01', { theme: 'conservation', ...extra });
+    expect(run({ cases: [cons({})] }).errors.join()).toMatch(/保育案例必須/);
+    expect(run({ cases: [cons({ requiresSecondReview: true })] }).errors).toEqual([]);
+    expect(run({ cases: [caseDoc()] }).errors).toEqual([]);
+  });
+
+  it('keeps case questions in advanced mode', () => {
+    const { errors } = run({
+      cases: [caseDoc()],
+      scenarios: [sub('daily-001', { difficulty: 'basic' })],
+    });
+    expect(errors.join()).toMatch(/案例小題目前只出現在進階模式/);
+  });
+
+  it('rejects a question pointing to a missing case or a case in another theme', () => {
+    const text = run({
+      cases: [caseDoc()],
+      scenarios: [
+        sub('daily-001', { case: 'daily-case-09' }),
+        sub('cons-001', { theme: 'conservation' }),
+      ],
+    }).errors.join('\n');
+    expect(text).toMatch(/daily-001\.md: case 參照的案例「daily-case-09」不存在/);
+    expect(text).toMatch(/cons-001\.md: 主題與所屬案例「daily-case-01」不一致/);
+  });
+
+  it('keeps the second-review flag consistent within a case', () => {
+    const { errors } = run({
+      cases: [caseDoc()],
+      scenarios: [sub('daily-001'), sub('daily-002', { requiresSecondReview: true })],
+    });
+    expect(errors).toEqual([
+      'daily-002.md: requiresSecondReview 需與所屬案例「daily-case-01」一致（ADR-0036）',
+    ]);
+  });
+
+  it('counts questions: too many is an error, too few only warns on a draft', () => {
+    const four = ['daily-001', 'daily-002', 'daily-003', 'daily-004'].map((id) => sub(id));
+    expect(run({ cases: [caseDoc()], scenarios: four }).errors.join()).toMatch(/最多 3 題小題/);
+    const one = run({ cases: [caseDoc()], scenarios: [sub('daily-001')] });
+    expect(one.errors).toEqual([]);
+    expect(one.warnings.join()).toMatch(/需要 2–3 題小題，目前 1 題/);
+    // 下架的小題不計
+    const retired = run({
+      cases: [caseDoc()],
+      scenarios: [sub('daily-001'), sub('daily-002', { status: 'retired' })],
+    });
+    expect(retired.warnings.join()).toMatch(/目前 1 題/);
+  });
+
+  it('publishes a case and its questions together', () => {
+    const draftCase = caseErrors({
+      cases: [caseDoc()],
+      scenarios: [sub('daily-001', reviewed), sub('daily-002')],
+    });
+    expect(draftCase.join()).toMatch(/已審內容的 case 不得參照未審（draft）案例/);
+    const thinCase = caseErrors({
+      cases: [caseDoc('daily-case-01', reviewed)],
+      scenarios: [sub('daily-001', reviewed), sub('daily-002')],
+    });
+    expect(thinCase.join()).toMatch(/已審案例至少需 2 題已審小題，目前 1 題/);
+    const both = caseErrors({
+      cases: [caseDoc('daily-case-01', reviewed)],
+      scenarios: [sub('daily-001', reviewed), sub('daily-002', reviewed)],
+    });
+    expect(both).toEqual([]);
+  });
+
+  it('checks the case body and its reader-facing text', () => {
+    const text = run({
+      cases: [
+        caseDoc('daily-case-01', {}, '## 背景\n只有背景。'),
+        caseDoc('daily-case-02', {
+          roles: [{ ...role('a'), grounds: '見 www.example.com' }, role('b'), role('c')],
+        }),
+        caseDoc('daily-case-03', {}, `${caseBody}\n<b>粗體</b>`),
+      ],
+    }).errors.join('\n');
+    expect(text).toMatch(/daily-case-01\.md: 本文: 請補「## 換個位置想」/);
+    expect(text).toMatch(/daily-case-02\.md: 案例文字不得含網址/);
+    expect(text).toMatch(/daily-case-03\.md: 本文不得含原生 HTML/);
   });
 });
 

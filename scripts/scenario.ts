@@ -45,6 +45,8 @@ export type ProposalOptions = {
   ai?: boolean;
   /** 題型（ADR-0022），預設 judge */
   format?: string;
+  /** 所屬的多方觀點案例（ADR-0036）；案例小題只出現在進階模式 */
+  case?: string;
 };
 
 // 各題型的空白欄位；judge 與 classify 以外的題型只出現在進階模式（classify 見 ADR-0034）。
@@ -84,7 +86,8 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
     throw new Error('署名需同時提供 --contributor 與 --contribution，或兩者都不填');
   let data: Record<string, unknown>;
   let body: string;
-  if (options.target && options.format) throw new Error('修訂提案沿用原題題型，不可指定 --format');
+  if (options.target && (options.format || options.case))
+    throw new Error('修訂提案沿用原題題型與案例，不可指定 --format 或 --case');
   if (options.target) {
     const text = readFileSync(scenarioPath(root, options.target), 'utf8');
     const original = readDocument(text);
@@ -100,6 +103,7 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
       title: options.title,
       theme: options.theme,
       ...formatFields(format),
+      ...(options.case ? { case: options.case, difficulty: 'advanced' } : {}),
       terms: [],
       sources: [],
       contributors: [],
@@ -149,6 +153,10 @@ export function preparePromotion(root: string, slug: string) {
     if (original.aiAssisted) data.aiAssisted = true;
     if (original.requiresSecondReview) data.requiresSecondReview = true;
   } else {
+    // 案例小題沿用案例的雙審標記（ADR-0036 §8）
+    const parent = input.cases?.find((doc) => (doc.data as { id?: string }).id === data.case);
+    if ((parent?.data as { requiresSecondReview?: boolean } | undefined)?.requiresSecondReview)
+      data.requiresSecondReview = true;
     const prefix = data.theme === 'daily' ? 'daily' : 'cons';
     const numbers = input.scenarios
       .map((doc) => String((doc.data as { id: string }).id))
@@ -249,7 +257,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       const arg = args[i] ?? '';
       if (['--ai', '--dry-run'].includes(arg)) flags.set(arg, 'true');
       else if (
-        ['--title', '--theme', '--format', '--contributor', '--contribution'].includes(arg)
+        ['--title', '--theme', '--format', '--case', '--contributor', '--contribution'].includes(
+          arg,
+        )
       ) {
         const value = args[++i];
         if (!value || value.startsWith('--')) throw new Error(`${arg} 缺少值`);
@@ -264,7 +274,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
       const slug = positionals[command === 'edit' ? 1 : 0];
       if (!slug)
         throw new Error(
-          '用法：scenario new <提案名稱> --theme daily --title 標題 [--format multi]；或 scenario edit <題號> <提案名稱>',
+          '用法：scenario new <提案名稱> --theme daily --title 標題 [--format multi] [--case daily-case-01]；或 scenario edit <題號> <提案名稱>',
         );
       console.log(
         createProposal(root, slug, {
@@ -275,6 +285,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
           contribution: flags.get('--contribution'),
           ai: flags.has('--ai'),
           format: flags.get('--format'),
+          case: flags.get('--case'),
         }),
       );
       console.log('已建立可不完整的提案；先補自己想做的部分，留下 nextSteps 讓其他人接力。');

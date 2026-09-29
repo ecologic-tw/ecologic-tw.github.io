@@ -55,6 +55,26 @@ describe('human review preparation (temporary fixtures only)', () => {
     });
   });
 
+  it('marks a case and checks its background and closing first (ADR-0036)', () => {
+    const { root } = fixture();
+    mkdirSync(join(root, 'cases/zh-TW'), { recursive: true });
+    const file = join(root, 'cases/zh-TW/daily-case-01.md');
+    const role = (id: string) =>
+      `  - {id: ${id}, name: 角色, cares: 在意, grounds: 依據, worries: 擔心, misread: 誤解}\n`;
+    const head = `---\nid: daily-case-01\ntheme: daily\ntitle: 案例\nsummary: 摘要\nroles:\n${role('a')}${role('b')}${role('c')}status: draft\nreviewers: []\nsources: [{title: Reference}]\nupdated: 2026-09-26\n---\n`;
+    writeFileSync(file, `${head}## 背景\n背景。\n`);
+    expect(() => prepareReview(root, ['daily-case-01'], ['alice'], '2026-09-29')).toThrow(
+      /換個位置想/,
+    );
+    writeFileSync(file, `${head}## 背景\n背景。\n## 換個位置想\n收尾。\n`);
+    const plan = prepareReview(root, ['daily-case-01'], ['alice'], '2026-09-29');
+    expect(parse(plan.writes[0]?.text.split('---')[1] ?? '')).toMatchObject({
+      status: 'reviewed',
+      reviewers: ['alice'],
+      published: '2026-09-29',
+    });
+  });
+
   it('updates all term review metadata without writing during preparation', () => {
     const { root, file } = fixture();
     const before = readFileSync(file, 'utf8');
