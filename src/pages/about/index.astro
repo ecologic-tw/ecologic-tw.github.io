@@ -35,7 +35,7 @@ const discussion = (await getPublishedToolkit()).find((item) => item.id === 'dis
     </section>
 
     <section aria-labelledby="privacy">
-      <h2 id="privacy">隱私：我們不蒐集你的資料</h2>
+      <h2 id="privacy">隱私：網站本身不蒐集你的資料</h2>
       <ul>
         <li>不使用 cookie，沒有流量統計、廣告或任何第三方程式。</li>
         <li>
@@ -49,7 +49,17 @@ const discussion = (await getPublishedToolkit()).find((item) => item.id === 'dis
         <li>
           你可以在<a href="/me/">「我的圖鑑」</a>匯出、匯入或一鍵清除這些紀錄。
         </li>
-        <li>點「意見回饋」會前往 Google 表單。表單不收集 Email，也請不要在表單中填寫個人資料。</li>
+        <li>
+          點「意見回饋」會前往 Google 表單。表單不收集
+          Email；只有投稿情境並選擇列名時，才會請你填暱稱，用來在網站與 GitHub
+          公開致謝。想更正或撤下暱稱，隨時可以透過表單或 GitHub
+          告訴我們。請不要在表單中填寫可以認出你或他人的資料。
+        </li>
+        <li>在 GitHub 開 Issue 或 PR 的內容是公開的，會和你的 GitHub 帳號一起顯示。</li>
+        <li>
+          網站放在 GitHub Pages。依 GitHub 的說明文件，GitHub 會為了資訊安全記錄造訪者的 IP
+          位址；本專案不會取用這些紀錄。
+        </li>
       </ul>
     </section>
 
@@ -141,6 +151,10 @@ const discussion = (await getPublishedToolkit()).find((item) => item.id === 'dis
           <ExternalLink href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hant">
             創用 CC 姓名標示－相同方式分享 4.0 國際
           </ExternalLink>
+        </li>
+        <li>
+          標題字型：霞鶩文楷 TC（LXGW WenKai TC），© The LXGW WenKai Project Authors，
+          <a href="/licenses/lxgw-wenkai-tc-OFL.txt">SIL Open Font License 1.1</a>
         </li>
       </ul>
       <p>轉載或改作內容時，請這樣標示：</p>
