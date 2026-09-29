@@ -16,7 +16,7 @@ sources:
   - title: "Mangel, M., & Samaniego, F. J. (1984). Abraham Wald's work on aircraft
       survivability. Journal of the American Statistical Association, 79(386),
       259–267."
-updated: 2026-09-26
+updated: 2026-09-30
 aiAssisted: true
 ---
 
@@ -47,3 +47,5 @@ aiAssisted: true
 ## 進階
 
 經典例子是二戰時期統計學家 Abraham Wald 分析返航戰機的彈孔：返航機身上彈孔少的部位，反而可能是被擊中就回不來的致命部位。
+
+本卡標示的證據強度「證據穩健」，指的是這種推理錯誤本身成立：只用通過篩選的樣本推論全體，結論可能出錯，這是統計上的道理，不需要靠實驗證明。至於人們在日常生活中多常犯這個錯，本卡不做主張。
