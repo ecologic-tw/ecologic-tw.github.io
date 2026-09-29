@@ -147,7 +147,7 @@
   - [ ] 至少一位試讀者走完兩輪後，依 ADR-0032 Review Point 檢視
 - [ ] 2 討論引導卡（可列印）與概念卡「分歧的種類」
   - [x] ADR-0033 起草（提議）
-  - [ ] Decision Owner 決定是否接受
+  - [x] ADR-0033 接受（2026-09-29，Decision Owner：@Wang-Yi-Zhang；入口放圖鑑總覽與關於頁，新增 `toolkit` 集合）
   - [ ] 實作：`toolkit` 集合、`/toolkit/discussion/` 與列印樣式、審核工具與檢查、測試；概念卡與引導卡草稿；更新紀錄
 - [ ] 3 爭點地圖（`classify` 題型）
 - [ ] 4 多方觀點情境（`cases` 集合）
