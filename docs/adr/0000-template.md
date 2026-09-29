@@ -1,8 +1,8 @@
 # ADR-XXXX 標題
 - 日期：
 - 狀態：提議／接受／取代（由 ADR-YYYY）
-- Decision Owner：（GitHub 帳號或角色）
-- Review Point：（何時、依什麼證據重新檢視）
+- 決策者：（GitHub 帳號或角色）
+- 回顧點：（何時、依什麼證據重新檢視）
 
 ## 背景
 

@@ -1,8 +1,8 @@
 # ADR-0012 標題字型自託管霞鶩文楷 TC
 - 日期：2026-09-26
 - 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
-- Decision Owner：@Wang-Yi-Zhang
-- Review Point：M5 Lighthouse 量測時；或 `dist/` 超過 50 MB 時
+- 決策者：@Wang-Yi-Zhang
+- 回顧點：M5 Lighthouse 量測時；或 `dist/` 超過 50 MB 時
 
 ## 背景
 04「視覺方向」要求田野手冊風格、手繪感，且字型自託管（紅線 2：不得使用外部字型 CDN）。中文字型檔動輒數 MB，需要一種不增加建置工具、瀏覽器又只下載用到字元的做法。

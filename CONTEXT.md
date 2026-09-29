@@ -27,9 +27,9 @@
 | 內容狀態 | `status` | `draft` 草稿（不發布）／`reviewed` 已審（發布）／`retired` 下架。 |
 | 維護者 | maintainer | 具 repo 寫入權、可核准 PR 的人。 |
 | 角色 | role | 承擔特定責任的位置，不是職位或地位；見 10-governance 角色名冊。 |
-| Decision Owner | decision owner | 對某項決策負責推進、公開理由與追蹤結果的人；寫在 ADR 中。 |
-| Review Point | review point | 預先約定重新檢視某決策或實驗的時間與依據。 |
-| Learning Review | learning review | 出錯後理解問題如何形成、改善系統的檢討（不找戰犯）。 |
+| 決策者 | decision owner | 對某項決策負責推進、公開理由與追蹤結果的人；寫在 ADR 中。 |
+| 回顧點 | review point | 預先約定重新檢視某決策或實驗的時間與依據。 |
+| 學習回顧 | learning review | 出錯後理解問題如何形成、改善系統的檢討（不找戰犯）。 |
 | 角色檢視 | role review | 每半年公開檢視角色與權力分配，防止隱形主管。 |
 | 紅線 | red line | `AGENTS.md` 所列不可違反的規則；修改屬社群基本規則。 |
 | 證據強度 | `evidence` | 認知偏誤卡的研究證據等級：`robust` 證據穩健／`moderate` 證據中等／`contested` 證據有爭議（ADR-0021）。 |

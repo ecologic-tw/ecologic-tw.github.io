@@ -1,8 +1,8 @@
 # ADR-0011 M0 工具鏈依賴與 CSP 實作方式
 - 日期：2026-09-26
 - 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
-- Decision Owner：@Wang-Yi-Zhang
-- Review Point：M1 完成時（開始有互動腳本與內容渲染），或 Astro 下一個主版本發布時
+- 決策者：@Wang-Yi-Zhang
+- 回顧點：M1 完成時（開始有互動腳本與內容渲染），或 Astro 下一個主版本發布時
 
 ## 背景
 M0 需初始化 Astro 專案、內容 schema 檢查、CI 與 CSP（docs/sdd/06、07、11）。紅線 8 要求新增 npm 套件須說明理由；07 要求 CSP 採「關閉行內化」或「Astro 內建 CSP（hash）」擇一並記錄。

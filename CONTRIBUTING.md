@@ -70,7 +70,7 @@ Codex、Claude Code 或其他 AI 工具均遵守 [AGENTS.md](AGENTS.md) 的共�
 
 ## 其他參與方式
 - 想試一個新點子：開「實驗提案」Issue（Hypothesis／Experiment／Evidence／Review）。
-- 發現已上線內容或流程出錯：開「Learning Review」Issue。
+- 發現已上線內容或流程出錯：開「學習回顧」Issue。
 - 想承擔某個角色：在每半年的「角色檢視」Issue 留言，或直接開 Issue 自薦。
 
 ## 行為準則

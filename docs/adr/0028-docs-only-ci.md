@@ -2,8 +2,8 @@
 
 - 日期：2026-09-28
 - 狀態：接受（2026-09-28，@Wang-Yi-Zhang）
-- Decision Owner：@Wang-Yi-Zhang
-- Review Point：實施後第一個月，檢查是否有純文件 PR 被誤判、或程式變更被誤判為純文件；若 `docs/` 開始被建置或測試讀取，須修改判斷規則
+- 決策者：@Wang-Yi-Zhang
+- 回顧點：實施後第一個月，檢查是否有純文件 PR 被誤判、或程式變更被誤判為純文件；若 `docs/` 開始被建置或測試讀取，須修改判斷規則
 
 ## 背景
 `ci.yml` 對每個 PR 都執行完整檢查（npm audit、lint、check、單元測試、build）與 e2e（安裝 Chromium、全部瀏覽器測試）；`deploy.yml` 每次合併到 main 都重新部署。專案有大量純文件 PR（ADR、SDD、交接紀錄、審核文件），這些檔案不被建置或測試讀取（`*.md` 已排除於 Prettier），完整 CI 主要是重跑未變動的程式。`AGENTS.md` 已規定只改文件時檢查引用、規範一致性與 `git diff --check`，但 CI 未對齊。
@@ -24,7 +24,7 @@
 - GitHub 行為：以 `if` 略過的 job 對必要檢查回報為成功；以路徑過濾未觸發的 workflow 則不回報，必要檢查會停在等待。
 
 ## 已知風險
-- 日後有程式開始讀取 `docs/` 或其他根目錄 Markdown 時，純文件判斷會漏跑測試 → 新增這類讀取時必須同步修改 `changes` 規則（Review Point 檢查）。
+- 日後有程式開始讀取 `docs/` 或其他根目錄 Markdown 時，純文件判斷會漏跑測試 → 新增這類讀取時必須同步修改 `changes` 規則（回顧點檢查）。
 - 純文件 PR 不檢查外部網址 → 由既有每週 `source-links.yml` 與人工審閱補足。
 - 決策當時 `e2e` 與 `docs` 不是必要檢查，失敗也不會阻擋合併 → 已由管理員於 2026-09-28 將 `e2e`、`docs` 加入 ruleset 必要檢查（見文末實施紀錄）。
 
