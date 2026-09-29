@@ -1,5 +1,11 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：更新紀錄補上綜合挑戰
+- **目標與範圍**：PR #76 合併後，Decision Owner 指出更新紀錄沒有綜合挑戰的說明；本 PR 在 `updates.yaml` 補一則 `kind: feature`，連到 `/challenge/`。
+- **分支**：`docs/updates-combined-challenge`，自 `origin/main`（`9ca1feb`，含 PR #76）建立。
+- **驗證**：內容檢查、正式 build（說明出現在 `/updates/` 與訂閱源）、`updates.spec.ts` 6 個 e2e 通過。
+- **改進**：之後新增讀者看得到的功能時，同一個 PR 就一併補更新紀錄。
+
 ## 2026-09-29：實作綜合挑戰（ADR-0032）
 - **目標與範圍**：依已接受的 ADR-0032 實作 `/challenge/`；不新增內容、不改進度資料格式、不做徽章與累積統計。
 - **分支**：`feat/combined-challenge`，自 `origin/main`（`397c007`，含 PR #75）建立。
