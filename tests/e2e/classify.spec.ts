@@ -55,6 +55,20 @@ test.describe('爭點地圖（ADR-0034）', () => {
     await expect(page.locator('[data-quiz-result]')).toBeHidden();
   });
 
+  test('shuffles the kinds for each statement', async ({ page }) => {
+    // 固定亂數：Fisher–Yates 每次都和第一個交換 → 價值、定義、利益、事實
+    await page.addInitScript(() => {
+      Math.random = () => 0;
+    });
+    await page.goto('/scenario/daily-023/');
+    for (const id of Object.keys(ANSWERS)) {
+      const order = await item(page, id)
+        .locator('[data-option-id]')
+        .evaluateAll((els) => els.map((el) => el.getAttribute('data-option-id')));
+      expect(order).toEqual(['value', 'definition', 'interest', 'fact']);
+    }
+  });
+
   test('a correct answer lights the kinds-of-disagreement card', async ({ page }) => {
     await page.goto('/scenario/daily-023/');
     await answer(page, {});

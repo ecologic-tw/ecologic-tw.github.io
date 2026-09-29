@@ -23,7 +23,7 @@ export function isCorrect(choice: string, answer: string): boolean {
   return choice === answer;
 }
 
-/** 爭點地圖（ADR-0034）的四種分歧；順序即作答選項的顯示順序 */
+/** 爭點地圖（ADR-0034）的四種分歧；作答時每一句的選項順序各自打亂，這個順序用於解說與沒有 JavaScript 時 */
 export const DISAGREEMENT_KINDS = ['fact', 'value', 'definition', 'interest'] as const;
 export type DisagreementKind = (typeof DISAGREEMENT_KINDS)[number];
 /** classify 題答對時點亮的概念卡 */
