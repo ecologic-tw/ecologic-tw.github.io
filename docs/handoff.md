@@ -1,5 +1,18 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：實作討論引導卡（ADR-0033）
+- **目標與範圍**：依已接受的 ADR-0033 實作可列印的討論引導卡，並起草引導卡與「分歧的種類」概念卡。
+- **分支**：`feat/discussion-card`，自 `origin/main`（`2562e95`，含 PR #79）建立。
+- **已完成**：
+  - 新集合 `toolkit`（`toolkitSchema`、`src/lib/toolkit.ts` 段落與連結檢查），`CONTENT_SCHEMA_VERSION` 升為 4。
+  - `/toolkit/[id]/` 頁面與列印樣式（A4、反面換頁、黑白、隱藏導覽）、「列印這張卡」按鈕（`src/scripts/print-button.ts`）。
+  - 入口在圖鑑總覽與關於頁，只在引導卡發布後顯示；sitemap 納入已審引導卡。
+  - `npm run review` 與內容檢查支援 `toolkit`：兩段落、圖鑑卡連結存在、已審不得連到未審、粗體、原生 HTML。
+  - 草稿（`aiAssisted: true`）：`toolkit/discussion`（陷阱的說明與回應逐字沿用已審圖鑑卡的摘要與善意回應）、`entries/kinds-of-disagreement`（來源 Stevenson 1944、Chalmers 2011、Fisher & Ury 1981，皆待核對原文）。
+- **驗證**：見 PR。正式建置沒有引導卡頁面與入口；含草稿建置有。以列印媒體產生的 PDF 為 2 頁。
+- **待人工**：先審概念卡再審引導卡；核對三則來源；發布時同一個 PR 補 `updates.yaml` 的 `kind: feature`（在此之前加會讓正式建置出現壞連結）。
+- **下一步**：人工審核、實際列印試用。
+
 ## 2026-09-29：接受 ADR-0033
 - **目標與範圍**：PR #78 合併後，Decision Owner 接受 ADR-0033；本 PR 只改文件。
 - **分支**：`docs/accept-adr-0033`，自 `origin/main` 建立。

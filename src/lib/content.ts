@@ -47,6 +47,14 @@ export async function getPublishedScenarios(theme?: Theme): Promise<Scenario[]> 
   return scenarios.sort((a, b) => a.id.localeCompare(b.id));
 }
 
+export type ToolkitItem = CollectionEntry<'toolkit'>;
+
+/** 討論引導卡等線下工具（ADR-0033），依 id 排序 */
+export async function getPublishedToolkit(): Promise<ToolkitItem[]> {
+  const items = await getCollection('toolkit', ({ data }) => isVisible(data.status));
+  return items.sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export type UpdateNote = CollectionEntry<'updates'>;
 
 /** 更新紀錄的手寫說明（ADR-0024），新到舊 */

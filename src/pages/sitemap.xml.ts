@@ -1,9 +1,15 @@
-import { getPublishedEntries, getPublishedScenarios, showDrafts } from '../lib/content.ts';
+import {
+  getPublishedEntries,
+  getPublishedScenarios,
+  getPublishedToolkit,
+  showDrafts,
+} from '../lib/content.ts';
 import { INDEX_PATHS, sitemapXml } from '../lib/site.ts';
 
 export async function GET() {
   const entries = await getPublishedEntries();
   const scenarios = await getPublishedScenarios();
+  const toolkit = await getPublishedToolkit();
   const paths = showDrafts
     ? []
     : [
@@ -14,6 +20,9 @@ export async function GET() {
         ...scenarios
           .filter((scenario) => scenario.data.status === 'reviewed')
           .map((scenario) => `/scenario/${scenario.id}/`),
+        ...toolkit
+          .filter((item) => item.data.status === 'reviewed')
+          .map((item) => `/toolkit/${item.id}/`),
       ];
   return new Response(sitemapXml(paths), {
     headers: { 'Content-Type': 'application/xml; charset=utf-8' },

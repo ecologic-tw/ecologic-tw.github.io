@@ -37,6 +37,24 @@ describe('human review preparation (temporary fixtures only)', () => {
     expect(readFileSync(terms, 'utf8')).toBe(beforeTerms);
   });
 
+  it('marks a toolkit card and checks both sides first (ADR-0033)', () => {
+    const { root } = fixture();
+    mkdirSync(join(root, 'toolkit/zh-TW'), { recursive: true });
+    const file = join(root, 'toolkit/zh-TW/discussion.md');
+    const head = `---\nid: discussion\ntitle: 討論引導卡\nsummary: 摘要\nstatus: draft\nreviewers: []\nsources: [{title: Reference}]\nupdated: 2026-09-26\n---\n`;
+    writeFileSync(file, `${head}## 正面：回應之前\n正面。\n`);
+    expect(() => prepareReview(root, ['discussion'], ['alice'], '2026-09-29')).toThrow(
+      /反面：分歧在哪裡/,
+    );
+    writeFileSync(file, `${head}## 正面：回應之前\n正面。\n## 反面：分歧在哪裡\n反面。\n`);
+    const plan = prepareReview(root, ['discussion'], ['alice'], '2026-09-29');
+    const written = plan.writes[0]?.text ?? '';
+    expect(parse(written.split('---')[1] ?? '')).toMatchObject({
+      status: 'reviewed',
+      reviewers: ['alice'],
+    });
+  });
+
   it('updates all term review metadata without writing during preparation', () => {
     const { root, file } = fixture();
     const before = readFileSync(file, 'utf8');

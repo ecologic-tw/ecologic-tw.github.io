@@ -1,10 +1,12 @@
 ---
 import ListFilter from '../../components/ListFilter.astro';
-import { kindIntro, kindLabel, t } from '../../i18n/zh-TW.ts';
+import { kindIntro, kindLabel, t, toolkit } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
-import { getPublishedEntries, groupByKind } from '../../lib/content.ts';
+import { getPublishedEntries, getPublishedToolkit, groupByKind } from '../../lib/content.ts';
 
 const groups = groupByKind(await getPublishedEntries());
+// 引導卡發布後才顯示入口，避免連到未發布的頁面（ADR-0033）
+const discussion = (await getPublishedToolkit()).find((item) => item.id === 'discussion');
 ---
 
 <Base title="圖鑑" description="邏輯定律、有效推論、謬誤與認知偏誤的圖鑑卡。" wide>
@@ -12,6 +14,11 @@ const groups = groupByKind(await getPublishedEntries());
   <p class="lead">
     每張卡說明一種推理方式：它是什麼、在生活和保育討論裡長什麼樣子，以及什麼時候其實合理。
   </p>
+  {discussion && (
+    <p class="toolkit-link">
+      <a href="/toolkit/discussion/">{toolkit.entry}</a>：{toolkit.entryHint}
+    </p>
+  )}
 
   {groups.length === 0 ? (
     <p class="empty">圖鑑卡正在審核中，審核通過後會出現在這裡。</p>
@@ -55,6 +62,12 @@ const groups = groupByKind(await getPublishedEntries());
   .lead {
     margin-top: 0.75rem;
     max-width: 30em;
+  }
+
+  .toolkit-link {
+    margin-top: 0.75rem;
+    max-width: 30em;
+    font-size: var(--step--1);
   }
 
   .empty {

@@ -1,0 +1,254 @@
+---
+// 討論引導卡（ADR-0033）：一張 A4 正反兩面。螢幕上是一般頁面；列印時隱藏導覽，反面從新的一頁開始。
+// 讀者用瀏覽器列印或另存 PDF，建置時不產生 PDF。
+import Contributors from '../../components/Contributors.astro';
+import Sources from '../../components/Sources.astro';
+import { t, toolkit as text } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedToolkit, type ToolkitItem } from '../../lib/content.ts';
+import { renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
+import { SITE_URL } from '../../lib/site.ts';
+import { loadTermInfo } from '../../lib/terms-source.ts';
+import { TOOLKIT_SECTIONS } from '../../lib/toolkit.ts';
+
+export async function getStaticPaths() {
+  const items = await getPublishedToolkit();
+  return items.map((item) => ({ params: { id: item.id }, props: { item } }));
+}
+
+interface Props {
+  item: ToolkitItem;
+}
+
+const { item } = Astro.props;
+const { data } = item;
+const terms = loadTermInfo();
+const sections = splitSections(item.body ?? '');
+const side = (key: keyof typeof TOOLKIT_SECTIONS) => ({
+  key,
+  title: TOOLKIT_SECTIONS[key],
+  html: renderMarkdown(sections.get(TOOLKIT_SECTIONS[key]) ?? '', terms, `${key}-`),
+});
+const sides = [side('front'), side('back')];
+const url = `${SITE_URL}/toolkit/${item.id}/`;
+---
+
+<Base title={data.title} description={data.summary} wide>
+  {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
+
+  <article class="toolkit">
+    <header class="head">
+      <h1>{data.title}</h1>
+      <p class="summary">{data.summary}</p>
+      <p class="print-hint screen-only">
+        {text.printHint}
+        <button type="button" class="print-button" data-print hidden>
+          {text.print}
+        </button>
+      </p>
+    </header>
+
+    {sides.map(({ key, title, html }) => (
+      <section class={`side side-${key}`} aria-labelledby={`side-${key}`}>
+        <h2 id={`side-${key}`}>{title}</h2>
+        <div class="prose" set:html={html} />
+      </section>
+    ))}
+
+    <footer class="card-foot">
+      <p>{url}</p>
+      <p>{text.license}</p>
+      <p>{t.notOfficial}</p>
+    </footer>
+
+    <div class="screen-only">
+      <Sources sources={data.sources} />
+      <Contributors contributors={data.contributors} />
+    </div>
+  </article>
+</Base>
+
+<script>
+  import '../../scripts/print-button.ts';
+</script>
+
+<style>
+  .head {
+    margin-top: 3rem;
+    max-width: var(--measure);
+  }
+
+  h1 {
+    font-size: var(--step-3);
+  }
+
+  .summary {
+    margin-top: 0.75rem;
+  }
+
+  .print-hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    margin-top: 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .print-button {
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--soil);
+    border-radius: 3px;
+    padding: 0.3rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .print-button[hidden] {
+    display: none;
+  }
+
+  .side {
+    margin-top: 2.5rem;
+    max-width: var(--measure);
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  .side h2 {
+    font-size: var(--step-2);
+  }
+
+  .side .prose :global(h3) {
+    margin-top: 1.25rem;
+    font-size: var(--step-1);
+  }
+
+  .side .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+
+  .side .prose :global(th),
+  .side .prose :global(td) {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--mist);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .card-foot {
+    margin-top: 1.5rem;
+    max-width: var(--measure);
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .card-foot p + p {
+    margin-top: 0.2rem;
+  }
+
+  /* 列印：一張 A4 正反兩面（ADR-0033）。黑白也清楚，不靠顏色區分。 */
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.skip-link),
+    :global(.draft-banner),
+    .screen-only {
+      display: none !important;
+    }
+
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+      color: #000 !important;
+    }
+
+    :global(main.page) {
+      max-width: none;
+      padding: 0;
+    }
+
+    .toolkit {
+      font-size: 10pt;
+      line-height: 1.45;
+      color: #000;
+    }
+
+    .head {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 16pt;
+    }
+
+    .summary {
+      margin-top: 0.2rem;
+    }
+
+    .side {
+      margin-top: 0.6rem;
+      max-width: none;
+      padding: 0;
+      border: 0;
+    }
+
+    .side h2 {
+      font-size: 13pt;
+      border-bottom: 1.5pt solid #000;
+      padding-bottom: 0.1rem;
+    }
+
+    .side .prose :global(h3) {
+      margin-top: 0.6rem;
+      font-size: 11pt;
+    }
+
+    .side .prose :global(*) {
+      color: #000 !important;
+    }
+
+    .side .prose :global(a) {
+      text-decoration: none;
+    }
+
+    .side .prose :global(table) {
+      font-size: 9pt;
+      break-inside: avoid;
+    }
+
+    .side .prose :global(th),
+    .side .prose :global(td) {
+      border: 0.75pt solid #000;
+      padding: 0.15rem 0.3rem;
+    }
+
+    .side .prose :global(blockquote) {
+      border-left: 2pt solid #000;
+    }
+
+    /* 反面從新的一頁開始 */
+    .side-back {
+      break-before: page;
+    }
+
+    .card-foot {
+      margin-top: 0.8rem;
+      max-width: none;
+      color: #000;
+      font-size: 8pt;
+      border-top: 0.75pt solid #000;
+      padding-top: 0.2rem;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+</style>

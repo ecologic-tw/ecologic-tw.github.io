@@ -2,10 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import ExternalLink from '../../components/ExternalLink.astro';
 import { FEEDBACK, formUrl } from '../../lib/feedback.ts';
+import { toolkit } from '../../i18n/zh-TW.ts';
+import { getPublishedToolkit } from '../../lib/content.ts';
 import { KEY } from '../../lib/progress.ts';
 
 const repo = 'https://github.com/ecologic-tw/ecologic-tw.github.io';
 const siteUrl = 'https://ecologic-tw.github.io/';
+// 引導卡發布後才顯示入口，避免連到未發布的頁面（ADR-0033）
+const discussion = (await getPublishedToolkit()).find((item) => item.id === 'discussion');
 ---
 
 <Base title="關於本站" description="邏生門的使命、非官方聲明、隱私、授權與參與方式。">
@@ -91,6 +95,15 @@ const siteUrl = 'https://ecologic-tw.github.io/';
         前，會先移除可能的個人資料。
       </p>
     </section>
+
+    {discussion && (
+      <section aria-labelledby="offline">
+        <h2 id="offline">帶到課堂與會議</h2>
+        <p>
+          <a href="/toolkit/discussion/">{toolkit.entry}</a>：{toolkit.entryHint}
+        </p>
+      </section>
+    )}
 
     <section aria-labelledby="join">
       <h2 id="join">一起參與</h2>
