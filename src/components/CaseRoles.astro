@@ -1,0 +1,75 @@
+---
+// 多方觀點案例的角色卡（ADR-0036）：每張是 <details>，手機上可以逐張收合；沒有 JavaScript 也能閱讀。
+import { cases } from '../i18n/zh-TW.ts';
+import type { Case } from '../lib/content.ts';
+
+interface Props {
+  roles: Case['data']['roles'];
+  /** 預設展開；放在已收合的區塊裡時也保持展開，少點一次 */
+  open?: boolean;
+}
+const { roles, open = true } = Astro.props;
+const fields = Object.entries(cases.roleFields) as [keyof typeof cases.roleFields, string][];
+---
+
+<ul class="roles">
+  {roles.map((role) => (
+    <li>
+      <details class="role-card" open={open} data-role-id={role.id}>
+        <summary>{role.name}</summary>
+        <dl>
+          {fields.map(([key, label]) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{role[key]}</dd>
+            </div>
+          ))}
+        </dl>
+      </details>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .roles {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    /* 依容器寬度排欄：案例頁多欄，題目頁較窄的欄位裡一欄 */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    align-items: start;
+  }
+
+  .role-card {
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+    background: var(--paper-deep);
+    padding: 0.75rem 1rem;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+  }
+
+  dl {
+    margin: 0.75rem 0 0;
+  }
+
+  dl div + div {
+    margin-top: 0.6rem;
+  }
+
+  dt {
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  dd {
+    margin: 0.1rem 0 0;
+  }
+</style>

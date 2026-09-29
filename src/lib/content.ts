@@ -55,6 +55,17 @@ export async function getPublishedToolkit(): Promise<ToolkitItem[]> {
   return items.sort((a, b) => a.id.localeCompare(b.id));
 }
 
+export type Case = CollectionEntry<'cases'>;
+
+/** 多方觀點案例（ADR-0036），依 id 排序 */
+export async function getPublishedCases(theme?: Theme): Promise<Case[]> {
+  const cases = await getCollection(
+    'cases',
+    ({ data }) => isVisible(data.status) && (!theme || data.theme === theme),
+  );
+  return cases.sort((a, b) => a.id.localeCompare(b.id));
+}
+
 export type UpdateNote = CollectionEntry<'updates'>;
 
 /** 更新紀錄的手寫說明（ADR-0024），新到舊 */

@@ -131,6 +131,38 @@ export const toolkit = {
   license: '內容以 CC BY-SA 4.0 授權，歡迎標示出處後分享與改作。',
 } as const;
 
+/** 多方觀點情境（ADR-0036）：理解不等於同意；不問讀者站在哪一邊 */
+export const cases = {
+  title: '多方觀點情境',
+  description: '一個虛構議題、幾位角色，練習找出共同點與真正的分歧點。',
+  intro:
+    '先讀背景與每一位角色在意什麼，再回答小題。題目不會問你站在哪一邊：理解不等於同意，也不代表各方的證據一樣強。',
+  entry: '多方觀點情境',
+  empty: '案例正在審核中，審核通過後會出現在這裡。',
+  basicModeNote:
+    '案例的小題屬於進階模式。背景與角色卡隨時可以讀；要作答時，在頁首把模式切到「進階」。',
+  counts: (roles: number, questions: number) => `${roles} 位角色・${questions} 題小題`,
+  background: '背景',
+  roles: '角色',
+  rolesHint: '先想想每個人在意什麼、擔心什麼，再看小題。每張角色卡都可以收合。',
+  roleFields: {
+    cares: '在意什麼',
+    grounds: '手上的依據',
+    worries: '擔心什麼',
+    misread: '容易被誤解的地方',
+  },
+  questions: '小題',
+  progress: (done: number, total: number) => `已作答 ${done}／${total} 題`,
+  closing: '換個位置想',
+  closingHint: '建議答完小題後再讀',
+  toolkitLink: '把這些方法帶到課堂或會議：討論引導卡',
+  partOf: (title: string, n: number, total: number) => `多方觀點：${title}（第 ${n}／${total} 題）`,
+  listTag: (title: string) => `多方觀點：${title}`,
+  context: '背景與角色卡',
+  backToCase: '回到案例',
+  toClosing: '回到案例：換個位置想',
+} as const;
+
 /** 內容修訂的揭露文字（ADR-0025）：中性說明，不催促重做 */
 export const revision = {
   latest: '最近修訂',

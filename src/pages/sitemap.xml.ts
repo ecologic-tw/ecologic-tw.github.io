@@ -1,4 +1,5 @@
 import {
+  getPublishedCases,
   getPublishedEntries,
   getPublishedScenarios,
   getPublishedToolkit,
@@ -10,6 +11,7 @@ export async function GET() {
   const entries = await getPublishedEntries();
   const scenarios = await getPublishedScenarios();
   const toolkit = await getPublishedToolkit();
+  const cases = (await getPublishedCases()).filter((item) => item.data.status === 'reviewed');
   const paths = showDrafts
     ? []
     : [
@@ -23,6 +25,7 @@ export async function GET() {
         ...toolkit
           .filter((item) => item.data.status === 'reviewed')
           .map((item) => `/toolkit/${item.id}/`),
+        ...cases.map((item) => `/cases/${item.id}/`),
       ];
   return new Response(sitemapXml(paths), {
     headers: { 'Content-Type': 'application/xml; charset=utf-8' },

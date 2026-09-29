@@ -7,7 +7,10 @@ interface Props {
   exclude?: string;
 }
 const { scenarios, exclude } = Astro.props;
-const items = scenarios.map((s) => ({ id: s.id, advanced: s.data.difficulty === 'advanced' }));
+// 案例小題不抽：沒讀過背景與角色卡時負擔太大（ADR-0036 §5）
+const items = scenarios
+  .filter((s) => !s.data.case)
+  .map((s) => ({ id: s.id, advanced: s.data.difficulty === 'advanced' }));
 ---
 
 {items.length > 0 && (

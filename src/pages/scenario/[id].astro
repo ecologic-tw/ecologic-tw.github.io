@@ -1,4 +1,5 @@
 ---
+import CaseRoles from '../../components/CaseRoles.astro';
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
@@ -10,6 +11,7 @@ import ScenarioFormat from '../../components/scenario/ScenarioFormat.astro';
 import {
   advancedQuiz,
   biasNote,
+  cases,
   classifyQuiz,
   quiz,
   revision,
@@ -17,7 +19,9 @@ import {
   themeLabel,
 } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
+import { CASE_SECTIONS, caseQuestions } from '../../lib/cases.ts';
 import {
+  getPublishedCases,
   getPublishedEntries,
   getPublishedScenarios,
   getUpdateNotes,
@@ -93,14 +97,34 @@ const rewrite =
 // 修訂紀錄可能提到答案，收在作答後才出現的解說區塊（ADR-0025）
 const revisions = revisionsFor(await getUpdateNotes(), `scenario/${scenario.id}`);
 
+// 多方觀點案例的小題（ADR-0036）：題目上方標出案例，附背景與角色卡；「下一題」依案例順序
+const caseItem = data.case
+  ? (await getPublishedCases()).find((item) => item.id === data.case)
+  : undefined;
 const themeScenarios = await getPublishedScenarios(data.theme);
-const index = themeScenarios.findIndex((s) => s.id === scenario.id);
-const later = themeScenarios.slice(index + 1);
-// 下一題依模式：基礎模式跳過進階題；沒有 JavaScript 時不分模式（mode-basic-only 不顯示）
+const sequence = caseItem
+  ? caseQuestions(caseItem.id, themeScenarios)
+  : themeScenarios.filter((s) => !s.data.case);
+const index = sequence.findIndex((s) => s.id === scenario.id);
+const later = sequence.slice(index + 1);
+const caseBackgroundHtml = caseItem
+  ? renderMarkdown(
+      splitSections(caseItem.body ?? '').get(CASE_SECTIONS.background) ?? '',
+      terms,
+      'case-',
+    )
+  : '';
+// 案例最後一題連回案例頁的收尾
+const caseLink = caseItem && {
+  href: `/cases/${caseItem.id}/${later.length ? '' : '#closing'}`,
+  label: later.length ? cases.backToCase : cases.toClosing,
+};
+// 下一題依模式：基礎模式跳過進階題；沒有 JavaScript 時不分模式（mode-basic-only 不顯示）。
+// 案例小題都是進階題，依序接續，不分模式。
 const nextAny = later[0];
 const nextBasic = later.find((s) => s.data.difficulty === 'basic');
 const nextLinks = (
-  nextAny === nextBasic
+  caseItem || nextAny === nextBasic
     ? [{ target: nextAny, className: undefined }]
     : [
         { target: nextBasic, className: 'mode-basic-only' },
@@ -117,6 +141,11 @@ const nextLinks = (
       <p class="meta">
         <a href={`/practice/${data.theme}/`}>{themeLabel[data.theme]}</a>
         {data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
+        {caseItem && (
+          <a href={`/cases/${caseItem.id}/`} data-case-link>
+            {cases.partOf(caseItem.data.title, index + 1, sequence.length)}
+          </a>
+        )}
       </p>
       <h1>{data.title}</h1>
       <RevisionStamp info={revisions} linked={false} />
@@ -124,6 +153,14 @@ const nextLinks = (
 
     {revisions.answerChangedOn && (
       <p class="answer-changed">{revision.scenarioAnswerChanged(revisions.answerChangedOn)}</p>
+    )}
+
+    {caseItem && (
+      <details class="case-context" data-case-context>
+        <summary>{cases.context}</summary>
+        <div class="prose" set:html={caseBackgroundHtml} />
+        <CaseRoles roles={caseItem.data.roles} />
+      </details>
     )}
 
     <section class="situation prose" aria-label={SECTIONS.scenario} set:html={scenarioHtml} />
@@ -151,6 +188,7 @@ const nextLinks = (
           {quiz.next}：{target.data.title}
         </a>
       ))}
+      {caseLink && <a href={caseLink.href}>{caseLink.label}</a>}
       <a href={`/practice/${data.theme}/`}>{quiz.backToList}</a>
     </p>
 
@@ -208,6 +246,7 @@ const nextLinks = (
             {quiz.next}：{target.data.title}
           </a>
         ))}
+        {caseLink && <a href={caseLink.href}>{caseLink.label}</a>}
         <a href={`/practice/${data.theme}/`}>{quiz.backToList}</a>
         <RandomScenarioButton scenarios={await getPublishedScenarios()} exclude={scenario.id} />
       </nav>
@@ -228,7 +267,8 @@ const nextLinks = (
 
   .meta {
     display: flex;
-    gap: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
     align-items: baseline;
     font-size: var(--step--1);
   }
@@ -246,6 +286,23 @@ const nextLinks = (
   h1 {
     margin-top: 0.4rem;
     font-size: var(--step-3);
+  }
+
+  /* 案例小題的背景與角色卡（ADR-0036）：預設收合，從案例頁過來的讀者已經讀過 */
+  .case-context {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  .case-context summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .case-context .prose {
+    margin-top: 0.75rem;
   }
 
   /* 情境：像田野筆記裡抄下的一段對話 */

@@ -1,8 +1,13 @@
 ---
 import RandomScenarioButton from '../../components/RandomScenarioButton.astro';
-import { challenge, quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
+import { cases, challenge, quiz, t, themeIntro, themeLabel } from '../../i18n/zh-TW.ts';
 import Base from '../../layouts/Base.astro';
-import { getPublishedScenarios, getUpdateNotes, type Theme } from '../../lib/content.ts';
+import {
+  getPublishedCases,
+  getPublishedScenarios,
+  getUpdateNotes,
+  type Theme,
+} from '../../lib/content.ts';
 import { THEMES } from '../../lib/content-schema.ts';
 import { revisionsFor } from '../../lib/updates.ts';
 
@@ -14,6 +19,9 @@ const theme = Astro.params.theme as Theme;
 const scenarios = await getPublishedScenarios(theme);
 const notes = await getUpdateNotes();
 const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).answerChangedOn;
+// 案例小題照常列出，並標出案例名稱（ADR-0036 §5）
+const themeCases = await getPublishedCases(theme);
+const caseTitle = new Map(themeCases.map((item) => [item.id, item.data.title]));
 ---
 
 <Base title={`${themeLabel[theme]}練習`} description={themeIntro[theme]} wide>
@@ -27,6 +35,7 @@ const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).an
       <div class="actions">
         <RandomScenarioButton scenarios={scenarios} />
         <a href="/challenge/">{challenge.entry}</a>
+        {themeCases.length > 0 && <a href="/cases/">{cases.entry}</a>}
       </div>
       <ol class="scenarios">
         {scenarios.map((s) => (
@@ -37,6 +46,9 @@ const answerChangedOn = (id: string) => revisionsFor(notes, `scenario/${id}`).an
           >
             <a href={`/scenario/${s.id}/`}>{s.data.title}</a>
             {s.data.difficulty === 'advanced' && <span class="tag">{quiz.advancedOnly}</span>}
+            {s.data.case && caseTitle.has(s.data.case) && (
+              <span class="tag">{cases.listTag(caseTitle.get(s.data.case) ?? '')}</span>
+            )}
             {s.data.status === 'draft' && <span class="tag draft">{t.draftBadge}</span>}
             <span class="status" data-status hidden />
           </li>

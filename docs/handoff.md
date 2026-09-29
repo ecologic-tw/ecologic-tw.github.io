@@ -6,13 +6,13 @@
 - **最後更新**：2026-09-29，Claude（Claude Code）
 
 ## 目前工作區
-- **`feat/cases-schema`**（自 `main` `d61ebff` 建立，待審）：ADR-0036 第 1 階段——`cases` 集合 schema、情境題 `case` 欄位、`choice` 新任務 `common-ground`／`ask-first`、建置期檢查、`npm run review` 與 `npm run scenario -- new --case`、單元測試；同步 03、08、CONTEXT、投稿指南、11 里程碑。還沒有頁面與內容。驗證見 PR。
-- PR #88–#90（ADR-0036、關於頁隱私說明、應對工具箱）都已合併。
+- **`feat/cases-pages`**（自 `main` `46608ad` 建立，待審）：ADR-0036 第 2 階段——`/cases/`、`/cases/<id>/`、小題頁的案例標示、背景與角色卡、案例內的下一題、隨機一題排除案例小題；同時起草日常試行案例 daily-case-01 與小題 daily-024–026（draft、aiAssisted），供 e2e 使用。同步 04、06、11。驗證見 PR。
+- PR #91（ADR-0036 第 1 階段 schema）已合併。
 - **未追蹤**：`Claude outputs/`（過時草稿，可刪）。
 
 ## 待人工決定
 - 回饋表單 Q17 說明欄貼上「列名告知」（見 `docs/feedback/google-form-design.md`），需在 Google 表單後台操作。
-- ADR-0036 試行案例的主題（日常或保育），在第 3 階段草稿 PR 前決定。日常案例若不屬爭議議題可單審發布；保育案例要等第二位審核者。
+- ADR-0036 試行案例 daily-case-01（巷口紅線）：Decision Owner 判斷是否屬爭議議題（目前標 `requiresSecondReview: false`），再審核案例與 3 題小題。
 - `docs/review/p0-p1-checklist.md`：2026-09-27 那一輪的一次性清單，仍有 14 項未勾。建議在開頭標註「歷史清單」，並刪掉 `review-guide.md` 第 134 行已過時的「本次修訂仍是 AI 草稿」。
 - `docs/review/2026-09-27-architecture-audit.md`：當時的審查快照，ADR-0025 有引用。建議保留，只在開頭標註「歷史快照」。
 - [ADR-0026](adr/0026-first-contribution-pilot.md) 的試行安排（仍是提議，還沒有真人試走）。
@@ -26,7 +26,7 @@
 - **2027-03**：第一次角色檢視。
 
 ## 下一步
-1. 審閱並合併 `feat/cases-schema`，接著做 ADR-0036 第 2 階段（案例頁與小題導覽）。
+1. 審閱並合併 `feat/cases-pages`；之後審核 daily-case-01 與 daily-024–026，發布時在 `updates.yaml` 加功能說明。
 2. 應對工具箱依 ADR-0037 Review Point 找試讀者回饋。
 3. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的 Review Point）。
 
