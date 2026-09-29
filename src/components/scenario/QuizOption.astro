@@ -1,0 +1,21 @@
+---
+// 作答選項。src/scripts/scenario.ts 以 data-option-* 找到選項、加上結果標示；樣式在 src/styles/quiz.css。
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'radio' | 'checkbox';
+  /** multi 題的選項角色（answer／acceptable／distractor） */
+  role?: string;
+}
+
+const { id, name, label, type = 'radio', role } = Astro.props;
+---
+
+<li data-option-id={id} data-role={role}>
+  <label>
+    <input type={type} name={name} value={id} />
+    <span data-option-label>{label}</span>
+    <span class="option-tag" data-option-tag hidden />
+  </label>
+</li>

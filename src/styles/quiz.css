@@ -1,0 +1,120 @@
+/* 情境題作答區與解說的共用樣式，只由 src/pages/scenario/[id].astro 匯入。
+   選項與說明由 src/components/scenario/ 的元件產生，頁面的 scoped 樣式套不到，所以放在這裡。
+   結果標示的 class（is-answer 等）由 src/scripts/scenario.ts 加上。規則順序即優先順序，調整時注意。 */
+
+.judge fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.judge legend {
+  font-family: var(--font-hand);
+  font-size: var(--step-2);
+  margin-bottom: 0.75rem;
+}
+
+.judge ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.judge label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--mist);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.judge label:has(input:checked) {
+  border-color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--ink);
+}
+
+.judge fieldset:disabled label {
+  cursor: default;
+}
+
+.judge li.is-answer label {
+  border-color: var(--moss);
+  box-shadow: inset 3px 0 0 var(--moss);
+}
+
+.judge input {
+  accent-color: var(--ink);
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+}
+
+.scenario .option-tag {
+  margin-left: auto;
+  font-size: var(--step--1);
+  color: var(--moss);
+}
+
+/* 進階題型（ADR-0022） */
+.judge fieldset + fieldset {
+  margin-top: 1.75rem;
+}
+
+.scenario .task {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  color: var(--moss);
+}
+
+.scenario .hint {
+  margin: -0.25rem 0 0.75rem;
+  font-size: var(--step--1);
+  color: var(--moss);
+}
+
+.judge li.is-missed label {
+  border-style: dashed;
+  border-color: var(--moss);
+}
+
+.judge li.is-wrong label {
+  border-color: var(--soil);
+}
+
+/* 爭點地圖（ADR-0034）：可接受的類型 */
+.judge li.is-acceptable label {
+  border-style: dashed;
+  border-color: var(--moss);
+}
+
+/* 看答案與解說 */
+.scenario .answer {
+  margin-top: 1rem;
+  font-size: var(--step-1);
+}
+
+.scenario .option-notes {
+  margin-top: 1.25rem;
+}
+
+.scenario .option-notes h2 {
+  font-size: var(--step-1);
+}
+
+.scenario .option-notes ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25em;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.scenario .role {
+  color: var(--moss);
+  font-size: var(--step--1);
+}

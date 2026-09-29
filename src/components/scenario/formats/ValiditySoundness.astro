@@ -1,0 +1,80 @@
+---
+// validity-soundness：有效 × 健全兩個判斷軸（ADR-0022）
+import { advancedQuiz } from '../../../i18n/zh-TW.ts';
+import { PREMISE_VERDICTS, VALIDITY_VERDICTS } from '../../../lib/content-schema.ts';
+import { soundnessOf } from '../../../lib/quiz.ts';
+import QuizOption from '../QuizOption.astro';
+import type { FormatProps } from '../types.ts';
+
+type Props = FormatProps<'validity-soundness'>;
+const { data, part } = Astro.props;
+
+const soundness = soundnessOf(data.validity, data.premises);
+---
+
+{part === 'question' && (
+  <>
+    <fieldset>
+      <legend>{advancedQuiz.validityQuestion}</legend>
+      <ul data-quiz-options data-quiz-group data-answer={data.validity}>
+        {VALIDITY_VERDICTS.map((v) => (
+          <QuizOption id={v} name="validity" label={advancedQuiz.validityLabel[v]} />
+        ))}
+      </ul>
+    </fieldset>
+    <fieldset>
+      <legend>{advancedQuiz.premisesQuestion}</legend>
+      <ul data-quiz-options data-quiz-group data-answer={data.premises}>
+        {PREMISE_VERDICTS.map((v) => (
+          <QuizOption id={v} name="premises" label={advancedQuiz.premisesLabel[v]} />
+        ))}
+      </ul>
+    </fieldset>
+  </>
+)}
+{part === 'notes' && soundness && (
+  <dl class="axes">
+    <div>
+      <dt>{advancedQuiz.axisValidity}</dt>
+      <dd>
+        <strong>{advancedQuiz.validityLabel[data.validity]}</strong>。{data.notes.validity}
+      </dd>
+    </div>
+    <div>
+      <dt>{advancedQuiz.axisPremises}</dt>
+      <dd>
+        <strong>{advancedQuiz.premisesLabel[data.premises]}</strong>。{data.notes.premises}
+      </dd>
+    </div>
+    <div>
+      <dt>{advancedQuiz.axisSoundness}</dt>
+      <dd>
+        <strong>{advancedQuiz.soundnessLabel[soundness]}</strong>
+      </dd>
+    </div>
+  </dl>
+)}
+
+<style>
+  .axes {
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .axes div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 1rem;
+  }
+
+  .axes dt {
+    color: var(--moss);
+    font-size: var(--step--1);
+    padding-top: 0.2rem;
+  }
+
+  .axes dd {
+    margin: 0;
+  }
+</style>

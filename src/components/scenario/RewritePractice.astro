@@ -1,0 +1,101 @@
+---
+// 改寫練習（02 規則 5）：外層 <section class="rewrite" data-quiz-rewrite> 留在頁面，才能沿用版面格線。
+// 改寫內容不儲存、不上傳，只計次數（src/scripts/scenario.ts）。
+import { quiz } from '../../i18n/zh-TW.ts';
+
+interface Props {
+  betterPhrasing: string[];
+  checklist: string[];
+}
+
+const { betterPhrasing, checklist } = Astro.props;
+---
+
+<h2 id="rewrite-title">{quiz.betterPhrasing}</h2>
+<label class="rewrite-label" for="rewrite-input">
+  {quiz.rewritePrompt}
+</label>
+<textarea id="rewrite-input" rows="4" autocomplete="off"></textarea>
+<fieldset class="checklist">
+  <legend>{quiz.checklistTitle}</legend>
+  {checklist.map((item) => (
+    <label>
+      <input type="checkbox" />
+      {item}
+    </label>
+  ))}
+</fieldset>
+<details class="reference" data-reference>
+  <summary>{quiz.showReference}</summary>
+  <ul>
+    {betterPhrasing.map((p) => (
+      <li>{p}</li>
+    ))}
+  </ul>
+</details>
+
+<style>
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  .rewrite-label {
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 0.4rem;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--moss);
+    border-radius: 3px;
+    resize: vertical;
+  }
+
+  .checklist {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .checklist legend {
+    margin-bottom: 0.5rem;
+  }
+
+  .checklist label {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    cursor: pointer;
+  }
+
+  .checklist input {
+    accent-color: var(--moss);
+  }
+
+  .reference {
+    margin-top: 1.25rem;
+  }
+
+  .reference > summary {
+    cursor: pointer;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--soil);
+    text-underline-offset: 0.25em;
+  }
+
+  .reference ul {
+    margin-top: 0.75rem;
+    padding-left: 1.25em;
+  }
+</style>

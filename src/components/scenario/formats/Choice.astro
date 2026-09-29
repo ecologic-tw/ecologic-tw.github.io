@@ -1,0 +1,44 @@
+---
+// choice：隱藏前提、形式辨識、反例選擇、鋼人練習（ADR-0022、ADR-0031）
+import { advancedQuiz } from '../../../i18n/zh-TW.ts';
+import QuizOption from '../QuizOption.astro';
+import type { FormatProps } from '../types.ts';
+
+type Props = FormatProps<'choice'>;
+const { data, part } = Astro.props;
+
+const choices = data.choices;
+const choiceAnswer = String(choices.findIndex((c) => c.correct));
+---
+
+{part === 'question' && (
+  <fieldset>
+    <legend>
+      <span class="task">{advancedQuiz.taskLabel[data.task]}</span>
+      {data.prompt}
+    </legend>
+    <ul data-quiz-options data-quiz-group data-answer={choiceAnswer} data-shuffle>
+      {choices.map((c, i) => (
+        <QuizOption id={String(i)} name="choice" label={c.text} />
+      ))}
+    </ul>
+  </fieldset>
+)}
+{part === 'answer' && (
+  <p class="answer">
+    {advancedQuiz.choiceAnswerIs}：<strong>{choices[Number(choiceAnswer)]?.text}</strong>
+  </p>
+)}
+{part === 'notes' && choices.length > 0 && (
+  <section class="option-notes" aria-labelledby="option-notes-title">
+    <h2 id="option-notes-title">{advancedQuiz.optionNotes}</h2>
+    <ul>
+      {choices.map((c) => (
+        <li>
+          <strong>{c.text}</strong>
+          {c.correct && <span class="role">（{advancedQuiz.roleLabel.answer}）</span>}：{c.note}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

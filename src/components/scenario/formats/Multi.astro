@@ -1,0 +1,59 @@
+---
+// multi：多重判讀（ADR-0022）
+import { advancedQuiz, quiz } from '../../../i18n/zh-TW.ts';
+import { NO_PROBLEM, type MultiRole } from '../../../lib/quiz.ts';
+import QuizOption from '../QuizOption.astro';
+import type { FormatProps } from '../types.ts';
+
+type Props = FormatProps<'multi'>;
+const { data, entries, part } = Astro.props;
+
+const titleOf = (id: string) =>
+  id === NO_PROBLEM ? quiz.noProblem : (entries.get(id)?.data.title ?? id);
+const options = (
+  [
+    ...data.answers.map((id) => ({ id, role: 'answer' })),
+    ...data.acceptable.map((id) => ({ id, role: 'acceptable' })),
+    ...data.distractors.map((id) => ({ id, role: 'distractor' })),
+  ] as { id: string; role: MultiRole }[]
+).map((o) => ({ ...o, title: titleOf(o.id), note: data.notes[o.id] ?? '' }));
+const answers = data.answers.flatMap((id) => entries.get(id) ?? []);
+---
+
+{part === 'question' && (
+  <fieldset aria-describedby="multi-hint">
+    <legend>{advancedQuiz.multiQuestion}</legend>
+    <p class="hint" id="multi-hint">
+      {advancedQuiz.multiHint}
+    </p>
+    <ul data-quiz-options data-quiz-multi data-shuffle>
+      {options.map((o) => (
+        <QuizOption id={o.id} name="choice" label={o.title} type="checkbox" role={o.role} />
+      ))}
+    </ul>
+  </fieldset>
+)}
+{part === 'answer' && (
+  <p class="answer">
+    {advancedQuiz.multiAnswerIs}：
+    {answers.map((e, i) => (
+      <>
+        {i > 0 && '、'}
+        <a href={`/guide/${e.id}/`}>{e.data.title}</a>
+      </>
+    ))}
+  </p>
+)}
+{part === 'notes' && options.length > 0 && (
+  <section class="option-notes" aria-labelledby="option-notes-title">
+    <h2 id="option-notes-title">{advancedQuiz.optionNotes}</h2>
+    <ul>
+      {options.map((o) => (
+        <li>
+          <strong>{o.title}</strong>
+          <span class="role">（{advancedQuiz.roleLabel[o.role]}）</span>：{o.note}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

@@ -1,0 +1,37 @@
+---
+// judge：單選判讀（預設題型）
+import { quiz } from '../../../i18n/zh-TW.ts';
+import { NO_PROBLEM, buildOptions } from '../../../lib/quiz.ts';
+import QuizOption from '../QuizOption.astro';
+import type { FormatProps } from '../types.ts';
+
+type Props = FormatProps<'judge'>;
+const { data, entries, part } = Astro.props;
+
+const titleOf = (id: string) =>
+  id === NO_PROBLEM ? quiz.noProblem : (entries.get(id)?.data.title ?? id);
+// 建置時的順序；前端再打亂（02 規則 2）
+const options = buildOptions(data.answer, data.distractors);
+const answerEntry = entries.get(data.answer);
+---
+
+{part === 'question' && (
+  <fieldset>
+    <legend>{quiz.question}</legend>
+    <ul data-quiz-options data-quiz-group data-answer={data.answer} data-shuffle>
+      {options.map((id) => (
+        <QuizOption id={id} name="choice" label={titleOf(id)} />
+      ))}
+    </ul>
+  </fieldset>
+)}
+{part === 'answer' && (
+  <p class="answer">
+    {quiz.answerIs}：
+    {answerEntry ? (
+      <a href={`/guide/${answerEntry.id}/`}>{answerEntry.data.title}</a>
+    ) : (
+      <strong>{quiz.noProblem}</strong>
+    )}
+  </p>
+)}
