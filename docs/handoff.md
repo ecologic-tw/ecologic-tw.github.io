@@ -6,14 +6,12 @@
 - **最後更新**：2026-09-29，Claude（Cowork）
 
 ## 目前工作區
-兩個分支自 `main`（`2d16cdd`，含 PR #88 ADR-0036）建立，已在本機提交、**尚未推送**，彼此獨立：
-- **`fix/about-privacy-and-font-license`**：關於頁隱私說明改為「網站本身不蒐集」，補上表單暱稱、GitHub 公開內容、GitHub Pages 記錄 IP 三件事；補霞鶩文楷的 SIL OFL 授權全文（`/licenses/`）；`updates.yaml` 公告；`docs/feedback/google-form-design.md` 加個資法第 8 條的「列名告知」文字。驗證：lint、276 個單元測試、build（88 個 HTML）、相關 e2e 17 個通過。
-- **`feat/response-toolbox`**（本檔所在）：[ADR-0037](adr/0037-response-toolbox.md)（提議）與第一階段實作草稿：「我的圖鑑」新增「我的應對工具箱」（可列印）、進度文字改為「試過」、答錯時補一句「每一次嘗試都算數」。驗證：lint、check、278 個單元測試、build、116 個 e2e（含 axe）通過。
-- 驗證在另一份工作副本以 Node 22 執行，以 PR 的 CI 為準。
+- **`feat/response-toolbox`**（本檔所在，自 `main` `2d16cdd` 建立，已推送、PR 為 draft）：[ADR-0037](adr/0037-response-toolbox.md)（2026-09-29 接受）第一階段：「我的圖鑑」新增「我的應對工具箱」（可列印）、進度文字改為「試過」、答錯時補一句「每一次嘗試都算數」。驗證：lint、check、278 個單元測試、build、116 個 e2e（含 axe）通過（Node 22，以 CI 為準）。與 main 試合併無衝突。
+- PR #89（關於頁隱私說明與字型授權）已合併。
 - **未追蹤**：`Claude outputs/`（過時草稿，可刪）。
 
 ## 待人工決定
-- 是否接受 [ADR-0037](adr/0037-response-toolbox.md)；接受前不要合併 `feat/response-toolbox`。
+- 工具箱 PR 從 draft 改為可審（ADR-0037 已接受），審閱後合併。
 - 回饋表單 Q17 說明欄貼上「列名告知」（見 `docs/feedback/google-form-design.md`），需在 Google 表單後台操作。
 - ADR-0036 試行案例的主題（日常或保育），在第 3 階段草稿 PR 前決定。日常案例若不屬爭議議題可單審發布；保育案例要等第二位審核者。
 - `docs/review/p0-p1-checklist.md`：2026-09-27 那一輪的一次性清單，仍有 14 項未勾。建議在開頭標註「歷史清單」，並刪掉 `review-guide.md` 第 134 行已過時的「本次修訂仍是 AI 草稿」。
@@ -29,7 +27,7 @@
 - **2027-03**：第一次角色檢視。
 
 ## 下一步
-1. 推送兩個分支並開 PR；ADR-0037 接受後才合併工具箱。
+1. 合併工具箱 PR；依 ADR-0037 Review Point 找試讀者回饋。
 2. ADR-0036（已合併）依其第 12 點分三個 PR 實作：schema → 頁面 → 1 則試行草稿。
 3. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的 Review Point）。
 
