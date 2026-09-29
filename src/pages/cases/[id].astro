@@ -1,0 +1,220 @@
+---
+// 多方觀點案例（ADR-0036）：背景、角色卡、小題清單與收尾的「換個位置想」。
+// 小題本身沿用 /scenario/<id>/ 作答；這一頁只負責把它們串起來。
+import CaseRoles from '../../components/CaseRoles.astro';
+import Contributors from '../../components/Contributors.astro';
+import FeedbackLinks from '../../components/FeedbackLinks.astro';
+import Sources from '../../components/Sources.astro';
+import { cases, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { CASE_SECTIONS, caseQuestions } from '../../lib/cases.ts';
+import {
+  getPublishedCases,
+  getPublishedScenarios,
+  getPublishedToolkit,
+  type Case,
+  type Scenario,
+} from '../../lib/content.ts';
+import { renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
+import { loadTermInfo } from '../../lib/terms-source.ts';
+
+export async function getStaticPaths() {
+  const scenarios = await getPublishedScenarios();
+  return (await getPublishedCases()).map((item) => ({
+    params: { id: item.id },
+    props: { item, questions: caseQuestions(item.id, scenarios) },
+  }));
+}
+
+interface Props {
+  item: Case;
+  questions: Scenario[];
+}
+
+const { item, questions } = Astro.props;
+const { data } = item;
+const terms = loadTermInfo();
+const sections = splitSections(item.body ?? '');
+const html = (key: keyof typeof CASE_SECTIONS) =>
+  renderMarkdown(sections.get(CASE_SECTIONS[key]) ?? '', terms, `${key}-`);
+const toolkit = (await getPublishedToolkit())[0];
+---
+
+<Base title={data.title} description={data.summary} wide>
+  {data.status === 'draft' && <p class="draft-banner">{t.draftNote}</p>}
+
+  <article class="case" data-case-questions={questions.map((q) => q.id).join(' ')}>
+    <header>
+      <p class="meta">
+        <a href="/cases/">{cases.title}</a>
+        <a href={`/practice/${data.theme}/`}>{themeLabel[data.theme]}</a>
+        <span class="tag">{quiz.advancedOnly}</span>
+      </p>
+      <h1>{data.title}</h1>
+      <p class="summary">{data.summary}</p>
+    </header>
+
+    <p class="note mode-basic-only">{cases.basicModeNote}</p>
+
+    <section aria-labelledby="background-title">
+      <h2 id="background-title">{cases.background}</h2>
+      <div class="prose" set:html={html('background')} />
+    </section>
+
+    <section aria-labelledby="roles-title">
+      <h2 id="roles-title">{cases.roles}</h2>
+      <p class="hint">{cases.rolesHint}</p>
+      <CaseRoles roles={data.roles} />
+    </section>
+
+    <section aria-labelledby="questions-title">
+      <h2 id="questions-title">{cases.questions}</h2>
+      <p class="hint" data-case-progress hidden></p>
+      <ol class="questions">
+        {questions.map((q) => (
+          <li data-scenario-id={q.id}>
+            <a href={`/scenario/${q.id}/`}>{q.data.title}</a>
+            {q.data.status === 'draft' && <span class="tag draft">{t.draftBadge}</span>}
+            <span class="status" data-status hidden />
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <details class="closing" id="closing" data-case-closing>
+      <summary>
+        <span class="closing-title">{cases.closing}</span>
+        <span class="hint">（{cases.closingHint}）</span>
+      </summary>
+      <p class="hint">{quiz.perspectiveHint}</p>
+      <div class="prose" set:html={html('perspective')} />
+      {toolkit && (
+        <p class="toolkit-link">
+          <a href={`/toolkit/${toolkit.id}/`}>{cases.toolkitLink}</a>
+        </p>
+      )}
+    </details>
+
+    <Sources sources={data.sources} />
+    <FeedbackLinks contentId={item.id} kind="case" />
+    <Contributors contributors={data.contributors} />
+  </article>
+</Base>
+
+<script>
+  import '../../scripts/practice-status.ts';
+  import '../../scripts/case-status.ts';
+</script>
+
+<style>
+  header {
+    margin-top: 3rem;
+    max-width: var(--measure);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: var(--step--1);
+  }
+
+  .meta a {
+    color: var(--moss);
+  }
+
+  .tag {
+    font-size: var(--step--1);
+    color: var(--moss);
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+    line-height: 1.6;
+  }
+
+  .tag.draft {
+    color: var(--soil);
+    border: 1px dashed var(--soil);
+  }
+
+  h1 {
+    margin-top: 0.4rem;
+    font-size: var(--step-3);
+  }
+
+  .summary {
+    margin-top: 0.75rem;
+  }
+
+  h2 {
+    margin-top: 2.5rem;
+    font-size: var(--step-2);
+  }
+
+  .note {
+    margin-top: 1.5rem;
+    max-width: var(--measure);
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--soil);
+    background: var(--paper-deep);
+  }
+
+  .hint {
+    margin-top: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .prose {
+    max-width: var(--measure);
+    margin-top: 0.75rem;
+  }
+
+  .questions {
+    margin: 1rem 0 0;
+    padding: 0 0 0 1.5rem;
+    border-top: 1px solid var(--mist);
+    max-width: var(--measure);
+  }
+
+  .questions li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .questions li > * + * {
+    margin-left: 0.75rem;
+  }
+
+  .questions a {
+    font-weight: 500;
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+  }
+
+  .status {
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .closing {
+    margin-top: 2.5rem;
+    max-width: var(--measure);
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  .closing summary {
+    cursor: pointer;
+  }
+
+  .closing-title {
+    font-weight: 500;
+    font-size: var(--step-2);
+  }
+
+  .toolkit-link {
+    margin-top: 1rem;
+  }
+</style>

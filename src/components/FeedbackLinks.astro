@@ -4,11 +4,11 @@ import { formUrl, issueUrl } from '../lib/feedback.ts';
 
 interface Props {
   contentId: string;
-  /** 情境題或圖鑑卡，只影響文字 */
-  kind: 'scenario' | 'entry';
+  /** 情境題、圖鑑卡或多方觀點案例，只影響文字 */
+  kind: 'scenario' | 'entry' | 'case';
 }
 const { contentId, kind } = Astro.props;
-const noun = kind === 'scenario' ? '這題' : '這張卡';
+const noun = { scenario: '這題', entry: '這張卡', case: '這個案例' }[kind];
 ---
 
 <aside class="feedback" aria-labelledby={`feedback-${contentId}`}>

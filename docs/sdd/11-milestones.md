@@ -74,8 +74,9 @@
   - [ ] 至少一位試讀者回饋後，依 ADR-0034 Review Point 檢視
 - [ ] 4 多方觀點情境（`cases` 集合）：ADR-0036 已接受
   - [x] 第 1 階段：schema、建置期檢查、審核與提案工具、單元測試（`feat/cases-schema`）
-  - [ ] 第 2 階段：案例頁、小題頁的案例標示與導覽、e2e 與 axe
-  - [ ] 第 3 階段：1 則試行案例草稿（主題待 Decision Owner 決定）
+  - [x] 第 2 階段：案例頁、小題頁的案例標示與導覽、e2e 與 axe（`feat/cases-pages`）
+  - [x] 第 3 階段草稿：日常試行案例 daily-case-01「巷口要不要畫紅線」與小題 daily-024–026（draft，隨第 2 階段 PR 起草，供 e2e 使用）
+  - [ ] 人工審核與發布（Decision Owner 先判斷是否屬爭議議題；發布時加 `updates.yaml` 說明）
 - [ ] 5 分支對話練習（試行 1–2 則）
 
 ## 後續（v1.1+）

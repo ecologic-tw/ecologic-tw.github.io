@@ -7,6 +7,7 @@ export const INDEX_PATHS = [
   '/practice/daily/',
   '/practice/conservation/',
   '/challenge/',
+  '/cases/',
   '/updates/',
 ];
 

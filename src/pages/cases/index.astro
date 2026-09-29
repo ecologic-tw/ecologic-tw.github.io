@@ -1,0 +1,127 @@
+---
+// 多方觀點案例列表（ADR-0036），依主題分組。
+import { cases, quiz, t, themeLabel } from '../../i18n/zh-TW.ts';
+import Base from '../../layouts/Base.astro';
+import { caseQuestions } from '../../lib/cases.ts';
+import { getPublishedCases, getPublishedScenarios } from '../../lib/content.ts';
+import { THEMES } from '../../lib/content-schema.ts';
+
+const all = await getPublishedCases();
+const scenarios = await getPublishedScenarios();
+const groups = THEMES.map((theme) => ({
+  theme,
+  items: all
+    .filter((item) => item.data.theme === theme)
+    .map((item) => ({ item, questions: caseQuestions(item.id, scenarios).map((q) => q.id) })),
+})).filter((group) => group.items.length > 0);
+---
+
+<Base title={cases.title} description={cases.description} wide>
+  <h1>{cases.title}</h1>
+  <p class="lead">{cases.intro}</p>
+  <p class="note mode-basic-only">{cases.basicModeNote}</p>
+
+  {groups.length === 0 ? (
+    <p class="empty">{cases.empty}</p>
+  ) : (
+    groups.map(({ theme, items }) => (
+      <section aria-labelledby={`theme-${theme}`}>
+        <h2 id={`theme-${theme}`}>{themeLabel[theme]}</h2>
+        <ul class="cases">
+          {items.map(({ item, questions }) => (
+            <li data-case-questions={questions.join(' ')}>
+              <a href={`/cases/${item.id}/`}>{item.data.title}</a>
+              <span class="tag">{quiz.advancedOnly}</span>
+              {item.data.status === 'draft' && <span class="tag draft">{t.draftBadge}</span>}
+              <p class="summary">{item.data.summary}</p>
+              <p class="counts">
+                {cases.counts(item.data.roles.length, questions.length)}
+                <span data-case-progress hidden />
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )}
+</Base>
+
+<script>
+  import '../../scripts/case-status.ts';
+</script>
+
+<style>
+  h1 {
+    margin-top: 3rem;
+    font-size: var(--step-3);
+  }
+
+  .lead,
+  .note {
+    margin-top: 0.75rem;
+    max-width: var(--measure);
+  }
+
+  .note {
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--soil);
+    background: var(--paper-deep);
+  }
+
+  .empty {
+    margin-top: 2rem;
+    color: var(--moss);
+  }
+
+  h2 {
+    margin-top: 2.5rem;
+    font-size: var(--step-2);
+  }
+
+  .cases {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--mist);
+  }
+
+  .cases li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--mist);
+  }
+
+  .cases a {
+    font-weight: 500;
+    font-size: var(--step-1);
+    letter-spacing: 0.04em;
+    margin-right: 0.75rem;
+  }
+
+  .tag {
+    font-size: var(--step--1);
+    color: var(--moss);
+    border: 1px solid var(--mist);
+    padding: 0 0.4rem;
+    line-height: 1.6;
+  }
+
+  .tag.draft {
+    color: var(--soil);
+    border: 1px dashed var(--soil);
+  }
+
+  .summary {
+    margin-top: 0.4rem;
+    max-width: var(--measure);
+  }
+
+  .counts {
+    margin-top: 0.25rem;
+    font-size: var(--step--1);
+    color: var(--moss);
+  }
+
+  .counts [data-case-progress]::before {
+    content: '・';
+  }
+</style>
