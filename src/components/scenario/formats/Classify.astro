@@ -26,7 +26,7 @@ const items = data.items;
         >
           <fieldset>
             <legend class="item-text">{item.text}</legend>
-            <ul data-quiz-options class="kinds">
+            <ul data-quiz-options data-shuffle class="kinds">
               {DISAGREEMENT_KINDS.map((kind) => (
                 <QuizOption
                   id={kind}
@@ -62,7 +62,7 @@ const items = data.items;
 )}
 
 <style>
-  /* 逐句一組單選。題號放在句子前（fieldset 裡的清單標記會對齊到選項列），
+  /* 逐句一組單選，每一句的選項順序各自打亂（沒有 JavaScript 時依固定順序）。題號放在句子前（fieldset 裡的清單標記會對齊到選項列），
      選項兩欄、手機一欄，標記文字才不會被擠到換行。選項的外框與結果標示在 src/styles/quiz.css。 */
   .classify-items {
     counter-reset: statement;

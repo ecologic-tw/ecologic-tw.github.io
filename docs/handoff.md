@@ -6,8 +6,8 @@
 - **最後更新**：2026-09-29，Claude（Claude Code）
 
 ## 目前工作區
-- **`feat/cases-pages`**（自 `main` `46608ad` 建立，待審）：ADR-0036 第 2 階段——`/cases/`、`/cases/<id>/`、小題頁的案例標示、背景與角色卡、案例內的下一題、隨機一題排除案例小題；同時起草日常試行案例 daily-case-01 與小題 daily-024–026（draft、aiAssisted），供 e2e 使用。同步 04、06、11。驗證見 PR。
-- PR #91（ADR-0036 第 1 階段 schema）已合併。
+- **`feat/classify-shuffle`**（自 `main` `384c4b7` 建立，待審）：爭點地圖每一句的四種分歧改為各自亂數排列（Decision Owner 2026-09-29 要求），同步 04。驗證見 PR。
+- PR #92（ADR-0036 第 2 階段：案例頁與日常試行案例草稿）已合併。
 - **未追蹤**：`Claude outputs/`（過時草稿，可刪）。
 
 ## 待人工決定
@@ -26,9 +26,10 @@
 - **2027-03**：第一次角色檢視。
 
 ## 下一步
-1. 審閱並合併 `feat/cases-pages`；之後審核 daily-case-01 與 daily-024–026，發布時在 `updates.yaml` 加功能說明。
-2. 應對工具箱依 ADR-0037 Review Point 找試讀者回饋。
-3. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的 Review Point）。
+1. 審閱並合併 `feat/classify-shuffle`。
+2. 審核 daily-case-01 與 daily-024–026，發布時在 `updates.yaml` 加功能說明。
+3. 應對工具箱依 ADR-0037 Review Point 找試讀者回饋。
+4. 爭點地圖、綜合挑戰、鋼人練習都在等試讀者回饋（各 ADR 的 Review Point）。
 
 ## 參考
 - 2026-09-29 以前的完整交接歷史：`git show 2205dba:docs/handoff.md`（或 `git log -p -- docs/handoff.md`）
