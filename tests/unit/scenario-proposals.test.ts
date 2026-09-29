@@ -60,9 +60,11 @@ it('previews then assigns a new id and preserves credits without approving conte
   expect(readFileSync(plan.file, 'utf8')).toContain('status: draft');
   expect(readFileSync(plan.file, 'utf8')).toContain('reviewers: []');
   expect(readFileSync(plan.file, 'utf8')).toContain('測試筆名');
-  expect(readFileSync(proposal, 'utf8')).toContain(`promotedTo: ${plan.id}`);
+  expect(existsSync(proposal)).toBe(false);
+  expect(readFileSync(plan.promoted, 'utf8')).toContain(`promotedTo: ${plan.id}`);
   expect(readFileSync(plan.file, 'utf8')).toContain('# Keep contribution discussion');
   expect(() => promoteProposal(root, 'idea')).toThrow(/已轉入/);
+  expect(() => createProposal(root, 'idea', { theme: 'daily', title: 'test' })).toThrow(/已轉入/);
 });
 it('rejects unsafe paths, duplicate proposals and partial attribution', () => {
   const root = fixture();

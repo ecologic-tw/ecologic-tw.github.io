@@ -65,6 +65,6 @@ parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證�
 - 建置後產生 `reports/content-quality.*`（不進公開 dist）；獨立來源連結 workflow 產生 Actions 報告。操作及限制見 `docs/review/content-quality.md`。
 
 ## 情境協作（ADR-0019）
-- `contributions/scenarios/` 接受不完整提案，不納入網站內容集合；`scripts/scenario.ts` 提供 new／edit／check／promote，轉入 draft 前沿用完整檢查。
+- `contributions/scenarios/` 接受不完整提案，不納入網站內容集合；`scripts/scenario.ts` 提供 new／edit／check／promote，轉入 draft 前沿用完整檢查；轉入後提案移到 `promoted/` 保留。
 - `contributors` 保存自願公開名稱與實際貢獻，`Contributors.astro` 共用顯示；不推測既有作者、不取代 reviewers。
 - `ExternalLink.astro` 與 Markdown 轉換集中處理外部連結的新視窗提示、安全屬性；建置產物檢查避免遺漏。

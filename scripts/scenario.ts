@@ -1,6 +1,6 @@
 // 不完整提案放在 contributions/，不載入正式網站。永不標為 reviewed。
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parse, parseDocument, stringify } from 'yaml';
@@ -15,6 +15,11 @@ const today = () => localDate();
 function proposalPath(root: string, slug: string): string {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('提案名稱請用小寫英數及連字號');
   return join(root, 'contributions/scenarios', `${slug}.md`);
+}
+/** 已轉入正式草稿的提案移到 promoted/，保留作為紀錄，不和進行中的提案混在一起 */
+function promotedPath(root: string, slug: string): string {
+  proposalPath(root, slug);
+  return join(root, 'contributions/scenarios/promoted', `${slug}.md`);
 }
 function scenarioPath(root: string, id: string): string {
   if (!/^(daily|cons)-\d{3}$/.test(id)) throw new Error('題號格式需為 daily-001 或 cons-001');
@@ -73,6 +78,8 @@ function formatFields(format: string): Record<string, unknown> {
 export function createProposal(root: string, slug: string, options: ProposalOptions) {
   const file = proposalPath(root, slug);
   if (existsSync(file)) throw new Error('提案已存在，請編輯原檔或另取名稱');
+  if (existsSync(promotedPath(root, slug)))
+    throw new Error('這個名稱的提案已轉入（見 promoted/），請另取名稱');
   if (!!options.contributor !== !!options.contribution)
     throw new Error('署名需同時提供 --contributor 與 --contribution，或兩者都不填');
   let data: Record<string, unknown>;
@@ -122,6 +129,9 @@ export function createProposal(root: string, slug: string, options: ProposalOpti
 
 export function preparePromotion(root: string, slug: string) {
   const proposal = proposalPath(root, slug);
+  const promoted = promotedPath(root, slug);
+  if (!existsSync(proposal) && existsSync(promoted))
+    throw new Error('已轉入，提案在 promoted/；後續請用 edit 建立新修訂提案');
   const { data, body, yaml } = readDocument(readFileSync(proposal, 'utf8'));
   if (data.promotedTo)
     throw new Error(`已轉入 ${String(data.promotedTo)}；後續請用 edit 建立新修訂提案`);
@@ -207,6 +217,7 @@ export function preparePromotion(root: string, slug: string) {
     id,
     file,
     proposal,
+    promoted,
     issues,
     text: `---\n${draftDocument.toString()}---\n${body}`,
     proposalText: `---\n${proposalDocument.toString()}---\n${body}`,
@@ -220,7 +231,10 @@ export function promoteProposal(root: string, slug: string, dryRun = false) {
   if (!dryRun) {
     // 新題使用 wx，避免並行工作時覆蓋同題號；修訂題已核對原始內容 hash。
     writeFileSync(plan.file, plan.text, { flag: plan.replacing ? 'w' : 'wx' });
-    writeFileSync(plan.proposal, plan.proposalText);
+    // 提案標記 promotedTo 後移到 promoted/（ADR-0019 修訂，2026-09-29）
+    mkdirSync(join(root, 'contributions/scenarios/promoted'), { recursive: true });
+    writeFileSync(plan.promoted, plan.proposalText, { flag: 'wx' });
+    unlinkSync(plan.proposal);
   }
   return plan;
 }

@@ -85,7 +85,7 @@ npm run scenario -- promote community-light
 npm run check
 ```
 
-工具沿用正式 schema 及全站引用／安全檢查，新題自動分配下一個 daily／cons 題號，`isControl` 依 `answer: none` 推導；不需手動同步兩個欄位。轉入永遠是 `draft`，`reviewers` 清空，不會發布。提案保留並標記 `promotedTo`，防止重複轉入；後續修訂使用新的 edit 提案。
+工具沿用正式 schema 及全站引用／安全檢查，新題自動分配下一個 daily／cons 題號，`isControl` 依 `answer: none` 推導；不需手動同步兩個欄位。轉入永遠是 `draft`，`reviewers` 清空，不會發布。提案標記 `promotedTo` 後移到 `contributions/scenarios/promoted/` 保留作為紀錄，防止重複轉入，名稱也不能再用；後續修訂使用新的 edit 提案。
 
 修改既有題目的 promote 會把該題改回 draft，可能影響已審對照題比例，工具會拒絕造成現有內容檢查錯誤的轉入。遇到比例限制，不要關掉規則；先完成提案，與維護者安排整批修訂及人工審核，必要時依 [退回審核指南](review-guide.md) 調整發布批次。不要將尚未重審的修訂直接合併上線。
 
