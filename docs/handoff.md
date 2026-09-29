@@ -1,5 +1,13 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：爭點地圖 ADR（ADR-0034）
+- **目標與範圍**：依 SDD 13 建議順序，為爭點地圖寫 ADR；本 PR 只改文件，未實作。另記錄 Decision Owner 以 Safari 試印討論引導卡成功。
+- **分支**：`docs/adr-0034-issue-map`，自 `origin/main`（`f37d493`，含 PR #81）建立。
+- **已完成**：ADR-0034（提議）：`format: classify`，3–5 句逐句選事實／價值／定義／利益；四類為程式常數；`acceptable` 0–1 個；每句都是正解或可接受才算答對；基礎與進階模式皆可（ADR-0022 §2 的例外）；答對點亮「分歧的種類」卡；不進綜合挑戰；試行 2 題。SDD 13 §5、11 里程碑同步。
+- **驗證**：本機 `git diff --check`、`npm run check:docs`、Prettier。
+- **Decision Owner 決定（2026-09-29）**：接受 ADR-0034；基礎模式可以出現；答對點亮「分歧的種類」卡。
+- **下一步**：接受後實作並起草 2 題。
+
 ## 2026-09-29：發布討論引導卡與「分歧的種類」
 - **目標與範圍**：PR #80 合併後，Decision Owner 審核概念卡 `kinds-of-disagreement` 與引導卡 `discussion`，並核對三則來源原文。
 - **分支**：`content/publish-discussion-card`，自 `origin/main`（`2622e6e`，含 PR #80）建立。
