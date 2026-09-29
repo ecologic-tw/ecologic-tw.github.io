@@ -1,8 +1,8 @@
 # ADR-0014 M2：作答互動、提前實作 progress.ts 核心、前端改用 zod/mini
 - 日期：2026-09-26
 - 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
-- Decision Owner：@Wang-Yi-Zhang
-- Review Point：M3 完成時（加入匯入匯出與徽章後），或單頁 JS 接近 50 KB gzip 時
+- 決策者：@Wang-Yi-Zhang
+- 回顧點：M3 完成時（加入匯入匯出與徽章後），或單頁 JS 接近 50 KB gzip 時
 
 ## 背景
 M2 的作答流程、模式切換與題目列表完成狀態（04）都需要讀寫本機進度，而 `progress.ts` 原本排在 M3（11）。另外，模式切換在每一頁都會載入進度模組，若用 Astro 內附的完整 zod，每頁多約 25 KB gzip。

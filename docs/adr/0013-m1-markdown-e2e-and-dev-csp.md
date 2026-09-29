@@ -1,8 +1,8 @@
 # ADR-0013 M1：Markdown 轉換改用 Sätteri 外掛、e2e 測試工具、CSP 僅於正式建置輸出
 - 日期：2026-09-26
 - 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
-- Decision Owner：@Wang-Yi-Zhang
-- Review Point：M2 完成時（作答頁加入互動腳本後），或 Astro／Sätteri 主版本更新時
+- 決策者：@Wang-Yi-Zhang
+- 回顧點：M2 完成時（作答頁加入互動腳本後），或 Astro／Sätteri 主版本更新時
 
 ## 背景
 M1 需要：內文 `[[名詞]]` 轉成可鍵盤操作的浮出說明（04）、`## 進階` 區塊漸進揭露，以及驗收「關閉 JS 可閱讀、鍵盤可操作 popover、axe 無嚴重問題」（11）。實作中另發現兩件事：

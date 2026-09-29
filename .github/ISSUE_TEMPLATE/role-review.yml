@@ -16,7 +16,7 @@ body:
     validations: { required: true }
   - type: textarea
     id: decisions
-    attributes: { label: 本期重大決策（ADR 清單）與其 Review Point 結果 }
+    attributes: { label: 本期重大決策（ADR 清單）與其回顧點結果 }
   - type: textarea
     id: power
     attributes:

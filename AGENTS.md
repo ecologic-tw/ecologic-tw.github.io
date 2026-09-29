@@ -19,10 +19,10 @@
 ## 社群文化與 AI 協作規範
 本專案文化依 `docs/共好型自主敏捷社群指引.md`（自由決定、公開承擔、共同學習）。你（AI）同樣適用：
 - **允許不知道，不能假裝知道**（§18）：邏輯判讀或保育事實不確定時，明確標出不確定之處與待查證項目，不要編造來源。
-- **公開承擔**（§2）：提出架構或流程變更時，寫明假設、已知風險與 Review Point（用 ADR 範本）。
+- **公開承擔**（§2）：提出架構或流程變更時，寫明假設、已知風險與回顧點（用 ADR 範本）。
 - **把壞消息說早**（§17）：發現既有內容或程式可能有錯，即使不在本次任務範圍，也要回報。
 - **對事不對人**（§11）：內容、Issue、PR 文字不羞辱、不貼標籤。
-- 不得自行擔任 Decision Owner、不得自行核准或合併 PR。
+- 不得自行擔任決策者、不得自行核准或合併 PR。
 
 ## 常用指令
 - `npm ci` / `npm run dev` / `npm run build` / `npm run check`（astro check＋內容 schema）/ `npm run lint` / `npm test` / `npm run test:e2e`（首次需 `npx playwright install chromium`）/ `npm run check:docs`（文件相對連結）
@@ -42,7 +42,7 @@
 | 知識範圍、真理理論、心理學範圍、進階題型規劃 | `docs/sdd/12-knowledge-scope.md` |
 | 互動擴充規劃（綜合挑戰、討論引導卡、爭點地圖、多方觀點、分支對話） | `docs/sdd/13-interaction-roadmap.md` |
 | 回饋機制 | `docs/sdd/09-feedback.md`、`docs/feedback/google-form-design.md` |
-| 社群文化、決策方式、Learning Review | `docs/共好型自主敏捷社群指引.md` |
+| 社群文化、決策方式、學習回顧 | `docs/共好型自主敏捷社群指引.md` |
 | 審核、治理、角色輪替、傳承 | `docs/sdd/10-governance.md`、`CODE_OF_CONDUCT.md` |
 | 里程碑與驗收（進度的唯一來源） | `docs/sdd/11-milestones.md` |
 | 為什麼這樣決定 | `docs/adr/` |

@@ -1,6 +1,6 @@
-name: Learning Review
+name: 學習回顧
 description: 事情出錯時，理解問題如何形成並改善系統（不找戰犯）
-title: '[Learning Review] '
+title: '[學習回顧] '
 labels: [learning-review]
 body:
   - type: markdown
