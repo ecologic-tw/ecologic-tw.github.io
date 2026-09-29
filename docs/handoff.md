@@ -1,5 +1,17 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：實作綜合挑戰（ADR-0032）
+- **目標與範圍**：依已接受的 ADR-0032 實作 `/challenge/`；不新增內容、不改進度資料格式、不做徽章與累積統計。
+- **分支**：`feat/combined-challenge`，自 `origin/main`（`397c007`，含 PR #75）建立。
+- **已完成**：
+  - `src/lib/challenge.ts`：抽題純函式（1 題對照題、兩主題、正解卡不重複、優先未作答、湊不齊時回傳無法開始）與 `sessionStorage` 狀態驗證；單元測試 16 個。
+  - `src/pages/challenge/index.astro`：所有可抽的單選判讀題在建置時產生並隱藏（目前 27 題，頁面約 110 KB），前端抽題後依序顯示；結果只顯示答對題數與逐題回顧。
+  - `src/scripts/challenge.ts`：逐題作答、上一題／下一題、重新整理可續作、送出後寫入 `answered`；在前幾題按 Enter 視同下一題。
+  - 首頁與題目列表加入口；sitemap 加入 `/challenge/`；04、07、CONTEXT、關於頁隱私說明、11 里程碑同步。
+- **驗證**：見 PR。本機預覽確認開始後顯示「第 1／5 題」、情境與打亂的選項。
+- **注意**：Playwright 的 `getByText` 不比對 `<noscript>` 內的文字，無 JavaScript 的測試改以 `data-challenge-nojs` 定位。
+- **下一步**：試讀者走兩輪，依 ADR-0032 Review Point 檢視。
+
 ## 2026-09-29：接受 ADR-0032
 - **目標與範圍**：PR #74 合併後，Decision Owner 接受 ADR-0032；本 PR 只改文件。
 - **分支**：`docs/accept-adr-0032`，自 `origin/main` 建立。

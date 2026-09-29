@@ -90,6 +90,36 @@ export const quiz = {
   answeredBeforeFix: '已作答（題目後來修正過）',
 } as const;
 
+/** 綜合挑戰（ADR-0032）：只陳述結果，不用評分、評語或催促的字眼 */
+export const challenge = {
+  title: '綜合挑戰',
+  description: '混合兩個主題的 5 題判讀，全部答完再看結果與解說。',
+  intro: [
+    '一次 5 題，混合日常生活與野生生物保育，其中有 1 題推理本身沒有問題。',
+    '作答時不會馬上告訴你對錯，也不計時；送出前可以回上一題修改。全部送出後，再一起看結果與每題的解說。',
+    '進行中的作答只存在這個瀏覽器分頁，關閉分頁就會清除。',
+  ],
+  overwriteNote:
+    '送出後會和一般作答一樣記錄下來，並覆蓋這些題目先前的紀錄；如果某張圖鑑卡只靠其中一題點亮，答錯時它會暫時暗下來。',
+  entry: '綜合挑戰（5 題）',
+  start: '開始',
+  noScript: '綜合挑戰需要 JavaScript 才能抽題與記錄作答。也可以到題目列表逐題練習。',
+  unavailable: '目前的題目還不夠組成一次挑戰。可以先到題目列表逐題練習。',
+  progress: (current: number, total: number) => `第 ${current}／${total} 題`,
+  previous: '上一題',
+  next: '下一題',
+  submit: '全部送出',
+  chooseFirst: '先選一個判讀，再到下一題。',
+  resultTitle: '結果',
+  result: (correct: number, total: number) => `這次答對 ${correct} 題（共 ${total} 題）`,
+  includesAnswered: '這次含有你之前做過的題目。',
+  reviewTitle: '逐題回顧',
+  yourChoice: '你的判讀',
+  answer: '這段推理',
+  openScenario: '看完整題目與改寫練習',
+  again: '再挑戰一次',
+} as const;
+
 /** 內容修訂的揭露文字（ADR-0025）：中性說明，不催促重做 */
 export const revision = {
   latest: '最近修訂',
