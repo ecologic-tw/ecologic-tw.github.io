@@ -1,6 +1,6 @@
 # ADR-0013 M1：Markdown 轉換改用 Sätteri 外掛、e2e 測試工具、CSP 僅於正式建置輸出
 - 日期：2026-09-26
-- 狀態：提議
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：M2 完成時（作答頁加入互動腳本後），或 Astro／Sätteri 主版本更新時
 

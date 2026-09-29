@@ -1,6 +1,6 @@
 # ADR-0014 M2：作答互動、提前實作 progress.ts 核心、前端改用 zod/mini
 - 日期：2026-09-26
-- 狀態：提議
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：M3 完成時（加入匯入匯出與徽章後），或單頁 JS 接近 50 KB gzip 時
 

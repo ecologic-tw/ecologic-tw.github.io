@@ -1,6 +1,6 @@
 # ADR-0015 M3：卡內小檢核、閱讀紀錄、徽章發放與進度匯入規則
 - 日期：2026-09-26
-- 狀態：提議
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
 - Decision Owner：@Wang-Yi-Zhang
 - Review Point：內容第一次大量改為 reviewed 時（確認徽章條件在實際題數下合理），或收到匯入相關的問題回報時
 

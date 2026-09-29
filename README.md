@@ -77,7 +77,7 @@ npm run test:e2e
 ### 接手前先看
 
 1. 閱讀 [共用開發規範](AGENTS.md)、[貢獻指南](CONTRIBUTING.md)、[專案用語](CONTEXT.md) 與 [里程碑](docs/sdd/11-milestones.md)，再按任務查閱 SDD 與 ADR。
-2. 核對 [交接紀錄](docs/handoff.md)、目前 Git 差異及相關 Issue／PR；文件中的歷史驗證結果不代表目前工作區已驗證。
+2. 讀 [目前狀態](docs/handoff.md)，再核對 Git 差異及相關 Issue／PR；歷史紀錄在各 PR 說明。文件中的驗證結果不代表目前工作區已驗證。
 3. 程式變更完成後執行 lint、check 與單元測試；影響建置或互動時加跑 build 或相關 e2e。只改文件時檢查連結、規範一致性與 `git diff --check`。
 4. 新增內容維持 `draft`，AI 協助內容標示 `aiAssisted: true`，依 [審核指南](docs/review/review-guide.md) 交由人類審核。交接時記下變更、實際驗證結果與待辦事項。
 

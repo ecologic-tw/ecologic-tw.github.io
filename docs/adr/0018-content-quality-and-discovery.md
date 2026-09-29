@@ -1,8 +1,8 @@
 # ADR-0018 來源呈現、搜尋索引與內容品質報告
 
 - 日期：2026-09-27
-- 狀態：提議
-- Decision Owner：人類維護者
+- 狀態：接受（2026-09-29，@Wang-Yi-Zhang）
+- Decision Owner：@Wang-Yi-Zhang
 - Review Point：首次部署後檢查分享預覽、搜尋索引及連結報告，並於下次內容擴充檢視閱讀門檻
 
 ## 背景與決策

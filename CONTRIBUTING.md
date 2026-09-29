@@ -57,13 +57,13 @@ Codex、Claude Code 或其他 AI 工具均遵守 [AGENTS.md](AGENTS.md) 的共�
 
 ```text
 請先完整閱讀 AGENTS.md、CONTRIBUTING.md、CONTEXT.md 與 docs/sdd/11-milestones.md，
-按本次任務讀取相關 SDD、ADR 與既有交接紀錄，簡述適用的紅線與目前進度。
+再讀 docs/handoff.md（目前狀態），按本次任務讀取相關 SDD 與 ADR，簡述適用的紅線與目前進度。
 先確認分支和 git status，保留既有未提交變更，再接手以下任務：
 （填入目標、範圍與交接紀錄的位置）
 完成後說明變更、實際驗證結果、未完成事項及下一步，並依 AGENTS.md 留下交接紀錄。
 ```
 
-交接紀錄放在既有 PR／Issue 或 repo 文件（未指定時可用 `docs/handoff.md`），不要只保存在單一 AI 的對話中。新增工具入口時只導向共用規範，避免複製出不同版本。流程理由見 [ADR-0016](docs/adr/0016-shared-ai-instructions.md)。
+交接紀錄寫在 PR 說明的「交接」段；`docs/handoff.md` 只保留目前狀態，交接時覆寫（[ADR-0035](docs/adr/0035-handoff-current-state-only.md)）。不要只保存在單一 AI 的對話中。新增工具入口時只導向共用規範，避免複製出不同版本。流程理由見 [ADR-0016](docs/adr/0016-shared-ai-instructions.md)。
 
 ## 授權
 提交即同意程式碼以 MIT、內容以 CC BY-SA 4.0 授權釋出。
