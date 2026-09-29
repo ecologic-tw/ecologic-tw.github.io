@@ -95,7 +95,7 @@ test.describe('/about/', () => {
     for (const heading of [
       '我們想做的事',
       '這不是官方網站',
-      '隱私：我們不蒐集你的資料',
+      '隱私：網站本身不蒐集你的資料',
       '回饋與投稿',
       '一起參與',
       '授權',
@@ -105,6 +105,11 @@ test.describe('/about/', () => {
     }
     await expect(page.getByText('ecologic:v1')).toBeVisible();
     await expect(page.getByText('https://forms.gle/ZAacF8i7hQ7QF8LC9')).toBeVisible();
+    // 自託管字型須附 SIL OFL 授權全文
+    const license = page.getByRole('link', { name: 'SIL Open Font License 1.1' });
+    const response = await page.request.get((await license.getAttribute('href')) ?? '');
+    expect(response.ok()).toBe(true);
+    expect(await response.text()).toContain('SIL Open Font License');
   });
 
   test('is reachable from every page footer', async ({ page }) => {
