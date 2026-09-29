@@ -4,7 +4,15 @@ import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
 import RevisionHistory from '../../components/RevisionHistory.astro';
 import RevisionStamp from '../../components/RevisionStamp.astro';
-import { advancedQuiz, biasNote, quiz, revision, t, themeLabel } from '../../i18n/zh-TW.ts';
+import {
+  advancedQuiz,
+  biasNote,
+  classifyQuiz,
+  quiz,
+  revision,
+  t,
+  themeLabel,
+} from '../../i18n/zh-TW.ts';
 import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import {
@@ -19,7 +27,14 @@ import {
   VALIDITY_VERDICTS,
   multiOptionIds,
 } from '../../lib/content-schema.ts';
-import { NO_PROBLEM, buildOptions, soundnessOf, type MultiRole } from '../../lib/quiz.ts';
+import {
+  DISAGREEMENT_ENTRY,
+  DISAGREEMENT_KINDS,
+  NO_PROBLEM,
+  buildOptions,
+  soundnessOf,
+  type MultiRole,
+} from '../../lib/quiz.ts';
 import { SECTIONS, renderMarkdown, splitSections } from '../../lib/scenario-sections.ts';
 import { loadTermInfo } from '../../lib/terms-source.ts';
 import { revisionsFor } from '../../lib/updates.ts';
@@ -59,6 +74,7 @@ const multiOptions =
       ).map((o) => ({ ...o, title: titleOf(o.id), note: data.notes[o.id] ?? '' }))
     : [];
 const choices = data.format === 'choice' ? data.choices : [];
+const classifyItems = data.format === 'classify' ? data.items : [];
 const choiceAnswer = String(choices.findIndex((c) => c.correct));
 const soundness =
   data.format === 'validity-soundness' ? soundnessOf(data.validity, data.premises) : undefined;
@@ -67,6 +83,7 @@ const chooseFirst = {
   multi: advancedQuiz.multiChooseFirst,
   'validity-soundness': advancedQuiz.axesChooseFirst,
   choice: advancedQuiz.choiceChooseFirst,
+  classify: classifyQuiz.chooseFirst,
 }[data.format];
 
 const terms = loadTermInfo();
@@ -90,7 +107,9 @@ const relatedIds =
     ? [data.answer, ...data.distractors]
     : data.format === 'multi'
       ? multiOptionIds(data)
-      : [];
+      : data.format === 'classify'
+        ? [DISAGREEMENT_ENTRY]
+        : [];
 const related = relatedIds.flatMap((id) => entries.get(id) ?? []);
 // 改寫練習：judge、multi 必填；其他題型選填，沒有時不顯示（ADR-0022 §3）
 const rewrite =
@@ -170,6 +189,38 @@ const nextLinks = (
               </li>
             ))}
           </ul>
+        </fieldset>
+      )}
+      {data.format === 'classify' && (
+        <fieldset aria-describedby="classify-hint">
+          <legend>{data.prompt ?? classifyQuiz.question}</legend>
+          <p class="hint" id="classify-hint">
+            {classifyQuiz.hint}
+          </p>
+          <ol class="classify-items" role="list">
+            {classifyItems.map((item) => (
+              <li
+                data-classify-item={item.id}
+                data-answer={item.answer}
+                data-acceptable={item.acceptable.join(' ')}
+              >
+                <fieldset>
+                  <legend class="item-text">{item.text}</legend>
+                  <ul data-quiz-options class="kinds">
+                    {DISAGREEMENT_KINDS.map((kind) => (
+                      <li data-option-id={kind}>
+                        <label>
+                          <input type="radio" name={`item-${item.id}`} value={kind} />
+                          <span data-option-label>{classifyQuiz.kindLabel[kind]}</span>
+                          <span class="option-tag" data-option-tag hidden />
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </fieldset>
+              </li>
+            ))}
+          </ol>
         </fieldset>
       )}
       {data.format === 'validity-soundness' && (
@@ -295,6 +346,25 @@ const nextLinks = (
             </dd>
           </div>
         </dl>
+      )}
+      {classifyItems.length > 0 && (
+        <section class="option-notes" aria-labelledby="classify-notes-title">
+          <h2 id="classify-notes-title">{classifyQuiz.answerIs}</h2>
+          <ol>
+            {classifyItems.map((item) => (
+              <li>
+                <strong>{item.text}</strong>
+                <span class="role">
+                  （{classifyQuiz.kindLabel[item.answer]}
+                  {item.acceptable.length > 0 &&
+                    `；${classifyQuiz.acceptableAlso}${item.acceptable.map((k) => classifyQuiz.kindLabel[k]).join('、')}`}
+                  ）
+                </span>
+                ：{item.note}
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
       {(multiOptions.length > 0 || choices.length > 0) && (
         <section class="option-notes" aria-labelledby="option-notes-title">
@@ -528,6 +598,50 @@ const nextLinks = (
 
   .judge li.is-wrong label {
     border-color: var(--soil);
+  }
+
+  /* 爭點地圖（ADR-0034）：逐句一組單選。題號放在句子前（fieldset 裡的清單標記會對齊到選項列），
+     選項兩欄、手機一欄，標記文字才不會被擠到換行。 */
+  .judge .classify-items {
+    counter-reset: statement;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .classify-items > li {
+    counter-increment: statement;
+  }
+
+  .judge .classify-items legend.item-text {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    margin-bottom: 0.5rem;
+  }
+
+  .classify-items legend.item-text::before {
+    content: counter(statement) '. ';
+    color: var(--moss);
+  }
+
+  @media (min-width: 36rem) {
+    .judge .kinds {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .judge li.is-acceptable label {
+    border-style: dashed;
+    border-color: var(--moss);
+  }
+
+  .option-notes ol {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25em;
+    display: grid;
+    gap: 0.4rem;
   }
 
   .axes {

@@ -42,8 +42,8 @@ export type ProposalOptions = {
   format?: string;
 };
 
-// 各題型的空白欄位；judge 以外的題型只出現在進階模式。
-// validity-soundness 與 choice 的改寫練習為選填，需要時再自行加上 betterPhrasing、checklist。
+// 各題型的空白欄位；judge 與 classify 以外的題型只出現在進階模式（classify 見 ADR-0034）。
+// validity-soundness、choice、classify 的改寫練習為選填，需要時再自行加上 betterPhrasing、checklist。
 function formatFields(format: string): Record<string, unknown> {
   if (format === 'multi')
     return {
@@ -66,6 +66,8 @@ function formatFields(format: string): Record<string, unknown> {
     };
   if (format === 'choice')
     return { format, task: '', prompt: '', choices: [], difficulty: 'advanced' };
+  // items：3–5 句，每句 { id, text, answer: fact|value|definition|interest, acceptable: [], note }
+  if (format === 'classify') return { format, items: [], difficulty: 'basic' };
   return { answer: '', distractors: [], difficulty: 'basic', betterPhrasing: [], checklist: [] };
 }
 export function createProposal(root: string, slug: string, options: ProposalOptions) {

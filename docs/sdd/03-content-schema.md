@@ -119,12 +119,24 @@ const scenarioBase = {
   prompt: z.string(),
   choices: z.array(z.object({ text, correct: z.boolean().default(false), note })).min(3).max(4),
   betterPhrasing?, checklist? }
+
+// classify：爭點地圖（ADR-0034），逐句選一種分歧；四類為程式常數 DISAGREEMENT_KINDS
+{ format: 'classify',
+  prompt?: string,                       // 預設「下面每一句，比較像哪一種分歧？」
+  items: z.array(z.object({
+    id,                                  // 同題內不重複
+    text, note,
+    answer: z.enum(['fact','value','definition','interest']),
+    acceptable: z.array(同上).max(1),    // 不可與 answer 相同
+  })).min(3).max(5),
+  betterPhrasing?, checklist? }
 ```
 refine：
 - `isControl` ⇔ `format: judge` 且 `answer === 'none'`（只有 `judge` 題可以是對照題）。
-- `judge` 以外的題型必須 `difficulty: advanced`。
+- `judge` 與 `classify` 以外的題型必須 `difficulty: advanced`；`classify` 基礎與進階皆可（ADR-0034）。
 - `multi`：`answers`、`acceptable`、`distractors` 互不重疊、不含 `none`，合計 4–6 個；`notes` 的鍵必須恰好是這些選項。
 - `choice`：恰好一個 `correct: true`。
+- `classify`：`items` 3–5 句、`id` 不重複、`acceptable` 最多 1 個且不等於 `answer`；句子與解說套用個資檢查；需要「分歧的種類」卡存在，已審題目要求它也已審。
 本文結構：`## 情境`（對話或陳述）、`## 解說`、`## 進階解說`（選填）、`## 換個位置想`（選填，作答後顯示於解說之後；寫作規則見 08 與 ADR-0029）。
 
 正式情境題（含 draft）的「情境」與「解說」必須存在且內容非空白；內容檢查、提案轉入與人工標記工具共用驗證。可不完整的提案仍放在 `contributions/scenarios/`，不影響正式內容檢查。

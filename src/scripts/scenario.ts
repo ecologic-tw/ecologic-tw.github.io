@@ -4,9 +4,9 @@
 // 單選題（judge、choice）與 validity-soundness 的兩個判斷軸都是「單選群組」，走同一條流程；
 // multi 為核取方塊，逐項標記。不計分，只記錄是否完全答對。
 // 使用者輸入只讀取、不渲染；所有文字以 textContent 寫入（docs/sdd/07）。
-import { advancedQuiz, quiz } from '../i18n/zh-TW.ts';
+import { advancedQuiz, classifyQuiz, quiz } from '../i18n/zh-TW.ts';
 import { addRewrite, recordAnswer, update } from '../lib/progress.ts';
-import { gradeMulti, isCorrect, shuffle, type MultiRole } from '../lib/quiz.ts';
+import { gradeClassify, gradeMulti, isCorrect, shuffle, type MultiRole } from '../lib/quiz.ts';
 
 type Outcome = { correct: boolean; labels: string[] };
 
@@ -80,6 +80,49 @@ function submitMulti(list: HTMLElement): Outcome | undefined {
   return { correct, labels: items.filter(isChecked).map(labelOf) };
 }
 
+/**
+ * 爭點地圖（ADR-0034）：每句一組單選。正解標 ✓、可接受標 △、其他標 ✗ 並指出正解。
+ * 不顯示答對幾句（不計分），整體結果只看是否每句都是正解或可接受。
+ */
+function submitClassify(root: HTMLElement): Outcome | undefined {
+  const items = [...root.querySelectorAll<HTMLElement>('[data-classify-item]')];
+  const chosen = new Map<string, string>();
+  for (const item of items) {
+    const input = item.querySelector<HTMLInputElement>('input:checked');
+    if (!input) return undefined;
+    chosen.set(item.dataset.classifyItem ?? '', input.value);
+  }
+  const keys = items.map((item) => ({
+    id: item.dataset.classifyItem ?? '',
+    answer: item.dataset.answer ?? '',
+    acceptable: (item.dataset.acceptable ?? '').split(' ').filter(Boolean),
+  }));
+  const { correct, marks } = gradeClassify(keys, chosen);
+  for (const [i, item] of items.entries()) {
+    const key = keys[i];
+    if (!key) continue;
+    const mark = marks.get(key.id) ?? 'wrong';
+    const pick = chosen.get(key.id);
+    for (const option of item.querySelectorAll<HTMLElement>('[data-option-id]')) {
+      const id = option.dataset.optionId;
+      if (id === key.answer) {
+        option.classList.add('is-answer');
+        const { icon, text } = classifyQuiz.marks.right;
+        setTag(
+          option,
+          mark === 'right' ? text : classifyQuiz.answerTag,
+          mark === 'right' ? icon : undefined,
+        );
+      } else if (id === pick) {
+        option.classList.add(mark === 'acceptable' ? 'is-acceptable' : 'is-wrong');
+        const { icon, text } = classifyQuiz.marks[mark === 'acceptable' ? 'acceptable' : 'wrong'];
+        setTag(option, text, icon);
+      }
+    }
+  }
+  return { correct, labels: [] };
+}
+
 for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
   const scenarioId = root.dataset.scenarioId ?? '';
   const format = root.dataset.format ?? 'judge';
@@ -109,7 +152,12 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const outcome = format === 'multi' ? submitMulti(first) : submitGroups(lists, chosenTag);
+    const outcome =
+      format === 'multi'
+        ? submitMulti(first)
+        : format === 'classify'
+          ? submitClassify(root)
+          : submitGroups(lists, chosenTag);
     if (!outcome) {
       if (error) error.hidden = false;
       return;
@@ -125,7 +173,11 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-quiz]')) {
     const choice = result.querySelector('[data-result-choice]');
     if (icon) icon.textContent = outcome.correct ? '✓' : '↻';
     if (text) text.textContent = outcome.correct ? quiz.correct : quiz.tryAnotherAngle;
-    if (choice) choice.textContent = `${chosenTag}：${outcome.labels.join('、')}`;
+    // classify 逐句已標示，不另列選擇（也不顯示答對幾句）
+    if (choice)
+      choice.textContent = outcome.labels.length
+        ? `${chosenTag}：${outcome.labels.join('、')}`
+        : '';
     result.hidden = false;
     if (nextLinks) nextLinks.hidden = false;
 

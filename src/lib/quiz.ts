@@ -23,20 +23,47 @@ export function isCorrect(choice: string, answer: string): boolean {
   return choice === answer;
 }
 
+/** 爭點地圖（ADR-0034）的四種分歧；順序即作答選項的顯示順序 */
+export const DISAGREEMENT_KINDS = ['fact', 'value', 'definition', 'interest'] as const;
+export type DisagreementKind = (typeof DISAGREEMENT_KINDS)[number];
+/** classify 題答對時點亮的概念卡 */
+export const DISAGREEMENT_ENTRY = 'kinds-of-disagreement';
+
 /** 收集判定需要的作答欄位；其餘題型沒有對應的圖鑑卡 */
 export type ScenarioAnswerKey =
   | { format: 'judge'; answer: string }
   | { format: 'multi'; answers: readonly string[] }
+  | { format: 'classify' }
   | { format: 'validity-soundness' | 'choice' };
 
 /**
  * 答對後可點亮的圖鑑卡（ADR-0022）：judge 為正解（「沒有問題」除外），
- * multi 為全部 answers，validity-soundness 與 choice 不點亮任何卡。
+ * multi 為全部 answers，classify 為「分歧的種類」（ADR-0034），validity-soundness 與 choice 不點亮任何卡。
  */
 export function collectableEntries(key: ScenarioAnswerKey): string[] {
   if (key.format === 'judge') return key.answer === NO_PROBLEM ? [] : [key.answer];
   if (key.format === 'multi') return [...key.answers];
+  if (key.format === 'classify') return [DISAGREEMENT_ENTRY];
   return [];
+}
+
+/** classify 逐句標記：right 正解／acceptable 可接受／wrong 其他 */
+export type ClassifyMark = 'right' | 'acceptable' | 'wrong';
+
+/** 爭點地圖（ADR-0034）：每一句都是正解或可接受才算答對；不計分。 */
+export function gradeClassify(
+  items: readonly { id: string; answer: string; acceptable: readonly string[] }[],
+  chosen: ReadonlyMap<string, string>,
+): { correct: boolean; marks: Map<string, ClassifyMark> } {
+  const marks = new Map<string, ClassifyMark>();
+  for (const { id, answer, acceptable } of items) {
+    const pick = chosen.get(id);
+    marks.set(
+      id,
+      pick === answer ? 'right' : pick && acceptable.includes(pick) ? 'acceptable' : 'wrong',
+    );
+  }
+  return { correct: [...marks.values()].every((m) => m !== 'wrong'), marks };
 }
 
 // ── 進階題型的判定（ADR-0022 §4）：不計分，只回傳是否完全答對與逐項標記 ──

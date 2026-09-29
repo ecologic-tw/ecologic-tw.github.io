@@ -2,7 +2,7 @@
 // 同時供 src/content.config.ts（建置期驗證）與 scripts/check-content.ts（交叉參照檢查）使用，
 // 因此只能 import 'astro/zod'，不可 import 'astro:content' 等虛擬模組。
 import { z } from 'astro/zod';
-import { NO_PROBLEM } from './quiz.ts';
+import { DISAGREEMENT_KINDS, NO_PROBLEM } from './quiz.ts';
 import { minimumReviewers, REVIEW_POLICY, type ReviewPolicy } from './review-policy.ts';
 
 export const ENTRY_KINDS = [
@@ -160,10 +160,18 @@ export const entrySchema = z
   });
 
 // 情境題題型（ADR-0022）：沒有 format 的既有題目視為 judge，不需遷移或重審。
-export const SCENARIO_FORMATS = ['judge', 'multi', 'validity-soundness', 'choice'] as const;
+export const SCENARIO_FORMATS = [
+  'judge',
+  'multi',
+  'validity-soundness',
+  'choice',
+  'classify',
+] as const;
 export const CHOICE_TASKS = ['hidden-premise', 'form', 'counterexample', 'steelman'] as const;
 export const VALIDITY_VERDICTS = ['valid', 'invalid'] as const;
 export const PREMISE_VERDICTS = ['credible', 'not-credible', 'uncertain'] as const;
+/** classify 題的句數（ADR-0034） */
+export const CLASSIFY_ITEM_COUNT = { min: 3, max: 5 } as const;
 /** multi 題的選項總數（answers ∪ acceptable ∪ distractors） */
 export const MULTI_OPTION_COUNT = { min: 4, max: 6 } as const;
 
@@ -233,11 +241,38 @@ const choiceScenario = z
   })
   .strict();
 
+// 爭點地圖（ADR-0034）：逐句判斷是哪一種分歧；四類為程式常數
+const disagreementKind = z.enum(DISAGREEMENT_KINDS);
+const classifyScenario = z
+  .object({
+    ...scenarioBase,
+    format: z.literal('classify'),
+    prompt: note.optional(),
+    items: z
+      .array(
+        z
+          .object({
+            id: z.string().regex(/^[a-z0-9-]+$/),
+            text: note,
+            answer: disagreementKind,
+            acceptable: z.array(disagreementKind).max(1).default([]),
+            note,
+          })
+          .strict(),
+      )
+      .min(CLASSIFY_ITEM_COUNT.min)
+      .max(CLASSIFY_ITEM_COUNT.max),
+    betterPhrasing: betterPhrasing.optional(),
+    checklist: checklist.optional(),
+  })
+  .strict();
+
 type AnyScenario = z.output<
   | typeof judgeScenario
   | typeof multiScenario
   | typeof validitySoundnessScenario
   | typeof choiceScenario
+  | typeof classifyScenario
 >;
 
 /** multi 題的全部選項 id，依 answers、acceptable、distractors 的順序 */
@@ -251,6 +286,23 @@ export function multiOptionIds(data: {
 
 function checkFormat(data: AnyScenario, ctx: z.RefinementCtx) {
   if (data.format === 'judge') return;
+  // classify 基礎與進階模式都可以出現（ADR-0034，ADR-0022 §2 的例外）
+  if (data.format === 'classify') {
+    const ids = data.items.map((item) => item.id);
+    if (new Set(ids).size !== ids.length) {
+      ctx.addIssue({ code: 'custom', path: ['items'], message: 'items 的 id 不可重複' });
+    }
+    for (const [i, item] of data.items.entries()) {
+      if (item.acceptable.includes(item.answer)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['items', i, 'acceptable'],
+          message: 'acceptable 不可與 answer 相同',
+        });
+      }
+    }
+    return;
+  }
   if (data.difficulty !== 'advanced') {
     ctx.addIssue({
       code: 'custom',
@@ -319,6 +371,7 @@ export const createScenarioSchema = (policy: ReviewPolicy = REVIEW_POLICY) =>
       multiScenario,
       validitySoundnessScenario,
       choiceScenario,
+      classifyScenario,
     ])
     .superRefine((data, ctx) => {
       requireReviewers(data, ctx, policy);
@@ -345,6 +398,10 @@ export function scenarioTexts(data: AnyScenario): string[] {
   if (data.format === 'validity-soundness') texts.push(data.notes.validity, data.notes.premises);
   if (data.format === 'choice') {
     texts.push(data.prompt, ...data.choices.flatMap((c) => [c.text, c.note]));
+  }
+  if (data.format === 'classify') {
+    if (data.prompt) texts.push(data.prompt);
+    texts.push(...data.items.flatMap((item) => [item.text, item.note]));
   }
   return texts;
 }

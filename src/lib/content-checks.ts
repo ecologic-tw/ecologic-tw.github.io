@@ -17,7 +17,7 @@ import {
 } from './content-schema.ts';
 import { findLiteralBold, LITERAL_BOLD_HINT } from './emphasis-check.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
-import { collectableEntries } from './quiz.ts';
+import { DISAGREEMENT_ENTRY, collectableEntries } from './quiz.ts';
 import { validateScenarioBody } from './scenario-sections.ts';
 import { guideLinkIds, validateToolkitBody } from './toolkit.ts';
 
@@ -176,6 +176,10 @@ export function checkContent(input: ContentInput): CheckResult {
         for (const id of data[field]) checkRef(item, field, entries, '圖鑑卡', id);
       }
     }
+    // classify 答對點亮「分歧的種類」（ADR-0034）：已審題目要求這張卡也已審
+    if (data.format === 'classify') {
+      checkRef(item, 'classify 點亮的卡', entries, '圖鑑卡', DISAGREEMENT_ENTRY);
+    }
     for (const id of data.terms) checkRef(item, 'terms', terms, '名詞', id);
     for (const id of bodyTermIds(item.doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
 
@@ -208,7 +212,7 @@ export function checkContent(input: ContentInput): CheckResult {
   }
 
   // 每張已發布的圖鑑卡都要能點亮（docs/sdd/02 規則 4），否則「圖鑑收藏家」徽章無法達成：
-  // 有卡內小檢核，或至少一題已發布情境題答對後會點亮它（judge 的正解、multi 的 answers）。
+  // 有卡內小檢核，或至少一題已發布情境題答對後會點亮它（judge 的正解、multi 的 answers、classify 的「分歧的種類」）。
   const collectable = new Set(
     [...scenarios.values()]
       .filter((s) => s.data.status === 'reviewed')
