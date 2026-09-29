@@ -26,16 +26,19 @@ sources:
   - title: "Stevenson, C. L. (1944). Ethics and Language. Yale University Press."
     supports:
       - "區分信念上的分歧（對事實的看法不同）與態度上的分歧（在意的事不同）。"
-  - title: "Fisher, R., & Ury, W. (1981). Getting to Yes: Negotiating Agreement Without Giving In. Houghton Mifflin."
+  - title: "Fisher, R., & Ury, W. (1981). Getting to Yes: Negotiating Agreement
+      Without Giving In. Houghton Mifflin."
     supports:
       - "談判時把焦點放在各方的利益，而不是各自的立場。"
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 updated: 2026-09-29
 isControl: false
+published: 2026-09-29
 ---
 
 ## 情境
