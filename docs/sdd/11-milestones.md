@@ -45,7 +45,18 @@
   - [ ] 後見之明偏誤 `hindsight-bias`（2026-09-28 開放；證據強度 AI 暫定 robust）
   - [ ] 框架效應 `framing-effect`（2026-09-28 開放；證據強度 AI 暫定 robust，僅限風險選擇框架）
 - [ ] 回顧點（約 2026-12-29）：檢視覆核結果與回饋，決定是否維持開放檢視做法
-- [ ] 決策者檢閱 [ADR-0038](../adr/0038-evidence-based-review.md)（提議：以證據判定紀錄取代以身分為主的審核門檻），接受後再修改 08、10、12、審核指南與 PR 模板
+
+## 證據判定紀錄（ADR-0038）
+已完成：ADR 接受（2026-09-29），修改 08、10、12 §5、審核指南、PR 模板，新增 [紀錄格式](../review/evidence/README.md)。
+- 已發布的心理學卡補證據判定紀錄（回顧點前或下次修訂時；證據強度需要改變時依 ADR-0025 處理）：
+  - [ ] 確認偏誤 `confirmation-bias`
+  - [ ] 倖存者偏誤 `survivorship-bias`
+  - [ ] 可得性捷思 `availability-heuristic`
+  - [ ] 後見之明偏誤 `hindsight-bias`
+  - [ ] 框架效應 `framing-effect`
+  - [ ] 非暴力溝通 `nonviolent-communication`
+  - [ ] 善意詮釋與鋼人論證 `charity-and-steelman`
+- [ ] 回顧點（第一批三張卡依新流程審核後，或約 2026-12-29）：檢視紀錄是否幫助發現錯誤、審核時間、有無卡因反證搜尋降級
 
 ## 持續
 ### 首次貢獻試行（ADR-0026，提議；決策者：@Wang-Yi-Zhang）
