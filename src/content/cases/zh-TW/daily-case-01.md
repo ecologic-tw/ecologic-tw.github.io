@@ -31,9 +31,11 @@ sources:
 contributors: []
 aiAssisted: true
 requiresSecondReview: false
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 updated: 2026-09-29
+published: 2026-09-29
 ---
 
 ## 背景
