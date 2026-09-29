@@ -146,6 +146,9 @@
   - [x] 實作：抽題純函式 `src/lib/challenge.ts` 與單元測試、`/challenge/` 頁面、首頁與題目列表入口、e2e 與 axe；同步 04、07、CONTEXT 與關於頁隱私說明
   - [ ] 至少一位試讀者走完兩輪後，依 ADR-0032 Review Point 檢視
 - [ ] 2 討論引導卡（可列印）與概念卡「分歧的種類」
+  - [x] ADR-0033 起草（提議）
+  - [ ] Decision Owner 決定是否接受
+  - [ ] 實作：`toolkit` 集合、`/toolkit/discussion/` 與列印樣式、審核工具與檢查、測試；概念卡與引導卡草稿；更新紀錄
 - [ ] 3 爭點地圖（`classify` 題型）
 - [ ] 4 多方觀點情境（`cases` 集合）
 - [ ] 5 分支對話練習（試行 1–2 則）
