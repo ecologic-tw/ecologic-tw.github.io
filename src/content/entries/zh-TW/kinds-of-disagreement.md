@@ -15,20 +15,24 @@ quickCheck:
   explanation: '「每天會多三百輛車」是關於實際上會怎樣的主張，可以用交通調查或類似地點的資料來檢驗。就算雙方對這個數字有共識，接下來「車流增加值不值得」還是價值分歧，要另外討論。'
 related: [ charity-and-steelman, nonviolent-communication, objective-meaning ]
 terms: [ proposition, argument ]
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
   - title: "Stevenson, C. L. (1944). Ethics and Language. Yale University Press."
     supports:
-      - "區分信念上的分歧（對事實的看法不同）與態度上的分歧（在意的事不同）；原文待人工核對。"
-  - title: "Chalmers, D. J. (2011). Verbal Disputes. The Philosophical Review, 120(4), 515–566."
+      - "區分信念上的分歧（對事實的看法不同）與態度上的分歧（在意的事不同）。"
+  - title: "Chalmers, D. J. (2011). Verbal Disputes. The Philosophical Review,
+      120(4), 515–566."
     supports:
-      - "字面之爭：雙方對同一個詞的用法不同，看起來不同意，其實在說不同的事；原文待人工核對。"
-  - title: "Fisher, R., & Ury, W. (1981). Getting to Yes: Negotiating Agreement Without Giving In. Houghton Mifflin."
+      - "字面之爭：雙方對同一個詞的用法不同，看起來不同意，其實在說不同的事。"
+  - title: "Fisher, R., & Ury, W. (1981). Getting to Yes: Negotiating Agreement
+      Without Giving In. Houghton Mifflin."
     supports:
-      - "談判時把焦點放在各方的利益，而不是各自的立場；原文待人工核對。"
+      - "談判時把焦點放在各方的利益，而不是各自的立場。"
 updated: 2026-09-29
 aiAssisted: true
+published: 2026-09-29
 ---
 
 ## 說明

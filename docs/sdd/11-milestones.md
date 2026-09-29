@@ -150,8 +150,8 @@
   - [x] ADR-0033 接受（2026-09-29，Decision Owner：@Wang-Yi-Zhang；入口放圖鑑總覽與關於頁，新增 `toolkit` 集合）
   - [x] 實作：`toolkit` 集合、`/toolkit/[id]/` 與列印樣式、入口（發布後才顯示）、審核工具與內容檢查、sitemap、單元與 e2e 測試；03、04、06、CONTEXT 同步
   - [x] 草稿（AI 起草）：討論引導卡 `discussion`、概念卡「分歧的種類」`kinds-of-disagreement`
-  - [ ] 人工審核：先審概念卡，再審引導卡（引導卡連到概念卡）；三則來源待核對原文
-  - [ ] 發布時在同一個 PR 的 `updates.yaml` 加一則 `kind: feature`
+  - [x] 人工審核並發布概念卡與引導卡（2026-09-29，@Wang-Yi-Zhang）；三則來源原文已核對
+  - [x] 發布時在同一個 PR 的 `updates.yaml` 加一則 `kind: feature`（`discussion-card`）
   - [ ] 至少一次實際列印使用後，依 ADR-0033 Review Point 檢視
 - [ ] 3 爭點地圖（`classify` 題型）
 - [ ] 4 多方觀點情境（`cases` 集合）

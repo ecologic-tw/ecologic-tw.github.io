@@ -2,15 +2,18 @@
 id: discussion
 title: 討論引導卡
 summary: 把善意回應、換個位置想與分歧的種類整理成一張 A4，帶到課堂、座談與會議使用。
-status: draft
-reviewers: []
+status: reviewed
+reviewers:
+  - Wang-Yi-Zhang
 sources:
-  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W. W. Norton."
+  - title: "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking. W.
+      W. Norton."
     supports:
       - "Rapoport 規則：先把對方的立場重述到對方滿意，說出同意之處，再提出批評。三步回應的「確認理解」與「找共同點」參考這個做法。"
 contributors: []
 updated: 2026-09-29
 aiAssisted: true
+published: 2026-09-29
 ---
 
 ## 正面：回應之前

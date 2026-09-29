@@ -1,5 +1,12 @@
 # AI 協作交接紀錄
 
+## 2026-09-29：發布討論引導卡與「分歧的種類」
+- **目標與範圍**：PR #80 合併後，Decision Owner 審核概念卡 `kinds-of-disagreement` 與引導卡 `discussion`，並核對三則來源原文。
+- **分支**：`content/publish-discussion-card`，自 `origin/main`（`2622e6e`，含 PR #80）建立。
+- **已完成**：@Wang-Yi-Zhang 自行執行 `npm run review` 標記兩份（AI 只跑 `--dry-run`）；依其確認刪除三則來源的「原文待人工核對」；`updates.yaml` 加 `discussion-card` 功能說明；11 里程碑同步。
+- **驗證**：見 PR。正式建置出現 `/toolkit/discussion/`，圖鑑總覽與關於頁出現入口。
+- **下一步**：實際列印使用（其他瀏覽器頁數），依 ADR-0033 Review Point 檢視。
+
 ## 2026-09-29：實作討論引導卡（ADR-0033）
 - **目標與範圍**：依已接受的 ADR-0033 實作可列印的討論引導卡，並起草引導卡與「分歧的種類」概念卡。
 - **分支**：`feat/discussion-card`，自 `origin/main`（`2562e95`，含 PR #79）建立。
