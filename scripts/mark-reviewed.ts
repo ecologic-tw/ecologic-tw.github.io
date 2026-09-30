@@ -7,12 +7,14 @@ import { parseDocument, isSeq, isMap } from 'yaml';
 import {
   caseSchema,
   entrySchema,
+  originSchema,
   scenarioSchema,
   termSchema,
   toolkitSchema,
 } from '../src/lib/content-schema.ts';
 import { validateCaseBody } from '../src/lib/cases.ts';
 import { localDate } from '../src/lib/dates.ts';
+import { validateOriginBody } from '../src/lib/origins.ts';
 import { validateScenarioBody } from '../src/lib/scenario-sections.ts';
 import { validateToolkitBody } from '../src/lib/toolkit.ts';
 
@@ -41,6 +43,7 @@ export function prepareReview(
     terms: termSchema,
     toolkit: toolkitSchema,
     cases: caseSchema,
+    origins: originSchema,
   };
 
   function mark(data: Record<string, unknown>, kind: keyof typeof schemas, file: string) {
@@ -71,7 +74,7 @@ export function prepareReview(
     return people;
   }
 
-  for (const kind of ['entries', 'scenarios', 'toolkit', 'cases'] as const) {
+  for (const kind of ['entries', 'scenarios', 'toolkit', 'cases', 'origins'] as const) {
     const dir = join(root, kind, 'zh-TW');
     if (!existsSync(dir)) continue;
     for (const name of readdirSync(dir).filter((n) => n.endsWith('.md'))) {
@@ -87,7 +90,8 @@ export function prepareReview(
         scenarios: validateScenarioBody,
         toolkit: validateToolkitBody,
         cases: validateCaseBody,
-      }[kind as 'scenarios' | 'toolkit' | 'cases'];
+        origins: validateOriginBody,
+      }[kind as 'scenarios' | 'toolkit' | 'cases' | 'origins'];
       if (validateBody) {
         const issues = validateBody(text.slice(match[0].length));
         if (issues.length) throw new Error(`${file}: ${issues.join('; ')}`);

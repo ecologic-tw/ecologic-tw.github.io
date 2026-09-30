@@ -23,7 +23,7 @@
 ├─ public/ fonts/  favicon.svg  social-card.png
 ├─ src/
 │  ├─ content.config.ts
-│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/  updates/zh-TW/  toolkit/zh-TW/  cases/zh-TW/
+│  ├─ content/ entries/zh-TW/  scenarios/zh-TW/  terms/zh-TW/  updates/zh-TW/  toolkit/zh-TW/  cases/zh-TW/  origins/zh-TW/
 │  ├─ i18n/zh-TW.ts            # 介面字串
 │  ├─ lib/
 │  │  ├─ progress.ts           # localStorage 讀寫、匯出匯入（zod 驗證）
@@ -67,6 +67,10 @@ parseImport(text, knownIds): ImportResult   // 100 KB 上限、zod 嚴格驗證�
 - 新增題型：在 `formats/` 加一個元件、在 `ScenarioFormat.astro` 加一行；前端判定仍在 `src/scripts/scenario.ts`，依 `data-*` 屬性運作。
 - 選項與結果標示的樣式在 `src/styles/quiz.css`（只由情境題頁面匯入），因為頁面的 scoped 樣式套不到子元件；題型專屬樣式放在各自元件。
 - 多方觀點案例（ADR-0036）：`src/pages/cases/` 串起案例與小題，小題仍由情境題頁作答。情境題頁有 `case` 時加上案例連結、收合的背景與角色卡（`CaseRoles.astro`，與案例頁共用），「下一題」改依案例順序。作答狀態由 `src/scripts/case-status.ts` 讀 `answered` 顯示。
+
+## 思想源流（ADR-0039）
+- `origins` 集合沒有獨立頁面；圖鑑卡頁以 `getPublishedOrigins(entryId)` 取接到這張卡的已發布項目，由 `OriginNotes.astro` 呈現，外層 `<section class="origins">` 留在頁面以沿用版面格線。
+- 本文三段由 `src/lib/origins.ts` 檢查，呈現時用 `splitSections`／`renderMarkdown` 分段轉換（與情境題相同）；參考資料網址納入建置產物的外連允許清單。
 
 ## 來源與搜尋（ADR-0018）
 - `Sources.astro` 統一呈現三種內容的來源；情境題置於答案揭露區。

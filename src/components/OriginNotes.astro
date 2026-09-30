@@ -1,0 +1,106 @@
+---
+// 思想源流（ADR-0039）：接到這張圖鑑卡的思想家與原典，預設收合。
+// 外層 <section class="origins"> 留在圖鑑卡頁，才能沿用版面格線；這裡只產生內容。
+// 三段本文各自轉成 HTML，段落標題用 h3，id 加上前綴，避免與卡片本文重複。
+import { origin as text } from '../i18n/zh-TW.ts';
+import type { Origin } from '../lib/content.ts';
+import { ORIGIN_SECTIONS } from '../lib/origins.ts';
+import { renderMarkdown, splitSections } from '../lib/scenario-sections.ts';
+import { loadTermInfo } from '../lib/terms-source.ts';
+import Sources from './Sources.astro';
+
+interface Props {
+  origins: Origin[];
+}
+
+const { origins } = Astro.props;
+const terms = loadTermInfo();
+const items = origins.map((o) => {
+  const sections = splitSections(o.body ?? '');
+  return {
+    o,
+    parts: Object.entries(ORIGIN_SECTIONS).map(([key, heading]) => ({
+      heading,
+      html: renderMarkdown(sections.get(heading) ?? '', terms, `origin-${o.id}-${key}-`),
+    })),
+  };
+});
+---
+
+<h2 id="origins-title">{text.title}</h2>
+<p class="hint">{text.hint}</p>
+{items.map(({ o, parts }) => (
+  <details class="origin" data-origin-id={o.id}>
+    <summary>
+      <span class="origin-title">{o.data.title}</span>
+      <span class="origin-meta">
+        {o.data.thinker}｜{o.data.era}｜{o.data.work}
+      </span>
+    </summary>
+    {o.data.status === 'draft' && <p class="draft">{text.draft}</p>}
+    <p class="origin-summary">{o.data.summary}</p>
+    {parts.map((part) => (
+      <section class="origin-part">
+        <h3>{part.heading}</h3>
+        <div class="prose" set:html={part.html} />
+      </section>
+    ))}
+    <Sources sources={o.data.sources} />
+  </details>
+))}
+
+<style>
+  h2 {
+    font-size: var(--step-1);
+  }
+
+  .hint {
+    margin-top: 0.4rem;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .origin {
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--mist);
+    border-radius: 3px;
+  }
+
+  summary {
+    cursor: pointer;
+  }
+
+  .origin-title {
+    font-weight: 500;
+  }
+
+  .origin-meta {
+    display: block;
+    color: var(--moss);
+    font-size: var(--step--1);
+  }
+
+  .draft {
+    margin-top: 0.75rem;
+    color: var(--soil);
+    font-size: var(--step--1);
+  }
+
+  .origin-summary {
+    margin-top: 0.75rem;
+  }
+
+  .origin-part {
+    margin-top: 1rem;
+  }
+
+  h3 {
+    font-size: var(--step-0);
+    color: var(--moss);
+  }
+
+  .origin-part .prose {
+    margin-top: 0.4rem;
+  }
+</style>
