@@ -3,6 +3,7 @@ import { file, glob } from 'astro/loaders';
 import {
   caseSchema,
   entrySchema,
+  originSchema,
   scenarioSchema,
   termSchema,
   toolkitSchema,
@@ -15,7 +16,7 @@ import {
 // 否則本機既有快取會沿用舊格式的資料（ADR-0022 實作時發現）。
 // 變更時若開發伺服器正在執行，它可能用記憶體裡的舊 schema 重建快取；請停止伺服器，
 // 刪除 .astro/data-store.json 後再啟動。
-export const CONTENT_SCHEMA_VERSION = 6;
+export const CONTENT_SCHEMA_VERSION = 7;
 
 const entries = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/entries/zh-TW' }),
@@ -49,4 +50,10 @@ const cases = defineCollection({
   schema: caseSchema,
 });
 
-export const collections = { entries, scenarios, terms, updates, toolkit, cases };
+// 思想源流（ADR-0039）：思想家的一個想法，在相關圖鑑卡頁呈現
+const origins = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/origins/zh-TW' }),
+  schema: originSchema,
+});
+
+export const collections = { entries, scenarios, terms, updates, toolkit, cases, origins };
