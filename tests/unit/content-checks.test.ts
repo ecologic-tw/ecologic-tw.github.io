@@ -47,6 +47,7 @@ function run(input: {
   updates?: SourceDoc[];
   toolkit?: SourceDoc[];
   cases?: SourceDoc[];
+  origins?: SourceDoc[];
 }) {
   return checkContent({ entries: cards, scenarios: [], terms: [], ...input });
 }
@@ -624,4 +625,73 @@ describe('loadContent (fixtures)', () => {
     const { errors } = checkContent(loadContent('tests/fixtures/content-invalid'));
     expect(errors.join()).toMatch(/charitableRespose/);
   });
+});
+
+describe('origins of ideas (ADR-0039)', () => {
+  const originBody = '## 原典怎麼說\n原文。\n\n## 和這張卡的關係\n關係。\n\n## 常見誤讀\n誤讀。';
+  const origin = (extra: Record<string, unknown> = {}, body = originBody): SourceDoc => ({
+    file: 'thinker-idea.md',
+    fileId: 'thinker-idea',
+    data: {
+      id: 'thinker-idea',
+      title: '思想家：一個想法',
+      thinker: '思想家',
+      era: '十八世紀',
+      work: '〈原典〉，1784',
+      entries: ['a'],
+      summary: '一句話摘要。',
+      status: 'draft',
+      updated: '2026-09-30',
+      sources: [{ title: '原典' }, { title: '學術參考' }],
+      ...extra,
+    },
+    body,
+  });
+
+  it('passes a complete draft', () => {
+    expect(run({ origins: [origin()] }).errors).toEqual([]);
+  });
+
+  it('requires all three sections', () => {
+    const { errors } = run({ origins: [origin({}, '## 原典怎麼說\n原文。')] });
+    expect(errors.join()).toMatch(/和這張卡的關係/);
+    expect(errors.join()).toMatch(/常見誤讀/);
+  });
+
+  it('requires the linked cards to exist and to be reviewed once published', () => {
+    expect(run({ origins: [origin({ entries: ['missing'] })] }).errors.join()).toMatch(/missing/);
+    const reviewed = origin({ status: 'reviewed', reviewers: ['alice'] });
+    expect(run({ origins: [reviewed] }).errors.join()).toMatch(/未審/);
+  });
+
+  it('needs both the original text and a scholarly reference once reviewed', () => {
+    const published = [
+      entry('a', { status: 'reviewed', reviewers: ['alice'] }),
+      entry('b'),
+      entry('c'),
+    ];
+    const reviewed = origin({
+      status: 'reviewed',
+      reviewers: ['alice'],
+      sources: [{ title: '原典' }],
+    });
+    const { errors } = checkContent({
+      entries: published,
+      scenarios: [],
+      terms: [],
+      origins: [reviewed],
+    });
+    expect(errors.join()).toMatch(/至少需 2 項來源/);
+  });
+
+  it('rejects duplicate cards and raw HTML', () => {
+    expect(run({ origins: [origin({ entries: ['a', 'a'] })] }).errors.join()).toMatch(/不可重複/);
+    const html = originBody.replace('原文。', '<b>原文</b>');
+    expect(run({ origins: [origin({}, html)] }).errors.join()).toMatch(/原生 HTML/);
+  });
+});
+
+it('the two pilot origins pass the content checks', () => {
+  const { errors } = checkContent(loadContent());
+  expect(errors.filter((e) => e.includes('origins'))).toEqual([]);
 });

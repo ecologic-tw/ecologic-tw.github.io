@@ -205,6 +205,21 @@ refine：
 - 本文固定兩段：`## 背景`（議題背景）、`## 換個位置想`（全部小題答完後的收尾，寫作規則同 ADR-0029）。
 - 小題是一般情境題，以 `case` 欄位指向案例；案例內依題號排序，即作答順序（`src/lib/cases.ts` 的 `caseQuestions`）。
 
+## 思想源流 `origins/zh-TW/<id>.md`（ADR-0039）
+```ts
+{
+  id: string,            // 檔名，例如 kant-enlightenment；沒有獨立頁面
+  title: string,         // ≤ 40 字，例如「康德：勇於運用自己的理智」
+  thinker: string,       // 思想家，例如「康德（Immanuel Kant）」
+  era: string,           // 年代，例如「1724–1804，普魯士」
+  work: string,          // 原典篇名與年代
+  entries: string[],     // 接到的圖鑑卡 1–4 張，不可重複
+  summary: string,       // ≤ 80 字
+  ...共用欄位,           // reviewed 需審核者，且至少 2 項來源：原典與學術參考
+}
+```
+本文固定三段，都必填：`## 原典怎麼說`、`## 和這張卡的關係`、`## 常見誤讀`。在 `entries` 所列圖鑑卡頁的參考資料之前，以預設收合的「思想源流」區塊呈現；段落標題在頁面上是 h3，id 加前綴避免與卡片本文重複。建置期檢查三段本文、`entries` 與本文圖鑑卡連結存在，已審思想源流不得接到未審的卡。每則在 `docs/review/origins/<id>.md` 留原典核對紀錄。
+
 ## 更新紀錄 `updates/zh-TW/updates.yaml`（ADR-0024）
 手寫說明：功能更新、重要勘誤、公告。新上架內容依 `published` 自動列出，不必另寫。
 ```yaml

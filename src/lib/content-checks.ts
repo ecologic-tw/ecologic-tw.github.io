@@ -13,13 +13,16 @@ import {
   updateSchema,
   type CaseData,
   type EntryData,
+  type OriginData,
   type ScenarioData,
   type TermData,
   type ToolkitData,
   type UpdateData,
   toolkitSchema,
+  originSchema,
 } from './content-schema.ts';
 import { validateCaseBody } from './cases.ts';
+import { validateOriginBody } from './origins.ts';
 import { findLiteralBold, LITERAL_BOLD_HINT } from './emphasis-check.ts';
 import { TERM_MARKER } from './markdown-ecologic.ts';
 import { DISAGREEMENT_ENTRY, collectableEntries } from './quiz.ts';
@@ -45,6 +48,8 @@ export type ContentInput = {
   toolkit?: SourceDoc[];
   /** 多方觀點案例（ADR-0036）；測試資料可省略 */
   cases?: SourceDoc[];
+  /** 思想源流（ADR-0039）；測試資料可省略 */
+  origins?: SourceDoc[];
 };
 
 export type CheckResult = { errors: string[]; warnings: string[] };
@@ -157,6 +162,22 @@ export function checkContent(input: ContentInput): CheckResult {
   for (const item of toolkit.values()) {
     const { doc } = item;
     errors.push(...validateToolkitBody(doc.body).map((issue) => `${doc.file}: ${issue}`));
+    for (const id of guideLinkIds(doc.body))
+      checkRef(item, '本文圖鑑卡連結', entries, '圖鑑卡', id);
+    for (const id of bodyTermIds(doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);
+    if (RAW_HTML.test(doc.body)) errors.push(`${doc.file}: 本文不得含原生 HTML（docs/sdd/07）`);
+    checkBold(doc);
+  }
+
+  // 思想源流（ADR-0039）：三段本文、接到的圖鑑卡存在，已審思想源流只能接到已審的卡
+  const origins = indexById(
+    validate<OriginData>(input.origins ?? [], originSchema, errors),
+    errors,
+  );
+  for (const item of origins.values()) {
+    const { data, doc } = item;
+    errors.push(...validateOriginBody(doc.body).map((issue) => `${doc.file}: ${issue}`));
+    for (const id of data.entries) checkRef(item, 'entries', entries, '圖鑑卡', id);
     for (const id of guideLinkIds(doc.body))
       checkRef(item, '本文圖鑑卡連結', entries, '圖鑑卡', id);
     for (const id of bodyTermIds(doc.body)) checkRef(item, '本文 [[名詞]]', terms, '名詞', id);

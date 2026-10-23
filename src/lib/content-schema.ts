@@ -456,6 +456,39 @@ export const toolkitSchema = z
   .strict()
   .superRefine(requireReviewers);
 
+/** 思想源流每則接到的圖鑑卡數（ADR-0039） */
+export const ORIGIN_ENTRY_COUNT = { min: 1, max: 4 } as const;
+
+// 思想源流（ADR-0039）：思想家的一個想法，接到相關圖鑑卡；沒有獨立頁面，在圖鑑卡頁呈現。
+// 本文段落見 src/lib/origins.ts；圖鑑卡參照與審核一致性在 content-checks 跨檔檢查。
+export const originSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9-]+$/),
+    title: z.string().trim().min(1).max(40),
+    thinker: z.string().trim().min(1).max(60),
+    era: z.string().trim().min(1).max(40),
+    work: z.string().trim().min(1).max(80),
+    entries: z
+      .array(z.string().regex(/^[a-z0-9-]+$/))
+      .min(ORIGIN_ENTRY_COUNT.min)
+      .max(ORIGIN_ENTRY_COUNT.max)
+      .refine((ids) => new Set(ids).size === ids.length, 'entries 不可重複'),
+    summary: z.string().trim().min(1).max(80),
+    ...reviewMeta,
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    requireReviewers(data, ctx);
+    // 原典加學術參考（ADR-0039 第 4 點）
+    if (data.status === 'reviewed' && data.sources.length < 2) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['sources'],
+        message: 'reviewed 思想源流至少需 2 項來源：原典與學術參考（ADR-0039）',
+      });
+    }
+  });
+
 /** 多方觀點案例的角色數與小題數（ADR-0036） */
 export const CASE_ROLE_COUNT = { min: 3, max: 4 } as const;
 export const CASE_QUESTION_COUNT = { min: 2, max: 3 } as const;
@@ -527,6 +560,7 @@ export type EntryData = z.output<typeof entrySchema>;
 export type ScenarioData = z.output<typeof scenarioSchema>;
 export type TermData = z.output<typeof termSchema>;
 export type ToolkitData = z.output<typeof toolkitSchema>;
+export type OriginData = z.output<typeof originSchema>;
 export type CaseData = z.output<typeof caseSchema>;
 
 // 更新紀錄的手寫說明（ADR-0024）：功能更新、重要勘誤、公告。新上架內容由 published 自動列出。
