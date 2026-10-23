@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Sources from '../../components/Sources.astro';
 import Contributors from '../../components/Contributors.astro';
+import OriginNotes from '../../components/OriginNotes.astro';
 import RevisionHistory from '../../components/RevisionHistory.astro';
 import RevisionStamp from '../../components/RevisionStamp.astro';
 import { biasNote, evidenceLabel, kindLabel, revision, t } from '../../i18n/zh-TW.ts';
@@ -9,6 +10,7 @@ import FeedbackLinks from '../../components/FeedbackLinks.astro';
 import Base from '../../layouts/Base.astro';
 import {
   getPublishedEntries,
+  getPublishedOrigins,
   getPublishedTerms,
   getUpdateNotes,
   type Entry,
@@ -35,6 +37,7 @@ const pair = data.pairWith ? byId.get(data.pairWith) : undefined;
 const related = data.related.flatMap((id) => byId.get(id) ?? []);
 const terms = data.terms.flatMap((id) => termById.get(id) ?? []);
 const revisions = revisionsFor(await getUpdateNotes(), `entry/${entry.id}`);
+const origins = await getPublishedOrigins(entry.id);
 ---
 
 <Base title={data.title} description={data.summary} wide>
@@ -112,6 +115,11 @@ const revisions = revisionsFor(await getUpdateNotes(), `entry/${entry.id}`);
     )}
 
     <div data-read-marker data-entry-id={entry.id} aria-hidden="true" />
+    {origins.length > 0 && (
+      <section class="origins" aria-labelledby="origins-title">
+        <OriginNotes origins={origins} />
+      </section>
+    )}
     <Sources sources={data.sources} />
     <RevisionHistory info={revisions} />
     <Contributors contributors={data.contributors} />
@@ -286,6 +294,11 @@ const revisions = revisionsFor(await getUpdateNotes(), `entry/${entry.id}`);
 
   .qc-reveal p {
     margin-top: 0.5rem;
+  }
+
+  /* 思想源流（ADR-0039） */
+  .origins {
+    margin-top: 2rem;
   }
 
   .prose {

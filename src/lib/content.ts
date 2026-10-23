@@ -73,3 +73,14 @@ export async function getUpdateNotes(): Promise<UpdateNote[]> {
   const notes = await getCollection('updates');
   return notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
+
+export type Origin = CollectionEntry<'origins'>;
+
+/** 思想源流（ADR-0039）：接到這張圖鑑卡的已發布項目，依 id 排序 */
+export async function getPublishedOrigins(entryId: string): Promise<Origin[]> {
+  const items = await getCollection(
+    'origins',
+    ({ data }) => isVisible(data.status) && data.entries.includes(entryId),
+  );
+  return items.sort((a, b) => a.id.localeCompare(b.id));
+}

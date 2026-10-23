@@ -12,7 +12,12 @@ const DIST = process.argv[2] ?? 'dist';
 // 內容 sources 中的網址視為允許（其正確性由內容審核把關）。
 const content = loadContent();
 const sourceUrls = new Set<string>();
-for (const doc of [...content.entries, ...content.scenarios, ...content.terms]) {
+for (const doc of [
+  ...content.entries,
+  ...content.scenarios,
+  ...content.terms,
+  ...(content.origins ?? []),
+]) {
   const sources = (doc.data as { sources?: { url?: string }[] } | undefined)?.sources ?? [];
   for (const s of sources) if (s.url) sourceUrls.add(s.url);
 }

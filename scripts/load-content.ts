@@ -41,5 +41,6 @@ export function loadContent(root = 'src/content', locale = 'zh-TW'): ContentInpu
     updates: readYamlList(join(root, 'updates', locale, 'updates.yaml')),
     toolkit: readMarkdownDir(join(root, 'toolkit', locale)),
     cases: readMarkdownDir(join(root, 'cases', locale)),
+    origins: readMarkdownDir(join(root, 'origins', locale)),
   };
 }

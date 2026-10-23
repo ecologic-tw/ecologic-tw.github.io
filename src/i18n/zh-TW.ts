@@ -241,3 +241,10 @@ export const toolbox = {
   count: (n: number) => `工具箱裡有 ${n} 句回應`,
   print: '列印我的工具箱',
 };
+
+/** 思想源流（ADR-0039） */
+export const origin = {
+  title: '思想源流',
+  hint: '這個工具從哪裡來、原本在回答什麼問題。思想家說過不代表就是對的；判斷仍要回到卡上的理由。',
+  draft: '這則思想源流是尚未審核的草稿。',
+};
