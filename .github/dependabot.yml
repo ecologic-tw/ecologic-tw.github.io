@@ -9,6 +9,9 @@ updates:
       # satteri 版本須與 @astrojs/markdown-satteri 依賴的一致（ADR-0013），隨該套件手動升級
       - dependency-name: satteri
         update-types: [version-update:semver-minor, version-update:semver-major]
+      # @types/node 主版號須與 engines、.nvmrc 的 Node 版本一致，改 Node 版本時一起手動升級
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }
