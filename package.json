@@ -23,14 +23,14 @@
     "scenario": "node scripts/scenario.ts"
   },
   "dependencies": {
-    "@astrojs/markdown-satteri": "^0.4.4",
+    "@astrojs/markdown-satteri": "^0.4.6",
     "@fontsource/lxgw-wenkai-tc": "^5.3.1",
-    "astro": "^7.4.1",
+    "astro": "^7.4.4",
     "satteri": "^0.10.5",
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.11",
+    "@astrojs/check": "^0.9.12",
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.64.1",
@@ -39,9 +39,9 @@
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.13.0",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1",
+    "prettier-plugin-astro": "^1.1.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.72.0",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^5.0.2",
     "yaml": "^2.9.1"
   }

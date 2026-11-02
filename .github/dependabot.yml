@@ -5,6 +5,10 @@ updates:
     schedule: { interval: monthly }
     groups:
       minor-and-patch: { update-types: [minor, patch] }
+    ignore:
+      # satteri 版本須與 @astrojs/markdown-satteri 依賴的一致（ADR-0013），隨該套件手動升級
+      - dependency-name: satteri
+        update-types: [version-update:semver-minor, version-update:semver-major]
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }
