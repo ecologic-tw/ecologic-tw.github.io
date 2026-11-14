@@ -25,7 +25,7 @@
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.6",
     "@fontsource/lxgw-wenkai-tc": "^5.3.1",
-    "astro": "^7.4.4",
+    "astro": "^7.4.7",
     "satteri": "^0.10.5",
     "zod": "^4.6.5"
   },
