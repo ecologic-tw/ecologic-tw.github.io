@@ -7,7 +7,7 @@
 
 ## 背景
 
-[ADR-0019](0019-incremental-scenario-contributions.md) 已允許不完整提案，但新人仍需自行從里程碑判斷可以做什麼、交出什麼，以及提交後由誰接手。目前角色集中一人，增加投稿量可能同時增加整理負擔。[ADR-0023](0023-sustainability-and-contributor-value.md) 的合作與永續提案仍有自己的決策程序，本案不代表接受該提案。
+[ADR-0019](0019-incremental-scenario-contributions.md) 已允許不完整提案，但新人仍需自行從里程碑判斷可以做什麼、交出什麼，以及提交後由誰接手。目前角色集中一人，增加投稿量可能同時增加整理負擔。[ADR-0023](0023-sustainability-and-contributor-value.md) 的合作與永續原則另有自己的決策程序（2026-11-14 接受），兩案彼此獨立。
 
 ## 決策（提議）
 
